@@ -14,7 +14,7 @@ jobs:
 
     strategy:
       matrix:
-        node-version: [10.x, 12.x]
+        node-version: [10.x]
 
     steps:
     - uses: actions/checkout@v2
@@ -43,13 +43,14 @@ jobs:
         cp -R .nuxt/* dist/server/.nuxt/
         mkdir -p dist/client/assets
         cp -R dist/server/.nuxt/dist dist/client/assets
-    - name: install
+    - name: Deploy
       run: |
         cd dist/server
         npm install
         cd ../../
-    - name: Deploy
-      run: |
+        cd function
+        npm install
+        cd ../
         npm install -g firebase-tools
         firebase deploy --token $FIREBASE_TOKEN
       env:
