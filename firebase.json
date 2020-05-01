@@ -4,7 +4,10 @@
     "indexes": "firestore.indexes.json"
   },
   "functions": {
-    "source": "dist/server"
+    "source": "dist/server",
+    "predeploy": [
+      "npm --prefix \"$RESOURCE_DIR\" run lint"
+    ]
   },
   "hosting": {
     "public": "dist/client",
