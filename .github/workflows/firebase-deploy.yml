@@ -25,13 +25,13 @@ jobs:
     - name: install Yarn and FIrebase
       run: |
         npm install -g yarn
-        npm install -g firebase-tools
     - name: Lint
       run: |
         yarn install
         yarn lint
     - name: Build
       run: |
+        yarn install
         yarn build
     - name: Copy
       run: |
@@ -43,14 +43,15 @@ jobs:
         cp -R .nuxt/* dist/server/.nuxt/
         mkdir -p dist/client/assets
         cp -R dist/server/.nuxt/dist dist/client/assets
-    - name: install 
+    - name: install
       run: |
         cd dist/server
         npm install
         cd ../../
     - name: Deploy
       run: |
+        npm install -g firebase-tools
         firebase deploy --token $FIREBASE_TOKEN
       env:
         FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
-        
+
