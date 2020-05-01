@@ -47,10 +47,11 @@ jobs:
       run: |
         cd dist/server
         npm install
-        cd ../../
+        cd ../..
+        cd ..
         cd function
         npm install
-        cd ../
+        cd ..
         npm install -g firebase-tools
         firebase deploy --token $FIREBASE_TOKEN
       env:
