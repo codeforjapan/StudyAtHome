@@ -9,7 +9,11 @@
     "build": "nuxt build",
     "start": "cross-env NODE_ENV=production node src/server/index.js",
     "generate": "nuxt generate",
-    "lint": "eslint --ext .js,.vue --ignore-path .gitignore ."
+    "lint": "eslint --ext .js,.vue --ignore-path .gitignore .",
+    "clean": "if exist dist rd /s /q dist && if exist .nuxt rd /s /q .nuxt",
+    "install:functions": "cd dist\\server && npm install && cd ..\\..\\",
+    "copy": "mkdir dist && xcopy functions dist\\server /e /c /h /i /y && xcopy /e /c /h /i /y src\\static dist\\client && xcopy /e /c /h /i /y .nuxt dist\\server\\.nuxt && xcopy /e /c /h /i /y dist\\server\\.nuxt\\dist dist\\client\\assets",
+    "firebase-emulator": "yarn clean && yarn lint && yarn build && yarn copy && yarn install:functions && firebase emulators:start"
   },
   "lint-staged": {
     "*.{js,vue}": "yarn lint",
