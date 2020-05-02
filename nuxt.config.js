@@ -1,5 +1,5 @@
 const colors = require('vuetify/es5/util/colors').default
-
+require('dotenv').config()
 module.exports = {
   mode: 'universal',
   srcDir: 'src',
@@ -21,6 +21,16 @@ module.exports = {
     ],
     link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }],
   },
+  env: {
+    FIREBASE_APIKEY: process.env.FIREBASE_APIKEY,
+    FIREBASE_AUTHDOMAIN: process.env.FIREBASE_AUTHDOMAIN,
+    FIREBASE_DATABASEURL: process.env.FIREBASE_DATABASEURL,
+    FIREBASE_PROJECTID: process.env.FIREBASE_PROJECTID,
+    FIREBASE_STORAGEBUCKET: process.env.FIREBASE_STORAGEBUCKET,
+    FIREBASE_MESSAGINGSENDERID: process.env.FIREBASE_MESSAGINGSENDERID,
+    FIREBASE_APPID: process.env.FIREBASE_APPID,
+    FIREBASE_MEASUREMENTID: process.env.FIREBASE_MEASUREMENTID,
+  },
   /*
    ** Customize the progress-bar color
    */
@@ -32,7 +42,11 @@ module.exports = {
   /*
    ** Plugins to load before mounting the App
    */
-  plugins: [],
+  plugins: [
+    {
+      src: '@/plugins/firebase.js',
+    },
+  ],
   /*
    ** Nuxt.js dev-modules
    */
@@ -65,7 +79,7 @@ module.exports = {
   vuetify: {
     customVariables: ['~/assets/variables.scss'],
     theme: {
-      dark: true,
+      dark: false,
       themes: {
         dark: {
           primary: colors.blue.darken2,

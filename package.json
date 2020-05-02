@@ -32,7 +32,8 @@
     "cross-env": "^7.0.2",
     "express": "^4.17.1",
     "firebase": "^7.14.2",
-    "nuxt": "^2.12.2"
+    "nuxt": "^2.12.2",
+    "vuexfire": "^3.2.0-alpha.0"
   },
   "devDependencies": {
     "@nuxtjs/eslint-config": "^2.0.2",
