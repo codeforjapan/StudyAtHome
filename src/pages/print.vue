@@ -17,54 +17,52 @@
       <tr class="bg-yel">
         <td>1</td>
         <td>
-          国語
+          {{ $route.query.firstsubject }}
         </td>
         <td>
-          きつつきの商売
+          {{ $route.query.firstUnit }}
         </td>
         <td>
-          ① P16～P25 を音読します。 ② 場面の様子を思い浮かべながら音読できるよう
+          {{ $route.query.firstContent }}
         </td>
         <td />
       </tr>
       <tr class="bg-yel">
         <td>2</td>
         <td>
-          数学
+          {{ $route.query.secondsubject }}
         </td>
         <td>
-          かけ算のきまり
+          {{ $route.query.secondUnit }}
         </td>
         <td>
-          教科書Ｐ10～12
+          {{ $route.query.secondContent }}
         </td>
         <td />
       </tr>
       <tr class="bg-yel">
         <td>3</td>
         <td>
-          社会
+          {{ $route.query.thirdsubject }}
         </td>
         <td>
-          地図のやくそく(1)
+          {{ $route.query.thirdUnit }}
         </td>
         <td>
-          （地図帳 P９～P10）をもとに、方位について調べます。
-          ・家から見た東西南北はどちらか、方位を調べてみよう。 ・地図帳 P10
-          トライ！に取り組もう。
+          {{ $route.query.thirdContent }}
         </td>
         <td />
       </tr>
       <tr>
         <td>4</td>
         <td>
-          理科
+          {{ $route.query.fourthsubject }}
         </td>
         <td>
-          春に見られるいろいろな生き物
+          {{ $route.query.fourthUnit }}
         </td>
         <td>
-          （P10～P11）の写真をみて、春の生き物の すがたをくわしく調べましょう。
+          {{ $route.query.fourthContent }}
         </td>
         <td />
       </tr>
