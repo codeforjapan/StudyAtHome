@@ -26,8 +26,15 @@
       </v-list>
     </v-navigation-drawer>
     -->
-    <v-app-bar :clipped-left="clipped" fixed app>
-      <v-app-bar-nav-icon @click.stop="drawer = !drawer" />
+    <v-app-bar fixed app>
+      <v-toolbar-title>
+        4<ruby>年<rt>ねん</rt></ruby> 3<ruby>組<rt>くみ</rt></ruby>
+      </v-toolbar-title>
+      <v-spacer />
+      <Calender class="date-icon" />
+      <v-toolbar-title>
+        4<ruby>月<rt>がつ</rt></ruby> 3<ruby>日<rt>か</rt></ruby>
+      </v-toolbar-title>
     </v-app-bar>
     <v-content style="background-color: #0071c2;">
       <v-container class="px-4 py-8">
@@ -41,29 +48,16 @@
 </template>
 
 <script>
+import Calender from '@/assets/svgs/icon_calender.svg'
 export default {
-  data() {
-    return {
-      clipped: false,
-      drawer: false,
-      fixed: false,
-      items: [
-        {
-          icon: 'mdi-apps',
-          title: 'Welcome',
-          to: '/',
-        },
-        {
-          icon: 'mdi-chart-bubble',
-          title: 'Inspire',
-          to: '/inspire',
-        },
-      ],
-      miniVariant: false,
-      right: true,
-      rightDrawer: false,
-      title: 'Vuetify.js',
-    }
+  components: {
+    Calender,
   },
 }
 </script>
+
+<style scoped>
+.date-icon {
+  margin-right: 15px;
+}
+</style>
