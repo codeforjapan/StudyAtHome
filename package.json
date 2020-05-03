@@ -33,6 +33,8 @@
     "express": "^4.17.1",
     "firebase": "^7.14.2",
     "nuxt": "^2.12.2",
+    "nuxt-svg-loader": "^1.2.0",
+    "nuxt-webfontloader": "^1.1.0",
     "vuexfire": "^3.2.0-alpha.0"
   },
   "devDependencies": {
