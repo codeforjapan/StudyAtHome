@@ -1,5 +1,6 @@
 import * as firebase from 'firebase/app'
 import 'firebase/firestore'
+import 'firebase/auth'
 const firebaseConfig = {
   apiKey: process.env.FIREBASE_APIKEY,
   authDomain: process.env.FIREBASE_AUTHDOMAIN,
@@ -15,7 +16,6 @@ if (!firebase.apps.length) {
   firebase.initializeApp(firebaseConfig)
 }
 
-const firestore = firebase.firestore()
+const firestoreDb = firebase.firestore()
 
-export { firebase }
-export default firestore
+export { firestoreDb }
