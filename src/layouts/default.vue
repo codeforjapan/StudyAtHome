@@ -28,7 +28,7 @@
       <v-app-bar-nav-icon @click.stop="drawer = !drawer" />
     </v-app-bar>
     <v-content>
-      <v-container>
+      <v-container class="px-4 py-8">
         <nuxt />
       </v-container>
     </v-content>

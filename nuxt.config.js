@@ -65,14 +65,21 @@ module.exports = {
     // Doc: https://axios.nuxtjs.org/usage
     '@nuxtjs/axios',
     '@nuxtjs/pwa',
+    'nuxt-webfontloader',
     // Doc: https://github.com/nuxt-community/dotenv-module
     '@nuxtjs/dotenv',
+    'nuxt-svg-loader',
   ],
   /*
    ** Axios module configuration
    ** See https://axios.nuxtjs.org/options
    */
   axios: {},
+  webfontloader: {
+    google: {
+      families: ['Roboto&display=swap', 'NotoSansJP&&display=swap'],
+    },
+  },
   /*
    ** vuetify module configuration
    ** https://github.com/nuxt-community/vuetify-module
