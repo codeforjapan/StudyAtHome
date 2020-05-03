@@ -1,5 +1,6 @@
 <template>
-  <v-app dark>
+  <v-app>
+    <!--
     <v-navigation-drawer
       v-model="drawer"
       :mini-variant="miniVariant"
@@ -24,10 +25,11 @@
         </v-list-item>
       </v-list>
     </v-navigation-drawer>
+    -->
     <v-app-bar :clipped-left="clipped" fixed app>
       <v-app-bar-nav-icon @click.stop="drawer = !drawer" />
     </v-app-bar>
-    <v-content>
+    <v-content style="background-color: #0071c2;">
       <v-container class="px-4 py-8">
         <nuxt />
       </v-container>
