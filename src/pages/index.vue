@@ -5,7 +5,7 @@
         <StudyCard
           schooltime="1"
           realtime="9:00 - 10:00"
-          :content="users[0]"
+          :content="String(users[0].name)"
           subject="国語"
         />
       </v-col>
@@ -13,7 +13,7 @@
         <StudyCard
           schooltime="2"
           realtime="10:00 - 11:00"
-          :content="users[1]"
+          :content="String(users[1].name)"
           subject="算数"
         />
       </v-col>
@@ -21,7 +21,7 @@
         <StudyCard
           schooltime="3"
           realtime="12:00 - 13:00"
-          :content="users[2]"
+          :content="String(users[2].name)"
           subject="理科"
         />
       </v-col>
