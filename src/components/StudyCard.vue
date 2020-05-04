@@ -1,5 +1,5 @@
 <template>
-  <v-card class="studycard">
+  <v-card color="#338dce" class="studycard">
     <div class="studycard-content">
       <div class="timestr">
         <v-icon size="20px" color="#ffffff">mdi-clock-outline</v-icon>
@@ -71,7 +71,6 @@ export default {
 <style scoped>
 .studycard {
   width: 100%;
-  background-color: #338dce;
 }
 .studycard-content {
   padding: 10px 18px;
