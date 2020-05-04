@@ -26,6 +26,6 @@ function handleRequest(req, res) {
     })
   })
 }
-
+console.log(process.env)
 app.use(handleRequest)
 exports.ssr = functions.https.onRequest(app)
