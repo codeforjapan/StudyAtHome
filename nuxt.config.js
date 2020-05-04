@@ -44,8 +44,7 @@ module.exports = {
    */
   plugins: [
     {
-      src: '@/plugins/firebase.js',
-      ssr: false,
+      src: '@/plugins/firebase',
     },
   ],
   /*

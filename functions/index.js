@@ -1,8 +1,14 @@
 const functions = require('firebase-functions')
-const express = require('express')
 const { Nuxt } = require('nuxt')
-
+const express = require('express')
 const app = express()
+
+const envs = functions.config().environment
+
+Object.entries(envs).forEach((k, v) => {
+  process.env[`${k}`.toUpperCase()] = v
+})
+
 const config = {
   dev: false,
   buildDir: '.nuxt',
@@ -12,10 +18,14 @@ const config = {
 }
 const nuxt = new Nuxt(config)
 
-async function handleRequest(req, res) {
-  res.set('Cache-Control', 'public, max-age=300, s-maxage=600')
-  await nuxt.ready() // ← nuxt.ready()でawaitしないといけなくなった！！
-  return nuxt.render(req, res)
+function handleRequest(req, res) {
+  res.set('Cache-Control', 'public, max-age=10, s-maxage=10')
+  return new Promise((resolve, reject) => {
+    nuxt.render(req, res, (promise) => {
+      promise.then(resolve).catch(reject)
+    })
+  })
 }
+
 app.use(handleRequest)
 exports.ssr = functions.https.onRequest(app)
