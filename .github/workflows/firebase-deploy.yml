@@ -33,6 +33,15 @@ jobs:
       run: |
         yarn install
         yarn build
+      env:
+        APIKEY: ${{ secrets.APIKEY }}
+        AUTHDOMAIN: ${{ secrets.AUTHDOMAIN }}
+        DATABASEURL: ${{ secrets.DATABASEURL }}
+        PROJECTID: ${{ secrets.PROJECTID }}
+        STORAGEBUCKET: ${{ secrets.STORAGEBUCKET }}
+        MESSAGINGSENDERID: ${{ secrets.MESSAGINGSENDERID }}
+        APPID: ${{ secrets.APPID }}
+        MEASUREMENTID: ${{ secrets.MEASUREMENTID }}
     - name: Copy
       run: |
         mkdir -p dist/server
