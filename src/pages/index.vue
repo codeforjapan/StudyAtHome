@@ -5,7 +5,7 @@
         <StudyCard
           schooltime="1"
           realtime="9:00 - 10:00"
-          content="内容（1時間目！！！！！）"
+          :content="users[0]"
           subject="国語"
         />
       </v-col>
@@ -13,7 +13,7 @@
         <StudyCard
           schooltime="2"
           realtime="10:00 - 11:00"
-          content="内容（2時間目！！！！！）"
+          :content="users[1]"
           subject="算数"
         />
       </v-col>
@@ -21,7 +21,7 @@
         <StudyCard
           schooltime="3"
           realtime="12:00 - 13:00"
-          content="内容（3時間目！！！！！）"
+          :content="users[2]"
           subject="理科"
         />
       </v-col>
@@ -38,9 +38,13 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
 import StudyCard from '@/components/StudyCard'
 export default {
   components: { StudyCard },
+  computed: {
+    ...mapGetters(['users']),
+  },
 }
 </script>
 
