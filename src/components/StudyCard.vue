@@ -9,23 +9,24 @@
         <div class="realtime">
           {{ realtime }}
         </div>
+        <v-spacer />
+        <v-icon size="20px" color="#ffffff">mdi-bookshelf</v-icon>
+        {{ subject }}
       </div>
       <div class="contentstr">
         {{ content }}
       </div>
       <v-row>
-        <v-col>
+        <v-col cols="6">
           <text-book-button />
         </v-col>
-        <v-col>
+        <v-col cols="6">
           <sub-text-book-button />
         </v-col>
-      </v-row>
-      <v-row>
-        <v-col>
+        <v-col cols="6">
           <movie-button />
         </v-col>
-        <v-col>
+        <v-col cols="6">
           <comment-button />
         </v-col>
       </v-row>
@@ -58,6 +59,10 @@ export default {
     content: {
       type: String,
       default: 'No Content Available',
+    },
+    subject: {
+      type: String,
+      default: '',
     },
   },
 }

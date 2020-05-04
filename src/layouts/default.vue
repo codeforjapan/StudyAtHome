@@ -41,7 +41,7 @@
         <nuxt />
       </v-container>
     </v-content>
-    <v-footer :fixed="fixed" app>
+    <v-footer dark color="#0071c2">
       <span>&copy; Code For Japan {{ new Date().getFullYear() }}</span>
     </v-footer>
   </v-app>

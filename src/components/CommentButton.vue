@@ -1,8 +1,8 @@
 <template>
-  <div class="contentButton">
+  <v-btn height="3.5em" class="contentButton">
     <iconComment class="icon" />
-    <div class="button-string">コメント</div>
-  </div>
+    <span class="button-string">コメント</span>
+  </v-btn>
 </template>
 
 <script>
@@ -19,8 +19,8 @@ export default {
 .contentButton {
   display: flex;
   padding: 10px;
+  width: 100%;
   font-family: 'Noto Sans', sans-serif;
-  height: 3em;
   align-items: center;
   justify-content: center;
   font-weight: bold;
@@ -35,6 +35,7 @@ export default {
 }
 .button-string {
   width: 7em;
+  font-size: 17px;
   text-align: center;
 }
 </style>
