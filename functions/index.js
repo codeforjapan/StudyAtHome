@@ -26,6 +26,6 @@ function handleRequest(req, res) {
     })
   })
 }
-console.log(functions.config().environment.APIKEY)
+console.log(functions.config().environment.apikey)
 app.use(handleRequest)
 exports.ssr = functions.https.onRequest(app)
