@@ -8,18 +8,37 @@ module.exports = {
    ** Headers of the page
    */
   head: {
-    titleTemplate: '%s - ' + process.env.npm_package_name,
-    title: process.env.npm_package_name || '',
+    title: 'おうちで時間割',
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
       {
         hid: 'description',
         name: 'description',
-        content: process.env.npm_package_description || '',
+        content:
+          'おうちにいても先生から課題が届きます！時間割に合わせて楽しく学んでコロナ休校を乗り切ろう！',
+      },
+      { hid: 'robots', name: 'robots', content: 'noindex' },
+    ],
+    link: [
+      { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
+      { rel: 'apple-touch-icon', href: '/apple-touch-icon-precomposed.png' },
+      {
+        hid: 'og:image',
+        property: 'og:image',
+        content: 'https://studyathome.web.app/ogp.png',
+      },
+      {
+        hid: 'twitter:image',
+        name: 'twitter:image',
+        content: 'https://studyathome.web.app/ogp.png',
+      },
+      {
+        hid: 'og:title',
+        property: 'og:title',
+        content: 'おうちで時間割',
       },
     ],
-    link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }],
   },
   env: {
     FIREBASE_APIKEY: process.env.FIREBASE_APIKEY,
