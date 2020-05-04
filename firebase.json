@@ -13,11 +13,12 @@
     "public": "dist/client",
     "ignore": [
       "firebase.json",
+      "**/.*",
       "**/node_modules/**"
     ],
     "rewrites": [
       {
-        "source": "!/**/*.@(js|ico|json)",
+        "source": "**",
         "function": "ssr"
       }
     ]
