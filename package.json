@@ -30,11 +30,14 @@
     "@nuxtjs/pwa": "^3.0.0-0",
     "core-js": "^2.6.11",
     "cross-env": "^7.0.2",
+    "dayjs": "^1.8.26",
     "express": "^4.17.1",
     "firebase": "^7.14.2",
+    "lodash.clonedeep": "^4.5.0",
     "nuxt": "^2.12.2",
     "nuxt-svg-loader": "^1.2.0",
     "nuxt-webfontloader": "^1.1.0",
+    "uuid": "^8.0.0",
     "vuexfire": "^3.2.0-alpha.0"
   },
   "devDependencies": {

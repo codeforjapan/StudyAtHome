@@ -16,6 +16,8 @@ if (!firebase.apps.length) {
   firebase.initializeApp(firebaseConfig)
 }
 
-const firestoreDb = firebase.firestore()
-
-export { firestoreDb }
+export default (context, inject) => {
+  inject('firebase', firebase)
+  inject('firestore', firebase.firestore())
+  inject('auth', firebase.auth())
+}
