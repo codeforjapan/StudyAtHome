@@ -26,6 +26,6 @@ function handleRequest(req, res) {
     })
   })
 }
-console.log(process.env.PROJECTID)
+console.log(process.env.AUTHDOMAIN)
 app.use(handleRequest)
 exports.ssr = functions.https.onRequest(app)
