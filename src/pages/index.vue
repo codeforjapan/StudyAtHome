@@ -1,14 +1,12 @@
 <template>
   <div class="MainPage">
-    <div class="Logo">
-      <Logo />
-    </div>
     <v-row class="DataBlock">
       <v-col cols="12" md="6">
         <StudyCard
           schooltime="1"
           realtime="9:00 - 10:00"
           content="内容（1時間目！！！！！）"
+          subject="国語"
         />
       </v-col>
       <v-col cols="12" md="6">
@@ -16,6 +14,7 @@
           schooltime="2"
           realtime="10:00 - 11:00"
           content="内容（2時間目！！！！！）"
+          subject="算数"
         />
       </v-col>
       <v-col cols="12" md="6">
@@ -23,6 +22,7 @@
           schooltime="3"
           realtime="12:00 - 13:00"
           content="内容（3時間目！！！！！）"
+          subject="理科"
         />
       </v-col>
       <v-col cols="12" md="6">
@@ -30,6 +30,7 @@
           schooltime="4"
           realtime="14:00 - 15:00"
           content="内容（4時間目！！！！！）"
+          subject="社会"
         />
       </v-col>
     </v-row>
@@ -38,9 +39,8 @@
 
 <script>
 import StudyCard from '@/components/StudyCard'
-import Logo from '@/assets/svgs/logo.svg'
 export default {
-  components: { StudyCard, Logo },
+  components: { StudyCard },
 }
 </script>
 
@@ -50,7 +50,7 @@ export default {
     text-align: center;
   }
   .DataBlock {
-    margin: 20px -12px;
+    margin: 0 -12px;
     .studycard {
       margin-bottom: 20px;
     }

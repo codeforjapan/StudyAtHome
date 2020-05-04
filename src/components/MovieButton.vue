@@ -1,10 +1,10 @@
 <template>
-  <div class="contentButton">
+  <v-btn height="3.5em" class="contentButton">
     <iconMovie class="icon" />
-    <div class="button-string">
+    <span class="button-string">
       <ruby>動<rt>どう</rt>画<rt>が</rt></ruby>
-    </div>
-  </div>
+    </span>
+  </v-btn>
 </template>
 
 <script>
@@ -21,8 +21,8 @@ export default {
 .contentButton {
   display: flex;
   padding: 10px;
+  width: 100%;
   font-family: 'Noto Sans', sans-serif;
-  height: 3em;
   align-items: center;
   justify-content: center;
   font-weight: bold;
@@ -37,6 +37,7 @@ export default {
 }
 .button-string {
   width: 7em;
+  font-size: 17px;
   text-align: center;
 }
 </style>
