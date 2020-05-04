@@ -1,6 +1,4 @@
 import cloneDeep from 'lodash.clonedeep'
-import dayjs from 'dayjs'
-import uuid from 'uuid/v4'
 
 export const state = () => ({
   user: null,
@@ -104,16 +102,5 @@ export const actions = {
     } finally {
       commit('setIsFetching', false)
     }
-  },
-  async sendPost({ commit, state }, { body }) {
-    const id = `${3000000000 + dayjs().unix()}-${uuid().replace(/-g/, '')}`
-    const from = state.user.email
-    const createdAt = 3000000000 + dayjs().unix()
-    await this.$firestore.collection('posts').doc(`${id}`).set({
-      id,
-      from,
-      body,
-      createdAt,
-    })
   },
 }
