@@ -26,6 +26,6 @@ function handleRequest(req, res) {
     })
   })
 }
-console.log(process.env.AUTHDOMAIN)
+console.log(functions.config().environment.APIKEY)
 app.use(handleRequest)
 exports.ssr = functions.https.onRequest(app)
