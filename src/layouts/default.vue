@@ -1,5 +1,10 @@
 <template>
   <v-app>
+    <v-overlay v-if="loading" color="#F8F9FA" opacity="1" z-index="9999">
+      <div class="loader">
+        Loading
+      </div>
+    </v-overlay>
     <!--
     <v-navigation-drawer
       v-model="drawer"
@@ -52,6 +57,14 @@ import Calender from '@/assets/svgs/icon_calender.svg'
 export default {
   components: {
     Calender,
+  },
+  data() {
+    return {
+      loading: true,
+    }
+  },
+  mounted() {
+    this.loading = false
   },
 }
 </script>
