@@ -49,8 +49,8 @@ export default {
   },
   props: {
     schooltime: {
-      type: String,
-      default: '1',
+      type: Number,
+      default: 1,
     },
     realtime: {
       type: String,
