@@ -38,7 +38,7 @@
     "nuxt-svg-loader": "^1.2.0",
     "nuxt-webfontloader": "^1.1.0",
     "uuid": "^8.0.0",
-    "vuexfire": "^3.2.0-alpha.0"
+    "vuexfire": "^3.2.2"
   },
   "devDependencies": {
     "@nuxtjs/eslint-config": "^2.0.2",
