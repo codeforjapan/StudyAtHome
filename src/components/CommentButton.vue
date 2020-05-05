@@ -31,10 +31,10 @@ export default {
   border-radius: 4px;
 }
 .icon {
-  margin-right: 10px;
+  margin-right: 5%;
 }
 .button-string {
-  width: 7em;
+  width: 5em;
   font-size: 17px;
   text-align: center;
 }
