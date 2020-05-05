@@ -5,7 +5,7 @@
         <StudyCard
           schooltime="1"
           realtime="9:00 - 10:00"
-          :content="String(users[0].name)"
+          :content="classData.classData.Lessons['2020-04-04'][0].Content"
           subject="国語"
         />
       </v-col>
@@ -13,7 +13,7 @@
         <StudyCard
           schooltime="2"
           realtime="10:00 - 11:00"
-          :content="String(users[1].name)"
+          content="Stess"
           subject="算数"
         />
       </v-col>
@@ -21,7 +21,7 @@
         <StudyCard
           schooltime="3"
           realtime="12:00 - 13:00"
-          :content="String(users[2].name)"
+          content="test"
           subject="理科"
         />
       </v-col>
@@ -43,7 +43,7 @@ import StudyCard from '@/components/StudyCard'
 export default {
   components: { StudyCard },
   computed: {
-    ...mapGetters(['users']),
+    ...mapGetters('modules/class', ['classData']),
   },
 }
 </script>
