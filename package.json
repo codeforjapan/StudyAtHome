@@ -10,9 +10,15 @@
     "start": "cross-env NODE_ENV=production node src/server/index.js",
     "generate": "nuxt generate",
     "lint": "eslint --ext .js,.vue --ignore-path .gitignore .",
-    "clean": "if exist dist rd /s /q dist && if exist .nuxt rd /s /q .nuxt",
-    "install:functions": "cd dist\\server && npm install && cd ..\\..\\",
-    "copy": "mkdir dist && xcopy functions dist\\server /e /c /h /i /y && xcopy /e /c /h /i /y src\\static dist\\client && xcopy /e /c /h /i /y .nuxt dist\\server\\.nuxt && xcopy /e /c /h /i /y dist\\server\\.nuxt\\dist dist\\client\\assets",
+    "clean": "rimraf dist .nuxt",
+    "precopy": "mkdirp dist/server dist/client/assets",
+    "copy": "yarn copy:windows",
+    "precopy:nix": "yarn precopy",
+    "copy:nix": "cp -r functions/* dist/server/ && cp -r src/static/* dist/client/ && cp -r .nuxt/ dist/server/ && cp -r .nuxt/dist dist/client/assets/",
+    "copy:windows": "xcopy functions dist\\server /e /c /h /i /y && xcopy /e /c /h /i /y src\\static dist\\client && xcopy /e /c /h /i /y .nuxt dist\\server\\.nuxt && xcopy /e /c /h /i /y dist\\server\\.nuxt\\dist dist\\client\\assets",
+    "install:functions": "npm run install:functions:windows",
+    "install:functions:nix": "cd dist/server && npm install && cd ../../",
+    "install:functions:windows": "cd dist\\server && npm install && cd ..\\..\\",
     "firebase-emulator": "yarn clean && yarn lint && yarn build && yarn copy && yarn install:functions && firebase emulators:start"
   },
   "lint-staged": {
@@ -52,8 +58,10 @@
     "eslint-plugin-prettier": "^3.1.3",
     "husky": "^4.2.5",
     "lint-staged": "^10.2.2",
+    "mkdirp": "^1.0.4",
     "nodemon": "^2.0.3",
     "prettier": "^2.0.5",
+    "rimraf": "^3.0.2",
     "sass-loader": "^8.0.2",
     "stylelint": "^13.3.3"
   }
