@@ -29,9 +29,9 @@
               </v-form>
             </v-card-text>
             <v-card-actions>
-              <v-btn @click="gotoSignup">SIGNUP</v-btn>
+              <v-btn @click="gotoSignin">Login</v-btn>
               <v-spacer />
-              <v-btn @click="doLogin">LOGIN</v-btn>
+              <v-btn @click="doSignin">Signin</v-btn>
             </v-card-actions>
             <hr />
             <v-spacer />
@@ -61,20 +61,31 @@ export default {
     async doLogin() {
       await firebase
         .auth()
-        .signInWithEmailAndPassword(this.email, this.password)
+        .createUserWithEmailAndPassword(this.email, this.password)
         .then((user) => {
-          this.login(user)
+          this.login({
+            uid: user.uid,
+            email: user.email,
+            username: user.displayName,
+            userImage: user.photoURL,
+          })
+          this.writeUserData(user.uid, user.email)
           this.$router.push('/edit')
         })
         .catch((error) => {
           alert(error)
         })
     },
-    gotoSignup() {
-      this.$router.push('/signup')
+    gotoSignin() {
+      this.$router.push('/signin')
     },
     gotoResetPassword() {
       this.$router.push('/reset-password')
+    },
+    writeUserData(userId, email) {
+      return firebase.firestore().collection('classData').doc(userId).set({
+        email,
+      })
     },
   },
 }

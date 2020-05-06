@@ -18,6 +18,5 @@ export function getUserFromCookie(req) {
 }
 
 export function getUserFromSession(req) {
-  console.log('[CHECK-AUTH] - checking if user is stored in session')
   return req.session ? req.session.userId : null
 }

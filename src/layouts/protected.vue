@@ -56,6 +56,14 @@
 import { mapActions } from 'vuex'
 export default {
   middleware: 'authenticated',
+  data() {
+    return {
+      loading: true,
+    }
+  },
+  mounted() {
+    this.loading = false
+  },
   methods: {
     ...mapActions('modules/user', ['logout']),
     async signout() {
@@ -67,14 +75,6 @@ export default {
       //   console.log(error.message)
       // })
     },
-  },
-  data() {
-    return {
-      loading: true,
-    }
-  },
-  mounted() {
-    this.loading = false
   },
 }
 </script>

@@ -11,7 +11,7 @@ export const actions = {
     const classData = classDataSnapshot.data()
     await dispatch('modules/class/setClassData', { classData })
     if (user) {
-      await dispatch('modules/user/setUSER', {
+      await dispatch('modules/user/setUser', {
         name: user.name,
         email: user.email,
         avatar: user.picture,
