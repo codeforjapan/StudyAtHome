@@ -8,6 +8,9 @@ module.exports = {
    ** Headers of the page
    */
   head: {
+    htmlAttrs: {
+      prefix: 'og: http://ogp.me/ns#',
+    },
     title: 'おうちで時間割',
     meta: [
       { charset: 'utf-8' },
@@ -23,6 +26,7 @@ module.exports = {
     link: [
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
       { rel: 'apple-touch-icon', href: '/apple-touch-icon-precomposed.png' },
+      { hid: 'og:type', property: 'og:type', content: 'website' },
       {
         hid: 'og:image',
         property: 'og:image',
@@ -54,6 +58,10 @@ module.exports = {
   plugins: [
     {
       src: '@/plugins/firebase',
+    },
+    {
+      src: '@/plugins/persistedstate.js',
+      ssr: false,
     },
   ],
   /*

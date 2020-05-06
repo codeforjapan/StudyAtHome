@@ -1,36 +1,17 @@
 <template>
   <div class="MainPage">
     <v-row class="DataBlock">
-      <v-col cols="12" md="6">
+      <v-col
+        v-for="(item, i) in classData.classData.Lessons['2020-04-04']"
+        :key="i"
+        cols="12"
+        md="6"
+      >
         <StudyCard
-          schooltime="1"
-          realtime="9:00 - 10:00"
-          :content="String(users[0].name)"
-          subject="国語"
-        />
-      </v-col>
-      <v-col cols="12" md="6">
-        <StudyCard
-          schooltime="2"
-          realtime="10:00 - 11:00"
-          :content="String(users[1].name)"
-          subject="算数"
-        />
-      </v-col>
-      <v-col cols="12" md="6">
-        <StudyCard
-          schooltime="3"
-          realtime="12:00 - 13:00"
-          :content="String(users[2].name)"
-          subject="理科"
-        />
-      </v-col>
-      <v-col cols="12" md="6">
-        <StudyCard
-          schooltime="4"
-          realtime="14:00 - 15:00"
-          content="内容（4時間目！！！！！）"
-          subject="社会"
+          :schooltime="i + 1"
+          :realtime="item.realTime"
+          :content="item.Content"
+          :subject="item.Subject"
         />
       </v-col>
     </v-row>
@@ -43,7 +24,7 @@ import StudyCard from '@/components/StudyCard'
 export default {
   components: { StudyCard },
   computed: {
-    ...mapGetters(['users']),
+    ...mapGetters('modules/class', ['classData']),
   },
 }
 </script>
