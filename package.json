@@ -41,7 +41,8 @@
     "nuxt": "^2.12.2",
     "nuxt-svg-loader": "^1.2.0",
     "nuxt-webfontloader": "^1.1.0",
-    "uuid": "^8.0.0"
+    "uuid": "^8.0.0",
+    "vuex-persistedstate": "^3.0.1"
   },
   "devDependencies": {
     "@nuxtjs/eslint-config": "^2.0.2",
