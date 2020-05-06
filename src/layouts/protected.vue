@@ -66,14 +66,9 @@ export default {
   },
   methods: {
     ...mapActions('modules/user', ['logout']),
-    async signout() {
-      await this.logout()
+    signout() {
+      this.logout()
       this.$router.push('/')
-      // this.logout().then(() => {
-      //   this.$router.push('/')
-      // }).catch((error) => {
-      //   console.log(error.message)
-      // })
     },
   },
 }

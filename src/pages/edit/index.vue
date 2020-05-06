@@ -1,5 +1,5 @@
 <template>
-  <h1>{{ userData }}</h1>
+  <h1>{{ uid }}</h1>
 </template>
 
 <script>
@@ -9,7 +9,7 @@ export default {
   layout: 'protected',
   name: 'IndexVue',
   computed: {
-    ...mapGetters('modules/user', ['userData']),
+    ...mapGetters('modules/user', ['uid']),
   },
 }
 </script>
