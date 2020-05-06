@@ -1,9 +1,10 @@
 import { getUserFromCookie } from '@/helpers'
-
+import firebase from '@/plugins/firebase'
 export const actions = {
   async nuxtServerInit({ dispatch, commit, state }, { req, res, error }) {
     const user = getUserFromCookie(req)
-    const classDataSnapshot = await this.$firestore
+    const classDataSnapshot = await firebase
+      .firestore()
       .collection('classData')
       .doc('あけしめたす')
       .get()
