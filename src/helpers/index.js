@@ -16,7 +16,3 @@ export function getUserFromCookie(req) {
     return decodedToken
   }
 }
-
-export function getUserFromSession(req) {
-  return req.session ? req.session.userId : null
-}
