@@ -58,12 +58,14 @@ export default {
   },
   methods: {
     ...mapActions('modules/user', ['login']),
-    async doLogin() {
-      await firebase
+    doLogin() {
+      firebase
         .auth()
         .signInWithEmailAndPassword(this.email, this.password)
-        .then((user) => {
-          this.login(user)
+        .then((userInfo) => {
+          this.login(userInfo)
+        })
+        .then(() => {
           this.$router.push('/edit')
         })
         .catch((error) => {
@@ -71,7 +73,7 @@ export default {
         })
     },
     gotoSignup() {
-      this.$router.push('/signup')
+      this.$router.push('/account/signup')
     },
     gotoResetPassword() {
       this.$router.push('/reset-password')

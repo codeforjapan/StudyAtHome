@@ -31,7 +31,7 @@
             <v-card-actions>
               <v-btn @click="gotoSignin">Login</v-btn>
               <v-spacer />
-              <v-btn @click="doSignin">Signin</v-btn>
+              <v-btn @click="doSignup">Signup</v-btn>
             </v-card-actions>
             <hr />
             <v-spacer />
@@ -58,18 +58,20 @@ export default {
   },
   methods: {
     ...mapActions('modules/user', ['login']),
-    async doLogin() {
-      await firebase
+    doSignup() {
+      firebase
         .auth()
         .createUserWithEmailAndPassword(this.email, this.password)
-        .then((user) => {
+        .then((userInfo) => {
           this.login({
-            uid: user.uid,
-            email: user.email,
-            username: user.displayName,
-            userImage: user.photoURL,
+            uid: userInfo.user.uid,
+            email: userInfo.user.email,
+            username: userInfo.user.displayName,
+            userImage: userInfo.user.photoURL,
           })
-          this.writeUserData(user.uid, user.email)
+          this.writeUserData(userInfo.user.uid, userInfo.user.email)
+        })
+        .then(() => {
           this.$router.push('/edit')
         })
         .catch((error) => {
@@ -77,13 +79,13 @@ export default {
         })
     },
     gotoSignin() {
-      this.$router.push('/signin')
+      this.$router.push('/account/signin')
     },
     gotoResetPassword() {
       this.$router.push('/reset-password')
     },
     writeUserData(userId, email) {
-      return firebase.firestore().collection('classData').doc(userId).set({
+      return firebase.firestore().collection('users').doc(userId).set({
         email,
       })
     },

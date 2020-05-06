@@ -1,8 +1,4 @@
 {
-  "firestore": {
-    "rules": "firestore.rules",
-    "indexes": "firestore.indexes.json"
-  },
   "functions": {
     "source": "dist/server",
     "predeploy": [
@@ -22,9 +18,6 @@
         "function": "ssr"
       }
     ]
-  },
-  "storage": {
-    "rules": "storage.rules"
   },
   "emulators": {
     "functions": {
