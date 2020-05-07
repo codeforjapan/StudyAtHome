@@ -1,30 +1,88 @@
 <template>
-  <div class="MainPage">
-    <v-row class="DataBlock">
-      <v-col
-        v-for="(item, i) in classData.classData.Lessons['2020-04-04']"
-        :key="i"
-        cols="12"
-        md="6"
-      >
-        <StudyCard
-          :schooltime="i + 1"
-          :realtime="item.realTime"
-          :content="item.Content"
-          :subject="item.Subject"
-        />
-      </v-col>
-    </v-row>
+  <div class="LoginPage">
+    <v-flex>
+      <div class="Logo">
+        <Logo style="height: 80vw; max-height: 350px; width: 100%;" />
+      </div>
+      <div class="LoginForm">
+        <v-form ref="form" v-model="valid">
+          <v-text-field
+            v-model="classId"
+            :counter="6"
+            label="クラスID"
+            :rules="nameRules"
+            outlined
+            dark
+            required
+          />
+          <v-btn
+            block
+            outlined
+            color="white"
+            height="40px"
+            :loading="loading"
+            :disabled="loading || !valid"
+            @click="checkInClass"
+          >
+            LOGIN
+          </v-btn>
+        </v-form>
+      </div>
+    </v-flex>
   </div>
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
-import StudyCard from '@/components/StudyCard'
+import { mapActions } from 'vuex'
+import firebase from '@/plugins/firebase'
+import Logo from '@/assets/svgs/logo.svg'
 export default {
-  components: { StudyCard },
-  computed: {
-    ...mapGetters('modules/class', ['classData']),
+  components: { Logo },
+  data() {
+    return {
+      classId: '',
+      loading: false,
+      error: false,
+      errorMessages: '',
+      valid: true,
+      exists: false,
+      nameRules: [
+        (v) => !!v || 'クラスIDは必須です',
+        (v) => (v && v.length === 6) || 'クラスIDは6文字のひらがなです',
+      ],
+    }
+  },
+  methods: {
+    ...mapActions('modules/class', ['loadClassData']),
+    checkInClass() {
+      this.loading = true
+      this.checkExistsClassData(this.classId)
+      if (this.exists) {
+        this.loadClassData(this.classId)
+        this.$router.push('classes')
+      } else {
+        this.loading = false
+        this.error = true
+        this.errorMessages = 'クラスIDが間違っています'
+      }
+    },
+    checkExistsClassData(classid) {
+      if (classid !== '' || classid !== null || classid !== '') {
+        firebase
+          .firestore()
+          .collection('classData')
+          .doc(classid)
+          .get()
+          .then(() => {
+            this.exists = true
+          })
+          .catch(() => {
+            this.exists = false
+          })
+      } else {
+        this.exists = false
+      }
+    },
   },
 }
 </script>
