@@ -7,7 +7,7 @@ import { mapGetters } from 'vuex'
 
 export default {
   layout: 'protected',
-  name: 'IndexVue',
+  name: 'EditorIndex',
   computed: {
     ...mapGetters('modules/user', ['uid']),
   },
