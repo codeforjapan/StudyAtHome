@@ -32,7 +32,7 @@ export const actions = {
       avatar: user.photoURL,
       uid: user.uid,
     }
-    Cookies.set('access_token', token) // saving token in cookie for server rendering
+    Cookies.set('__session', token) // saving token in cookie for server rendering
     await dispatch('setUserData', userInfo)
     await dispatch('setUid', firebase.auth().currentUser.uid)
   },
@@ -40,7 +40,7 @@ export const actions = {
   async logout({ commit }) {
     await firebase.auth().signOut()
 
-    Cookies.remove('access_token')
+    Cookies.remove('__session')
     commit('setUserData', null)
     commit('setUid', null)
   },
