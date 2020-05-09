@@ -8,8 +8,7 @@ export default ({ req, redirect }) => {
         .auth()
         .verifyIdToken(token)
         .then(() => {})
-        .catch((error) => {
-          console.error(error)
+        .catch(() => {
           redirect('/account/login')
         })
     } else {
