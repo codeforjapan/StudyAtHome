@@ -63,6 +63,10 @@ module.exports = {
       src: '@/plugins/persistedstate.js',
       ssr: false,
     },
+    {
+      src: '@/plugins/firebase-admin.js',
+      ssr: true,
+    },
   ],
   /*
    ** Nuxt.js dev-modules
