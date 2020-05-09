@@ -33,7 +33,6 @@ export const mutations = {
 
 export const actions = {
   async loadClassData({ dispatch, state }, classId) {
-    console.log(classId)
     const classDataSnapshot = await firebase
       .firestore()
       .collection('classData')
