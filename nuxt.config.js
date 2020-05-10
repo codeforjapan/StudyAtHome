@@ -1,4 +1,5 @@
 const colors = require('vuetify/es5/util/colors').default
+const environment = process.env.NODE_ENV || 'development'
 
 module.exports = {
   mode: 'universal',
@@ -86,6 +87,8 @@ module.exports = {
     '@nuxtjs/axios',
     '@nuxtjs/pwa',
     'nuxt-webfontloader',
+    // Doc: https://github.com/nuxt-community/dotenv-module
+    ['@nuxtjs/dotenv', { filename: `.env.${environment}` }],
     'nuxt-svg-loader',
   ],
   /*
@@ -118,6 +121,16 @@ module.exports = {
         },
       },
     },
+  },
+  env: {
+    APIKEY: process.env.APIKEY,
+    AUTHDOMAIN: process.env.AUTHDOMAIN,
+    DATABASEURL: process.env.DATABASEURL,
+    PROJECTID: process.env.PROJECTID,
+    STORAGEBUCKET: process.env.STORAGEBUCKET,
+    MESSAGINGSENDERID: process.env.MESSAGINGSENDERID,
+    APPID: process.env.APPID,
+    MEASUREMENTID: process.env.MEASUREMENTID,
   },
   /*
    ** Build configuration
