@@ -16,12 +16,10 @@
           />
           <v-text-field
             v-model="password"
-            :append-icon="
-              show_password ? 'mdi-visibility' : 'mdi-visibility_off'
-            "
+            :append-icon="show_password ? 'mdi-eye' : 'mdi-eye-off'"
             :type="show_password ? 'text' : 'password'"
             :counter="32"
-            label="password"
+            label="Password"
             outlined
             dark
             prepend-icon="mdi-lock"
