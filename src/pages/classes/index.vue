@@ -23,6 +23,7 @@ import { mapGetters } from 'vuex'
 import StudyCard from '@/components/StudyCard'
 export default {
   components: { StudyCard },
+  middleware: 'checkClassData',
   computed: {
     ...mapGetters('modules/class', ['Lessons']),
   },

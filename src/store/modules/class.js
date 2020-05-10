@@ -20,6 +20,9 @@ export const getters = {
   Lessons(state) {
     return state.classData.Lessons
   },
+  isLoadedClassData: (state) => {
+    return state.classId !== ''
+  },
 }
 
 export const mutations = {
@@ -41,6 +44,7 @@ export const actions = {
     const classDa = await classDataSnapshot.data()
     await dispatch('setClassData', classDa)
     await dispatch('setClassId', classId)
+    await dispatch('isLoadedClassData')
   },
   setClassData({ commit }, classData) {
     commit('setClassData', classData)
@@ -49,6 +53,6 @@ export const actions = {
     commit('setClassId', classId)
   },
   isLoadedClassData: (state) => {
-    return !!state.classData
+    return state.classData !== {}
   },
 }

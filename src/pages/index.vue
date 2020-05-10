@@ -4,6 +4,7 @@
       <div class="Logo">
         <Logo style="height: 80vw; max-height: 350px; width: 100%;" />
       </div>
+      {{ errorMessages }}
       <div class="LoginForm">
         <v-form ref="form" v-model="valid">
           <v-text-field
@@ -45,7 +46,6 @@ export default {
       error: false,
       errorMessages: '',
       valid: true,
-      exists: false,
       nameRules: [
         (v) => !!v || 'クラスIDは必須です',
         (v) => (v && v.length === 6) || 'クラスIDは6文字のひらがなです',
@@ -56,32 +56,24 @@ export default {
     ...mapActions('modules/class', ['loadClassData']),
     checkInClass() {
       this.loading = true
-      this.checkExistsClassData(this.classId)
-      if (this.exists) {
-        this.loadClassData(this.classId)
-        this.$router.push('classes')
-      } else {
-        this.loading = false
-        this.error = true
-        this.errorMessages = 'クラスIDが間違っています'
-      }
+      this.checkExistsClassData(this.classId).then((value) => {
+        if (value) {
+          this.loadClassData(this.classId)
+          this.$router.push('/classes')
+        } else {
+          this.loading = false
+          this.error = true
+          this.errorMessages = 'クラスIDが間違っています'
+        }
+      })
     },
-    checkExistsClassData(classid) {
-      if (classid !== '' || classid !== null || classid !== '') {
-        firebase
-          .firestore()
-          .collection('classData')
-          .doc(classid)
-          .get()
-          .then(() => {
-            this.exists = true
-          })
-          .catch(() => {
-            this.exists = false
-          })
-      } else {
-        this.exists = false
-      }
+    async checkExistsClassData(classid) {
+      const check = await firebase
+        .firestore()
+        .collection('classData')
+        .doc(classid)
+        .get()
+      return check.exists
     },
   },
 }
