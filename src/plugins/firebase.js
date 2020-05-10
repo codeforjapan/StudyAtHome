@@ -2,14 +2,14 @@ import * as firebase from 'firebase/app'
 import 'firebase/firestore'
 import 'firebase/auth'
 const firebaseConfig = {
-  apiKey: process.env.APIKEY,
-  authDomain: process.env.AUTHDOMAIN,
-  databaseURL: process.env.DATABASEURL,
-  projectId: process.env.PROJECTID,
-  storageBucket: process.env.STORAGEBUCKET,
-  messagingSenderId: process.env.MESSAGINGSENDERID,
-  appId: process.env.APPID,
-  measurementId: process.env.MEASUREMENTID,
+  apiKey: 'AIzaSyDryyjdTrz5FWFveRwjiRqmUaE6yje2vas',
+  authDomain: 'studyathome.firebaseapp.com',
+  databaseURL: 'https://studyathome.firebaseio.com',
+  projectId: 'studyathome',
+  storageBucket: 'studyathome.appspot.com',
+  messagingSenderId: '133064394534',
+  appId: '1:133064394534:web:9198f1bf636a12535e63e7',
+  measurementId: 'G-N9EMMWHQJV',
 }
 
 if (!firebase.apps.length) {
