@@ -1,5 +1,6 @@
 {
   "projects": {
-    "default": "studyathome"
+    "default": "studyathome",
+    "development": "studyathome-dev"
   }
 }
