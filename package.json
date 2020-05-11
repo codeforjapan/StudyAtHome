@@ -15,7 +15,7 @@
     "install:functions": "yarn install --cwd dist/server",
     "install:functions:win": "cd dist\\server && npm install && cd ..\\..\\",
     "install:functions:nix": "pushd dist/server && npm install && popd",
-    "copy": "yarn copy:client copy:server",
+    "copy": "yarn copy:client && yarn copy:server",
     "copy:server": "cpx -Cv \"functions/**\" dist/server && cpx -v \".nuxt/**\" dist/server/",
     "copy:server:win": "xcopy /e /c /h /i /y functions dist\\server && xcopy /e /c /h /i /y .nuxt dist\\server\\.nuxt",
     "copy:server:nix": "cp -rTv functions/ dist/server && cp -rv .nuxt/ dist/server/",
