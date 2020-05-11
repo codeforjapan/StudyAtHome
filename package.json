@@ -11,10 +11,8 @@
     "generate": "nuxt generate",
     "lint": "eslint --ext .js,.vue --ignore-path .gitignore .",
     "clean": "rimraf .nuxt dist",
-    "install:functions": "yarn install --cwd dist/server",
     "copy": "yarn copy:client && yarn copy:server",
-    "copy:server": "cpx -Cv \"functions/**\" dist/server && cpx -v \".nuxt/**\" dist/server/",
-    "copy:client": "cpx -Cv \"src/static/**\" dist/client/ && cpx -Cv \".nuxt/dist/**\" dist/client/assets/",
+    "install:functions": "yarn install --cwd dist/server",
     "firebase-emulator": "yarn clean && yarn lint && yarn build && yarn copy && yarn install:functions && firebase emulators:start"
   },
   "lint-staged": {
