@@ -10,7 +10,6 @@
     "start": "cross-env NODE_ENV=production node src/server/index.js",
     "generate": "nuxt generate",
     "lint": "eslint --ext .js,.vue --ignore-path .gitignore .",
-    "lintx": "eslint --ext .js,.vue .",
     "clean": "rimraf .nuxt dist",
     "install:functions": "yarn install --cwd dist/server",
     "copy": "yarn copy:client && yarn copy:server",
