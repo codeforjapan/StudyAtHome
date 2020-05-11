@@ -10,9 +10,12 @@
     "start": "cross-env NODE_ENV=production node src/server/index.js",
     "generate": "nuxt generate",
     "lint": "eslint --ext .js,.vue --ignore-path .gitignore .",
-    "clean": "if exist dist rd /s /q dist && if exist .nuxt rd /s /q .nuxt",
-    "install:functions": "cd dist\\server && npm install && cd ..\\..\\",
-    "copy": "mkdir dist && xcopy functions dist\\server /e /c /h /i /y && xcopy /e /c /h /i /y src\\static dist\\client && xcopy /e /c /h /i /y .nuxt dist\\server\\.nuxt && xcopy /e /c /h /i /y dist\\server\\.nuxt\\dist dist\\client\\assets",
+    "lintx": "eslint --ext .js,.vue .",
+    "clean": "rimraf .nuxt dist",
+    "install:functions": "yarn install --cwd dist/server",
+    "copy": "yarn copy:client && yarn copy:server",
+    "copy:server": "cpx -Cv \"functions/**\" dist/server && cpx -v \".nuxt/**\" dist/server/",
+    "copy:client": "cpx -Cv \"src/static/**\" dist/client/ && cpx -Cv \".nuxt/dist/**\" dist/client/assets/",
     "firebase-emulator": "yarn clean && yarn lint && yarn build && yarn copy && yarn install:functions && firebase emulators:start"
   },
   "lint-staged": {
@@ -51,6 +54,7 @@
     "@nuxtjs/stylelint-module": "^3.2.2",
     "@nuxtjs/vuetify": "^1.11.2",
     "babel-eslint": "^10.1.0",
+    "cpx": "^1.5.0",
     "eslint": "^6.8.0",
     "eslint-config-prettier": "^6.11.0",
     "eslint-plugin-nuxt": "^0.5.2",
@@ -59,6 +63,7 @@
     "lint-staged": "^10.2.2",
     "nodemon": "^2.0.3",
     "prettier": "^2.0.5",
+    "rimraf": "^3.0.2",
     "sass-loader": "^8.0.2",
     "stylelint": "^13.3.3"
   }
