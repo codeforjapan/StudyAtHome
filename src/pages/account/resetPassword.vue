@@ -14,17 +14,6 @@
             dark
             prepend-icon="mdi-email"
           />
-          <v-text-field
-            v-model="password"
-            :append-icon="show_password ? 'mdi-eye' : 'mdi-eye-off'"
-            :type="show_password ? 'text' : 'password'"
-            :counter="32"
-            label="Password"
-            outlined
-            dark
-            prepend-icon="mdi-lock"
-            @click:append="show_password = !show_password"
-          />
           <v-btn
             block
             outlined
@@ -34,7 +23,7 @@
             :disabled="loading"
             @click="doSignup"
           >
-            SIGNUP
+            再設定メールを送信する
           </v-btn>
         </v-form>
       </div>
@@ -54,8 +43,6 @@ export default {
   data() {
     return {
       email: '',
-      password: '',
-      show_password: false,
       loading: false,
     }
   },
@@ -65,13 +52,9 @@ export default {
       this.loading = true
       firebase
         .auth()
-        .createUserWithEmailAndPassword(this.email, this.password)
-        .then((userInfo) => {
-          this.login(userInfo)
-          this.writeUserData(userInfo.user.uid, userInfo.user.email)
-        })
+        .sendPasswordResetEmail(this.email)
         .then(() => {
-          this.$router.push('/edit')
+          this.$router.push('/account/signin')
         })
         .catch((error) => {
           this.loading = false
@@ -83,15 +66,6 @@ export default {
     },
     gotoResetPassword() {
       this.$router.push('/reset-password')
-    },
-    writeUserData(userId, email) {
-      const today = new Date()
-      return firebase.firestore().collection('users').doc(userId).set({
-        allow_access: [],
-        created_at: today,
-        updated_at: today,
-        last_login: today,
-      })
     },
   },
 }
