@@ -2,6 +2,7 @@ import firebase from '@/plugins/firebase'
 export const state = () => ({
   classId: '',
   classData: {},
+  ViewDate: '',
 })
 
 export const getters = {
@@ -20,6 +21,9 @@ export const getters = {
   Lessons(state) {
     return state.classData.Lessons
   },
+  ViewDate(state) {
+    return state.ViewDate
+  },
   isLoadedClassData: (state) => {
     return state.classId !== ''
   },
@@ -31,6 +35,19 @@ export const mutations = {
   },
   setClassId(state, classId) {
     state.classId = classId
+  },
+  setViewDate(state, date) {
+    state.ViewDate = date
+  },
+  nextDate(state) {
+    state.ViewDate = this.$dayjs(state.ViewDate)
+      .add(1, 'd')
+      .format('YYYY-MM-DD')
+  },
+  prevDate(state) {
+    state.ViewDate = this.$dayjs(state.ViewDate)
+      .subtract(1, 'd')
+      .format('YYYY-MM-DD')
   },
 }
 
@@ -51,6 +68,15 @@ export const actions = {
   },
   setClassId({ commit }, classId) {
     commit('setClassId', classId)
+  },
+  setViewDate({ commit }, date) {
+    commit('setViewDate', date)
+  },
+  prevDate({ commit }) {
+    commit('prevDate')
+  },
+  nextDate({ commit }) {
+    commit('nextDate')
   },
   isLoadedClassData: (state) => {
     return state.classData !== {}
