@@ -46,9 +46,11 @@
       <v-btn icon dark>
         <v-icon>mdi-chevron-left</v-icon>
       </v-btn>
-      <v-btn text dark>
-        2020 / 05 / 14
-      </v-btn>
+      <v-menu>
+        <v-btn text dark v-on="on">
+          2020/05/14
+        </v-btn>
+      </v-menu>
       <v-btn icon dark>
         <v-icon>mdi-chevron-right</v-icon>
       </v-btn>
