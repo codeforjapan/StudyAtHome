@@ -40,19 +40,26 @@
         color: white;
         text-align: center;
       "
-      elevation="10"
+      elevation="0"
     >
+      <span>
+        {{ schoolName }}
+      </span>
       <v-spacer />
-      <v-btn icon dark>
-        <v-icon>mdi-chevron-left</v-icon>
-      </v-btn>
-      <v-btn text dark>
-        2020 / 05 / 14
-      </v-btn>
-      <v-btn icon dark>
-        <v-icon>mdi-chevron-right</v-icon>
-      </v-btn>
-      <v-spacer />
+      <div class="date">
+        <v-btn icon small dark @click="prevDate">
+          <v-icon>mdi-chevron-left</v-icon>
+        </v-btn>
+        <v-btn text dark style="padding: 0 0;">
+          {{ ViewDate }}
+        </v-btn>
+        <v-btn icon small dark @click="nextDate">
+          <v-icon>mdi-chevron-right</v-icon>
+        </v-btn>
+      </div>
+      <span>
+        {{ className }}
+      </span>
     </v-app-bar>
     <v-content style="background-color: #0071c2;">
       <v-container class="px-4 py-8">
@@ -66,7 +73,12 @@
 </template>
 
 <script>
+import { mapGetters, mapActions } from 'vuex'
 export default {
+  middleware: 'checkClassData',
+  computed: {
+    ...mapGetters('modules/class', ['schoolName', 'className', 'ViewDate']),
+  },
   data() {
     return {
       loading: true,
@@ -74,6 +86,10 @@ export default {
   },
   mounted() {
     this.loading = false
+    this.setViewDate(this.$dayjs().format('YYYY-MM-DD'))
+  },
+  methods: {
+    ...mapActions('modules/class', ['setViewDate', 'prevDate', 'nextDate']),
   },
 }
 </script>
@@ -81,5 +97,11 @@ export default {
 <style scoped>
 .date-icon {
   margin-right: 15px;
+}
+.date {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 </style>
