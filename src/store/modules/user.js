@@ -24,16 +24,14 @@ export const mutations = {
 }
 
 export const actions = {
-  async login({ dispatch, state }, user) {
+  async login({ dispatch }) {
     const token = await firebase.auth().currentUser.getIdToken(true)
-    const userInfo = {
-      name: user.displayName,
-      email: user.email,
-      avatar: user.photoURL,
-      uid: user.uid,
-    }
     Cookies.set('__session', token) // saving token in cookie for server rendering
-    await dispatch('setUserData', userInfo)
+    const userD = firebase
+      .firestore()
+      .collection('users')
+      .doc(firebase.auth().currentUser.uid)
+    await dispatch('setUserData', { allow_access: userD.allow_access })
     await dispatch('setUid', firebase.auth().currentUser.uid)
   },
 
