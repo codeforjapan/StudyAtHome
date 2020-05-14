@@ -50,9 +50,27 @@
         <v-btn icon small dark @click="prevDate">
           <v-icon>mdi-chevron-left</v-icon>
         </v-btn>
-        <v-btn text dark style="padding: 0 0;">
-          {{ ViewDate }}
-        </v-btn>
+        <v-menu
+          ref="menu"
+          v-model="menu"
+          :close-on-content-click="false"
+          :return-value.sync="VuexDate"
+          transition="scale-transition"
+          offset-y
+        >
+          <template v-slot:activator="{ on }">
+            <v-btn text dark style="padding: 0 0;" v-on="on">
+              {{ VuexDate }}
+            </v-btn>
+          </template>
+          <v-date-picker v-model="VuexDate" no-title scrollable>
+            <v-spacer />
+            <v-btn text color="primary" @click="menu = false">Cancel</v-btn>
+            <v-btn text color="primary" @click="$refs.menu.save(VuexDate)">
+              OK
+            </v-btn>
+          </v-date-picker>
+        </v-menu>
         <v-btn icon small dark @click="nextDate">
           <v-icon>mdi-chevron-right</v-icon>
         </v-btn>
@@ -78,10 +96,19 @@ export default {
   middleware: 'checkClassData',
   computed: {
     ...mapGetters('modules/class', ['schoolName', 'className', 'ViewDate']),
+    VuexDate: {
+      get() {
+        return this.ViewDate
+      },
+      set(value) {
+        this.setViewDate(this.$dayjs(value).format('YYYY-MM-DD'))
+      },
+    },
   },
   data() {
     return {
       loading: true,
+      menu: false,
     }
   },
   mounted() {
