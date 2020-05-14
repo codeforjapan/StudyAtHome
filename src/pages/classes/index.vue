@@ -1,7 +1,7 @@
 <template>
   <div class="MainPage">
     <v-row class="DataBlock">
-      <v-col v-for="(item, i) in Lessons[today]" :key="i" cols="12" md="6">
+      <v-col v-for="(item, i) in Lessons[ViewDate]" :key="i" cols="12" md="6">
         <StudyCard
           :schooltime="i + 1"
           :realtime="item.realTime"
@@ -18,14 +18,9 @@ import { mapGetters } from 'vuex'
 import StudyCard from '@/components/StudyCard'
 export default {
   components: { StudyCard },
-  middleware: 'checkClassData',
+  layout: 'classes',
   computed: {
-    ...mapGetters('modules/class', ['Lessons']),
-  },
-  data() {
-    return {
-      today: this.$dayjs().format('YYYY-MM-DD'),
-    }
+    ...mapGetters('modules/class', ['Lessons', 'ViewDate']),
   },
 }
 </script>
