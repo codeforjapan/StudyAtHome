@@ -48,8 +48,8 @@ export default {
       valid: true,
       nameRules: [
         (v) => !!v || 'クラスIDは必須です',
-        (v) => (v && v.length === 6) || 'クラスIDは6文字のひらがなです',
-      ],
+        (v) => (v && v.length === 6) || 'クラスIDは6文字のひらがなです'
+      ]
     }
   },
   methods: {
@@ -74,8 +74,8 @@ export default {
         .doc(classid)
         .get()
       return check.exists
-    },
-  },
+    }
+  }
 }
 </script>
 

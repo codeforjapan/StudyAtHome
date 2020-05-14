@@ -12,8 +12,8 @@ import iconText from '@/assets/svgs/icon_text.svg'
 export default {
   name: 'ContentsButton',
   components: {
-    iconText,
-  },
+    iconText
+  }
 }
 </script>
 

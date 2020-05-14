@@ -12,8 +12,8 @@ import iconMovie from '@/assets/svgs/icon_movie.svg'
 export default {
   name: 'ContentsButton',
   components: {
-    iconMovie,
-  },
+    iconMovie
+  }
 }
 </script>
 

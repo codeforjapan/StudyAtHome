@@ -49,14 +49,14 @@ import Logo from '@/assets/svgs/logo.svg'
 
 export default {
   components: {
-    Logo,
+    Logo
   },
   data() {
     return {
       email: '',
       password: '',
       show_password: false,
-      loading: false,
+      loading: false
     }
   },
   methods: {
@@ -90,10 +90,10 @@ export default {
         allow_access: [],
         created_at: today,
         updated_at: today,
-        last_login: today,
+        last_login: today
       })
-    },
-  },
+    }
+  }
 }
 </script>
 
@@ -105,7 +105,7 @@ export default {
   }
   .SignUpTitle {
     color: #ffffff;
-    font-family: 'Noto Sans JP';
+    font-family: 'Noto Sans JP', sans-serif;
     font-size: 5em;
   }
   .DataBlock {

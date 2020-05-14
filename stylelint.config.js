@@ -1,5 +1,11 @@
 module.exports = {
-  // add your custom config here
-  // https://stylelint.io/user-guide/configuration
-  rules: {},
+  extends: ['stylelint-config-standard', 'stylelint-config-prettier'],
+  plugins: ['stylelint-scss'],
+  rules: {
+    'at-rule-no-unknown': null,
+    'scss/at-rule-no-unknown': true,
+    'color-hex-case': 'lower',
+    'color-hex-length': 'long',
+    'string-quotes': 'single'
+  }
 }

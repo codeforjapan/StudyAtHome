@@ -38,12 +38,12 @@ import Logo from '@/assets/svgs/logo.svg'
 
 export default {
   components: {
-    Logo,
+    Logo
   },
   data() {
     return {
       email: '',
-      loading: false,
+      loading: false
     }
   },
   methods: {
@@ -66,8 +66,8 @@ export default {
     },
     gotoResetPassword() {
       this.$router.push('/reset-password')
-    },
-  },
+    }
+  }
 }
 </script>
 
@@ -79,7 +79,7 @@ export default {
   }
   .SignUpTitle {
     color: #ffffff;
-    font-family: 'Noto Sans JP';
+    font-family: 'Noto Sans JP', sans-serif;
     font-size: 5em;
   }
   .DataBlock {

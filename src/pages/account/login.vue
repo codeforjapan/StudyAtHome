@@ -48,14 +48,14 @@ import firebase from '@/plugins/firebase'
 import Logo from '@/assets/svgs/logo.svg'
 export default {
   components: {
-    Logo,
+    Logo
   },
   data() {
     return {
       email: '',
       password: '',
       show_password: false,
-      loading: false,
+      loading: false
     }
   },
   methods: {
@@ -81,8 +81,8 @@ export default {
     },
     gotoResetPassword() {
       this.$router.push('/reset-password')
-    },
-  },
+    }
+  }
 }
 </script>
 
@@ -94,7 +94,7 @@ export default {
   }
   .LoginTitle {
     color: #ffffff;
-    font-family: 'Noto Sans JP';
+    font-family: 'Noto Sans JP', sans-serif;
     font-size: 5em;
   }
   .DataBlock {

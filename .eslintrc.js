@@ -14,23 +14,27 @@ module.exports = {
     'plugin:prettier/recommended',
     'plugin:nuxt/recommended'
   ],
-  plugins: [
-    'prettier'
-  ],
+  plugins: ['prettier'],
   // add your custom rules here
   rules: {
     'nuxt/no-cjs-in-config': 'off',
     'vue/max-attributes-per-line': 'off',
-    'vue/html-self-closing': ['error', {
-      'html': {
-        'void': 'always'
-      }
-    }],
-    'prettier/prettier': [
-      'error', {
-        semi: false,
-        singleQuote: true
+    'vue/html-self-closing': [
+      'error',
+      {
+        html: {
+          void: 'always'
+        }
       }
     ],
+    'comma-dangle': ['error', 'never'],
+    'prettier/prettier': [
+      'error',
+      {
+        semi: false,
+        singleQuote: true,
+        trailingComma: 'none'
+      }
+    ]
   }
 }

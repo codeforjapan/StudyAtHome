@@ -31,17 +31,7 @@
       </v-list>
     </v-navigation-drawer>
     -->
-    <v-app-bar
-      fixed
-      app
-      dense
-      style="
-        background-color: rgba(0, 0, 0, 0);
-        color: white;
-        text-align: center;
-      "
-      elevation="0"
-    >
+    <v-app-bar fixed app dense class="bar" elevation="0">
       <span>
         {{ schoolName }}
       </span>
@@ -102,13 +92,13 @@ export default {
       },
       set(value) {
         this.setViewDate(this.$dayjs(value).format('YYYY-MM-DD'))
-      },
-    },
+      }
+    }
   },
   data() {
     return {
       loading: true,
-      menu: false,
+      menu: false
     }
   },
   mounted() {
@@ -116,8 +106,8 @@ export default {
     this.setViewDate(this.$dayjs().format('YYYY-MM-DD'))
   },
   methods: {
-    ...mapActions('modules/class', ['setViewDate', 'prevDate', 'nextDate']),
-  },
+    ...mapActions('modules/class', ['setViewDate', 'prevDate', 'nextDate'])
+  }
 }
 </script>
 
@@ -130,5 +120,10 @@ export default {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+}
+.bar {
+  background-color: rgba(0, 0, 0, 0);
+  color: white;
+  text-align: center;
 }
 </style>
