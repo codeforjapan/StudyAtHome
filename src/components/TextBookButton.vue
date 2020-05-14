@@ -12,8 +12,8 @@ import iconBook from '@/assets/svgs/icon_book.svg'
 export default {
   name: 'ContentsButton',
   components: {
-    iconBook,
-  },
+    iconBook
+  }
 }
 </script>
 

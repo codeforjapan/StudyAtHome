@@ -2,7 +2,7 @@ import firebase from '@/plugins/firebase'
 export const state = () => ({
   classId: '',
   classData: {},
-  ViewDate: '',
+  ViewDate: ''
 })
 
 export const getters = {
@@ -26,7 +26,7 @@ export const getters = {
   },
   isLoadedClassData: (state) => {
     return state.classId !== ''
-  },
+  }
 }
 
 export const mutations = {
@@ -48,7 +48,7 @@ export const mutations = {
     state.ViewDate = this.$dayjs(state.ViewDate)
       .subtract(1, 'd')
       .format('YYYY-MM-DD')
-  },
+  }
 }
 
 export const actions = {
@@ -80,5 +80,5 @@ export const actions = {
   },
   isLoadedClassData: (state) => {
     return state.classData !== {}
-  },
+  }
 }

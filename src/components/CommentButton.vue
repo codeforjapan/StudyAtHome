@@ -10,8 +10,8 @@ import iconComment from '@/assets/svgs/icon_comment.svg'
 export default {
   name: 'CommentButton',
   components: {
-    iconComment,
-  },
+    iconComment
+  }
 }
 </script>
 

@@ -4,8 +4,6 @@
 
 <script>
 export default {
-  name: 'AboutVue',
+  name: 'AboutVue'
 }
 </script>
-
-<style scoped></style>
