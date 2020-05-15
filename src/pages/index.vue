@@ -39,13 +39,13 @@ import { mapActions } from 'vuex'
 import firebase from '@/plugins/firebase'
 import Logo from '@/assets/svgs/logo.svg'
 
-export type DataType = {
+type DataType = {
   classId: string
   loading: boolean
   error: boolean
   errorMessages: string
   valid: boolean
-  nameRules: any[]
+  nameRules: ((v: string) => boolean | string)[]
 }
 
 export default Vue.extend({
@@ -78,7 +78,7 @@ export default Vue.extend({
         }
       })
     },
-    async checkExistsClassData(classid): boolean {
+    async checkExistsClassData(classid: string): Promise<Boolean> {
       const check = await firebase
         .firestore()
         .collection('classData')
