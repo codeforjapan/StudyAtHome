@@ -24,7 +24,7 @@ export const getters = {
   ViewDate(state) {
     return state.ViewDate
   },
-  isLoadedClassData: (state) => {
+  isLoadedClassData: state => {
     return state.classId !== ''
   }
 }
@@ -52,7 +52,7 @@ export const mutations = {
 }
 
 export const actions = {
-  async loadClassData({ dispatch, state }, classId) {
+  async loadClassData({ dispatch }, classId) {
     const classDataSnapshot = await firebase
       .firestore()
       .collection('classData')
@@ -78,7 +78,7 @@ export const actions = {
   nextDate({ commit }) {
     commit('nextDate')
   },
-  isLoadedClassData: (state) => {
+  isLoadedClassData: state => {
     return state.classData !== {}
   }
 }

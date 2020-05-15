@@ -31,7 +31,14 @@
       </v-list>
     </v-navigation-drawer>
     -->
-    <v-app-bar fixed app dense class="bar" elevation="0">
+    <v-app-bar
+      fixed
+      app
+      dense
+      class="bar"
+      style="background-color: rgba(0, 0, 0, 0)"
+      elevation="0"
+    >
       <span>
         {{ schoolName }}
       </span>
@@ -84,6 +91,12 @@
 import { mapGetters, mapActions } from 'vuex'
 export default {
   middleware: 'checkClassData',
+  data() {
+    return {
+      loading: true,
+      menu: false
+    }
+  },
   computed: {
     ...mapGetters('modules/class', ['schoolName', 'className', 'ViewDate']),
     VuexDate: {
@@ -93,12 +106,6 @@ export default {
       set(value) {
         this.setViewDate(this.$dayjs(value).format('YYYY-MM-DD'))
       }
-    }
-  },
-  data() {
-    return {
-      loading: true,
-      menu: false
     }
   },
   mounted() {

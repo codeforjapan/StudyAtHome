@@ -4,7 +4,7 @@ import checkExistsClassData from '`@/utils/checkExistsClassData'
 import firebase from '@/plugins/firebase'
 */
 export const actions = {
-  async nuxtServerInit({ dispatch, commit, state }, { req, res, error }) {
+  async nuxtServerInit({ dispatch }, { req }) {
     const user = getUserFromCookie(req)
     /*
     const classDataSnapshot = await firebase

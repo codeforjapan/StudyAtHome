@@ -51,13 +51,13 @@ export const actions = {
 }
 
 export const getters = {
-  userData: (state) => {
+  userData: state => {
     return state.userData
   },
-  uid: (state) => {
+  uid: state => {
     return state.uid
   },
-  isAuthenticated: (state) => {
+  isAuthenticated: state => {
     return !!state.userData && !!state.userData.uid
   }
 }

@@ -3,9 +3,6 @@ module.exports = {
   plugins: ['stylelint-scss'],
   rules: {
     'at-rule-no-unknown': null,
-    'scss/at-rule-no-unknown': true,
-    'color-hex-case': 'lower',
-    'color-hex-length': 'long',
-    'string-quotes': 'single'
+    'scss/at-rule-no-unknown': true
   }
 }

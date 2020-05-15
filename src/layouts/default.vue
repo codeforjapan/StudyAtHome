@@ -31,7 +31,14 @@
       </v-list>
     </v-navigation-drawer>
     -->
-    <v-app-bar fixed app dense class="bar" elevation="0">
+    <v-app-bar
+      fixed
+      app
+      dense
+      class="bar"
+      style="background-color: rgba(0, 0, 0, 0)"
+      elevation="0"
+    >
       <v-spacer />
       おうちで時間割
       <v-spacer />
@@ -66,7 +73,7 @@ export default {
 }
 .bar {
   background-color: rgba(0, 0, 0, 0);
-  color: white;
+  color: #fff;
   text-align: center;
 }
 </style>

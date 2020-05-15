@@ -1,7 +1,6 @@
 const colors = require('vuetify/es5/util/colors').default
 const environment = process.env.NODE_ENV || 'development'
 
-// eslint-disable-next-line nuxt/no-cjs-in-config
 module.exports = {
   mode: 'universal',
   srcDir: 'src',
@@ -81,7 +80,7 @@ module.exports = {
     // Doc: https://github.com/nuxt-community/eslint-module
     '@nuxtjs/eslint-module',
     // Doc: https://github.com/nuxt-community/stylelint-module
-    // '@nuxtjs/stylelint-module',
+    '@nuxtjs/stylelint-module',
     '@nuxt/typescript-build',
     '@nuxtjs/vuetify'
   ],
