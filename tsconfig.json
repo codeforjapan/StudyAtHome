@@ -9,20 +9,17 @@
       "dom"
     ],
     "esModuleInterop": true,
-    "resolveJsonModule": true,
     "allowJs": true,
     "sourceMap": true,
     "strict": true,
     "noEmit": true,
-    "noImplicitThis": true,
-    "experimentalDecorators": true,
-    "baseUrl": ".",
+    "baseUrl": "./",
     "paths": {
       "~/*": [
-        "./*"
+        "src/*"
       ],
       "@/*": [
-        "./*"
+        "src/*"
       ]
     },
     "types": [
@@ -30,6 +27,9 @@
       "@nuxt/types"
     ]
   },
+  "files": [
+    "shims-vue.d.ts"
+  ],
   "exclude": [
     "node_modules"
   ]

@@ -28,16 +28,17 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
+import Vue from 'vue'
 import { mapGetters } from 'vuex'
 import StudyCard from '@/components/StudyCard'
-export default {
+export default Vue.extend({
   components: { StudyCard },
   layout: 'classes',
   computed: {
     ...mapGetters('modules/class', ['Lessons', 'ViewDate'])
   }
-}
+})
 </script>
 
 <style lang="scss" scoped>
