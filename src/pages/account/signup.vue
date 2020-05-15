@@ -42,16 +42,24 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
+import Vue from 'vue'
 import { mapActions } from 'vuex'
 import firebase from '@/plugins/firebase'
 import Logo from '@/assets/svgs/logo.svg'
 
-export default {
+export type DataType = {
+  email: string
+  password: string
+  showPassword: boolean
+  loading: boolean
+}
+
+export default Vue.extend({
   components: {
     Logo
   },
-  data() {
+  data(): DataType {
     return {
       email: '',
       password: '',
@@ -61,7 +69,7 @@ export default {
   },
   methods: {
     ...mapActions('modules/user', ['login']),
-    doSignup() {
+    doSignup(): void {
       this.loading = true
       firebase
         .auth()
@@ -78,13 +86,7 @@ export default {
           alert(error)
         })
     },
-    gotoSignin() {
-      this.$router.push('/account/signin')
-    },
-    gotoResetPassword() {
-      this.$router.push('/reset-password')
-    },
-    writeUserData(userId) {
+    writeUserData(userId): void {
       const today = new Date()
       return firebase
         .firestore()
@@ -98,7 +100,7 @@ export default {
         })
     }
   }
-}
+})
 </script>
 
 <style lang="scss" scoped>

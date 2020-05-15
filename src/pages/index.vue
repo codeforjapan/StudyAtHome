@@ -33,13 +33,24 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
+import Vue from 'vue'
 import { mapActions } from 'vuex'
 import firebase from '@/plugins/firebase'
 import Logo from '@/assets/svgs/logo.svg'
-export default {
+
+export type DataType = {
+  classId: string
+  loading: boolean
+  error: boolean
+  errorMessages: string
+  valid: boolean
+  nameRules: any[]
+}
+
+export default Vue.extend({
   components: { Logo },
-  data() {
+  data(): DataType {
     return {
       classId: '',
       loading: false,
@@ -54,7 +65,7 @@ export default {
   },
   methods: {
     ...mapActions('modules/class', ['loadClassData']),
-    checkInClass() {
+    checkInClass(): void {
       this.loading = true
       this.checkExistsClassData(this.classId).then(value => {
         if (value) {
@@ -67,7 +78,7 @@ export default {
         }
       })
     },
-    async checkExistsClassData(classid) {
+    async checkExistsClassData(classid): boolean {
       const check = await firebase
         .firestore()
         .collection('classData')
@@ -76,7 +87,7 @@ export default {
       return check.exists
     }
   }
-}
+})
 </script>
 
 <style lang="scss" scoped>
