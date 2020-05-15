@@ -2,7 +2,7 @@
   <v-card color="#338dce" class="studycard">
     <div class="studycard-content">
       <div class="timestr">
-        <v-icon size="20px" color="#ffffff">mdi-clock-outline</v-icon>
+        <v-icon size="20px" color="#fff">mdi-clock-outline</v-icon>
         <div class="schooltime">
           {{ schooltime }}<ruby>時<rt>じ</rt>間<rt>かん</rt>目<rt>め</rt></ruby>
         </div>
@@ -10,7 +10,7 @@
           {{ realtime }}
         </div>
         <v-spacer />
-        <v-icon size="20px" color="#ffffff">mdi-bookshelf</v-icon>
+        <v-icon size="20px" color="#fff">mdi-bookshelf</v-icon>
         {{ subject }}
       </div>
       <div class="contentstr">
@@ -45,26 +45,26 @@ export default {
     TextBookButton,
     SubTextBookButton,
     MovieButton,
-    CommentButton,
+    CommentButton
   },
   props: {
     schooltime: {
       type: Number,
-      default: 1,
+      default: 1
     },
     realtime: {
       type: String,
-      default: '',
+      default: ''
     },
     content: {
       type: String,
-      default: 'No Content Available',
+      default: 'No Content Available'
     },
     subject: {
       type: String,
-      default: '',
-    },
-  },
+      default: ''
+    }
+  }
 }
 </script>
 
@@ -79,7 +79,7 @@ export default {
   font-family: 'Noto Sans', sans-serif;
   height: 100%;
   align-items: center;
-  color: #ffffff;
+  color: #fff;
   margin-bottom: 10px;
   display: flex;
 }
@@ -91,15 +91,13 @@ export default {
 }
 .contentstr {
   padding: 10px 14px;
-  margin-inside: 10px;
-
+  margin: -10px;
   font-family: 'Noto Sans', sans-serif;
   font-size: 12px;
   line-height: 15px;
   width: 100%;
   height: 100%;
-
-  background: #ffffff;
+  background-color: #fff;
   border-radius: 4px;
 
   /* Inside Auto Layout */

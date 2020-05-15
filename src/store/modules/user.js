@@ -3,7 +3,7 @@ import firebase from '@/plugins/firebase.js'
 
 export const state = () => ({
   userData: null,
-  uid: null,
+  uid: null
 })
 
 export const mutations = {
@@ -20,7 +20,7 @@ export const mutations = {
     } else {
       state.uid = null
     }
-  },
+  }
 }
 
 export const actions = {
@@ -47,17 +47,17 @@ export const actions = {
   },
   setUid({ commit }, payload) {
     commit('setUid', payload)
-  },
+  }
 }
 
 export const getters = {
-  userData: (state) => {
+  userData: state => {
     return state.userData
   },
-  uid: (state) => {
+  uid: state => {
     return state.uid
   },
-  isAuthenticated: (state) => {
+  isAuthenticated: state => {
     return !!state.userData && !!state.userData.uid
-  },
+  }
 }

@@ -35,8 +35,8 @@ export default {
   components: { StudyCard },
   layout: 'classes',
   computed: {
-    ...mapGetters('modules/class', ['Lessons', 'ViewDate']),
-  },
+    ...mapGetters('modules/class', ['Lessons', 'ViewDate'])
+  }
 }
 </script>
 

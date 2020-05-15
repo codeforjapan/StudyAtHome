@@ -58,7 +58,7 @@ export default {
   middleware: 'authenticated',
   data() {
     return {
-      loading: true,
+      loading: true
     }
   },
   mounted() {
@@ -69,8 +69,8 @@ export default {
     signout() {
       this.logout()
       this.$router.push('/')
-    },
-  },
+    }
+  }
 }
 </script>
 

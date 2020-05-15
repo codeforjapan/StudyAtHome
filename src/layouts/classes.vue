@@ -35,11 +35,8 @@
       fixed
       app
       dense
-      style="
-        background-color: rgba(0, 0, 0, 0);
-        color: white;
-        text-align: center;
-      "
+      class="bar"
+      style="background-color: rgba(0, 0, 0, 0)"
       elevation="0"
     >
       <span>
@@ -94,6 +91,12 @@
 import { mapGetters, mapActions } from 'vuex'
 export default {
   middleware: 'checkClassData',
+  data() {
+    return {
+      loading: true,
+      menu: false
+    }
+  },
   computed: {
     ...mapGetters('modules/class', ['schoolName', 'className', 'ViewDate']),
     VuexDate: {
@@ -102,13 +105,7 @@ export default {
       },
       set(value) {
         this.setViewDate(this.$dayjs(value).format('YYYY-MM-DD'))
-      },
-    },
-  },
-  data() {
-    return {
-      loading: true,
-      menu: false,
+      }
     }
   },
   mounted() {
@@ -116,8 +113,8 @@ export default {
     this.setViewDate(this.$dayjs().format('YYYY-MM-DD'))
   },
   methods: {
-    ...mapActions('modules/class', ['setViewDate', 'prevDate', 'nextDate']),
-  },
+    ...mapActions('modules/class', ['setViewDate', 'prevDate', 'nextDate'])
+  }
 }
 </script>
 
@@ -130,5 +127,10 @@ export default {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+}
+.bar {
+  background-color: rgba(0, 0, 0, 0);
+  color: white;
+  text-align: center;
 }
 </style>

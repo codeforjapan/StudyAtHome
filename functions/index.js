@@ -16,8 +16,8 @@ const config = {
   dev: false,
   buildDir: '.nuxt',
   build: {
-    publicPath: '/assets/',
-  },
+    publicPath: '/assets/'
+  }
 }
 const nuxt = new Nuxt(config)
 

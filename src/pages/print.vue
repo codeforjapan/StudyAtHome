@@ -73,7 +73,7 @@
 <script>
 export default {
   name: 'Print',
-  layout: 'print',
+  layout: 'print'
 }
 </script>
 
@@ -88,7 +88,6 @@ ruby {
   padding: 0;
   border: 0;
   font-size: 100%;
-  font: inherit;
   vertical-align: baseline;
 }
 table {
@@ -146,8 +145,6 @@ table {
   .message-table tr.header td:last-child {
     border-right: none;
   }
-  .message-table tr.bg-yel {
-  }
 }
 @media (max-width: 768px) {
   .message-table {
@@ -196,8 +193,6 @@ table {
   }
   .message-table tr.header td:last-child {
     border-right: none;
-  }
-  .message-table tr.bg-yel {
   }
 }
 </style>
