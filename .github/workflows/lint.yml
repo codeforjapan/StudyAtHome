@@ -1,9 +1,6 @@
 name: lint
 
-on:
-  pull_request:
-    branches:
-      - development
+on: pull_request
 
 jobs:
   deploy:
