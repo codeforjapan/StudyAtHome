@@ -57,16 +57,17 @@
         >
           <template v-slot:activator="{ on }">
             <v-btn text dark style="padding: 0 0;" v-on="on">
-              {{ VuexDate }}
+              {{ viewDate }}
             </v-btn>
           </template>
+          <!--
           <v-date-picker v-model="VuexDate" no-title scrollable>
             <v-spacer />
             <v-btn text color="primary" @click="menu = false">Cancel</v-btn>
             <v-btn text color="primary" @click="$refs.menu.save(VuexDate)">
               OK
             </v-btn>
-          </v-date-picker>
+          </v-date-picker>-->
         </v-menu>
         <v-btn icon small dark @click="nextDate">
           <v-icon>mdi-chevron-right</v-icon>
@@ -88,7 +89,8 @@
 </template>
 
 <script>
-import { mapGetters, mapActions } from 'vuex'
+import { mapGetters } from 'vuex'
+import dayjs from 'dayjs'
 export default {
   middleware: 'checkClassData',
   data() {
@@ -98,22 +100,11 @@ export default {
     }
   },
   computed: {
-    ...mapGetters('modules/class', ['schoolName', 'className', 'ViewDate']),
-    VuexDate: {
-      get() {
-        return this.ViewDate
-      },
-      set(value) {
-        this.setViewDate(this.$dayjs(value).format('YYYY-MM-DD'))
-      }
-    }
+    ...mapGetters('modules/class', ['schoolName', 'className', 'viewDate'])
   },
   mounted() {
     this.loading = false
-    this.setViewDate(this.$dayjs().format('YYYY-MM-DD'))
-  },
-  methods: {
-    ...mapActions('modules/class', ['setViewDate', 'prevDate', 'nextDate'])
+    this.setViewDate(dayjs().format('YYYY-MM-DD'))
   }
 }
 </script>
