@@ -35,25 +35,12 @@
       fixed
       app
       dense
-      style="
-        background-color: rgba(0, 0, 0, 0);
-        color: white;
-        text-align: center;
-      "
-      elevation="10"
+      class="bar"
+      style="background-color: rgba(0, 0, 0, 0)"
+      elevation="0"
     >
       <v-spacer />
-      <v-btn icon dark>
-        <v-icon>mdi-chevron-left</v-icon>
-      </v-btn>
-      <v-menu>
-        <v-btn text dark v-on="on">
-          2020/05/14
-        </v-btn>
-      </v-menu>
-      <v-btn icon dark>
-        <v-icon>mdi-chevron-right</v-icon>
-      </v-btn>
+      おうちで時間割
       <v-spacer />
     </v-app-bar>
     <v-content style="background-color: #0071c2;">
@@ -71,17 +58,22 @@
 export default {
   data() {
     return {
-      loading: true,
+      loading: true
     }
   },
   mounted() {
     this.loading = false
-  },
+  }
 }
 </script>
 
 <style scoped>
 .date-icon {
   margin-right: 15px;
+}
+.bar {
+  background-color: rgba(0, 0, 0, 0);
+  color: #fff;
+  text-align: center;
 }
 </style>

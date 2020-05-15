@@ -5,7 +5,7 @@ if (process.server) {
   if (!admin.apps.length) {
     admin.initializeApp({
       credential: admin.credential.applicationDefault(),
-      databaseURL: 'https://studyathome.firebaseio.com',
+      databaseURL: 'https://studyathome.firebaseio.com'
     })
   }
 }

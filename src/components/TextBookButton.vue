@@ -12,8 +12,8 @@ import iconBook from '@/assets/svgs/icon_book.svg'
 export default {
   name: 'ContentsButton',
   components: {
-    iconBook,
-  },
+    iconBook
+  }
 }
 </script>
 
@@ -26,7 +26,7 @@ export default {
   align-items: center;
   justify-content: center;
   font-weight: bold;
-  background: #ffffff;
+  background: #fff;
   border: 1px solid #bdc3c7;
   box-sizing: border-box;
   box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.15);

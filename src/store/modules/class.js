@@ -2,7 +2,7 @@ import firebase from '@/plugins/firebase'
 export const state = () => ({
   classId: '',
   classData: {},
-  ViewDate: '',
+  ViewDate: ''
 })
 
 export const getters = {
@@ -24,9 +24,9 @@ export const getters = {
   ViewDate(state) {
     return state.ViewDate
   },
-  isLoadedClassData: (state) => {
+  isLoadedClassData: state => {
     return state.classId !== ''
-  },
+  }
 }
 
 export const mutations = {
@@ -48,11 +48,11 @@ export const mutations = {
     state.ViewDate = this.$dayjs(state.ViewDate)
       .subtract(1, 'd')
       .format('YYYY-MM-DD')
-  },
+  }
 }
 
 export const actions = {
-  async loadClassData({ dispatch, state }, classId) {
+  async loadClassData({ dispatch }, classId) {
     const classDataSnapshot = await firebase
       .firestore()
       .collection('classData')
@@ -78,7 +78,7 @@ export const actions = {
   nextDate({ commit }) {
     commit('nextDate')
   },
-  isLoadedClassData: (state) => {
+  isLoadedClassData: state => {
     return state.classData !== {}
-  },
+  }
 }

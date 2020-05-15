@@ -48,14 +48,14 @@ import firebase from '@/plugins/firebase'
 import Logo from '@/assets/svgs/logo.svg'
 export default {
   components: {
-    Logo,
+    Logo
   },
   data() {
     return {
       email: '',
       password: '',
       show_password: false,
-      loading: false,
+      loading: false
     }
   },
   methods: {
@@ -65,13 +65,13 @@ export default {
       firebase
         .auth()
         .signInWithEmailAndPassword(this.email, this.password)
-        .then((userInfo) => {
+        .then(userInfo => {
           this.login(userInfo)
         })
         .then(() => {
           this.$router.push('/edit')
         })
-        .catch((error) => {
+        .catch(error => {
           this.loading = false
           alert(error)
         })
@@ -81,8 +81,8 @@ export default {
     },
     gotoResetPassword() {
       this.$router.push('/reset-password')
-    },
-  },
+    }
+  }
 }
 </script>
 
@@ -93,8 +93,8 @@ export default {
     text-align: center;
   }
   .LoginTitle {
-    color: #ffffff;
-    font-family: 'Noto Sans JP';
+    color: #fff;
+    font-family: 'Noto Sans JP', sans-serif;
     font-size: 5em;
   }
   .DataBlock {

@@ -9,9 +9,7 @@ export default {
   layout: 'protected',
   name: 'EditorIndex',
   computed: {
-    ...mapGetters('modules/user', ['uid']),
-  },
+    ...mapGetters('modules/user', ['uid'])
+  }
 }
 </script>
-
-<style scoped></style>
