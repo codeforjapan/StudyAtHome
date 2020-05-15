@@ -56,7 +56,7 @@ export default {
         .then(() => {
           this.$router.push('/account/signin')
         })
-        .catch((error) => {
+        .catch(error => {
           this.loading = false
           alert(error)
         })
@@ -78,7 +78,7 @@ export default {
     text-align: center;
   }
   .SignUpTitle {
-    color: #ffffff;
+    color: #fff;
     font-family: 'Noto Sans JP', sans-serif;
     font-size: 5em;
   }

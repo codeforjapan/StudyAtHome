@@ -66,14 +66,14 @@ export default {
       firebase
         .auth()
         .createUserWithEmailAndPassword(this.email, this.password)
-        .then((userInfo) => {
+        .then(userInfo => {
           this.login(userInfo)
           this.writeUserData(userInfo.user.uid, userInfo.user.email)
         })
         .then(() => {
           this.$router.push('/edit')
         })
-        .catch((error) => {
+        .catch(error => {
           this.loading = false
           alert(error)
         })
@@ -84,14 +84,18 @@ export default {
     gotoResetPassword() {
       this.$router.push('/reset-password')
     },
-    writeUserData(userId, email) {
+    writeUserData(userId) {
       const today = new Date()
-      return firebase.firestore().collection('users').doc(userId).set({
-        allow_access: [],
-        created_at: today,
-        updated_at: today,
-        last_login: today
-      })
+      return firebase
+        .firestore()
+        .collection('users')
+        .doc(userId)
+        .set({
+          allow_access: [],
+          created_at: today,
+          updated_at: today,
+          last_login: today
+        })
     }
   }
 }
@@ -104,7 +108,7 @@ export default {
     text-align: center;
   }
   .SignUpTitle {
-    color: #ffffff;
+    color: #fff;
     font-family: 'Noto Sans JP', sans-serif;
     font-size: 5em;
   }

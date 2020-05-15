@@ -65,13 +65,13 @@ export default {
       firebase
         .auth()
         .signInWithEmailAndPassword(this.email, this.password)
-        .then((userInfo) => {
+        .then(userInfo => {
           this.login(userInfo)
         })
         .then(() => {
           this.$router.push('/edit')
         })
-        .catch((error) => {
+        .catch(error => {
           this.loading = false
           alert(error)
         })
@@ -93,7 +93,7 @@ export default {
     text-align: center;
   }
   .LoginTitle {
-    color: #ffffff;
+    color: #fff;
     font-family: 'Noto Sans JP', sans-serif;
     font-size: 5em;
   }
