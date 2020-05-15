@@ -2,6 +2,7 @@
   "compilerOptions": {
     "target": "es2018",
     "module": "esnext",
+    "experimentalDecorators": true,
     "moduleResolution": "node",
     "lib": [
       "esnext",
@@ -13,13 +14,13 @@
     "sourceMap": true,
     "strict": true,
     "noEmit": true,
-    "baseUrl": "./",
+    "baseUrl": "./src",
     "paths": {
       "~/*": [
-        "src/*"
+        "./*"
       ],
       "@/*": [
-        "src/*"
+        "./*"
       ]
     },
     "types": [
@@ -28,7 +29,7 @@
     ]
   },
   "files": [
-    "shims-vue.d.ts"
+    "types/vue-shim.d.ts"
   ],
   "exclude": [
     "node_modules"

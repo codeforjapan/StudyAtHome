@@ -37,7 +37,7 @@ import { mapActions } from 'vuex'
 import firebase from '@/plugins/firebase'
 import Logo from '@/assets/svgs/logo.svg'
 
-export type DataType = {
+type DataType = {
   email: string
   loading: boolean
 }

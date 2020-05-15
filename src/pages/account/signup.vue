@@ -48,7 +48,7 @@ import { mapActions } from 'vuex'
 import firebase from '@/plugins/firebase'
 import Logo from '@/assets/svgs/logo.svg'
 
-export type DataType = {
+type DataType = {
   email: string
   password: string
   showPassword: boolean
@@ -63,7 +63,7 @@ export default Vue.extend({
     return {
       email: '',
       password: '',
-      show_password: false,
+      showPassword: false,
       loading: false
     }
   },
@@ -86,9 +86,9 @@ export default Vue.extend({
           alert(error)
         })
     },
-    writeUserData(userId): void {
+    async writeUserData(userId: string): Promise<void> {
       const today = new Date()
-      return firebase
+      return await firebase
         .firestore()
         .collection('users')
         .doc(userId)

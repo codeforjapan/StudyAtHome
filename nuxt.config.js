@@ -106,6 +106,11 @@ module.exports = {
       families: ['Roboto&display=swap', 'NotoSansJP&&display=swap']
     }
   },
+  typescript: {
+    typeCheck: {
+      eslint: true
+    }
+  },
   /*
    ** vuetify module configuration
    ** https://github.com/nuxt-community/vuetify-module
