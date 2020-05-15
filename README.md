@@ -1,28 +1,17 @@
-# StudyAtHome
+# おうちで時間割
 
-> Ouchi De Jikanwari Web Version
+## 貢献の仕方
+Issues にあるいろいろな修正にご協力いただけると嬉しいです。
 
-## Build Setup
-```bash
-# install dependencies
-$ yarn install
+詳しくは[貢献の仕方](./CONTRIBUTING.md)を御覧ください。
 
-# serve with hot reload at localhost:3000
-$ yarn dev
+## 行動原則
+詳しくは[サイト構築にあたっての行動原則](./CODE_OF_CONDUCT.md)を御覧ください。
 
-# build for production and launch server
-$ yarn build
-$ yarn start
+## ライセンス
+本ソフトウェアは、[MITライセンス](./LICENSE.txt)の元提供されています。
 
-# generate static project
-$ yarn generate
-```
 
-### Use Docker
+## 開発者向け情報
 
-```bash
-# serve with hot reload at localhost:3000
-$ docker-compose up --build
-```
-
-For detailed explanation on how things work, check out [Nuxt.js docs](https://nuxtjs.org).
+開発をお手伝いいただける方は、[こちらのドキュメント](./FOR_DEVELOPERS.md)を御覧ください。
