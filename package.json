@@ -18,7 +18,8 @@
     "firebase-emulator": "yarn clean && yarn lint && yarn build && yarn copy && yarn install:functions && firebase emulators:start"
   },
   "lint-staged": {
-    "*.{js,vue}": "yarn lint"
+    "*.{js,vue}": "yarn lint",
+    "*.{css,scss,vue}": "stylelint"
   },
   "husky": {
     "hooks": {
