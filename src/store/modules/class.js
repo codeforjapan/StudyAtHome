@@ -1,4 +1,3 @@
-import firebase from '@/plugins/firebase'
 export const state = () => ({
   classId: '',
   classData: {},
@@ -53,8 +52,7 @@ export const mutations = {
 
 export const actions = {
   async loadClassData({ dispatch }, classId) {
-    const classDataSnapshot = await firebase
-      .firestore()
+    const classDataSnapshot = await this.$fireStore
       .collection('classData')
       .doc(classId)
       .get()

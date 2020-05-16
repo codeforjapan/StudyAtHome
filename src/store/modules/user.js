@@ -1,6 +1,3 @@
-import Cookies from 'js-cookie'
-import firebase from '@/plugins/firebase.js'
-
 export const state = () => ({
   userData: null,
   uid: null
@@ -25,20 +22,16 @@ export const mutations = {
 
 export const actions = {
   async login({ dispatch }) {
-    const token = await firebase.auth().currentUser.getIdToken(true)
-    Cookies.set('__session', token) // saving token in cookie for server rendering
-    const userD = firebase
-      .firestore()
+    const userD = this.$fireStore
       .collection('users')
-      .doc(firebase.auth().currentUser.uid)
+      .doc(this.$fireAuth.currentUser.uid)
     await dispatch('setUserData', { allow_access: userD.allow_access })
-    await dispatch('setUid', firebase.auth().currentUser.uid)
+    await dispatch('setUid', this.$fireAuth.currentUser.uid)
   },
 
   async logout({ commit }) {
-    await firebase.auth().signOut()
+    await this.$fireAuth.signOut()
 
-    Cookies.remove('__session')
     commit('setUserData', null)
     commit('setUid', null)
   },
