@@ -1435,6 +1435,15 @@
     consola "^2.11.3"
     eslint-loader "^4.0.2"
 
+"@nuxtjs/firebase@^5.2.0":
+  version "5.2.0"
+  resolved "https://registry.yarnpkg.com/@nuxtjs/firebase/-/firebase-5.2.0.tgz#424c2196b2da288658148eb105dd152524d97f8d"
+  integrity sha512-utznHEJeoGej01YBgDbX5Elt1L/25aWj7O4aF/PzV7A1WCWi3sBLQDoqSdnIrDkyX/gr8xYrc/BOD024iwiAuA==
+  dependencies:
+    consola "^2.11.3"
+  optionalDependencies:
+    firebase-admin "^8.11.0"
+
 "@nuxtjs/proxy@^1.3.3":
   version "1.3.3"
   resolved "https://registry.yarnpkg.com/@nuxtjs/proxy/-/proxy-1.3.3.tgz#3de3d9f073e8e57167168100940be2a824a220e0"
@@ -4757,7 +4766,7 @@ find-versions@^3.2.0:
   dependencies:
     semver-regex "^2.0.0"
 
-firebase-admin@^8.12.0:
+firebase-admin@^8.11.0, firebase-admin@^8.12.0:
   version "8.12.1"
   resolved "https://registry.yarnpkg.com/firebase-admin/-/firebase-admin-8.12.1.tgz#a380c43a9e6ba37dfbe42211a253dd890a442063"
   integrity sha512-DZ4Q7QQJYaO2BhnhZLrhL+mGRTCLS5WrxjbJtuKGmbKRBepwMhx++EQA5yhnGnIXgDHnp5SrZnVKygNdXtH8BQ==

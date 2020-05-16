@@ -90,6 +90,7 @@ module.exports = {
     // Doc: https://axios.nuxtjs.org/usage
     '@nuxtjs/axios',
     '@nuxtjs/pwa',
+    '@nuxtjs/firebase',
     'nuxt-webfontloader',
     // Doc: https://github.com/nuxt-community/dotenv-module
     ['@nuxtjs/dotenv', { filename: `.env.${environment}` }],
@@ -103,6 +104,73 @@ module.exports = {
   webfontloader: {
     google: {
       families: ['Roboto&display=swap', 'NotoSansJP&&display=swap'],
+    },
+  },
+  firebase: {
+    config: {
+      apiKey: process.env.APIKEY,
+      authDomain: process.env.AUTHDOMAIN,
+      databaseURL: process.env.DATABASEURL,
+      projectId: process.env.PROJECTID,
+      storageBucket: process.env.STORAGEBUCKET,
+      messagingSenderId: process.env.MESSAGINGSENDERID,
+      appId: process.env.APPID,
+      measurementId: process.env.MEASUREMENTID,
+    },
+    onFirebaseHosting: true,
+    services: {
+      auth: {
+        persistence: 'local',
+        /*
+        initialize: {
+          onAuthStateChangedMutation: 'SET_AUTH_USER',
+          onAuthStateChangedAction: null,
+        },
+        */
+        ssr: true,
+      },
+      firestore: {
+        enablePersistence: true,
+      },
+      functions: true,
+      storage: false,
+      realtimeDb: false,
+      performance: true,
+      analytics: true,
+      remoteConfig: {
+        settings: {
+          fetchTimeoutMillis: 60000, // Default
+          minimumFetchIntervalMillis: 43200000, // Default
+        },
+        defaultConfig: {
+          welcome_message: 'Welcome',
+        },
+      },
+      messaging: {
+        createServiceWorker: true,
+      },
+    },
+  },
+  pwa: {
+    manifest: {
+      name: 'おうちで時間割',
+      short_name: 'おうちで時間割',
+      theme_color: '#0071C2',
+      background_color: '#ffffff',
+      display: 'standalone',
+      Scope: '/',
+      start_url: '/',
+      splash_pages: null,
+    },
+
+    workbox: {
+      importScripts: [
+        // ...
+        '/firebase-auth-sw.js',
+      ],
+      // by default the workbox module will not install the service worker in dev environment to avoid conflicts with HMR
+      // only set this true for testing and remember to always clear your browser cache in development
+      dev: false,
     },
   },
   /*
