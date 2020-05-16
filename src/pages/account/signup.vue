@@ -75,10 +75,10 @@ export default Vue.extend({
       firebase
         .auth()
         .createUserWithEmailAndPassword(this.email, this.password)
-        .then((userInfo: UserCredential) => {
+        .then(async (userInfo: UserCredential) => {
           if (userInfo.user !== null) {
             this.login(userInfo)
-            this.writeUserData(userInfo.user.uid)
+            await this.writeUserData(userInfo.user.uid)
           }
         })
         .then(() => {
@@ -89,9 +89,9 @@ export default Vue.extend({
           alert(error)
         })
     },
-    async writeUserData(userId: string): Promise<void> {
+    writeUserData(userId: string): Promise<void> {
       const today = new Date()
-      return await firebase
+      return firebase
         .firestore()
         .collection('users')
         .doc(userId)
