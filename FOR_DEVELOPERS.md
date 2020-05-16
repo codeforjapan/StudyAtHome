@@ -1,6 +1,8 @@
 # 開発者向け情報
 
 Nuxt.JSに関する内容、Firebaseに関する内容は各ドキュメントを参照してください。
+詳しい内容は下記のURLを参照ください
+https://hackmd.io/@-6Y5YRBcS2aaE4g4aJ17Cw/SkGfvX2cL
 
 ## 1. 環境構築
 

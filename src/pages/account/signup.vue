@@ -45,9 +45,7 @@
 <script lang="ts">
 import Vue from 'vue'
 import { mapActions } from 'vuex'
-import firebase from '@/plugins/firebase'
 import Logo from '@/assets/svgs/logo.svg'
-import UserCredential = firebase.auth.UserCredential
 
 type DataType = {
   email: string
@@ -72,10 +70,9 @@ export default Vue.extend({
     ...mapActions('modules/user', ['login']),
     doSignup(): void {
       this.loading = true
-      firebase
-        .auth()
+      this.$fireAuth
         .createUserWithEmailAndPassword(this.email, this.password)
-        .then(async (userInfo: UserCredential) => {
+        .then(async userInfo => {
           if (userInfo.user !== null) {
             this.login(userInfo)
             await this.writeUserData(userInfo.user.uid)
@@ -91,8 +88,7 @@ export default Vue.extend({
     },
     writeUserData(userId: string): Promise<void> {
       const today = new Date()
-      return firebase
-        .firestore()
+      return this.$fireStore
         .collection('users')
         .doc(userId)
         .set({
