@@ -31,7 +31,7 @@
 <script lang="ts">
 import Vue from 'vue'
 import { mapGetters } from 'vuex'
-import StudyCard from '@/components/StudyCard'
+import StudyCard from '@/components/StudyCard.vue'
 export default Vue.extend({
   components: { StudyCard },
   layout: 'classes',

@@ -47,6 +47,7 @@ import Vue from 'vue'
 import { mapActions } from 'vuex'
 import firebase from '@/plugins/firebase'
 import Logo from '@/assets/svgs/logo.svg'
+import UserCredential = firebase.auth.UserCredential
 
 type DataType = {
   email: string
@@ -74,9 +75,11 @@ export default Vue.extend({
       firebase
         .auth()
         .createUserWithEmailAndPassword(this.email, this.password)
-        .then(userInfo => {
-          this.login(userInfo)
-          this.writeUserData(userInfo.user.uid, userInfo.user.email)
+        .then((userInfo: UserCredential) => {
+          if (userInfo.user !== null) {
+            this.login(userInfo)
+            this.writeUserData(userInfo.user.uid)
+          }
         })
         .then(() => {
           this.$router.push('/edit')
