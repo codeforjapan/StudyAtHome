@@ -102,14 +102,26 @@ module.exports = {
   },
   firebase: {
     config: {
-      apiKey: 'AIzaSyCav4DOx10ki9XW7ZsGzt9ENXgBhB-oQQY',
-      authDomain: 'studyathome-dev.firebaseapp.com',
-      databaseURL: 'https://studyathome-dev.firebaseio.com',
-      projectId: 'studyathome-dev',
-      storageBucket: 'studyathome-dev.appspot.com',
-      messagingSenderId: '837731952989',
-      appId: '1:837731952989:web:90728f8e4b8b6ca8dc60b4',
-      measurementId: 'G-8763ED3W29'
+      production: {
+        apiKey: 'AIzaSyDryyjdTrz5FWFveRwjiRqmUaE6yje2vas',
+        authDomain: 'studyathome.firebaseapp.com',
+        databaseURL: 'https://studyathome.firebaseio.com',
+        projectId: 'studyathome',
+        storageBucket: 'studyathome.appspot.com',
+        messagingSenderId: '133064394534',
+        appId: '1:133064394534:web:9198f1bf636a12535e63e7',
+        measurementId: 'G-N9EMMWHQJV'
+      },
+      development: {
+        apiKey: 'AIzaSyCav4DOx10ki9XW7ZsGzt9ENXgBhB-oQQY',
+        authDomain: 'studyathome-dev.firebaseapp.com',
+        databaseURL: 'https://studyathome-dev.firebaseio.com',
+        projectId: 'studyathome-dev',
+        storageBucket: 'studyathome-dev.appspot.com',
+        messagingSenderId: '837731952989',
+        appId: '1:837731952989:web:90728f8e4b8b6ca8dc60b4',
+        measurementId: 'G-8763ED3W29'
+      }
     },
     onFirebaseHosting: true,
     services: {
