@@ -35,7 +35,6 @@
 
 <script>
 import { mapActions } from 'vuex'
-import firebase from '@/plugins/firebase'
 import Logo from '@/assets/svgs/logo.svg'
 export default {
   components: { Logo },
@@ -68,8 +67,7 @@ export default {
       })
     },
     async checkExistsClassData(classid) {
-      const check = await firebase
-        .firestore()
+      const check = await this.$fireStore
         .collection('classData')
         .doc(classid)
         .get()
