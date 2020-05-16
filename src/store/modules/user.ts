@@ -39,7 +39,7 @@ class UserData extends VuexModule implements UserDataState {
 
   @action
   public async login() {
-    const userData: firebase.User | null = await firebase.auth().currentUser
+    const userData: firebase.User | null = firebase.auth().currentUser
     const token: Promise<string> | null =
       userData ? userData.getIdToken(true) : null
     if (userData !== null && token !== null) {
@@ -50,8 +50,8 @@ class UserData extends VuexModule implements UserDataState {
         .doc(userData.uid)
         .get()
       const allowAccess: string = userD.get('allow_access')
-      await this.setUserData({ allow_access: allowAccess })
-      await this.setUid(userData.uid)
+      this.setUserData({ allow_access: allowAccess })
+      this.setUid(userData.uid)
     }
   }
 
