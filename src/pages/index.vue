@@ -47,16 +47,16 @@ export default {
       errorMessages: '',
       valid: true,
       nameRules: [
-        (v) => !!v || 'クラスIDは必須です',
-        (v) => (v && v.length === 6) || 'クラスIDは6文字のひらがなです',
-      ],
+        v => !!v || 'クラスIDは必須です',
+        v => (v && v.length === 6) || 'クラスIDは6文字のひらがなです'
+      ]
     }
   },
   methods: {
     ...mapActions('modules/class', ['loadClassData']),
     checkInClass() {
       this.loading = true
-      this.checkExistsClassData(this.classId).then((value) => {
+      this.checkExistsClassData(this.classId).then(value => {
         if (value) {
           this.loadClassData(this.classId)
           this.$router.push('/classes')
@@ -74,8 +74,8 @@ export default {
         .doc(classid)
         .get()
       return check.exists
-    },
-  },
+    }
+  }
 }
 </script>
 

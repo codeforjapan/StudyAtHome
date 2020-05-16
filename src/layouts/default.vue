@@ -31,15 +31,17 @@
       </v-list>
     </v-navigation-drawer>
     -->
-    <v-app-bar fixed app>
-      <v-toolbar-title>
-        4<ruby>年<rt>ねん</rt></ruby> 3<ruby>組<rt>くみ</rt></ruby>
-      </v-toolbar-title>
+    <v-app-bar
+      fixed
+      app
+      dense
+      class="bar"
+      style="background-color: rgba(0, 0, 0, 0)"
+      elevation="0"
+    >
       <v-spacer />
-      <Calender class="date-icon" />
-      <v-toolbar-title>
-        4<ruby>月<rt>がつ</rt></ruby> 3<ruby>日<rt>か</rt></ruby>
-      </v-toolbar-title>
+      おうちで時間割
+      <v-spacer />
     </v-app-bar>
     <v-content style="background-color: #0071c2;">
       <v-container class="px-4 py-8">
@@ -53,24 +55,25 @@
 </template>
 
 <script>
-import Calender from '@/assets/svgs/icon_calender.svg'
 export default {
-  components: {
-    Calender,
-  },
   data() {
     return {
-      loading: true,
+      loading: true
     }
   },
   mounted() {
     this.loading = false
-  },
+  }
 }
 </script>
 
 <style scoped>
 .date-icon {
   margin-right: 15px;
+}
+.bar {
+  background-color: rgba(0, 0, 0, 0);
+  color: #fff;
+  text-align: center;
 }
 </style>
