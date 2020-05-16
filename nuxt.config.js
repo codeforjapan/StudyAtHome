@@ -10,7 +10,7 @@ module.exports = {
    */
   head: {
     htmlAttrs: {
-      prefix: 'og: http://ogp.me/ns#',
+      prefix: 'og: http://ogp.me/ns#'
     },
     title: 'おうちで時間割',
     meta: [
@@ -20,9 +20,9 @@ module.exports = {
         hid: 'description',
         name: 'description',
         content:
-          'おうちにいても先生から課題が届きます！時間割に合わせて楽しく学んでコロナ休校を乗り切ろう！',
+          'おうちにいても先生から課題が届きます！時間割に合わせて楽しく学んでコロナ休校を乗り切ろう！'
       },
-      { hid: 'robots', name: 'robots', content: 'noindex' },
+      { hid: 'robots', name: 'robots', content: 'noindex' }
     ],
     link: [
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
@@ -31,19 +31,19 @@ module.exports = {
       {
         hid: 'og:image',
         property: 'og:image',
-        content: 'https://studyathome.web.app/ogp.png',
+        content: 'https://studyathome.web.app/ogp.png'
       },
       {
         hid: 'twitter:image',
         name: 'twitter:image',
-        content: 'https://studyathome.web.app/ogp.png',
+        content: 'https://studyathome.web.app/ogp.png'
       },
       {
         hid: 'og:title',
         property: 'og:title',
-        content: 'おうちで時間割',
-      },
-    ],
+        content: 'おうちで時間割'
+      }
+    ]
   },
   /*
    ** Customize the progress-bar color
@@ -58,20 +58,20 @@ module.exports = {
    */
   plugins: [
     {
-      src: '@/plugins/firebase',
+      src: '@/plugins/firebase'
     },
     {
       src: '@/plugins/persistedstate.js',
-      ssr: false,
+      ssr: false
     },
     {
       src: '@/plugins/firebase-admin.js',
-      ssr: true,
+      ssr: true
     },
     {
       src: '@/plugins/dayjs.js',
-      ssr: true,
-    },
+      ssr: true
+    }
   ],
   /*
    ** Nuxt.js dev-modules
@@ -81,7 +81,8 @@ module.exports = {
     '@nuxtjs/eslint-module',
     // Doc: https://github.com/nuxt-community/stylelint-module
     '@nuxtjs/stylelint-module',
-    '@nuxtjs/vuetify',
+    '@nuxt/typescript-build',
+    '@nuxtjs/vuetify'
   ],
   /*
    ** Nuxt.js modules
@@ -94,7 +95,7 @@ module.exports = {
     'nuxt-webfontloader',
     // Doc: https://github.com/nuxt-community/dotenv-module
     ['@nuxtjs/dotenv', { filename: `.env.${environment}` }],
-    'nuxt-svg-loader',
+    'nuxt-svg-loader'
   ],
   /*
    ** Axios module configuration
@@ -103,8 +104,8 @@ module.exports = {
   axios: {},
   webfontloader: {
     google: {
-      families: ['Roboto&display=swap', 'NotoSansJP&&display=swap'],
-    },
+      families: ['Roboto&display=swap', 'NotoSansJP&&display=swap']
+    }
   },
   firebase: {
     config: {
@@ -115,7 +116,7 @@ module.exports = {
       storageBucket: process.env.STORAGEBUCKET,
       messagingSenderId: process.env.MESSAGINGSENDERID,
       appId: process.env.APPID,
-      measurementId: process.env.MEASUREMENTID,
+      measurementId: process.env.MEASUREMENTID
     },
     onFirebaseHosting: true,
     services: {
@@ -127,10 +128,10 @@ module.exports = {
           onAuthStateChangedAction: null,
         },
         */
-        ssr: true,
+        ssr: true
       },
       firestore: {
-        enablePersistence: true,
+        enablePersistence: true
       },
       functions: true,
       storage: false,
@@ -140,16 +141,16 @@ module.exports = {
       remoteConfig: {
         settings: {
           fetchTimeoutMillis: 60000, // Default
-          minimumFetchIntervalMillis: 43200000, // Default
+          minimumFetchIntervalMillis: 43200000 // Default
         },
         defaultConfig: {
-          welcome_message: 'Welcome',
-        },
+          welcome_message: 'Welcome'
+        }
       },
       messaging: {
-        createServiceWorker: true,
-      },
-    },
+        createServiceWorker: true
+      }
+    }
   },
   pwa: {
     manifest: {
@@ -160,18 +161,18 @@ module.exports = {
       display: 'standalone',
       Scope: '/',
       start_url: '/',
-      splash_pages: null,
+      splash_pages: null
     },
 
     workbox: {
       importScripts: [
         // ...
-        '/firebase-auth-sw.js',
+        '/firebase-auth-sw.js'
       ],
       // by default the workbox module will not install the service worker in dev environment to avoid conflicts with HMR
       // only set this true for testing and remember to always clear your browser cache in development
-      dev: false,
-    },
+      dev: false
+    }
   },
   /*
    ** vuetify module configuration
@@ -189,10 +190,10 @@ module.exports = {
           info: colors.teal.lighten1,
           warning: colors.amber.base,
           error: colors.deepOrange.accent4,
-          success: colors.green.accent3,
-        },
-      },
-    },
+          success: colors.green.accent3
+        }
+      }
+    }
   },
   env: {
     APIKEY: process.env.APIKEY,
@@ -202,7 +203,7 @@ module.exports = {
     STORAGEBUCKET: process.env.STORAGEBUCKET,
     MESSAGINGSENDERID: process.env.MESSAGINGSENDERID,
     APPID: process.env.APPID,
-    MEASUREMENTID: process.env.MEASUREMENTID,
+    MEASUREMENTID: process.env.MEASUREMENTID
   },
   /*
    ** Build configuration
@@ -217,15 +218,25 @@ module.exports = {
             // require.resolve('@nuxt/babel-preset-app-edge'), // For nuxt-edge users
             {
               buildTarget: isServer ? 'server' : 'client',
-              corejs: { version: 3 },
-            },
-          ],
+              corejs: { version: 3 }
+            }
+          ]
         ]
-      },
+      }
     },
     /*
      ** You can extend webpack config here
      */
-    extend(config, ctx) {},
-  },
+    extend(config, ctx) {
+      // Run ESLint on save
+      if (ctx.isDev && ctx.isClient) {
+        config.module.rules.push({
+          enforce: 'pre',
+          test: /\.(js|vue|ts)$/,
+          loader: 'eslint-loader',
+          exclude: /(node_modules)/
+        })
+      }
+    }
+  }
 }
