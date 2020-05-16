@@ -40,8 +40,9 @@ class UserData extends VuexModule implements UserDataState {
   @action
   public async login() {
     const userData: firebase.User | null = firebase.auth().currentUser
-    const token: Promise<string> | null =
-      userData ? userData.getIdToken(true) : null
+    const token: Promise<string> | null = userData
+      ? userData.getIdToken(true)
+      : null
     if (userData !== null && token !== null) {
       Cookies.set('__session', token) // saving token in cookie for server rendering
       const userD: firebase.firestore.DocumentSnapshot = await firebase
