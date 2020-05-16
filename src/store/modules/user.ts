@@ -7,7 +7,6 @@ import {
 } from 'vuex-class-component'
 import Cookies from 'js-cookie'
 import firebase from 'firebase'
-import { User } from 'firebase'
 
 interface UserDataState {
   userData: any
@@ -40,7 +39,7 @@ class UserData extends VuexModule implements UserDataState {
 
   @action
   public async login() {
-    const userData: User | null = await firebase.auth().currentUser
+    const userData: firebase.User | null = await firebase.auth().currentUser
     const token: Promise<string> | null = userData ? userData.getIdToken(true) : null
     if (userData !== null && token !== null) {
       Cookies.set('__session', token) // saving token in cookie for server rendering
