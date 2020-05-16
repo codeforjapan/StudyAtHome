@@ -32,6 +32,7 @@
     "@nuxtjs/axios": "^5.10.3",
     "@nuxtjs/dotenv": "^1.4.1",
     "@nuxtjs/pwa": "^3.0.0-0",
+    "@types/js-cookie": "^2.2.6",
     "cookieparser": "^0.1.0",
     "core-js": "3.6.5",
     "cross-env": "^7.0.2",
