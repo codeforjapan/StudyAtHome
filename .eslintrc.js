@@ -2,11 +2,12 @@ module.exports = {
   plugins: ['eslint-plugin-tsdoc'],
   extends: [
     '@nuxtjs/eslint-config-typescript',
-    'prettier/vue',
+    'plugin:prettier/recommended',
     'prettier',
-    'plugin:prettier/recommended'
+    'prettier/vue'
   ],
   rules: {
+    'nuxt/no-cjs-in-config': 'off',
     'vue/max-attributes-per-line': 'off',
     'vue/html-self-closing': [
       'error',

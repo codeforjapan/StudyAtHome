@@ -1,7 +1,7 @@
 const colors = require('vuetify/es5/util/colors').default
 const environment = process.env.NODE_ENV || 'development'
 
-module.exports = {
+export default {
   mode: 'universal',
   srcDir: 'src',
   buildDir: '.nuxt',
@@ -77,13 +77,15 @@ module.exports = {
    ** Nuxt.js dev-modules
    */
   buildModules: [
-    // Doc: https://github.com/nuxt-community/eslint-module
-    '@nuxtjs/eslint-module',
     // Doc: https://github.com/nuxt-community/stylelint-module
     '@nuxtjs/stylelint-module',
     '@nuxt/typescript-build',
     '@nuxtjs/vuetify'
   ],
+  typescript: {
+    typeCheck: true,
+    ignoreNotFoundWarnings: true
+  },
   /*
    ** Nuxt.js modules
    */
