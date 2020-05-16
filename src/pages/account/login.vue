@@ -44,8 +44,8 @@
 
 <script>
 import { mapActions } from 'vuex'
-import firebase from '@/plugins/firebase'
 import Logo from '@/assets/svgs/logo.svg'
+
 export default {
   components: {
     Logo
@@ -62,8 +62,7 @@ export default {
     ...mapActions('modules/user', ['login']),
     doLogin() {
       this.loading = true
-      firebase
-        .auth()
+      this.$fireAuth
         .signInWithEmailAndPassword(this.email, this.password)
         .then(userInfo => {
           this.login(userInfo)
