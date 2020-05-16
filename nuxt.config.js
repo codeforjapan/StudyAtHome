@@ -58,15 +58,8 @@ module.exports = {
    */
   plugins: [
     {
-      src: '@/plugins/firebase'
-    },
-    {
       src: '@/plugins/persistedstate.js',
       ssr: false
-    },
-    {
-      src: '@/plugins/firebase-admin.js',
-      ssr: true
     },
     {
       src: '@/plugins/dayjs.js',
@@ -109,14 +102,14 @@ module.exports = {
   },
   firebase: {
     config: {
-      apiKey: process.env.APIKEY,
-      authDomain: process.env.AUTHDOMAIN,
-      databaseURL: process.env.DATABASEURL,
-      projectId: process.env.PROJECTID,
-      storageBucket: process.env.STORAGEBUCKET,
-      messagingSenderId: process.env.MESSAGINGSENDERID,
-      appId: process.env.APPID,
-      measurementId: process.env.MEASUREMENTID
+      apiKey: 'AIzaSyCav4DOx10ki9XW7ZsGzt9ENXgBhB-oQQY',
+      authDomain: 'studyathome-dev.firebaseapp.com',
+      databaseURL: 'https://studyathome-dev.firebaseio.com',
+      projectId: 'studyathome-dev',
+      storageBucket: 'studyathome-dev.appspot.com',
+      messagingSenderId: '837731952989',
+      appId: '1:837731952989:web:90728f8e4b8b6ca8dc60b4',
+      measurementId: 'G-8763ED3W29'
     },
     onFirebaseHosting: true,
     services: {
