@@ -28,9 +28,6 @@
       "@nuxt/types"
     ]
   },
-  "files": [
-    "types/vue-shim.d.ts"
-  ],
   "exclude": [
     "node_modules"
   ]
