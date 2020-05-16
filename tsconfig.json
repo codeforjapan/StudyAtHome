@@ -16,7 +16,7 @@
     "noEmit": true,
     "noImplicitThis": true,
     "experimentalDecorators": true,
-    "baseUrl": ".",
+    "baseUrl": "src",
     "paths": {
       "~/*": [
         "./*"

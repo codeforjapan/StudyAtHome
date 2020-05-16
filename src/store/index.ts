@@ -1,8 +1,7 @@
-// @ts-ignore
 import { getUserFromCookie } from '@/helpers/index.js'
 export const actions = {
-  // @ts-ignore
-  nuxtServerInit: ({ commit }, { req }) => {
+  // TODO anyから直す
+  nuxtServerInit: ({ commit }: any, { req }: any) => {
     const user = getUserFromCookie(req)
     if (user) {
       commit('modules/user/setUserData', {
