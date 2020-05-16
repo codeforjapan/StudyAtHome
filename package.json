@@ -18,7 +18,9 @@
     "firebase-emulator": "yarn clean && yarn lint && yarn build && yarn copy && yarn install:functions && firebase emulators:start"
   },
   "lint-staged": {
-    "*.{js,vue}": "yarn lint",
+    "*.{js,ts,css,vue}": [
+      "eslint --fix"
+    ],
     "*.{css,scss,vue}": "stylelint"
   },
   "husky": {
@@ -51,9 +53,7 @@
   },
   "devDependencies": {
     "@nuxt/typescript-build": "^0.6.6",
-    "@nuxtjs/eslint-config": "^2.0.2",
     "@nuxtjs/eslint-config-typescript": "^2.0.0",
-    "@nuxtjs/eslint-module": "^2.0.0",
     "@nuxtjs/stylelint-module": "^3.2.2",
     "@nuxtjs/vuetify": "^1.11.2",
     "babel-eslint": "^10.1.0",
@@ -61,7 +61,6 @@
     "eslint": "^7.0.0",
     "eslint-config-prettier": "^6.11.0",
     "eslint-loader": "^4.0.2",
-    "eslint-plugin-nuxt": "^1.0.0",
     "eslint-plugin-prettier": "^3.1.3",
     "eslint-plugin-tsdoc": "^0.2.4",
     "husky": "^4.2.5",

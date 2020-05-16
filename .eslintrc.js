@@ -1,17 +1,11 @@
 module.exports = {
-  root: true,
-  env: {
-    browser: true,
-    node: true
-  },
+  plugins: ['eslint-plugin-tsdoc'],
   extends: [
     '@nuxtjs/eslint-config-typescript',
-    'plugin:nuxt/recommended',
     'plugin:prettier/recommended',
     'prettier',
     'prettier/vue'
   ],
-  plugins: ['vue'],
   rules: {
     'nuxt/no-cjs-in-config': 'off',
     'vue/max-attributes-per-line': 'off',
@@ -29,6 +23,7 @@ module.exports = {
         semi: false,
         singleQuote: true
       }
-    ]
+    ],
+    'tsdoc/syntax': 'error'
   }
 }
