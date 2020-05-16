@@ -42,33 +42,44 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
+import Vue from 'vue'
 import { mapActions } from 'vuex'
 import firebase from '@/plugins/firebase'
 import Logo from '@/assets/svgs/logo.svg'
+import UserCredential = firebase.auth.UserCredential
 
-export default {
+type DataType = {
+  email: string
+  password: string
+  showPassword: boolean
+  loading: boolean
+}
+
+export default Vue.extend({
   components: {
     Logo
   },
-  data() {
+  data(): DataType {
     return {
       email: '',
       password: '',
-      show_password: false,
+      showPassword: false,
       loading: false
     }
   },
   methods: {
     ...mapActions('modules/user', ['login']),
-    doSignup() {
+    doSignup(): void {
       this.loading = true
       firebase
         .auth()
         .createUserWithEmailAndPassword(this.email, this.password)
-        .then(userInfo => {
-          this.login(userInfo)
-          this.writeUserData(userInfo.user.uid, userInfo.user.email)
+        .then(async (userInfo: UserCredential) => {
+          if (userInfo.user !== null) {
+            this.login(userInfo)
+            await this.writeUserData(userInfo.user.uid)
+          }
         })
         .then(() => {
           this.$router.push('/edit')
@@ -78,13 +89,7 @@ export default {
           alert(error)
         })
     },
-    gotoSignin() {
-      this.$router.push('/account/signin')
-    },
-    gotoResetPassword() {
-      this.$router.push('/reset-password')
-    },
-    writeUserData(userId) {
+    writeUserData(userId: string): Promise<void> {
       const today = new Date()
       return firebase
         .firestore()
@@ -98,7 +103,7 @@ export default {
         })
     }
   }
-}
+})
 </script>
 
 <style lang="scss" scoped>

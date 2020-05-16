@@ -78,7 +78,6 @@ export default {
 </script>
 
 <style>
-/*! CSS Used from: https://sho.benesse.co.jp/common/_share19.css */
 table,
 tbody,
 tr,
