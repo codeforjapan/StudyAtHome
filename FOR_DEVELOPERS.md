@@ -1,8 +1,9 @@
 # 開発者向け情報
 
-Nuxt.JSに関する内容、Firebaseに関する内容は各ドキュメントを参照してください。
+Nuxt.jsに関する内容、Firebaseに関する内容は各ドキュメントを参照してください。
 詳しい内容は下記のURLを参照ください
-https://hackmd.io/@-6Y5YRBcS2aaE4g4aJ17Cw/SkGfvX2cL
+
+[おうちで時間割 Nuxt版　仕様書 \- HackMD](https://hackmd.io/hltUcnt2S0eQEv1Heif7zw?both)
 
 ## 1. 環境構築
 
@@ -12,8 +13,9 @@ https://hackmd.io/@-6Y5YRBcS2aaE4g4aJ17Cw/SkGfvX2cL
 | ------- | ------- | ------- |
 |[Node.js](https://nodejs.org/ja/)|10.19.0以上|必須|
 |[Visual Studio Code](https://code.visualstudio.com/)| |Visual Studio Codeを利用する場合|
-|[yarn](https://classic.yarnpkg.com/ja/)| |本プログラムをyarnで実行する場合|
-|[docker compose](https://docs.docker.com/compose/install/)| |本プログラムをdocker composeで実行する場合|
+|[Yarn](https://classic.yarnpkg.com/ja/)| |本プログラムをyarnで実行する場合|
+|[Docker Engine](https://docs.docker.com/engine/install/),
+[Docker Compose](https://docs.docker.com/compose/install/)|本プログラムをdocker composeで実行する場合|
 |[Vagrant](https://www.vagrantup.com/)| |本プログラムをVagrantで実行する場合|
 
 ### 1-1. Visual Studio Codeの拡張機能
@@ -65,6 +67,7 @@ $ yarn dev
 #### 2-2-1. 依存関係を構築し、プログラムを実行する
 
 以下のコマンドを実行した後、 http://localhost:3000 にアクセスすると、開発中のプログラムを確認する事ができます。
+
 ```bash
 # serve with hot reload at localhost:3000
 $ docker-compose up --build
@@ -75,6 +78,7 @@ $ docker-compose up --build
 ##### 2-2-2-1. `Cannot find module ****` と怒られた時
 
 プログラムを止め、以下のコマンドを実行します。
+
 ```bash
 # serve with hot reload at localhost:3000
 $ docker-compose run --rm app yarn install
@@ -82,7 +86,7 @@ $ docker-compose run --rm app yarn install
 
 ## 3. 本番環境/その他の判定
 
-`process.env.NODE_ENV` の値が、本番の場合は`'production'`に、それ以外の場合は `'development'` になっています。  
+`process.env.NODE_ENV` の値が、本番の場合は`'production'`に、それ以外の場合は `'development'` になっています。
 テスト環境のみで実行したい処理がある場合は、こちらの値をご利用ください。
 
 ---
@@ -100,7 +104,7 @@ $ docker-compose run --rm app yarn install
 
 ## 5. ブランチルール
 
-development 以外は、Pull Request は禁止です。  
+development 以外は、Pull Request は禁止です。
 Pull Request を送る際のブランチは、以下のネーミングルールに従ったブランチにしてください。
 
 | 種類 | ブランチのネーミングルール |
@@ -115,4 +119,3 @@ Pull Request を送る際のブランチは、以下のネーミングルール�
 | ---- | ---- | ---- | ---- | ---- |
 | 開発 | development | https://studyathome-dev.web.app/ | 全開発者 | base branch。基本は、この`development`ブランチに Pull Requestを送ってください。 |
 | 本番 | master | https://studyathome.web.app/ | 管理者のみ | 管理者以外の Pull Request は禁止です。 |
-
