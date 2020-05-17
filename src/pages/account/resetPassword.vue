@@ -33,7 +33,6 @@
 
 <script lang="ts">
 import Vue from 'vue'
-import { mapActions } from 'vuex'
 import Logo from '@/assets/svgs/logo.svg'
 
 type DataType = {
@@ -52,7 +51,6 @@ export default Vue.extend({
     }
   },
   methods: {
-    ...mapActions('modules/user', ['login']),
     doResetPassword(): void {
       this.loading = true
       this.$fireAuth

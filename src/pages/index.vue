@@ -35,7 +35,7 @@
 
 <script lang="ts">
 import Vue from 'vue'
-import { mapActions } from 'vuex'
+import { vxm } from '@/store'
 import Logo from '@/assets/svgs/logo.svg'
 
 type DataType = {
@@ -63,12 +63,11 @@ export default Vue.extend({
     }
   },
   methods: {
-    ...mapActions('modules/class', ['loadClassData']),
     checkInClass(): void {
       this.loading = true
       this.checkExistsClassData(this.classId).then(value => {
         if (value) {
-          this.loadClassData(this.classId)
+          vxm.class.loadClassData(this.classId)
           this.$router.push('/classes')
         } else {
           this.loading = false
