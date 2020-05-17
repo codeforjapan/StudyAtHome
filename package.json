@@ -31,7 +31,6 @@
     "@nuxt/typescript-runtime": "^0.4.6",
     "@nuxtjs/axios": "^5.10.3",
     "@nuxtjs/dotenv": "^1.4.1",
-    "@nuxtjs/firebase": "^5.2.0",
     "@nuxtjs/pwa": "^3.0.0-0",
     "cookieparser": "^0.1.0",
     "core-js": "3.6.5",
