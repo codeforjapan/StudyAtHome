@@ -7,6 +7,7 @@ module.exports = {
     'prettier/vue'
   ],
   rules: {
+    'require-await': 'off',
     'nuxt/no-cjs-in-config': 'off',
     'vue/max-attributes-per-line': 'off',
     'vue/html-self-closing': [
