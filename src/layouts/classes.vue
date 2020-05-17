@@ -87,11 +87,19 @@
   </v-app>
 </template>
 
-<script>
+<script lang="ts">
+import Vue from 'vue'
 import { mapGetters, mapActions } from 'vuex'
-export default {
+import dayjs from 'dayjs'
+
+type LocalData = {
+  loading: boolean
+  menu: boolean
+}
+
+export default Vue.extend({
   middleware: 'checkClassData',
-  data() {
+  data(): LocalData {
     return {
       loading: true,
       menu: false
@@ -100,22 +108,22 @@ export default {
   computed: {
     ...mapGetters('modules/class', ['schoolName', 'className', 'ViewDate']),
     VuexDate: {
-      get() {
+      get(): string {
         return this.ViewDate
       },
-      set(value) {
-        this.setViewDate(this.$dayjs(value).format('YYYY-MM-DD'))
+      set(value: string): void {
+        this.setViewDate(dayjs(value).format('YYYY-MM-DD'))
       }
     }
   },
-  mounted() {
+  mounted(): void {
     this.loading = false
-    this.setViewDate(this.$dayjs().format('YYYY-MM-DD'))
+    this.setViewDate(dayjs().format('YYYY-MM-DD'))
   },
   methods: {
     ...mapActions('modules/class', ['setViewDate', 'prevDate', 'nextDate'])
   }
-}
+})
 </script>
 
 <style scoped>
