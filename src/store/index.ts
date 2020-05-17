@@ -12,35 +12,34 @@ import firebase from '@/plugins/firebase'
 
 Vue.use(Vuex)
 
-export async function nuxtServerInit(
-  _ctx: ActionContext<any, any>,
-  { req }: Context
-) {
-  const user = getUserFromCookie(req)
-  /*
-  const classDataSnapshot = await firebase
-    .firestore()
-    .collection('classData')
-    .doc('あけしめたす')
-    .get()
-  const classData = classDataSnapshot.data()
-  await dispatch('modules/class/setClassData', { classData }) */
-  if (user) {
-    vxm.user.userData = {
-      name: user.name,
-      email: user.email,
-      avatar: user.picture,
-      uid: user.user_id
-    }
-  }
-}
-
-const store = new Vuex.Store({
+export const store = new Vuex.Store({
   modules: {
     ...extractVuexModule(UserStore),
     ...extractVuexModule(ClassStore)
   }
 })
+
+export const actions = {
+  nuxtServerInit(_ctx: ActionContext<any, any>, { req }: Context) {
+    const user = getUserFromCookie(req)
+    /*
+    const classDataSnapshot = await firebase
+      .firestore()
+      .collection('classData')
+      .doc('あけしめたす')
+      .get()
+    const classData = classDataSnapshot.data()
+    await dispatch('modules/class/setClassData', { classData }) */
+    if (user) {
+      vxm.user.userData = {
+        name: user.name,
+        email: user.email,
+        avatar: user.picture,
+        uid: user.user_id
+      }
+    }
+  }
+}
 
 export const vxm = {
   user: createProxy(store, UserStore),
