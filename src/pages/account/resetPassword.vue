@@ -33,6 +33,7 @@
 
 <script>
 import { mapActions } from 'vuex'
+import firebase from '@/plugins/firebase'
 import Logo from '@/assets/svgs/logo.svg'
 
 export default {
@@ -49,7 +50,8 @@ export default {
     ...mapActions('modules/user', ['login']),
     doSignup() {
       this.loading = true
-      this.$fireAuth
+      firebase
+        .auth()
         .sendPasswordResetEmail(this.email)
         .then(() => {
           this.$router.push('/account/signin')
