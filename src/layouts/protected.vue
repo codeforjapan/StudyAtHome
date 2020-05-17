@@ -55,14 +55,19 @@
 <script lang="ts">
 import Vue from 'vue'
 import { vxm } from '@/store'
+
+type LocalData = {
+  loading: boolean
+}
+
 export default Vue.extend({
   middleware: 'authenticated',
-  data() {
+  data(): LocalData {
     return {
       loading: true
     }
   },
-  mounted() {
+  mounted(): void {
     this.loading = false
   },
   methods: {

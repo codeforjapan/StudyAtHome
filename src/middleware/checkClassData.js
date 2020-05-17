@@ -1,5 +1,5 @@
 export default function({ store, redirect }) {
-  if (!store.getters['modules/class/isLoadedClassData']) {
+  if (!store.getters['class/isLoaded']) {
     return redirect('/')
   }
 }

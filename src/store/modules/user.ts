@@ -1,4 +1,6 @@
-import { createModule, action } from 'vuex-class-component'
+import { createModule, action, mutation } from 'vuex-class-component'
+import Cookies from 'js-cookie'
+import firebase from '@/plugins/firebase.js'
 
 const VuexModule = createModule({
   namespaced: 'user',
@@ -11,6 +13,11 @@ const VuexModule = createModule({
   uid: string | null
 } */
 
+type SetPayloadType = {
+  userData: any
+  uid: string | null
+}
+
 export class UserStore extends VuexModule {
   userData: any = null
   uid: string | null = null
@@ -19,23 +26,42 @@ export class UserStore extends VuexModule {
     return !!this.userData && !!this.uid
   }
 
+  @mutation
+  private SET({ userData, uid }: SetPayloadType) {
+    this.userData = userData
+    this.uid = uid
+  }
+
   @action
   public async login() {
-    if (this.$store.$fireAuth.currentUser) {
-      const userD = await this.$store.$fireStore
-        .collection('users')
-        .doc(this.$store.$fireAuth.currentUser.uid)
-        .get()
-      this.userData = { allow_access: userD.get('allow_access') }
-      this.uid = this.$store.$fireAuth.currentUser.uid
-    }
+    const user = firebase.auth().currentUser
+    if (!user) return
+
+    const token = await user.getIdToken(true)
+    Cookies.set('__session', token) // saving token in cookie for server rendering
+    const data = await firebase
+      .firestore()
+      .collection('users')
+      .doc(user.uid)
+      .get()
+
+    this.SET({
+      uid: user.uid,
+      userData: { allow_access: data.get('allow_access') }
+    })
+    // this.userData = { allow_access: data.get('allow_access') }
+    // this.uid = user.uid
   }
 
   @action
   public async logout() {
-    await this.$store.$fireAuth.signOut()
-
-    this.userData = null
-    this.uid = null
+    await firebase.auth().signOut()
+    Cookies.remove('__session')
+    this.SET({
+      uid: null,
+      userData: null
+    })
+    // this.userData = null
+    // this.uid = null
   }
 }

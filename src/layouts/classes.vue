@@ -90,9 +90,15 @@
 <script lang="ts">
 import Vue from 'vue'
 import { vxm } from '@/store'
+
+type LocalData = {
+  loading: boolean
+  menu: boolean
+}
+
 export default Vue.extend({
   middleware: 'checkClassData',
-  data() {
+  data(): LocalData {
     return {
       loading: true,
       menu: false
@@ -108,7 +114,7 @@ export default Vue.extend({
       }
     }
   },
-  mounted() {
+  mounted(): void {
     this.loading = false
     vxm.class.displayDate = this.$dayjs().format('YYYY-MM-DD')
   }
