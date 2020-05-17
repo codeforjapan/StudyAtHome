@@ -54,17 +54,23 @@
   </v-app>
 </template>
 
-<script>
-export default {
-  data() {
+<script lang="ts">
+import Vue from 'vue'
+
+type LocalData = {
+  loading: boolean
+}
+
+export default Vue.extend({
+  data(): LocalData {
     return {
       loading: true
     }
   },
-  mounted() {
+  mounted(): void {
     this.loading = false
   }
-}
+})
 </script>
 
 <style scoped>

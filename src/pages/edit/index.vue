@@ -1,15 +1,12 @@
 <template>
-  <h1>{{ uid }}</h1>
+  <h1>Editor</h1>
 </template>
 
-<script>
-import { mapGetters } from 'vuex'
+<script lang="ts">
+import Vue from 'vue'
 
-export default {
+export default Vue.extend({
   layout: 'protected',
-  name: 'EditorIndex',
-  computed: {
-    ...mapGetters('modules/user', ['uid'])
-  }
-}
+  name: 'EditorIndex'
+})
 </script>

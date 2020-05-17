@@ -4,3 +4,4 @@ src/static/
 src/assets/
 dist/
 .nuxt/
+src/pages/print.vue
