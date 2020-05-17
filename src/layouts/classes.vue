@@ -44,7 +44,7 @@
       </span>
       <v-spacer />
       <div class="date">
-        <v-btn icon small dark @click="prevDate">
+        <v-btn icon small dark @click="classStore.prevDate">
           <v-icon>mdi-chevron-left</v-icon>
         </v-btn>
         <v-menu
@@ -68,12 +68,12 @@
             </v-btn>
           </v-date-picker>
         </v-menu>
-        <v-btn icon small dark @click="nextDate">
+        <v-btn icon small dark @click="classStore.nextDate">
           <v-icon>mdi-chevron-right</v-icon>
         </v-btn>
       </div>
       <span>
-        {{ className }}
+        {{ classStore.className }}
       </span>
     </v-app-bar>
     <v-content style="background-color: #0071c2;">
@@ -87,9 +87,10 @@
   </v-app>
 </template>
 
-<script>
-import { mapGetters, mapActions } from 'vuex'
-export default {
+<script lang="ts">
+import Vue from 'vue'
+import { vxm } from '@/store'
+export default Vue.extend({
   middleware: 'checkClassData',
   data() {
     return {
@@ -98,24 +99,20 @@ export default {
     }
   },
   computed: {
-    ...mapGetters('modules/class', ['schoolName', 'className', 'ViewDate']),
     VuexDate: {
       get() {
-        return this.ViewDate
+        return vxm.class.displayDate
       },
-      set(value) {
-        this.setViewDate(this.$dayjs(value).format('YYYY-MM-DD'))
+      set(value: string) {
+        vxm.class.displayDate = this.$dayjs(value).format('YYYY-MM-DD')
       }
     }
   },
   mounted() {
     this.loading = false
-    this.setViewDate(this.$dayjs().format('YYYY-MM-DD'))
-  },
-  methods: {
-    ...mapActions('modules/class', ['setViewDate', 'prevDate', 'nextDate'])
+    vxm.class.displayDate = this.$dayjs().format('YYYY-MM-DD')
   }
-}
+})
 </script>
 
 <style scoped>

@@ -44,7 +44,7 @@
 
 <script lang="ts">
 import Vue from 'vue'
-import { mapActions } from 'vuex'
+import { vxm } from '@/store'
 import Logo from '@/assets/svgs/logo.svg'
 
 export type DataType = {
@@ -67,13 +67,12 @@ export default Vue.extend({
     }
   },
   methods: {
-    ...mapActions('modules/user', ['login']),
     doLogin(): void {
       this.loading = true
       this.$fireAuth
         .signInWithEmailAndPassword(this.email, this.password)
-        .then(userInfo => {
-          this.login(userInfo)
+        .then(_userInfo => {
+          vxm.user.login(/* _userInfo */)
         })
         .then(() => {
           this.$router.push('/edit')

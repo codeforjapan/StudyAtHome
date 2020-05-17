@@ -52,9 +52,10 @@
   </v-app>
 </template>
 
-<script>
-import { mapActions } from 'vuex'
-export default {
+<script lang="ts">
+import Vue from 'vue'
+import { vxm } from '@/store'
+export default Vue.extend({
   middleware: 'authenticated',
   data() {
     return {
@@ -65,13 +66,12 @@ export default {
     this.loading = false
   },
   methods: {
-    ...mapActions('modules/user', ['logout']),
     signout() {
-      this.logout()
+      vxm.user.logout()
       this.$router.push('/')
     }
   }
-}
+})
 </script>
 
 <style scoped>

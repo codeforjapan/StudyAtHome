@@ -44,7 +44,7 @@
 
 <script lang="ts">
 import Vue from 'vue'
-import { mapActions } from 'vuex'
+import { vxm } from '@/store'
 import Logo from '@/assets/svgs/logo.svg'
 
 type DataType = {
@@ -67,14 +67,13 @@ export default Vue.extend({
     }
   },
   methods: {
-    ...mapActions('modules/user', ['login']),
     doSignup(): void {
       this.loading = true
       this.$fireAuth
         .createUserWithEmailAndPassword(this.email, this.password)
         .then(async userInfo => {
           if (userInfo.user !== null) {
-            this.login(userInfo)
+            vxm.user.login(/* userInfo */)
             await this.writeUserData(userInfo.user.uid)
           }
         })
