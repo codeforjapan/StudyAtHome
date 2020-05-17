@@ -9,14 +9,12 @@ Nuxt.jsに関する内容、Firebaseに関する内容は各ドキュメント�
 
 以下のアプリケーションを開発をおこなう環境へインストールします。
 
-| アプリケーション名 | バージョン(指定がある場合のみ、記載する) | インストール条件 |
+| アプリケーション名 | バージョン<br>(指定がある場合のみ記載) | インストール条件 |
 | ------- | ------- | ------- |
 |[Node.js](https://nodejs.org/ja/)|10.19.0以上|必須|
 |[Visual Studio Code](https://code.visualstudio.com/)| |Visual Studio Codeを利用する場合|
 |[Yarn](https://classic.yarnpkg.com/ja/)| |本プログラムをyarnで実行する場合|
-|[Docker Engine](https://docs.docker.com/engine/install/),
-[Docker Compose](https://docs.docker.com/compose/install/)|本プログラムをdocker composeで実行する場合|
-|[Vagrant](https://www.vagrantup.com/)| |本プログラムをVagrantで実行する場合|
+|[Docker Engine](https://docs.docker.com/engine/install/),[Docker Compose](https://docs.docker.com/compose/install/)| |本プログラムをdocker composeで実行する場合|
 
 ### 1-1. Visual Studio Codeの拡張機能
 
@@ -48,8 +46,6 @@ $ yarn install
 #### 2-1-2. プログラムを実行する
 
 以下のコマンドを実行した後、 http://localhost:3000 にアクセスすると、開発中のプログラムを確認する事ができます。
-
-##### 2-1-2. 通常
 
 ```bash
 # serve with hot reload at localhost:3000
@@ -95,10 +91,10 @@ $ docker-compose run --rm app yarn install
 
 下表の左列に記載されたブランチが更新されると、ブランチとWebサイトの更新が自動的におこなわれます。
 
-| ブランチ | HTML類がbuildされ、更新されるブランチ | 更新されるWebサイト |
+| 更新対象 | 自動的に更新されるブランチ | 更新されるWebサイト |
 | ---- | ---- | ---- |
-|`master`|本番サイト https://studyathome.web.app/|
-|`development`|開発用サイト https://studyathome-dev.web.app/|
+|`master`| 無し |本番サイト https://studyathome.web.app/|
+|`development`| 無し |開発用サイト https://studyathome-dev.web.app/|
 
 ---
 
