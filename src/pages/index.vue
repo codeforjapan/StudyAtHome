@@ -36,6 +36,7 @@
 <script lang="ts">
 import Vue from 'vue'
 import { vxm } from '@/store'
+import firebase from '@/plugins/firebase'
 import Logo from '@/assets/svgs/logo.svg'
 
 type DataType = {
@@ -65,10 +66,13 @@ export default Vue.extend({
   methods: {
     checkInClass(): void {
       this.loading = true
-      this.checkExistsClassData(this.classId).then(value => {
+      this.checkExistsClassData(this.classId).then(async value => {
         if (value) {
-          vxm.class.loadClassData(this.classId)
+          console.log('1111')
+          await vxm.class.loadClassData(this.classId)
+          console.log('2222')
           this.$router.push('/classes')
+          console.log('3333')
         } else {
           this.loading = false
           this.error = true
@@ -77,7 +81,8 @@ export default Vue.extend({
       })
     },
     async checkExistsClassData(classid: string): Promise<Boolean> {
-      const check = await this.$fireStore
+      const check = await firebase
+        .firestore()
         .collection('classData')
         .doc(classid)
         .get()

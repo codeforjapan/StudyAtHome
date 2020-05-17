@@ -45,6 +45,7 @@
 <script lang="ts">
 import Vue from 'vue'
 import { vxm } from '@/store'
+import firebase from '@/plugins/firebase'
 import Logo from '@/assets/svgs/logo.svg'
 
 export type DataType = {
@@ -69,7 +70,8 @@ export default Vue.extend({
   methods: {
     doLogin(): void {
       this.loading = true
-      this.$fireAuth
+      firebase
+        .auth()
         .signInWithEmailAndPassword(this.email, this.password)
         .then(_userInfo => {
           vxm.user.login(/* _userInfo */)
