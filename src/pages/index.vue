@@ -23,7 +23,7 @@
             height="40px"
             :loading="loading"
             :disabled="loading || !valid"
-            @click="checkInClass"
+            @click="loginToClass"
           >
             LOGIN
           </v-btn>
@@ -63,7 +63,7 @@ export default Vue.extend({
     }
   },
   methods: {
-    checkInClass(): void {
+    loginToClass(): void {
       this.loading = true
       vxm.classData
         .loadClassData(this.classId)
