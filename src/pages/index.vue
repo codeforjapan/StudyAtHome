@@ -23,7 +23,7 @@
             height="40px"
             :loading="loading"
             :disabled="loading || !valid"
-            @click="checkInClass"
+            @click="loginToClass"
           >
             LOGIN
           </v-btn>
@@ -35,8 +35,7 @@
 
 <script lang="ts">
 import Vue from 'vue'
-import { mapActions } from 'vuex'
-import firebase from '@/plugins/firebase'
+import { vxm } from '@/store'
 import Logo from '@/assets/svgs/logo.svg'
 
 type DataType = {
@@ -64,27 +63,18 @@ export default Vue.extend({
     }
   },
   methods: {
-    ...mapActions('modules/class', ['loadClassData']),
-    checkInClass(): void {
+    loginToClass(): void {
       this.loading = true
-      this.checkExistsClassData(this.classId).then(value => {
-        if (value) {
-          this.loadClassData(this.classId)
+      vxm.classData
+        .loadClassData(this.classId)
+        .then(() => {
           this.$router.push('/classes')
-        } else {
+        })
+        .catch((e: Error) => {
           this.loading = false
           this.error = true
-          this.errorMessages = 'クラスIDが間違っています'
-        }
-      })
-    },
-    async checkExistsClassData(classid: string): Promise<Boolean> {
-      const check = await firebase
-        .firestore()
-        .collection('classData')
-        .doc(classid)
-        .get()
-      return check.exists
+          this.errorMessages = e.message
+        })
     }
   }
 })
