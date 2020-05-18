@@ -39,7 +39,7 @@ export class ClassStore extends VuexModule {
   displayDate: string = ''
 
   public get isLoaded(): boolean {
-    return !this.classData.schoolName && !this.classData.className
+    return !!this.classData.schoolName && !!this.classData.className
   }
 
   @mutation
