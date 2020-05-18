@@ -1,7 +1,7 @@
 import { vxm } from '@/store'
 
 export default function({ redirect }) {
-  if (!vxm.class.isLoaded) {
+  if (!vxm.classData.isLoaded) {
     return redirect('/')
   }
 }
