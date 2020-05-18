@@ -7,6 +7,7 @@
         cols="12"
         md="6"
       >
+        <!-- @todo データ構造にあわせる -->
         <StudyCard
           :schooltime="i + 1"
           :realtime="item.startTime"
