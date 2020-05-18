@@ -8,26 +8,24 @@ const VuexModule = createModule({
   target: 'nuxt'
 })
 
-/* interface User {
-  userData: any
-  uid: string | null
-} */
+type UserData = any
+type Uid = string | null
 
-type SetPayloadType = {
-  userData: any
-  uid: string | null
+interface User {
+  userData: UserData
+  uid: Uid
 }
 
-export class UserStore extends VuexModule {
-  userData: any = null
-  uid: string | null = null
+export class UserStore extends VuexModule implements User {
+  userData: UserData = null
+  uid: Uid = null
 
   public get isAuthenticated(): boolean {
     return !!this.userData && !!this.uid
   }
 
   @mutation
-  private SET({ userData, uid }: SetPayloadType) {
+  private SET({ userData, uid }: User) {
     this.userData = userData
     this.uid = uid
   }
@@ -49,8 +47,6 @@ export class UserStore extends VuexModule {
       uid: user.uid,
       userData: { allow_access: data.get('allow_access') }
     })
-    // this.userData = { allow_access: data.get('allow_access') }
-    // this.uid = user.uid
   }
 
   @action
@@ -61,7 +57,5 @@ export class UserStore extends VuexModule {
       uid: null,
       userData: null
     })
-    // this.userData = null
-    // this.uid = null
   }
 }
