@@ -40,40 +40,44 @@
       elevation="0"
     >
       <span>
-        {{ schoolName }}
+        {{ classData.schoolName }}
       </span>
       <v-spacer />
       <div class="date">
-        <v-btn icon small dark @click="classStore.prevDate">
+        <v-btn icon small dark @click="classData.prevDate">
           <v-icon>mdi-chevron-left</v-icon>
         </v-btn>
         <v-menu
           ref="menu"
           v-model="menu"
           :close-on-content-click="false"
-          :return-value.sync="VuexDate"
+          :return-value.sync="classData.displayDate"
           transition="scale-transition"
           offset-y
         >
           <template v-slot:activator="{ on }">
             <v-btn text dark style="padding: 0 0;" v-on="on">
-              {{ VuexDate }}
+              {{ classData.displayDate }}
             </v-btn>
           </template>
-          <v-date-picker v-model="VuexDate" no-title scrollable>
+          <v-date-picker v-model="classData.displayDate" no-title scrollable>
             <v-spacer />
             <v-btn text color="primary" @click="menu = false">Cancel</v-btn>
-            <v-btn text color="primary" @click="$refs.menu.save(VuexDate)">
+            <v-btn
+              text
+              color="primary"
+              @click="$refs.menu.save(classData.displayDate)"
+            >
               OK
             </v-btn>
           </v-date-picker>
         </v-menu>
-        <v-btn icon small dark @click="classStore.nextDate">
+        <v-btn icon small dark @click="classData.nextDate">
           <v-icon>mdi-chevron-right</v-icon>
         </v-btn>
       </div>
       <span>
-        {{ classStore.className }}
+        {{ classData.className }}
       </span>
     </v-app-bar>
     <v-content style="background-color: #0071c2;">
@@ -94,6 +98,7 @@ import { vxm } from '@/store'
 type LocalData = {
   loading: boolean
   menu: boolean
+  classData: typeof vxm.classData
 }
 
 export default Vue.extend({
@@ -101,22 +106,13 @@ export default Vue.extend({
   data(): LocalData {
     return {
       loading: true,
-      menu: false
-    }
-  },
-  computed: {
-    VuexDate: {
-      get() {
-        return vxm.class.displayDate
-      },
-      set(value: string) {
-        vxm.class.displayDate = this.$dayjs(value).format('YYYY-MM-DD')
-      }
+      menu: false,
+      classData: vxm.classData
     }
   },
   mounted(): void {
     this.loading = false
-    vxm.class.displayDate = this.$dayjs().format('YYYY-MM-DD')
+    this.classData.displayDate = this.$dayjs().format('YYYY-MM-DD')
   }
 })
 </script>
