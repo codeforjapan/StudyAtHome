@@ -8,44 +8,58 @@ const VuexModule = createModule({
   target: 'nuxt'
 })
 
-export interface Class {
-  schoolName: string
-  className: string
-  lessons: {
-    [key: string]: Lesson
-  }
-}
+type ClassId = string
+type ClassName = string
+type SchoolName = string
+type Lessons = { [key: string]: Lesson }
+type DisplayDate = string
 
-export interface Lesson {
+interface Lesson {
   subject: string
   content: string
   startTime: Date
   endTime: Date
 }
 
-type SetPayloadType = {
-  classId: string
-  classData: Class
+interface RawClassData {
+  schoolName: ClassName
+  className: SchoolName
+  lessons: Lessons
 }
 
-export class ClassStore extends VuexModule {
-  classId: string = ''
-  classData: Class = {
-    schoolName: '',
-    className: '',
-    lessons: {}
-  }
+interface ClassData {
+  classId: ClassId
+  schoolName: ClassName
+  className: SchoolName
+  lessons: Lessons
+  displayDate: DisplayDate
+}
 
-  displayDate: string = ''
+export class ClassDataStore extends VuexModule implements ClassData {
+  classId: ClassId = ''
+  className: ClassName = ''
+  schoolName: SchoolName = ''
+  lessons: Lessons = {}
+  displayDate: DisplayDate = ''
 
   public get isLoaded(): boolean {
-    return !!this.classData.schoolName && !!this.classData.className
+    return !!this.schoolName && !!this.className
   }
 
   @mutation
-  private SET({ classId, classData }: SetPayloadType) {
+  private setClassId(classId: ClassId) {
     this.classId = classId
-    this.classData = classData
+  }
+
+  @mutation
+  private setDataFromRawClassData({
+    className,
+    schoolName,
+    lessons
+  }: RawClassData) {
+    this.className = className
+    this.schoolName = schoolName
+    this.lessons = lessons
   }
 
   @mutation
@@ -63,16 +77,23 @@ export class ClassStore extends VuexModule {
   }
 
   @action
-  public async loadClassData(classId: string) {
-    const classDataSnapshot = await firebase
+  public async loadClassData(classId: ClassId) {
+    return firebase
       .firestore()
       .collection('classData')
       .doc(classId)
       .get()
-    const data = classDataSnapshot.data() as Class
-    this.SET({
-      classId,
-      classData: data
-    })
+      .then(snapshot => {
+        if (!snapshot.exists)
+          return Promise.reject(new Error('クラスIDが間違っています'))
+
+        const { className, schoolName, lessons } = snapshot.data() as ClassData
+        this.setClassId(classId)
+        this.setDataFromRawClassData({
+          className,
+          schoolName,
+          lessons
+        })
+      })
   }
 }
