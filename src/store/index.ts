@@ -4,7 +4,7 @@ import { Context } from '@nuxt/types/app'
 import { createProxy, extractVuexModule } from 'vuex-class-component'
 import { getUserFromCookie } from '@/helpers/index.js'
 import { UserStore } from '@/store/modules/user'
-import { ClassDataStore } from '@/store/modules/class'
+import { ClassDataStore } from '@/store/modules/classData'
 
 Vue.use(Vuex)
 
