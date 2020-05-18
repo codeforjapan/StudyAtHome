@@ -3,7 +3,7 @@ import dayjs from 'dayjs'
 import firebase from '@/plugins/firebase'
 
 const VuexModule = createModule({
-  namespaced: 'class',
+  namespaced: 'classData',
   strict: false,
   target: 'nuxt'
 })
