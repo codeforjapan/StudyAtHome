@@ -36,7 +36,6 @@
 <script lang="ts">
 import Vue from 'vue'
 import { vxm } from '@/store'
-import firebase from '@/plugins/firebase'
 import Logo from '@/assets/svgs/logo.svg'
 
 type DataType = {
@@ -66,27 +65,16 @@ export default Vue.extend({
   methods: {
     checkInClass(): void {
       this.loading = true
-      this.checkExistsClassData(this.classId).then(async value => {
-        if (value) {
-          console.log('1111')
-          await vxm.class.loadClassData(this.classId)
-          console.log('2222')
+      vxm.classData
+        .loadClassData(this.classId)
+        .then(() => {
           this.$router.push('/classes')
-          console.log('3333')
-        } else {
+        })
+        .catch((e: Error) => {
           this.loading = false
           this.error = true
-          this.errorMessages = 'クラスIDが間違っています'
-        }
-      })
-    },
-    async checkExistsClassData(classid: string): Promise<Boolean> {
-      const check = await firebase
-        .firestore()
-        .collection('classData')
-        .doc(classid)
-        .get()
-      return check.exists
+          this.errorMessages = e.message
+        })
     }
   }
 })
