@@ -44,7 +44,7 @@
 
 <script lang="ts">
 import Vue from 'vue'
-import { mapActions } from 'vuex'
+import { vxm } from '@/store'
 import firebase from '@/plugins/firebase'
 import Logo from '@/assets/svgs/logo.svg'
 
@@ -68,7 +68,6 @@ export default Vue.extend({
     }
   },
   methods: {
-    ...mapActions('modules/user', ['login']),
     doSignup(): void {
       this.loading = true
       firebase
@@ -76,7 +75,7 @@ export default Vue.extend({
         .createUserWithEmailAndPassword(this.email, this.password)
         .then(async userInfo => {
           if (userInfo.user !== null) {
-            this.login(userInfo)
+            vxm.user.login(/* userInfo */)
             await this.writeUserData(userInfo.user.uid)
           }
         })

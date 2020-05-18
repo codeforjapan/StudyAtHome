@@ -33,7 +33,6 @@
 
 <script lang="ts">
 import Vue from 'vue'
-import { mapActions } from 'vuex'
 import firebase from '@/plugins/firebase'
 import Logo from '@/assets/svgs/logo.svg'
 
@@ -53,7 +52,6 @@ export default Vue.extend({
     }
   },
   methods: {
-    ...mapActions('modules/user', ['login']),
     doResetPassword(): void {
       this.loading = true
       firebase

@@ -1,8 +1,8 @@
 import Vue from 'vue'
-import { Dayjs } from 'dayjs'
+import dayjs from 'dayjs'
 
 declare module 'vue/types/vue' {
   interface Vue {
-    $dayjs: Dayjs
+    $dayjs: typeof dayjs
   }
 }

@@ -1,5 +1,7 @@
-export default function({ store, redirect }) {
-  if (!store.getters['modules/class/isLoadedClassData']) {
+import { vxm } from '@/store'
+
+export default function({ redirect }) {
+  if (!vxm.classData.isLoaded) {
     return redirect('/')
   }
 }

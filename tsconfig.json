@@ -11,6 +11,7 @@
     ],
     "esModuleInterop": true,
     "allowJs": true,
+    "allowSyntheticDefaultImports": true,
     "sourceMap": true,
     "strict": true,
     "noEmit": true,
@@ -26,7 +27,7 @@
     "types": [
       "@types/node",
       "@nuxt/types",
-      "@nuxtjs/firebase"
+      "@types/js-cookie",
     ]
   },
   "exclude": [

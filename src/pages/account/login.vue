@@ -44,7 +44,7 @@
 
 <script lang="ts">
 import Vue from 'vue'
-import { mapActions } from 'vuex'
+import { vxm } from '@/store'
 import firebase from '@/plugins/firebase'
 import Logo from '@/assets/svgs/logo.svg'
 
@@ -68,14 +68,13 @@ export default Vue.extend({
     }
   },
   methods: {
-    ...mapActions('modules/user', ['login']),
     doLogin(): void {
       this.loading = true
       firebase
         .auth()
         .signInWithEmailAndPassword(this.email, this.password)
-        .then(userInfo => {
-          this.login(userInfo)
+        .then(_userInfo => {
+          vxm.user.login(/* _userInfo */)
         })
         .then(() => {
           this.$router.push('/edit')

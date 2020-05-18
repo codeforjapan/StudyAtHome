@@ -54,7 +54,7 @@
 
 <script lang="ts">
 import Vue from 'vue'
-import { mapActions } from 'vuex'
+import { vxm } from '@/store'
 
 type LocalData = {
   loading: boolean
@@ -71,9 +71,8 @@ export default Vue.extend({
     this.loading = false
   },
   methods: {
-    ...mapActions('modules/user', ['logout']),
     signout() {
-      this.logout()
+      vxm.user.logout()
       this.$router.push('/')
     }
   }
