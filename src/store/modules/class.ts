@@ -49,14 +49,14 @@ export class ClassStore extends VuexModule {
   }
 
   @mutation
-  private nextDate() {
+  public nextDate() {
     this.displayDate = dayjs(this.displayDate)
       .add(1, 'd')
       .format('YYYY-MM-DD')
   }
 
   @mutation
-  private prevDate() {
+  public prevDate() {
     this.displayDate = dayjs(this.displayDate)
       .subtract(1, 'd')
       .format('YYYY-MM-DD')
