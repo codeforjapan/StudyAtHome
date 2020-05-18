@@ -25,7 +25,7 @@ export class UserStore extends VuexModule implements User {
   }
 
   @mutation
-  private SET({ userData, uid }: User) {
+  private setUser({ userData, uid }: User) {
     this.userData = userData
     this.uid = uid
   }
@@ -43,7 +43,7 @@ export class UserStore extends VuexModule implements User {
       .doc(user.uid)
       .get()
 
-    this.SET({
+    this.setUser({
       uid: user.uid,
       userData: { allow_access: data.get('allow_access') }
     })
@@ -53,7 +53,7 @@ export class UserStore extends VuexModule implements User {
   public async logout() {
     await firebase.auth().signOut()
     Cookies.remove('__session')
-    this.SET({
+    this.setUser({
       uid: null,
       userData: null
     })
