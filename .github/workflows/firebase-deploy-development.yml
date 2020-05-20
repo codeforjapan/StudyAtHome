@@ -52,8 +52,14 @@ jobs:
         cp -R .nuxt/* dist/server/.nuxt/
         mkdir -p dist/client/assets
         cp -R dist/server/.nuxt/dist dist/client/assets
-    - name: install
+    - name: Install at dist/server
       run: yarn install --cwd dist/server
+    - name: Build at dist/server
+      run:  |
+        cd dist/server
+        yarn lint
+        yarn build
+        cd --
     - name: Deploy
       run: |
         npm install -g firebase-tools

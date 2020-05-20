@@ -1,6 +1,6 @@
-const functions = require('firebase-functions')
+import * as functions from 'firebase-functions'
 const { Nuxt } = require('nuxt')
-const express = require('express')
+import express = require('express')
 
 process.env.STORAGEBUCKET = functions.config().environment.storagebucket
 process.env.MESSAGINGSENDERID = functions.config().environment.messagingsenderid
@@ -11,7 +11,8 @@ process.env.APPID = functions.config().environment.appid
 process.env.PROJECTID = functions.config().environment.projectid
 process.env.MEASUREMENTID = functions.config().environment.measurementid
 
-const app = express()
+const app: express.Application = express()
+
 const config = {
   dev: false,
   buildDir: '.nuxt',
@@ -21,10 +22,11 @@ const config = {
 }
 const nuxt = new Nuxt(config)
 
-async function handleRequest(req, res) {
-  res.set('Cache-Control', 'public, max-age=300, s-maxage=600')
+async function handleRequest(req: Express.Request, res: any) {
+  res.header('Cache-Control', 'public, max-age=300, s-maxage=600')
   await nuxt.ready() // ← nuxt.ready()でawaitしないといけなくなった！！
   return nuxt.render(req, res)
 }
+
 app.use(handleRequest)
 exports.ssr = functions.https.onRequest(app)
