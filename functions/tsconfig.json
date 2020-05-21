@@ -8,7 +8,8 @@
     "strict": true,
     "target": "es2017",
     // "esModuleInterop": true,
-    "skipLibCheck": true
+    "skipLibCheck": true,
+    "types": ["@types/node", "@types/express", "@nuxt/types"]
   },
   "compileOnSave": true,
   "include": ["src"],

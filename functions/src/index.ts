@@ -1,6 +1,7 @@
 import * as functions from 'firebase-functions'
+import * as express from 'express'
+// @ts-ignore: see https://github.com/nuxt/typescript/issues/44
 const { Nuxt } = require('nuxt')
-import express = require('express')
 
 process.env.STORAGEBUCKET = functions.config().environment.storagebucket
 process.env.MESSAGINGSENDERID = functions.config().environment.messagingsenderid
@@ -17,12 +18,12 @@ const config = {
   dev: false,
   buildDir: '.nuxt',
   build: {
-    publicPath: '/assets/'
-  }
+    publicPath: '/assets/',
+  },
 }
 const nuxt = new Nuxt(config)
 
-async function handleRequest(req: Express.Request, res: any) {
+async function handleRequest(req: Express.Request, res: any): Promise<any> {
   res.header('Cache-Control', 'public, max-age=300, s-maxage=600')
   await nuxt.ready() // ← nuxt.ready()でawaitしないといけなくなった！！
   return nuxt.render(req, res)

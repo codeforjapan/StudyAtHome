@@ -1,13 +1,32 @@
 {
+  "env": { "node": true, "es6": true },
+  "parser": "vue-eslint-parser",
   "parserOptions": {
+    "parser": "@typescript-eslint/parser",
     // Required for certain syntax usages
-    "ecmaVersion": 2017
+    "ecmaVersion": 2017,
+    "sourceType": "module",
+    "project": "./tsconfig.json"
   },
   "plugins": [
+    "eslint-plugin-tsdoc",
+    "@typescript-eslint",
+    "markdown",
     "promise"
   ],
-  "extends": "eslint:recommended",
+  "extends": [
+    "@nuxtjs/eslint-config-typescript",
+    "eslint:recommended",
+    "plugin:@typescript-eslint/eslint-recommended",
+    "plugin:@typescript-eslint/recommended",
+    "plugin:prettier/recommended",
+    "prettier/@typescript-eslint"
+  ],
+  "overrides": [],
   "rules": {
+    "@typescript-eslint/ban-ts-ignore": "off",
+    "@typescript-eslint/no-var-requires": "off",
+
     // Removed rule "disallow the use of console" from recommended eslint rules
     "no-console": "off",
 
@@ -56,7 +75,7 @@
     // Warn against unnecessary calls to .bind()
     "no-extra-bind": 1,
 
-    // Warn against unnecessary labels    
+    // Warn against unnecessary labels
     "no-extra-label": 1,
 
     // Disallow leading or trailing decimal points in numeric literals
@@ -111,7 +130,7 @@
     "prefer-arrow-callback": 1,
 
     // Return inside each then() to create readable and reusable Promise chains.
-    // Forces developers to return console logs and http calls in promises. 
+    // Forces developers to return console logs and http calls in promises.
     "promise/always-return": 2,
 
     //Enforces the use of catch() on un-returned promises
