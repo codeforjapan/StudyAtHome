@@ -14,9 +14,11 @@
   },
   "dependencies": {
     "@babel/runtime-corejs3": "^7.9.6",
+    "@nuxt/typescript-runtime": "^0.4.6",
     "@nuxtjs/axios": "^5.10.3",
     "@nuxtjs/dotenv": "^1.4.1",
     "@nuxtjs/pwa": "^3.0.0-0",
+    "@types/js-cookie": "^2.2.6",
     "cookieparser": "^0.1.0",
     "core-js": "3.6.5",
     "cross-env": "^7.0.2",
@@ -29,9 +31,12 @@
     "jwt-decode": "^2.2.0",
     "lodash.clonedeep": "^4.5.0",
     "nuxt": "^2.12.2",
+    "nuxt-property-decorator": "^2.7.2",
     "nuxt-svg-loader": "^1.2.0",
     "nuxt-webfontloader": "^1.1.0",
-    "uuid": "^8.0.0"
+    "uuid": "^8.0.0",
+    "vuex-class-component": "^2.3.2",
+    "vuex-persistedstate": "^3.0.1"
   },
   "devDependencies": {
     "firebase-functions-test": "^0.2.1",
