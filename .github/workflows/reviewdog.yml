@@ -1,9 +1,6 @@
 name: reviewdog
 
-on:
-  pull_request:
-    branches:
-      - development
+on: pull_request
 
 jobs:
   eslint:

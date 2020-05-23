@@ -1,5 +1,8 @@
-export default ({ req, redirect }) => {
+import { Middleware } from '@nuxt/types'
+
+const authenticated: Middleware = async ({ req, redirect }) => {
   if (process.server) {
+    // @todo dynamic import で実装する
     const admin = require('firebase-admin')
     const cookieparser = require('cookieparser')
     if (req.headers.cookie) {
@@ -16,3 +19,5 @@ export default ({ req, redirect }) => {
     }
   }
 }
+
+export default authenticated
