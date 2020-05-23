@@ -67,10 +67,6 @@ export default {
     {
       src: '@/plugins/firebase-admin.js',
       ssr: true
-    },
-    {
-      src: '@/plugins/dayjs.js',
-      ssr: true
     }
   ],
   /*
