@@ -44,6 +44,7 @@ export default Vue.extend({
 <style scoped lang="scss">
 .ContentCard {
   color: 'black';
+  border-radius: 14px !important;
   .ContentCard-SubjectTag {
     margin-right: 4px;
   }
