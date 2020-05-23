@@ -16,14 +16,14 @@
           />
           <v-text-field
             v-model="password"
-            :append-icon="show_password ? 'mdi-eye' : 'mdi-eye-off'"
-            :type="show_password ? 'text' : 'password'"
+            :append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
+            :type="showPassword ? 'text' : 'password'"
             :counter="32"
             label="Password"
             outlined
             dark
             prepend-icon="mdi-lock"
-            @click:append="show_password = !show_password"
+            @click:append="showPassword = !showPassword"
           />
           <v-btn
             block
@@ -42,31 +42,39 @@
   </div>
 </template>
 
-<script>
-import { mapActions } from 'vuex'
+<script lang="ts">
+import Vue from 'vue'
+import { vxm } from '@/store'
 import firebase from '@/plugins/firebase'
 import Logo from '@/assets/svgs/logo.svg'
-export default {
+
+export type DataType = {
+  email: string
+  password: string
+  showPassword: boolean
+  loading: boolean
+}
+
+export default Vue.extend({
   components: {
     Logo
   },
-  data() {
+  data(): DataType {
     return {
       email: '',
       password: '',
-      show_password: false,
+      showPassword: false,
       loading: false
     }
   },
   methods: {
-    ...mapActions('modules/user', ['login']),
-    doLogin() {
+    doLogin(): void {
       this.loading = true
       firebase
         .auth()
         .signInWithEmailAndPassword(this.email, this.password)
-        .then(userInfo => {
-          this.login(userInfo)
+        .then(_userInfo => {
+          vxm.user.login(/* _userInfo */)
         })
         .then(() => {
           this.$router.push('/edit')
@@ -75,15 +83,9 @@ export default {
           this.loading = false
           alert(error)
         })
-    },
-    gotoSignup() {
-      this.$router.push('/account/signup')
-    },
-    gotoResetPassword() {
-      this.$router.push('/reset-password')
     }
   }
-}
+})
 </script>
 
 <style lang="scss" scoped>
