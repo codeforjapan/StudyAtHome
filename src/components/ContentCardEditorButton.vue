@@ -1,6 +1,6 @@
 <template>
   <v-btn class="editorButton" width="48px" height="48px">
-    <v-icon :color="iconColor">{{ iconName }}</v-icon>
+    <v-icon :color="iconColor" :size="iconSize">{{ iconName }}</v-icon>
   </v-btn>
 </template>
 
@@ -18,6 +18,11 @@ export default Vue.extend({
       type: String,
       required: false,
       default: '#0071c2'
+    },
+    iconSize: {
+      type: [String, Number],
+      required: false,
+      default: '24px'
     }
   }
 })
