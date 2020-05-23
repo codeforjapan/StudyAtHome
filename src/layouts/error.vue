@@ -12,8 +12,16 @@
   </v-app>
 </template>
 
-<script>
-export default {
+<script lang="ts">
+import Vue from 'vue'
+import { MetaInfo } from 'vue-meta'
+
+type LocalData = {
+  pageNotFound: string
+  otherError: string
+}
+
+export default Vue.extend({
   layout: 'empty',
   props: {
     error: {
@@ -21,20 +29,20 @@ export default {
       default: null
     }
   },
-  data() {
+  data(): LocalData {
     return {
       pageNotFound: '404 Not Found',
       otherError: 'An error occurred'
     }
   },
-  head() {
+  head(): MetaInfo {
     const title =
       this.error.statusCode === 404 ? this.pageNotFound : this.otherError
     return {
       title
     }
   }
-}
+})
 </script>
 
 <style scoped>
