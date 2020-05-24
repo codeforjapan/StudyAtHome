@@ -40,40 +40,44 @@
       elevation="0"
     >
       <span>
-        {{ schoolName }}
+        {{ classData.schoolName }}
       </span>
       <v-spacer />
       <div class="date">
-        <v-btn icon small dark @click="prevDate">
+        <v-btn icon small dark @click="classData.prevDate">
           <v-icon>mdi-chevron-left</v-icon>
         </v-btn>
         <v-menu
           ref="menu"
           v-model="menu"
           :close-on-content-click="false"
-          :return-value.sync="VuexDate"
+          :return-value.sync="classData.displayDate"
           transition="scale-transition"
           offset-y
         >
           <template v-slot:activator="{ on }">
             <v-btn text dark style="padding: 0 0;" v-on="on">
-              {{ VuexDate }}
+              {{ classData.displayDate }}
             </v-btn>
           </template>
-          <v-date-picker v-model="VuexDate" no-title scrollable>
+          <v-date-picker v-model="classData.displayDate" no-title scrollable>
             <v-spacer />
             <v-btn text color="primary" @click="menu = false">Cancel</v-btn>
-            <v-btn text color="primary" @click="$refs.menu.save(VuexDate)">
+            <v-btn
+              text
+              color="primary"
+              @click="$refs.menu.save(classData.displayDate)"
+            >
               OK
             </v-btn>
           </v-date-picker>
         </v-menu>
-        <v-btn icon small dark @click="nextDate">
+        <v-btn icon small dark @click="classData.nextDate">
           <v-icon>mdi-chevron-right</v-icon>
         </v-btn>
       </div>
       <span>
-        {{ className }}
+        {{ classData.className }}
       </span>
     </v-app-bar>
     <v-content style="background-color: #0071c2;">
@@ -87,35 +91,31 @@
   </v-app>
 </template>
 
-<script>
-import { mapGetters, mapActions } from 'vuex'
-export default {
+<script lang="ts">
+import Vue from 'vue'
+import dayjs from 'dayjs'
+import { vxm } from '@/store'
+
+type LocalData = {
+  loading: boolean
+  menu: boolean
+  classData: typeof vxm.classData
+}
+
+export default Vue.extend({
   middleware: 'checkClassData',
-  data() {
+  data(): LocalData {
     return {
       loading: true,
-      menu: false
+      menu: false,
+      classData: vxm.classData
     }
   },
-  computed: {
-    ...mapGetters('modules/class', ['schoolName', 'className', 'ViewDate']),
-    VuexDate: {
-      get() {
-        return this.ViewDate
-      },
-      set(value) {
-        this.setViewDate(this.$dayjs(value).format('YYYY-MM-DD'))
-      }
-    }
-  },
-  mounted() {
+  mounted(): void {
     this.loading = false
-    this.setViewDate(this.$dayjs().format('YYYY-MM-DD'))
-  },
-  methods: {
-    ...mapActions('modules/class', ['setViewDate', 'prevDate', 'nextDate'])
+    this.classData.displayDate = dayjs().format('YYYY-MM-DD')
   }
-}
+})
 </script>
 
 <style scoped>

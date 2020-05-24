@@ -91,7 +91,6 @@ export default {
 }
 .contentstr {
   padding: 10px 14px;
-  margin: -10px;
   font-family: 'Noto Sans', sans-serif;
   font-size: 12px;
   line-height: 15px;

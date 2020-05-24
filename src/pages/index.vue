@@ -23,7 +23,7 @@
             height="40px"
             :loading="loading"
             :disabled="loading || !valid"
-            @click="checkInClass"
+            @click="loginToClass"
           >
             LOGIN
           </v-btn>
@@ -33,13 +33,23 @@
   </div>
 </template>
 
-<script>
-import { mapActions } from 'vuex'
-import firebase from '@/plugins/firebase'
+<script lang="ts">
+import Vue from 'vue'
+import { vxm } from '@/store'
 import Logo from '@/assets/svgs/logo.svg'
-export default {
+
+type DataType = {
+  classId: string
+  loading: boolean
+  error: boolean
+  errorMessages: string
+  valid: boolean
+  nameRules: ((v: string) => boolean | string)[]
+}
+
+export default Vue.extend({
   components: { Logo },
-  data() {
+  data(): DataType {
     return {
       classId: '',
       loading: false,
@@ -53,30 +63,21 @@ export default {
     }
   },
   methods: {
-    ...mapActions('modules/class', ['loadClassData']),
-    checkInClass() {
+    loginToClass(): void {
       this.loading = true
-      this.checkExistsClassData(this.classId).then(value => {
-        if (value) {
-          this.loadClassData(this.classId)
+      vxm.classData
+        .loadClassData(this.classId)
+        .then(() => {
           this.$router.push('/classes')
-        } else {
+        })
+        .catch((e: Error) => {
           this.loading = false
           this.error = true
-          this.errorMessages = 'クラスIDが間違っています'
-        }
-      })
-    },
-    async checkExistsClassData(classid) {
-      const check = await firebase
-        .firestore()
-        .collection('classData')
-        .doc(classid)
-        .get()
-      return check.exists
+          this.errorMessages = e.message
+        })
     }
   }
-}
+})
 </script>
 
 <style lang="scss" scoped>

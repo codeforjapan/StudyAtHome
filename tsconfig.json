@@ -2,6 +2,7 @@
   "compilerOptions": {
     "target": "es2018",
     "module": "esnext",
+    "experimentalDecorators": true,
     "moduleResolution": "node",
     "lib": [
       "esnext",
@@ -9,14 +10,12 @@
       "dom"
     ],
     "esModuleInterop": true,
-    "resolveJsonModule": true,
     "allowJs": true,
+    "allowSyntheticDefaultImports": true,
     "sourceMap": true,
     "strict": true,
     "noEmit": true,
-    "noImplicitThis": true,
-    "experimentalDecorators": true,
-    "baseUrl": ".",
+    "baseUrl": "./src",
     "paths": {
       "~/*": [
         "./*"
@@ -27,7 +26,8 @@
     },
     "types": [
       "@types/node",
-      "@nuxt/types"
+      "@nuxt/types",
+      "@types/js-cookie",
     ]
   },
   "exclude": [
