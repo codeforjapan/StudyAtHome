@@ -63,7 +63,6 @@ export default Vue.extend({
   },
   methods: {
     onClick(): void {
-      console.log('pushed')
       this.$emit('addButtonClicked')
     }
   }
