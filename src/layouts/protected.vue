@@ -40,7 +40,7 @@
         4<ruby>月<rt>がつ</rt></ruby> 3<ruby>日<rt>か</rt></ruby>
       </v-toolbar-title>
     </v-app-bar>
-    <v-content style="background-color: #0071c2;">
+    <v-content class="content">
       <v-container class="px-4 py-8">
         <nuxt />
       </v-container>
@@ -79,8 +79,11 @@ export default Vue.extend({
 })
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 .date-icon {
   margin-right: 15px;
+}
+.content {
+  background-color: $color-base-color-01;
 }
 </style>
