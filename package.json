@@ -52,7 +52,6 @@
     "nuxt-property-decorator": "^2.7.2",
     "nuxt-svg-loader": "^1.2.0",
     "nuxt-webfontloader": "^1.1.0",
-    "typescript": "^3.9.3",
     "uuid": "^8.0.0",
     "vue-property-decorator": "^8.4.2",
     "vuex-class-component": "^2.3.2",
