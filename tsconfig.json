@@ -28,6 +28,7 @@
       "@types/node",
       "@nuxt/types",
       "@types/js-cookie",
+      "@types/jest"
     ]
   },
   "exclude": [
