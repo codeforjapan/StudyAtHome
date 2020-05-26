@@ -93,6 +93,7 @@
 
 <script lang="ts">
 import Vue from 'vue'
+import dayjs from 'dayjs'
 import { vxm } from '@/store'
 
 type LocalData = {
@@ -112,7 +113,7 @@ export default Vue.extend({
   },
   mounted(): void {
     this.loading = false
-    this.classData.displayDate = this.$dayjs().format('YYYY-MM-DD')
+    this.classData.displayDate = dayjs().format('YYYY-MM-DD')
   }
 })
 </script>

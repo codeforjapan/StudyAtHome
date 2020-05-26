@@ -7,6 +7,7 @@
   "scripts": {
     "dev": "cross-env NODE_ENV=development nuxt-ts",
     "build": "nuxt-ts build",
+    "test:unit": "jest --config jest.config.js",
     "start": "cross-env NODE_ENV=production nuxt-ts",
     "generate": "nuxt-ts generate",
     "lint": "eslint --ext .js,.vue,.ts --ignore-path .gitignore .",
@@ -35,9 +36,11 @@
     "@nuxtjs/dotenv": "^1.4.1",
     "@nuxtjs/pwa": "^3.0.0-0",
     "@types/js-cookie": "^2.2.6",
+    "@types/node": "^14.0.5",
     "cookieparser": "^0.1.0",
     "core-js": "3.6.5",
     "cross-env": "^7.0.2",
+    "date-fns": "^2.14.0",
     "dayjs": "^1.8.26",
     "express": "^4.17.1",
     "firebase": "^7.14.3",
@@ -50,6 +53,7 @@
     "nuxt-svg-loader": "^1.2.0",
     "nuxt-webfontloader": "^1.1.0",
     "uuid": "^8.0.0",
+    "vue-property-decorator": "^8.4.2",
     "vuex-class-component": "^2.3.2",
     "vuex-persistedstate": "^3.0.1"
   },
@@ -58,7 +62,11 @@
     "@nuxtjs/eslint-config-typescript": "^2.0.0",
     "@nuxtjs/stylelint-module": "^3.2.2",
     "@nuxtjs/vuetify": "^1.11.2",
+    "@types/jest": "^25.2.3",
+    "@vue/test-utils": "^1.0.3",
+    "babel-core": "^6.26.3",
     "babel-eslint": "^10.1.0",
+    "babel-jest": "^26.0.1",
     "cpx": "^1.5.0",
     "eslint": "^7.0.0",
     "eslint-config-prettier": "^6.11.0",
@@ -66,6 +74,7 @@
     "eslint-plugin-prettier": "^3.1.3",
     "eslint-plugin-tsdoc": "^0.2.4",
     "husky": "^4.2.5",
+    "jest": "^26.0.1",
     "lint-staged": "^10.2.2",
     "nodemon": "^2.0.3",
     "prettier": "^1.19.1",
@@ -74,6 +83,8 @@
     "stylelint": "^13.3.3",
     "stylelint-config-prettier": "^8.0.1",
     "stylelint-config-standard": "^20.0.0",
-    "stylelint-scss": "^3.17.2"
+    "stylelint-scss": "^3.17.2",
+    "ts-jest": "^26.0.0",
+    "vue-jest": "^3.0.5"
   }
 }
