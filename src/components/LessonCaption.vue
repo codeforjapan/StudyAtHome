@@ -15,7 +15,7 @@
       </v-row>
     </v-container>
     <div class="lessoncaption-time">
-      {{ format(starttime) }}<br />|<br />{{ format(endtime) }}
+      {{ format(startTime) }}<br />|<br />{{ format(endTime) }}
     </div>
   </div>
 </template>
@@ -35,11 +35,11 @@ export default Vue.extend({
       type: String,
       default: '時間目'
     },
-    starttime: {
+    startTime: {
       type: Date,
       required: true
     },
-    endtime: {
+    endTime: {
       type: Date,
       required: true
     }
