@@ -1,5 +1,4 @@
 import { createModule, action, mutation } from 'vuex-class-component'
-import Cookies from 'js-cookie'
 import firebase from '@/plugins/firebase.js'
 
 const VuexModule = createModule({
@@ -7,26 +6,44 @@ const VuexModule = createModule({
   strict: false,
   target: 'nuxt'
 })
-
-type UserData = any
+type email = string | null
+type emailVerified = boolean
+type displayName = string | null
+type allowAccess = classId[]
+type classId = string
 type Uid = string | null
 
 interface User {
-  userData: UserData
+  email: email
+  emailVerified: emailVerified
+  displayName: displayName
+  allowAccess: allowAccess
   uid: Uid
 }
 
 export class UserStore extends VuexModule implements User {
-  userData: UserData = null
+  email: email = null
+  emailVerified: emailVerified = false
+  displayName: displayName = null
+  allowAccess: allowAccess = []
   uid: Uid = null
 
   public get isAuthenticated(): boolean {
-    return !!this.userData && !!this.uid
+    return !!this.email && !!this.uid && !!this.displayName
   }
 
   @mutation
-  private setUser({ userData, uid }: User) {
-    this.userData = userData
+  private setUser({
+    email,
+    emailVerified,
+    displayName,
+    allowAccess,
+    uid
+  }: User) {
+    this.email = email
+    this.emailVerified = emailVerified
+    this.displayName = displayName
+    this.allowAccess = allowAccess
     this.uid = uid
   }
 
@@ -35,8 +52,6 @@ export class UserStore extends VuexModule implements User {
     const user = firebase.auth().currentUser
     if (!user) return
 
-    const token = await user.getIdToken(true)
-    Cookies.set('__session', token) // saving token in cookie for server rendering
     const data = await firebase
       .firestore()
       .collection('users')
@@ -44,18 +59,23 @@ export class UserStore extends VuexModule implements User {
       .get()
 
     this.setUser({
-      uid: user.uid,
-      userData: { allow_access: data.get('allow_access') }
+      email: user.email,
+      emailVerified: user.emailVerified,
+      displayName: user.displayName,
+      allowAccess: data.get('allow_access'),
+      uid: user.uid
     })
   }
 
   @action
   public async logout() {
     await firebase.auth().signOut()
-    Cookies.remove('__session')
     this.setUser({
       uid: null,
-      userData: null
+      email: null,
+      emailVerified: false,
+      displayName: null,
+      allowAccess: []
     })
   }
 }
