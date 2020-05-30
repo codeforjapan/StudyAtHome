@@ -6,26 +6,26 @@ const VuexModule = createModule({
   strict: false,
   target: 'nuxt'
 })
-type email = string | null
-type emailVerified = boolean
-type displayName = string | null
-type allowAccess = classId[]
-type classId = string
+type Email = string | null
+type EmailVerified = boolean
+type DisplayName = string | null
+type AllowAccess = ClassId[]
+type ClassId = string
 type Uid = string | null
 
 interface User {
-  email: email
-  emailVerified: emailVerified
-  displayName: displayName
-  allowAccess: allowAccess
+  email: Email
+  emailVerified: EmailVerified
+  displayName: DisplayName
+  allowAccess: AllowAccess
   uid: Uid
 }
 
 export class UserStore extends VuexModule implements User {
-  email: email = null
-  emailVerified: emailVerified = false
-  displayName: displayName = null
-  allowAccess: allowAccess = []
+  email: Email = null
+  emailVerified: EmailVerified = false
+  displayName: DisplayName = null
+  allowAccess: AllowAccess = []
   uid: Uid = null
 
   public get isAuthenticated(): boolean {
