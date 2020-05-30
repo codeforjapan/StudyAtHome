@@ -80,7 +80,7 @@
         {{ classData.className }}
       </span>
     </v-app-bar>
-    <v-content style="background-color: #0071c2;">
+    <v-content class="content">
       <v-container class="px-4 py-8">
         <nuxt />
       </v-container>
@@ -118,7 +118,7 @@ export default Vue.extend({
 })
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 .date-icon {
   margin-right: 15px;
 }
@@ -132,5 +132,8 @@ export default Vue.extend({
   background-color: rgba(0, 0, 0, 0);
   color: white;
   text-align: center;
+}
+.content {
+  background-color: $color-base-color-01;
 }
 </style>
