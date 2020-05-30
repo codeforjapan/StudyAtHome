@@ -1,23 +1,16 @@
 import { Middleware } from '@nuxt/types'
+import firebase from '@/plugins/firebase.js'
+import { vxm } from '@/store'
 
-const authenticated: Middleware = async ({ req, redirect }) => {
-  if (process.server) {
-    // @todo dynamic import で実装する
-    const admin = require('firebase-admin')
-    const cookieparser = require('cookieparser')
-    if (req.headers.cookie) {
-      const token = cookieparser.parse(req.headers.cookie).__session
-      admin
-        .auth()
-        .verifyIdToken(token)
-        .then(() => {})
-        .catch(() => {
-          redirect('/account/login')
-        })
+const authenticated: Middleware = async ({ redirect }) => {
+  firebase.auth().onAuthStateChanged(user => {
+    if (user) {
+      vxm.user.login()
     } else {
+      vxm.user.logout()
       redirect('/account/login')
     }
-  }
+  })
 }
 
 export default authenticated
