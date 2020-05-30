@@ -1,5 +1,11 @@
 <template>
-  <h1>{{ email }}</h1>
+  <div>
+    <h1>{{ user.uid }}</h1>
+    <h1>{{ user.email }}</h1>
+    <h1>{{ user.emailVerified }}</h1>
+    <h1>{{ user.displayName }}</h1>
+    <h1>{{ user.allowAccess }}</h1>
+  </div>
 </template>
 
 <script lang="ts">
@@ -11,7 +17,7 @@ export default Vue.extend({
   name: 'EditorIndex',
   data() {
     return {
-      email: vxm.user.email
+      user: vxm.user
     }
   }
 })
