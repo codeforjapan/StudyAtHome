@@ -135,6 +135,15 @@ export default {
     APPID: process.env.APPID,
     MEASUREMENTID: process.env.MEASUREMENTID
   },
+  workbox: {
+    importScripts: [
+      'https://www.gstatic.com/firebasejs/7.14.6/firebase-app.js',
+      'https://www.gstatic.com/firebasejs/7.14.6/firebase-auth.js',
+      'swenv.js',
+      'sw-firebase-auth.js'
+    ],
+    dev: process.env.MODE !== 'production'
+  },
   /*
    ** Build configuration
    */
