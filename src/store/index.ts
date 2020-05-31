@@ -1,7 +1,8 @@
 import Vue from 'vue'
 import Vuex, { ActionContext } from 'vuex'
+import { Context } from '@nuxt/types/app'
 import { createProxy, extractVuexModule } from 'vuex-class-component'
-import firebase from '@/plugins/firebase'
+import jwtDecode from 'jwt-decode'
 import { UserStore } from '@/store/modules/user'
 import { ClassDataStore } from '@/store/modules/classData'
 
@@ -15,12 +16,15 @@ export const store = new Vuex.Store({
 })
 
 export const actions = {
-  nuxtServerInit(_ctx: ActionContext<any, any>) {
-    firebase.auth().onAuthStateChanged(user => {
-      if (user) {
-        vxm.user.login()
-      }
-    })
+  async nuxtServerInit(_ctx: ActionContext<any, any>, { req }: Context) {
+    const authorizationHeader = req.headers.authorization || ''
+    const components = authorizationHeader.split(' ')
+    const token = components.length > 1 ? components[1] : ''
+    if (!token) return
+    const decodedClaims = await jwtDecode(token)
+    if (decodedClaims) {
+      await vxm.user.loginFromUserObject(decodedClaims)
+    }
   }
 }
 
