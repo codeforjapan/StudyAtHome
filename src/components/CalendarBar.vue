@@ -1,23 +1,5 @@
 <template>
   <v-container fluid fill-height class="calendar-bar">
-    <!--    <v-row>-->
-    <!--      <v-col>-->
-    <!--        date: {{ fmtISO(dateListWindow.currentDate) }}, config: { view:-->
-    <!--        {{ dateListWindow.view }}, dateListWindow:-->
-    <!--        {{ dateListWindow.startWeekOn }} }-->
-    <!--      </v-col>-->
-    <!--    </v-row>-->
-    <!--    <v-row>-->
-    <!--      <v-col>-->
-    <!--        <v-btn fab small @click="dateListWindow.prevList()">&lt;&lt;</v-btn>-->
-    <!--        <v-btn fab small @click="dateListWindow.prevDay()">&lt;</v-btn>-->
-    <!--        <v-btn fab small @click="dateListWindow.selectDate(new Date())"-->
-    <!--          >Today-->
-    <!--        </v-btn>-->
-    <!--        <v-btn fab small @click="dateListWindow.nextDay()">&gt;</v-btn>-->
-    <!--        <v-btn fab small @click="dateListWindow.nextList()">&gt;&gt;</v-btn>-->
-    <!--      </v-col>-->
-    <!--    </v-row>-->
     <v-row align="center">
       <v-col cols="1" class="pa-1">
         <v-card class="calendar-bar-ym">
