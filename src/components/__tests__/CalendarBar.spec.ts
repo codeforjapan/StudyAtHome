@@ -50,10 +50,6 @@ describe('CalendarBar.vue', () => {
 
   test('sets the correct default data with no props', () => {
     const wrapper = mountFunction({})
-    // const currentDate = wrapper.vm.$data.currentDate()
-    // const dateList = wrapper.vm.$data.dateList()
-    // expect(dateList).toBe('')
-    // expect(currentDate).toBe('')
     const dateListWindow = wrapper.vm.$data.dateListWindow
     expect(dateListWindow.view).toBe('Week')
     expect(dateListWindow.startWeekOn).toBe('Monday')
@@ -84,19 +80,26 @@ describe('CalendarBar.vue', () => {
    * 26 27 28 29 30        24 25 26 27 28 29 30  28 29 30
    *                       31
    */
+
   test('renders date list of the day', () => {
     const dt = new Date(2020, 4, 3, 10, 0, 0, 0)
     let dateListWindow
 
     wrapper = mountFunction({
-      propsData: { date: dt, config: { view: 'Day', startWeekOn: 'Sunday' } }
+      propsData: {
+        date: dt,
+        config: { view: 'Day', startWeekOn: 'Sunday' }
+      }
     })
     dateListWindow = wrapper.vm.$data.dateListWindow
     expect(dateListWindow.currentDate).toStrictEqual(dt)
     expect(dateListWindow.list).toStrictEqual(Array.of(dt))
 
     wrapper = mountFunction({
-      propsData: { date: dt, config: { view: 'Day', startWeekOn: 'Monday' } }
+      propsData: {
+        date: dt,
+        config: { view: 'Day', startWeekOn: 'Monday' }
+      }
     })
     dateListWindow = wrapper.vm.$data.dateListWindow
     expect(dateListWindow.currentDate).toStrictEqual(dt)
@@ -296,7 +299,10 @@ describe('CalendarBar.vue', () => {
     let dtx: Date
 
     wrapper = mountFunction({
-      propsData: { date: dt, config: { view: 'Day', startWeekOn: 'Sunday' } }
+      propsData: {
+        date: dt,
+        config: { view: 'Day', startWeekOn: 'Sunday' }
+      }
     })
     const dateListWindow = wrapper.vm.$data.dateListWindow
 
@@ -361,7 +367,10 @@ describe('CalendarBar.vue', () => {
     )
 
     wrapper = mountFunction({
-      propsData: { date: dt, config: { view: 'Week', startWeekOn: 'Sunday' } }
+      propsData: {
+        date: dt,
+        config: { view: 'Week', startWeekOn: 'Sunday' }
+      }
     })
     const dateListWindow = wrapper.vm.$data.dateListWindow
 
