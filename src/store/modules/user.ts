@@ -29,7 +29,7 @@ export class UserStore extends VuexModule implements User {
   uid: Uid = null
 
   public get isAuthenticated(): boolean {
-    return !!this.email && !!this.uid && !!this.displayName
+    return !!this.email && !!this.uid
   }
 
   @mutation
@@ -49,25 +49,23 @@ export class UserStore extends VuexModule implements User {
 
   @action
   public async login() {
-    if (process.client) {
-      const user = firebase.auth().currentUser
-      if (!user) return
-      /*
-      const data = await firebase
-        .firestore()
-        .collection('users')
-        .doc(user.uid)
-        .get()
-       */
+    const user = firebase.auth().currentUser
+    if (!user) return
+    /*
+    const data = await firebase
+      .firestore()
+      .collection('users')
+      .doc(user.uid)
+      .get()
+     */
 
-      this.setUser({
-        email: user.email,
-        emailVerified: user.emailVerified,
-        displayName: user.displayName,
-        allowAccess: [],
-        uid: user.uid
-      })
-    }
+    this.setUser({
+      email: user.email,
+      emailVerified: user.emailVerified,
+      displayName: user.displayName,
+      allowAccess: [],
+      uid: user.uid
+    })
   }
 
   @action
