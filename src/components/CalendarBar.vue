@@ -1,8 +1,8 @@
 <template>
-  <v-container fluid fill-height class="calendar-bar">
-    <v-row align="center">
-      <v-col cols="1" class="pa-1">
-        <v-card class="calendar-bar-ym">
+  <v-container fill-height class="calendar-bar">
+    <v-row align="center" class="pa-0 ma-0">
+      <v-col cols="1" class="pa-0 ma-1">
+        <v-card class="calendar-bar-ym" flat="true">
           <v-card-title class="calendar-bar-ym-title">
             {{ currentMonthString }}
           </v-card-title>
@@ -19,10 +19,11 @@
           right: () => dateListWindow.prevList()
         }"
         cols="0"
-        class="pa-1"
+        class="pa-0 ma-0"
       >
         <v-card
-          class="calendar-bar-date"
+          class="calendar-bar-date elevation-4"
+          flat="false"
           :class="{
             current: fmtft(date) === fmtft(dateListWindow.currentDate)
           }"
@@ -246,6 +247,14 @@ export default class CalendarBar extends Vue {
 .calendar-bar {
   color: $color-white;
   font-size: small;
+  background: linear-gradient(
+    to bottom,
+    $color-white 0%,
+    $color-white 50%,
+    $color-base-color-01 50%,
+    $color-base-color-01 100%
+  );
+  padding: 0 3px;
 }
 
 .calendar-bar-ym {
@@ -253,7 +262,7 @@ export default class CalendarBar extends Vue {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  background: $color-grey-inactive;
+  background: rgba(0, 0, 0, 0);
   height: 68px;
   min-width: 12px;
   font-family: 'Noto Sans JP', sans-serif;
@@ -276,7 +285,7 @@ export default class CalendarBar extends Vue {
 }
 
 .calendar-bar-ym-subtitle {
-  color: $color-white;
+  color: $color-white !important;
   font-size: 10px;
   padding: 8px 2px 16px;
 }
@@ -292,6 +301,7 @@ export default class CalendarBar extends Vue {
   justify-content: center;
   color: $color-gray;
   font-family: 'Noto Sans JP', sans-serif;
+  margin: 0 3px;
 }
 
 .calendar-bar-date.current {
@@ -305,7 +315,7 @@ export default class CalendarBar extends Vue {
 }
 
 .calendar-bar-date-subtitle {
-  color: $color-gray;
+  color: $color-gray !important;
   font-size: 22px;
   padding: 8px 2px 16px;
 }
