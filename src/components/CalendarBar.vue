@@ -1,107 +1,50 @@
-<style scoped lang="scss">
-.calendar-bar {
-  font-size: small;
-  color: #fff;
-}
-
-.calendar-bar-ym {
-  display: flex;
-  flex-direction: column;
-  color: #292a2b;
-  height: 68px;
-  min-width: 12px;
-  align-items: center;
-  justify-content: center;
-  .title {
-    font-size: 12px;
-  }
-  .subtitle {
-    font-size: 10px;
-  }
-}
-
-.calendar-bar-ym-title {
-  color: #0d2671;
-  font-size: 12px;
-  padding: 8px 0 0 0;
-  align-items: center;
-  justify-content: center;
-}
-
-.calendar-bar-ym-subtitle {
-  color: #16ac52;
-  font-size: 10px;
-  padding: 8px 2px 16px;
-}
-
-.calendar-bar-date {
-  display: flex;
-  flex-direction: column;
-  background: #fff;
-  height: 68px;
-  min-width: 16px;
-  border-radius: 30px !important;
-  align-items: center;
-  justify-content: center;
-  font-family: 'Noto Sans', sans-serif;
-}
-
-.calendar-bar-date.current {
-  background: #ffdb6c !important;
-}
-
-.calendar-bar-date-title {
-  color: #383834;
-  font-size: 8px;
-  padding: 8px 0 0 0;
-}
-
-.calendar-bar-date-subtitle {
-  color: #16ac52;
-  font-size: 22px;
-  padding: 8px 2px 16px;
-}
-</style>
 <template>
   <v-container fluid fill-height class="calendar-bar">
-    <v-row>
-      <v-col>
-        date: {{ fmtISO(dateListWindow.currentDate) }}, config: { view:
-        {{ dateListWindow.view }}, dateListWindow:
-        {{ dateListWindow.startWeekOn }} }
-      </v-col>
-    </v-row>
     <!--    <v-row>-->
     <!--      <v-col>-->
-    <!--        <v-btn fab small @click="dateListWindow.prevWeek()">&lt;&lt;</v-btn>-->
+    <!--        date: {{ fmtISO(dateListWindow.currentDate) }}, config: { view:-->
+    <!--        {{ dateListWindow.view }}, dateListWindow:-->
+    <!--        {{ dateListWindow.startWeekOn }} }-->
+    <!--      </v-col>-->
+    <!--    </v-row>-->
+    <!--    <v-row>-->
+    <!--      <v-col>-->
+    <!--        <v-btn fab small @click="dateListWindow.prevList()">&lt;&lt;</v-btn>-->
     <!--        <v-btn fab small @click="dateListWindow.prevDay()">&lt;</v-btn>-->
     <!--        <v-btn fab small @click="dateListWindow.selectDate(new Date())"-->
     <!--          >Today-->
     <!--        </v-btn>-->
     <!--        <v-btn fab small @click="dateListWindow.nextDay()">&gt;</v-btn>-->
-    <!--        <v-btn fab small @click="dateListWindow.nextWeek()">&gt;&gt;</v-btn>-->
+    <!--        <v-btn fab small @click="dateListWindow.nextList()">&gt;&gt;</v-btn>-->
     <!--      </v-col>-->
     <!--    </v-row>-->
-    <!-- xxxxxxxxxxxxxxxxxxxxxxxxxxx -->
     <v-row align="center">
-      <!-- m/yyyy -->
-      <v-col>
+      <v-col cols="1" class="pa-1">
         <v-card class="calendar-bar-ym">
           <v-card-title class="calendar-bar-ym-title">
-            {{ fmtM(dateListWindow.currentDate) }}月
+            {{ currentMonthString }}
           </v-card-title>
           <v-card-subtitle class="calendar-bar-ym-subtitle">
-            {{ fmtyyyy(dateListWindow.currentDate) }}
+            {{ currentYearString }}
           </v-card-subtitle>
         </v-card>
       </v-col>
-      <v-col v-for="date in dateListWindow.list" :key="date">
+      <v-col
+        v-for="date in dateListWindow.list"
+        :key="date"
+        v-touch="{
+          left: () => dateListWindow.nextList(),
+          right: () => dateListWindow.prevList()
+        }"
+        cols="0"
+        class="pa-1"
+      >
         <v-card
           class="calendar-bar-date"
           :class="{
             current: fmtft(date) === fmtft(dateListWindow.currentDate)
           }"
-          @click.stop="dateListWindow.selectDate(date)"
+          @click="dateListWindow.selectDate(date)"
         >
           <v-card-title class="calendar-bar-date-title">
             {{ fmteeeee(date) }}
@@ -116,12 +59,13 @@
 </template>
 
 <script lang="ts">
-import { Vue, Component, Prop } from 'vue-property-decorator'
+import { Vue, Component, Prop, Emit, Watch } from 'vue-property-decorator'
 import add from 'date-fns/add'
 import format from 'date-fns/format'
 import formatISO from 'date-fns/formatISO'
 import isValid from 'date-fns/isValid'
 import ja from 'date-fns/locale/ja'
+
 export type View = 'Day' | 'Weekday' | 'Week'
 export type StartWeekOn =
   | 'Sunday'
@@ -139,16 +83,13 @@ export type CalendarBarConfig = {
 export interface DateListWindow {
   list: Array<Date>
   currentDate: Date
-
   selectDate(date: Date): DateListWindow
-
   nextDay(): DateListWindow
-
   prevDay(): DateListWindow
-
   nextWeek(): DateListWindow
-
   prevWeek(): DateListWindow
+  nextList(): DateListWindow
+  prevList(): DateListWindow
 }
 
 class DateListWindowImpl implements DateListWindow {
@@ -157,15 +98,11 @@ class DateListWindowImpl implements DateListWindow {
   currentDate: Date
   list: Array<Date>
 
-  constructor({
-    view = 'Week',
-    startWeekOn = 'Monday',
-    date = new Date()
-  }: {
-    view: View
-    startWeekOn: StartWeekOn
-    date: Date
-  }) {
+  constructor(
+    view: View = 'Week',
+    startWeekOn: StartWeekOn = 'Monday',
+    date: Date = new Date()
+  ) {
     this.view = view
     this.startWeekOn = view === 'Weekday' ? 'Monday' : startWeekOn
     this.currentDate = this.calcCurrentDate(
@@ -197,6 +134,11 @@ class DateListWindowImpl implements DateListWindow {
 
   nextWeek = (): DateListWindow => this.addDays(7)
   prevWeek = (): DateListWindow => this.addDays(-7)
+  nextList = (): DateListWindow =>
+    this.view === 'Day' ? this.nextDay() : this.nextWeek()
+
+  prevList = (): DateListWindow =>
+    this.view === 'Day' ? this.prevDay() : this.prevWeek()
 
   selectDate(date: Date): DateListWindow {
     this.currentDate = this.calcCurrentDate(
@@ -216,9 +158,7 @@ class DateListWindowImpl implements DateListWindow {
   }
 
   private addDays(value: number): DateListWindow {
-    this.currentDate = add(this.currentDate, { days: value })
-    this.list = this.generateDateList()
-    return this
+    return this.selectDate(add(this.currentDate, { days: value }))
   }
 
   private firstDateOfList: (
@@ -273,32 +213,37 @@ class DateListWindowImpl implements DateListWindow {
 @Component
 export default class CalendarBar extends Vue {
   @Prop({ default: new Date() }) date: Date | undefined
-  @Prop({ default: { view: 'Week', startWeekOn: 'Monday' } })
-  config: CalendarBarConfig | undefined
+  @Prop({ default: { view: 'Week', startWeekOn: 'Monday' } }) config:
+    | CalendarBarConfig
+    | undefined
 
-  dateListWindow: DateListWindow = new DateListWindowImpl({
-    view: this.config?.view ?? 'Week',
-    startWeekOn: this.config?.startWeekOn ?? 'Monday',
-    date: this.date ?? new Date()
-  })
+  dateListWindow: DateListWindow = new DateListWindowImpl(
+    this.config?.view ?? 'Week',
+    this.config?.startWeekOn ?? 'Monday',
+    this.date ?? new Date()
+  )
 
-  // currentDate = () => this.dateListWindow.currentDate
-  // dateList = () => this.dateListWindow.list
+  @Emit('changeCurrentDate')
+  changeCurrentDate(): Date {
+    return this.dateListWindow.currentDate
+  }
 
-  fmtmd(date: Date): String {
-    return format(date, 'M/d')
+  @Watch('dateListWindow.currentDate', { immediate: true })
+  // @Watch('dateListWindow.currentDate')
+  onChangeCurrentDate() {
+    this.changeCurrentDate()
+  }
+
+  get currentMonthString(): string {
+    return format(this.dateListWindow.currentDate, 'M') + '月'
+  }
+
+  get currentYearString(): string {
+    return format(this.dateListWindow.currentDate, 'yyyy')
   }
 
   fmtd(date: Date): String {
     return format(date, 'd')
-  }
-
-  fmtdd(date: Date): String {
-    return format(date, 'dd')
-  }
-
-  fmteee(date: Date): String {
-    return format(date, 'EEE', { locale: ja })
   }
 
   fmteeeee(date: Date): String {
@@ -309,16 +254,77 @@ export default class CalendarBar extends Vue {
     return format(date, 'yyyy-MM-dd HH:mm:ss EEE')
   }
 
-  fmtM(date: Date): String {
-    return format(date, 'M')
-  }
-
-  fmtyyyy(date: Date): String {
-    return format(date, 'yyyy')
-  }
-
   fmtISO(date: Date): String {
     return formatISO(date)
   }
 }
 </script>
+
+<style lang="scss" scoped>
+.calendar-bar {
+  color: $color-white;
+  font-size: small;
+}
+
+.calendar-bar-ym {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: $color-grey-inactive;
+  height: 68px;
+  min-width: 12px;
+  font-family: 'Noto Sans JP', sans-serif;
+
+  .title {
+    color: $color-base-color-01;
+    font-size: 12px;
+  }
+
+  .subtitle {
+    color: $color-white;
+    font-size: 10px;
+  }
+}
+
+.calendar-bar-ym-title {
+  color: $color-base-color-01;
+  font-size: 12px;
+  padding: 8px 0 0 0;
+}
+
+.calendar-bar-ym-subtitle {
+  color: $color-white;
+  font-size: 10px;
+  padding: 8px 2px 16px;
+}
+
+.calendar-bar-date {
+  display: flex;
+  flex-direction: column;
+  background: $color-white;
+  height: 68px;
+  min-width: 16px;
+  border-radius: 30px !important;
+  align-items: center;
+  justify-content: center;
+  color: $color-gray;
+  font-family: 'Noto Sans JP', sans-serif;
+}
+
+.calendar-bar-date.current {
+  background: $color-yellow;
+}
+
+.calendar-bar-date-title {
+  color: $color-gray;
+  font-size: 8px;
+  padding: 8px 0 0 0;
+}
+
+.calendar-bar-date-subtitle {
+  color: $color-gray;
+  font-size: 22px;
+  padding: 8px 2px 16px;
+}
+</style>
