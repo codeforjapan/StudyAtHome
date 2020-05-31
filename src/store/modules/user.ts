@@ -49,21 +49,36 @@ export class UserStore extends VuexModule implements User {
 
   @action
   public async login() {
-    const user = firebase.auth().currentUser
+    if (process.client) {
+      const user = firebase.auth().currentUser
+      if (!user) return
+      /*
+      const data = await firebase
+        .firestore()
+        .collection('users')
+        .doc(user.uid)
+        .get()
+       */
+
+      this.setUser({
+        email: user.email,
+        emailVerified: user.emailVerified,
+        displayName: user.displayName,
+        allowAccess: [],
+        uid: user.uid
+      })
+    }
+  }
+
+  @action
+  public async loginFromUserObject(user: any) {
     if (!user) return
-
-    const data = await firebase
-      .firestore()
-      .collection('users')
-      .doc(user.uid)
-      .get()
-
     this.setUser({
       email: user.email,
-      emailVerified: user.emailVerified,
-      displayName: user.displayName,
-      allowAccess: data.get('allow_access'),
-      uid: user.uid
+      emailVerified: user.email_verified,
+      displayName: user.display_name,
+      allowAccess: [],
+      uid: user.user_id
     })
   }
 
