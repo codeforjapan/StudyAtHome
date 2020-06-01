@@ -1,18 +1,16 @@
 <template>
   <div class="MainPage">
-    <v-row v-if="classData.lessons[classData.displayDate]" class="DataBlock">
+    <v-row v-if="classData.getLessonsByDate" class="DataBlock">
       <v-col
-        v-for="(item, i) in classData.lessons[classData.displayDate]"
+        v-for="(item, i) in classData.getLessonsByDate"
         :key="i"
         cols="12"
         md="6"
       >
-        <!-- @todo データ構造にあわせる -->
-        <StudyCard
-          :schooltime="i + 1"
-          :realtime="item.startTime"
-          :content="item.content"
-          :subject="item.subject"
+        <ContentCard
+          :content="formatDate(item.startTime)"
+          :title="item.content"
+          :subjects="[{ name: item.subject }]"
         />
       </v-col>
     </v-row>
@@ -34,7 +32,7 @@
 import Vue from 'vue'
 import dayjs from 'dayjs'
 import { vxm } from '@/store'
-import StudyCard from '@/components/StudyCard.vue'
+import ContentCard from '@/components/ContentCard.vue'
 
 type Data = {
   classData: typeof vxm.classData
@@ -46,7 +44,7 @@ type Computed = {
 }
 
 export default Vue.extend<Data, unknown, Computed, unknown>({
-  components: { StudyCard },
+  components: { ContentCard },
   layout: 'classes',
   data() {
     return {
@@ -55,10 +53,18 @@ export default Vue.extend<Data, unknown, Computed, unknown>({
   },
   computed: {
     isToday() {
-      return this.classData.displayDate === dayjs().format('YYYY-MM-DD')
+      return (
+        dayjs(this.classData.displayDate).format('YYYY-MM-DD') ===
+        dayjs().format('YYYY-MM-DD')
+      )
     },
     dateTitle() {
       return dayjs(this.classData.displayDate).format('M/D')
+    }
+  },
+  methods: {
+    formatDate(date: Date): string {
+      return dayjs(date).format('HH:MM')
     }
   }
 })
