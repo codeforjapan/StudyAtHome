@@ -1,8 +1,8 @@
 <template>
   <div class="MainPage">
-    <v-row v-if="classData.getLessonsByDate" class="DataBlock">
+    <v-row v-if="classData.getLessonsByDisplayDate" class="DataBlock">
       <v-col
-        v-for="(item, i) in classData.getLessonsByDate"
+        v-for="(item, i) in classData.getLessonsByDisplayDate"
         :key="i"
         cols="12"
         md="6"
