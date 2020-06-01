@@ -1,22 +1,16 @@
 <template>
-  <div>
-    <v-btn @click="addButtonClicked" />
-    <v-bottom-sheet v-model="sheet" persistent class="hoge">
-      <v-container class="hoge">
-        <v-row>
-          <v-col class="message"> {{ message }}</v-col>
-          <v-col cols="2">
-            <span class="abb-button">
-              <AddButton
-                :icon-size="iconSize"
-                @addButtonClicked="addButtonClicked"
-              />
-            </span>
-          </v-col>
-        </v-row>
-      </v-container>
-    </v-bottom-sheet>
-  </div>
+  <v-bottom-sheet v-model="sheet" persistent>
+    <v-container class="simple-bottom-sheet">
+      <v-row>
+        <v-col class="message">{{ message }}</v-col>
+        <v-col cols="2">
+          <span class="abb-button">
+            <AddButton @addButtonClicked="addButtonClicked" />
+          </span>
+        </v-col>
+      </v-row>
+    </v-container>
+  </v-bottom-sheet>
 </template>
 
 <script lang="ts">
@@ -52,7 +46,7 @@ export default Vue.extend({
 </script>
 
 <style lang="scss" scoped>
-.hoge {
+.simple-bottom-sheet {
   background-color: $color-base-color-07;
   color: $color-white;
   border-radius: 24px 24px 0 0;
