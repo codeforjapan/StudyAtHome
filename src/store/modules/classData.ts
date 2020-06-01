@@ -46,7 +46,7 @@ export class ClassDataStore extends VuexModule implements ClassData {
   lessons: Lessons = []
   displayDate: DisplayDate = new Date()
 
-  public get getLessonsByDate(): Lessons {
+  public get getLessonsByDisplayDate(): Lessons {
     const dateStart = new Date(
       this.displayDate.getFullYear(),
       this.displayDate.getMonth(),
