@@ -2,7 +2,7 @@
   <v-container fill-height class="calendar-bar">
     <v-row align="center" class="pa-0 ma-0">
       <v-col cols="1" class="pa-0 ma-1">
-        <v-card class="calendar-bar-ym" flat="true">
+        <v-card class="calendar-bar-ym" flat>
           <v-card-title class="calendar-bar-ym-title">
             {{ currentMonthString }}
           </v-card-title>
@@ -13,7 +13,7 @@
       </v-col>
       <v-col
         v-for="date in dateListWindow.list"
-        :key="date"
+        :key="fmtft(date)"
         v-touch="{
           left: () => dateListWindow.nextList(),
           right: () => dateListWindow.prevList()
@@ -23,7 +23,6 @@
       >
         <v-card
           class="calendar-bar-date elevation-4"
-          flat="false"
           :class="{
             current: fmtft(date) === fmtft(dateListWindow.currentDate)
           }"
@@ -195,10 +194,19 @@ class DateListWindowImpl implements DateListWindow {
 
 @Component
 export default class CalendarBar extends Vue {
-  @Prop({ default: new Date() }) date: Date | undefined
-  @Prop({ default: { view: 'Week', startWeekOn: 'Monday' } }) config:
-    | CalendarBarConfig
-    | undefined
+  @Prop({
+    default() {
+      return new Date()
+    }
+  })
+  date: Date | undefined
+
+  @Prop({
+    default() {
+      return { view: 'Week', startWeekOn: 'Monday' }
+    }
+  })
+  config: CalendarBarConfig | undefined
 
   dateListWindow: DateListWindow = new DateListWindowImpl(
     this.config?.view ?? 'Week',
@@ -247,14 +255,7 @@ export default class CalendarBar extends Vue {
 .calendar-bar {
   color: $color-white;
   font-size: small;
-  background: linear-gradient(
-    to bottom,
-    $color-white 0%,
-    $color-white 50%,
-    $color-base-color-01 50%,
-    $color-base-color-01 100%
-  );
-  padding: 0 3px;
+  padding: 0 0;
 }
 
 .calendar-bar-ym {
@@ -281,13 +282,15 @@ export default class CalendarBar extends Vue {
 .calendar-bar-ym-title {
   color: $color-base-color-01;
   font-size: 12px;
+  font-weight: bold;
   padding: 8px 0 0 0;
 }
 
 .calendar-bar-ym-subtitle {
   color: $color-white !important;
   font-size: 10px;
-  padding: 8px 2px 16px;
+  font-weight: bold;
+  padding: 8px 2px 0;
 }
 
 .calendar-bar-date {

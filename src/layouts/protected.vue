@@ -1,60 +1,40 @@
 <template>
   <v-app>
-    <v-overlay v-if="loading" color="#F8F9FA" opacity="1" z-index="9999">
+    <v-overlay v-if="loading" color="#0071C2" opacity="1" z-index="9999">
       <div class="loader">
         Loading
       </div>
     </v-overlay>
-    <!--
-    <v-navigation-drawer
-      v-model="drawer"
-      :mini-variant="miniVariant"
-      :clipped="clipped"
-      fixed
-      app
-    >
-      <v-list>
-        <v-list-item
-          v-for="(item, i) in items"
-          :key="i"
-          :to="item.to"
-          router
-          exact
-        >
-          <v-list-item-action>
-            <v-icon>{{ item.icon }}</v-icon>
-          </v-list-item-action>
-          <v-list-item-content>
-            <v-list-item-title v-text="item.title" />
-          </v-list-item-content>
-        </v-list-item>
-      </v-list>
-    </v-navigation-drawer>
-    -->
-    <v-app-bar fixed app>
-      <v-toolbar-title>
-        Editor 4<ruby>年<rt>ねん</rt></ruby> 3<ruby>組<rt>くみ</rt></ruby>
-      </v-toolbar-title>
+    <v-app-bar fixed app class="bar" elevation="0">
+      <HeaderLogo />
       <v-spacer />
-      <v-toolbar-title>
-        4<ruby>月<rt>がつ</rt></ruby> 3<ruby>日<rt>か</rt></ruby>
-      </v-toolbar-title>
+      <div class="admin-buttons">
+        <v-btn outlined rounded color="#0071C2">
+          <v-icon>mdi-calendar-today</v-icon>
+        </v-btn>
+        <v-btn outlined rounded color="#0071C2">
+          <v-icon>mdi-clipboard-account</v-icon>
+        </v-btn>
+      </div>
+      <template v-slot:extension>
+        <div class="header-calender">
+          <CalendarBar />
+        </div>
+      </template>
     </v-app-bar>
     <v-content class="content">
       <v-container class="px-4 py-8">
         <nuxt />
       </v-container>
     </v-content>
-    <v-footer dark color="#0071c2">
-      <a href="#" @click="signout">Logout</a>
-      <span>&copy; Code For Japan {{ new Date().getFullYear() }}</span>
-    </v-footer>
   </v-app>
 </template>
 
 <script lang="ts">
 import Vue from 'vue'
 import { vxm } from '@/store'
+import HeaderLogo from '@/assets/svgs/header_logo.svg'
+import CalendarBar from '@/components/CalendarBar.vue'
 
 type LocalData = {
   loading: boolean
@@ -62,6 +42,10 @@ type LocalData = {
 
 export default Vue.extend({
   middleware: 'authenticated',
+  components: {
+    CalendarBar,
+    HeaderLogo
+  },
   data(): LocalData {
     return {
       loading: true
@@ -80,10 +64,37 @@ export default Vue.extend({
 </script>
 
 <style scoped lang="scss">
+.v-btn {
+  font-family: 'Noto Sans', 'Noto Sans JP', sans-serif;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 12px;
+  line-height: 16px;
+  background-color: $color-white;
+}
 .date-icon {
   margin-right: 15px;
 }
+.date {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+.bar {
+  background-color: $color-back-gray;
+  text-align: center;
+}
 .content {
   background-color: $color-base-color-01;
+}
+.header-calender {
+  margin: 0 auto;
+  width: 100%;
+  max-width: 640px;
+  height: 40px;
+}
+.admin-buttons {
+  padding: 0 4px;
 }
 </style>
