@@ -8,7 +8,7 @@
         md="6"
       >
         <ContentCard
-          :content="formatDate(item.startTime)"
+          :description="formatDate(item.startTime)"
           :title="item.content"
           :subjects="[{ name: item.subject }]"
         />
