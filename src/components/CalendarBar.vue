@@ -196,17 +196,17 @@ class DateListWindowImpl implements DateListWindow {
 export default class CalendarBar extends Vue {
   @Prop({
     default() {
-      return new Date()
-    }
-  })
-  date: Date | undefined
-
-  @Prop({
-    default() {
       return { view: 'Week', startWeekOn: 'Monday' }
     }
   })
   config: CalendarBarConfig | undefined
+
+  @Prop({
+    default() {
+      return new Date()
+    }
+  })
+  public value!: Date
 
   dateListWindow: DateListWindow = new DateListWindowImpl(
     this.config?.view ?? 'Week',
@@ -219,9 +219,19 @@ export default class CalendarBar extends Vue {
     return this.dateListWindow.currentDate
   }
 
+  private get date(): Date {
+    return this.value
+  }
+
+  @Emit()
+  public input(value: Date) {
+    return value
+  }
+
   @Watch('dateListWindow.currentDate', { immediate: true })
   // @Watch('dateListWindow.currentDate')
   onChangeCurrentDate() {
+    this.input(this.dateListWindow.currentDate)
     this.changeCurrentDate()
   }
 
