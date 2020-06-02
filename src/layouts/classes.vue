@@ -14,7 +14,7 @@
       </v-btn>
       <template v-slot:extension>
         <div class="header-calender">
-          <CalendarBar />
+          <CalendarBar v-model="date" />
         </div>
       </template>
     </v-app-bar>
@@ -30,9 +30,11 @@
 import Vue from 'vue'
 import HeaderLogo from '@/assets/svgs/header_logo.svg'
 import CalendarBar from '@/components/CalendarBar.vue'
+import { vxm } from '@/store'
 
 type LocalData = {
   loading: boolean
+  date: Date
 }
 
 export default Vue.extend({
@@ -43,7 +45,13 @@ export default Vue.extend({
   },
   data(): LocalData {
     return {
-      loading: true
+      loading: true,
+      date: new Date()
+    }
+  },
+  watch: {
+    date(value) {
+      vxm.classData.setDate(value)
     }
   },
   mounted(): void {
