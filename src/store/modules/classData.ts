@@ -1,6 +1,7 @@
 import { createModule, mutation, action } from 'vuex-class-component'
 import dayjs from 'dayjs'
 import firebase from '@/plugins/firebase'
+import Timestamp = firebase.firestore.Timestamp
 
 const VuexModule = createModule({
   namespaced: 'classData',
@@ -10,9 +11,8 @@ const VuexModule = createModule({
 
 type ClassId = string
 type ClassName = string
-type SchoolName = string
-type Lessons = { [key: string]: Lesson }
-type DisplayDate = string
+type Lessons = Lesson[]
+type DisplayDate = Date
 
 interface Lesson {
   subject: string
@@ -21,16 +21,21 @@ interface Lesson {
   endTime: Date
 }
 
+interface RawLesson {
+  subject: string
+  content: string
+  startTime: Timestamp
+  endTime: Timestamp
+}
+
 interface RawClassData {
-  schoolName: ClassName
-  className: SchoolName
+  className: ClassName
   lessons: Lessons
 }
 
 interface ClassData {
   classId: ClassId
-  schoolName: ClassName
-  className: SchoolName
+  className: ClassName
   lessons: Lessons
   displayDate: DisplayDate
 }
@@ -38,12 +43,37 @@ interface ClassData {
 export class ClassDataStore extends VuexModule implements ClassData {
   classId: ClassId = ''
   className: ClassName = ''
-  schoolName: SchoolName = ''
-  lessons: Lessons = {}
-  displayDate: DisplayDate = ''
+  lessons: Lessons = []
+  displayDate: DisplayDate = new Date()
+
+  public get getLessonsByDisplayDate(): Lessons {
+    const dateStart = new Date(
+      this.displayDate.getFullYear(),
+      this.displayDate.getMonth(),
+      this.displayDate.getDay(),
+      0,
+      0,
+      0
+    )
+    const dateEnd = new Date(
+      this.displayDate.getFullYear(),
+      this.displayDate.getMonth(),
+      this.displayDate.getDay(),
+      23,
+      59,
+      59
+    )
+    const lessonsByDate: Lessons = []
+    this.lessons.forEach(value => {
+      const sec = value.startTime.getTime()
+      if (dateStart.getTime() <= sec && dateEnd.getTime() >= sec)
+        lessonsByDate.push(value)
+    })
+    return lessonsByDate
+  }
 
   public get isLoaded(): boolean {
-    return !!this.schoolName && !!this.className
+    return !!this.className
   }
 
   @mutation
@@ -52,13 +82,8 @@ export class ClassDataStore extends VuexModule implements ClassData {
   }
 
   @mutation
-  private setDataFromRawClassData({
-    className,
-    schoolName,
-    lessons
-  }: RawClassData) {
+  private setDataFromRawClassData({ className, lessons }: RawClassData) {
     this.className = className
-    this.schoolName = schoolName
     this.lessons = lessons
   }
 
@@ -66,19 +91,51 @@ export class ClassDataStore extends VuexModule implements ClassData {
   public nextDate() {
     this.displayDate = dayjs(this.displayDate)
       .add(1, 'd')
-      .format('YYYY-MM-DD')
+      .toDate()
   }
 
   @mutation
   public prevDate() {
     this.displayDate = dayjs(this.displayDate)
       .subtract(1, 'd')
-      .format('YYYY-MM-DD')
+      .toDate()
+  }
+
+  @mutation
+  public setDate(date: Date) {
+    this.displayDate = date
   }
 
   @action
   public async loadClassData(classId: ClassId) {
-    return firebase
+    let className = ''
+    const lessons: Lesson[] = []
+    await firebase
+      .firestore()
+      .collection('classData')
+      .doc(classId)
+      .collection('Lessons')
+      .get()
+      .then(QuerySnapshot => {
+        QuerySnapshot.forEach(function(doc) {
+          const data = doc.data() as RawLesson
+          const reformatData = {
+            subject: data.subject,
+            content: data.content,
+            startTime: data.startTime.toDate(),
+            endTime: new Date()
+          }
+          lessons.push(reformatData)
+        })
+      })
+      .catch(() => {
+        return Promise.reject(new Error('クラスIDが間違っています'))
+      })
+    lessons.sort((a, b) => {
+      return a.startTime > b.startTime ? 1 : -1
+    })
+
+    await firebase
       .firestore()
       .collection('classData')
       .doc(classId)
@@ -87,13 +144,13 @@ export class ClassDataStore extends VuexModule implements ClassData {
         if (!snapshot.exists)
           return Promise.reject(new Error('クラスIDが間違っています'))
 
-        const { className, schoolName, lessons } = snapshot.data() as ClassData
-        this.setClassId(classId)
-        this.setDataFromRawClassData({
-          className,
-          schoolName,
-          lessons
-        })
+        const data = snapshot.data() as ClassData
+        className = data.className
       })
+    this.setClassId(classId)
+    this.setDataFromRawClassData({
+      className,
+      lessons
+    })
   }
 }

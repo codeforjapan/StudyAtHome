@@ -113,7 +113,7 @@ export default Vue.extend({
   },
   mounted(): void {
     this.loading = false
-    this.classData.displayDate = dayjs().format('YYYY-MM-DD')
+    this.classData.displayDate = dayjs().toDate()
   }
 })
 </script>
