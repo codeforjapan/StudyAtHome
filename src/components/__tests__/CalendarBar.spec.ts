@@ -62,9 +62,9 @@ describe('CalendarBar.vue', () => {
     // 2020-05-08T10:00:00.000+0900
     const dt = new Date(2020, 4, 8, 10, 0, 0, 0)
     const wrapper = mountFunction({
-      propsData: { date: dt, config: { view: 'V', startWeekOn: 'DOW' } }
+      propsData: { value: dt, config: { view: 'V', startWeekOn: 'DOW' } }
     })
-    expect(wrapper.props().date).toBe(dt)
+    expect(wrapper.props().value).toBe(dt)
     expect(wrapper.props().config.view).toBe('V')
     expect(wrapper.props().config.startWeekOn).toBe('DOW')
   })
@@ -87,7 +87,7 @@ describe('CalendarBar.vue', () => {
 
     wrapper = mountFunction({
       propsData: {
-        date: dt,
+        value: dt,
         config: { view: 'Day', startWeekOn: 'Sunday' }
       }
     })
@@ -97,7 +97,7 @@ describe('CalendarBar.vue', () => {
 
     wrapper = mountFunction({
       propsData: {
-        date: dt,
+        value: dt,
         config: { view: 'Day', startWeekOn: 'Monday' }
       }
     })
@@ -118,7 +118,7 @@ describe('CalendarBar.vue', () => {
       new Date(2020, 4, 9, 10, 0, 0, 0)
     )
     const props = (pDate: Date, pDow: string) => ({
-      date: pDate,
+      value: pDate,
       config: { view: 'Week', startWeekOn: pDow }
     })
     let dateListWindow
@@ -234,7 +234,7 @@ describe('CalendarBar.vue', () => {
       new Date(2020, 4, 9, 10, 0, 0, 0)
     )
     const props = (pDate: Date, pDow: string) => ({
-      date: pDate,
+      value: pDate,
       config: { view: 'Weekday', startWeekOn: pDow }
     })
     let dateListWindow
@@ -300,7 +300,7 @@ describe('CalendarBar.vue', () => {
 
     wrapper = mountFunction({
       propsData: {
-        date: dt,
+        value: dt,
         config: { view: 'Day', startWeekOn: 'Sunday' }
       }
     })
@@ -368,7 +368,7 @@ describe('CalendarBar.vue', () => {
 
     wrapper = mountFunction({
       propsData: {
-        date: dt,
+        value: dt,
         config: { view: 'Week', startWeekOn: 'Sunday' }
       }
     })
@@ -438,7 +438,7 @@ describe('CalendarBar.vue', () => {
 
     wrapper = mountFunction({
       propsData: {
-        date: dt,
+        value: dt,
         config: { view: 'Weekday', startWeekOn: 'Sunday' }
       }
     })
