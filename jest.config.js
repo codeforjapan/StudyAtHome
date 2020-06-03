@@ -1,5 +1,10 @@
 module.exports = {
   roots: ['<rootDir>/src'],
+  //  setupFiles: ['<rootDir>/test/jest.setup.ts'],
+  moduleNameMapper: {
+    '^@/(.*)$': '<rootDir>/$1',
+    '^~/(.*)$': '<rootDir>/$1'
+  },
   transform: {
     '.*\\.(vue)$': 'vue-jest',
     '^.+\\.tsx?$': 'ts-jest'
