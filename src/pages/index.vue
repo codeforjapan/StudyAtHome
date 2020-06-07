@@ -7,14 +7,6 @@
       {{ errorMessages }}
       <div class="LoginForm">
         <v-form ref="form" v-model="valid">
-          <input-field class="elevation-0" type="password" label="パスワード" />
-          <input-field
-            class="elevation-0"
-            type="email"
-            label="メールアドレス"
-          />
-          <input-field class="elevation-0" type="classId" label="クラスID" />
-          <input-field class="elevation-0" type="text" label="てきすと" />
           <v-text-field
             v-model="classId"
             :counter="6"
@@ -45,7 +37,6 @@
 import Vue from 'vue'
 import { vxm } from '@/store'
 import Logo from '@/assets/svgs/logo.svg'
-import InputField from '~/components/InputField.vue'
 
 type DataType = {
   classId: string
@@ -57,14 +48,18 @@ type DataType = {
 }
 
 export default Vue.extend({
-  components: { InputField, Logo },
+  components: { Logo },
   data(): DataType {
     return {
       classId: '',
       loading: false,
       error: false,
       errorMessages: '',
-      valid: true
+      valid: true,
+      nameRules: [
+        v => !!v || 'クラスIDは必須です',
+        v => (v && v.length === 6) || 'クラスIDは6文字のひらがなです'
+      ]
     }
   },
   methods: {
