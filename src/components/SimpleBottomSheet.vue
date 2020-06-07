@@ -1,15 +1,20 @@
 <template>
-  <v-bottom-sheet v-model="sheet" persistent>
-    <v-container class="simple-bottom-sheet">
-      <v-row>
-        <v-col class="message">{{ message }}</v-col>
-        <v-col cols="2">
-          <span class="abb-button">
-            <AddButton @addButtonClicked="addButtonClicked" />
-          </span>
-        </v-col>
-      </v-row>
-    </v-container>
+  <v-bottom-sheet v-model="sheet" class="sheet" persistent scrollable>
+    <v-card class="card">
+      <v-card-title class="card-title" />
+      <v-card-text class="card-text">
+        <v-container class="container">
+          <v-row class="row">
+            <v-col class="col message">{{ message }}</v-col>
+            <v-col cols="2">
+              <span class="add-button">
+                <AddButton @addButtonClicked="addButtonClicked" />
+              </span>
+            </v-col>
+          </v-row>
+        </v-container>
+      </v-card-text>
+    </v-card>
   </v-bottom-sheet>
 </template>
 
@@ -23,6 +28,7 @@ export default Vue.extend({
   props: {
     message: {
       type: String,
+      default: 'メッセージ',
       required: true
     },
     expanded: {
@@ -38,7 +44,6 @@ export default Vue.extend({
   },
   methods: {
     addButtonClicked() {
-      this.sheet = !this.sheet
       this.$emit('addButtonClicked')
     }
   }
@@ -46,24 +51,39 @@ export default Vue.extend({
 </script>
 
 <style lang="scss" scoped>
-.simple-bottom-sheet {
+.card {
   background-color: $color-base-color-07;
-  color: $color-white;
-  border-radius: 24px 24px 0 0;
+  border-radius: 24px 24px 0 0 !important;
+}
+
+.card-title {
+  padding: 8px !important;
+}
+.card-text {
+  padding: 0 !important;
+}
+
+.container {
+  padding: 0 16px 16px;
+}
+
+.row {
+  margin: 0;
+  padding: 0;
+}
+
+.col {
   padding: 0;
 }
 
 .message {
-  max-width: 90%;
-  padding: 1rem 1.5rem;
   align-self: center;
+  color: $color-white !important;
+  font-family: 'Noto Sans JP', sans-serif;
 }
 
 .add-button {
-  max-width: 20%;
-  margin: 0 12px;
-  padding: 10px;
-  align-self: end;
+  align-self: start;
   float: right;
 }
 </style>
