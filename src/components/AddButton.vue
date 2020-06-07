@@ -6,21 +6,7 @@
     :height="buttonSize"
     @click="onClick"
   >
-    <span v-if="iconSize === 'x-small'">
-      <v-icon :color="iconColor" x-small>{{ iconName }}</v-icon>
-    </span>
-    <span v-if="iconSize === 'small'">
-      <v-icon :color="iconColor" small>{{ iconName }}</v-icon>
-    </span>
-    <span v-if="iconSize === 'medium'">
-      <v-icon :color="iconColor" small>{{ iconName }}</v-icon>
-    </span>
-    <span v-if="iconSize === 'large'">
-      <v-icon :color="iconColor" small>{{ iconName }}</v-icon>
-    </span>
-    <span v-if="iconSize === 'x-large'">
-      <v-icon :color="iconColor" x-large>{{ iconName }}</v-icon>
-    </span>
+    <v-icon :size="iconSize" :color="iconColor">{{ iconName }}</v-icon>
   </v-btn>
 </template>
 
@@ -51,14 +37,9 @@ export default Vue.extend({
       default: '#004170'
     },
     iconSize: {
-      type: String,
+      type: [String, Number],
       required: false,
-      default: 'medium',
-      validator(value: string): boolean {
-        return ['x-small', 'small', 'medium', 'large', 'x-large'].includes(
-          value
-        )
-      }
+      default: '40'
     }
   },
   methods: {
