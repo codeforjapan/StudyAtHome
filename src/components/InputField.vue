@@ -2,91 +2,169 @@
   <v-text-field
     v-if="type === 'password'"
     v-model="value"
-    :append-icon="show ? 'mdi-eye' : 'mdi-eye-off'"
+    :color="textFieldColor"
     :type="show ? 'text' : 'password'"
     :label="label"
     background-color="white"
-    error="true"
+    class="elevation-0"
     solo
     flat
     outlined
-    @click:append="show = !show"
-  />
+  >
+    <template v-slot:prepend-inner>
+      <v-icon :color="prependIconColor">{{ prependIcon }}</v-icon>
+    </template>
+    <template v-slot:append>
+      <v-icon
+        color="blue"
+        @click="show = !show"
+        v-text="show ? 'mdi-eye' : 'mdi-eye-off'"
+      />
+    </template>
+  </v-text-field>
   <v-text-field
     v-else-if="type === 'email'"
     v-model="value"
+    :color="textFieldColor"
     type="text"
     :label="label"
     background-color="white"
+    class="elevation-0"
     solo
     flat
     outlined
-    @click:append="show = !show"
-  />
+  >
+    <template v-slot:prepend-inner>
+      <v-icon :color="prependIconColor">{{ prependIcon }}</v-icon>
+    </template>
+  </v-text-field>
   <v-text-field
     v-else-if="type === 'classId'"
     v-model="value"
+    :color="textFieldColor"
     type="text"
     :label="label"
     background-color="white"
+    class="elevation-0"
     solo
     flat
     outlined
-    @click:append="show = !show"
-    rules="classIdRules"
-  />
+  >
+    <template v-slot:prepend-inner>
+      <v-icon :color="prependIconColor">{{ prependIcon }}</v-icon>
+    </template>
+  </v-text-field>
   <v-text-field
     v-else
     v-model="value"
+    :color="textFieldColor"
     type="text"
     :label="label"
     background-color="white"
+    class="elevation-0"
     solo
     flat
     outlined
-    @click:append="show = !show"
-  />
+  >
+    <template v-slot:prepend-inner>
+      <v-icon :color="prependIconColor">{{ prependIcon }}</v-icon>
+    </template>
+  </v-text-field>
 </template>
 
-<script>
-export default {
+<script lang="ts">
+import Vue from 'vue'
+type DataType = {
+  value: string
+  show: boolean
+}
+export default Vue.extend({
   name: 'InputField',
   props: {
     type: {
       type: String,
-      require: false,
+      required: false,
       default: 'text'
     },
     label: {
       type: String,
-      require: true,
+      required: true,
       default: ''
     },
     hint: {
       type: String,
-      require: false,
+      required: false,
       default: ''
     },
-    append_icon: {
+    appendIcon: {
       type: String,
-      require: false,
+      required: false,
       default: ''
+    },
+    require: {
+      type: Boolean,
+      required: false,
+      default: false
     }
   },
-  data() {
+  data(): DataType {
     return {
       show: false,
-      value: '',
-      classIdRule: [
-        v => !!v || 'クラスIDは必須です',
-        v => (v && v.length === 6) || 'クラスIDは6文字のひらがなです'
-      ],
-      passwordRule: [
-        v => !!v || 'クラスIDは必須です',
-        v => (v && v.length === 6) || 'クラスIDは6文字のひらがなです'
-      ],
-
+      value: ''
+    }
+  },
+  computed: {
+    prependIconColor(): string {
+      if (this.type === 'classId') {
+        if (!this.value || this.value.length !== 6) return '#C01B61'
+      }
+      if (this.type === 'email') {
+        if (!this.value || !this.value.match(/.+@.+\..+/)) return '#C01B61'
+      }
+      if (this.require) {
+        if (!this.value) return '#C01B61'
+      }
+      if (this.value) {
+        return '#138945'
+      }
+      return '#BDBDBD'
+    },
+    textFieldColor(): string {
+      if (this.type === 'classId') {
+        if (!this.value || this.value.length !== 6) return '#C01B61'
+      }
+      if (this.type === 'email') {
+        if (!this.value || !this.value.match(/.+@.+\..+/)) return '#C01B61'
+      }
+      if (this.require) {
+        if (!this.value) return '#C01B61'
+      }
+      return '#0071C2'
+    },
+    prependIcon(): string {
+      if (this.type === 'classId') {
+        if (!this.value || this.value.length !== 6) return 'mdi-alert-circle'
+      }
+      if (this.type === 'email') {
+        if (!this.value || !this.value.match(/.+@.+\..+/))
+          return 'mdi-alert-circle'
+      }
+      if (this.require) {
+        if (!this.value) return 'mdi-alert-circle'
+      }
+      return 'mdi-check-circle'
+    }
+  },
+  watch: {
+    value(value) {
+      this.$emit('input', value)
     }
   }
-}
+})
 </script>
+
+<style lang="scss">
+.v-input__slot {
+  box-shadow: inset 2px 2px 5px rgba(0, 0, 0, 0.3);
+}
+</style>
