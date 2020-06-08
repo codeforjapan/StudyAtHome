@@ -2,7 +2,7 @@ import Vue from 'vue'
 import Vuex, { ActionContext } from 'vuex'
 import { Context } from '@nuxt/types/app'
 import { createProxy, extractVuexModule } from 'vuex-class-component'
-import { getUserFromCookie } from '@/helpers/index.js'
+import jwtDecode from 'jwt-decode'
 import { UserStore } from '@/store/modules/user'
 import { ClassDataStore } from '@/store/modules/classData'
 
@@ -16,15 +16,14 @@ export const store = new Vuex.Store({
 })
 
 export const actions = {
-  nuxtServerInit(_ctx: ActionContext<any, any>, { req }: Context) {
-    const user = getUserFromCookie(req)
-    if (user) {
-      vxm.user.userData = {
-        name: user.name,
-        email: user.email,
-        avatar: user.picture,
-        uid: user.user_id
-      }
+  async nuxtServerInit(_ctx: ActionContext<any, any>, { req }: Context) {
+    const authorizationHeader = req.headers.authorization || ''
+    const components = authorizationHeader.split(' ')
+    const token = components.length > 1 ? components[1] : ''
+    if (!token) return
+    const decodedClaims = await jwtDecode(token)
+    if (decodedClaims) {
+      await vxm.user.loginFromUserObject(decodedClaims)
     }
   }
 }
