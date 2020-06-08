@@ -43,27 +43,18 @@ export default Vue.extend({
 
 <style scoped lang="scss">
 .ContentCard {
-  color: 'black';
+  color: $color-gray;
   border-radius: 14px !important;
   .ContentCard-SubjectTag {
     margin-right: 4px;
   }
   .ContentCard-Title {
-    font-family: 'Noto Sans', sans-serif;
-    font-style: normal;
     font-weight: bold;
     font-size: 14px;
-    line-height: 19px;
-    color: #424242;
   }
   .ContentCard-Description {
     white-space: pre-wrap;
-    font-family: 'Noto Sans', sans-serif;
-    font-style: normal;
-    font-weight: normal;
     font-size: 12px;
-    line-height: 16px;
-    color: #424242;
   }
 }
 </style>
