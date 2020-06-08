@@ -50,7 +50,7 @@ export class ClassDataStore extends VuexModule implements ClassData {
     const dateStart = new Date(
       this.displayDate.getFullYear(),
       this.displayDate.getMonth(),
-      this.displayDate.getDay(),
+      this.displayDate.getDate(),
       0,
       0,
       0
@@ -58,7 +58,7 @@ export class ClassDataStore extends VuexModule implements ClassData {
     const dateEnd = new Date(
       this.displayDate.getFullYear(),
       this.displayDate.getMonth(),
-      this.displayDate.getDay(),
+      this.displayDate.getDate(),
       23,
       59,
       59
@@ -115,6 +115,7 @@ export class ClassDataStore extends VuexModule implements ClassData {
       .collection('classData')
       .doc(classId)
       .collection('Lessons')
+      .orderBy('startTime')
       .get()
       .then(QuerySnapshot => {
         QuerySnapshot.forEach(function(doc) {
@@ -131,9 +132,6 @@ export class ClassDataStore extends VuexModule implements ClassData {
       .catch(() => {
         return Promise.reject(new Error('クラスIDが間違っています'))
       })
-    lessons.sort((a, b) => {
-      return a.startTime > b.startTime ? 1 : -1
-    })
 
     await firebase
       .firestore()
