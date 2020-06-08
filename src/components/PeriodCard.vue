@@ -52,34 +52,36 @@ export default Vue.extend({
 <style scoped lang="scss">
 .PeriodCard {
   display: flex;
+  border-bottom: 1px solid $color-base-color-02;
 
-  &-NumberBlock {
+  .PeriodCard-NumberBlock {
     display: flex;
     flex-direction: column;
     margin: 12px;
   }
 
-  &-Number {
+  .PeriodCard-Number {
     display: flex;
     flex-direction: column;
     align-items: center;
     color: $color-white;
     background-color: $color-base-color-06;
-    max-width: 40px;
+    width: 40px;
     border-radius: 3em;
     padding: 12px 4px;
     margin-bottom: 8px;
 
-    &-Num {
+    .PeriodCard-Number-Num {
       font-size: 22px;
     }
 
-    &-Text {
+    .PeriodCard-Number-Text {
       font-size: 8px;
+      font-weight: bold;
     }
   }
 
-  &-Time {
+  .PeriodCard-Time {
     display: flex;
     flex-direction: column;
     justify-content: center;
