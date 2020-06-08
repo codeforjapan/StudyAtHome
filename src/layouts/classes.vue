@@ -61,8 +61,6 @@ export default Vue.extend({
 
 <style scoped lang="scss">
 .v-btn {
-  font-family: 'Noto Sans', 'Noto Sans JP', sans-serif;
-  font-style: normal;
   font-weight: bold;
   font-size: 12px;
   line-height: 16px;

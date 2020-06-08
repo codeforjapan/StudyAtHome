@@ -43,15 +43,11 @@ export default Vue.extend({
   padding: 4px 12px;
   .SubjectIcon {
     border-radius: 0;
-    height: 7px;
-    fill: #fff;
   }
   .SubjectTagText {
-    font-family: 'Noto Sans', sans-serif;
-    font-style: normal;
     font-weight: bold;
     font-size: 12px;
-    color: #424242;
+    color: $color-gray;
     margin: 8px;
   }
 }
