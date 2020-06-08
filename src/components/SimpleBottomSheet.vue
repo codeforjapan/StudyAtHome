@@ -1,5 +1,11 @@
 <template>
-  <v-bottom-sheet v-model="sheet" class="sheet" persistent scrollable>
+  <v-bottom-sheet
+    v-model="sheet"
+    class="sheet"
+    persistent
+    scrollable
+    hide-overlay
+  >
     <v-card class="card">
       <v-card-title class="card-title" />
       <v-card-text class="card-text">
@@ -79,7 +85,6 @@ export default Vue.extend({
 .message {
   align-self: center;
   color: $color-white !important;
-  font-family: 'Noto Sans JP', sans-serif;
 }
 
 .add-button {
