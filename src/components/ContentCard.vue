@@ -1,5 +1,5 @@
 <template>
-  <v-card class="ContentCard">
+  <v-card class="ContentCard elevation-4">
     <v-card-actions class="ContentCard-Actions">
       <subject-tag
         v-for="(item, idx) in subjects"
