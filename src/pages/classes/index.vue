@@ -1,9 +1,8 @@
 <template>
   <div class="MainPage">
-    <period-card
-      v-if="classData.getLessonsByDisplayDate.length"
-      :class-data="classData"
-    />
+    <div v-if="classData.getLessonsByDisplayDate.length">
+      <period-card :class-data="classData" />
+    </div>
     <v-row v-else-if="today" class="DataBlock">
       <h1 style="color: white; width: 100vw; text-align: center;">
         今日の時間割はまだ届いていないみたいです
