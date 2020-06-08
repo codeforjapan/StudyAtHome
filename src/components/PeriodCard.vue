@@ -53,6 +53,12 @@ export default Vue.extend({
 .PeriodCard {
   display: flex;
   border-bottom: 1px solid $color-base-color-02;
+  padding-bottom: 12px;
+  margin-bottom: 12px;
+
+  &:last-child {
+    border: none;
+  }
 
   .PeriodCard-NumberBlock {
     display: flex;
