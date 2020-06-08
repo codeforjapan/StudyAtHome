@@ -1,20 +1,9 @@
 <template>
   <div class="MainPage">
-    <v-row v-if="classData.getLessonsByDisplayDate.length" class="DataBlock">
-      <v-col
-        v-for="(item, i) in classData.getLessonsByDisplayDate"
-        :key="i"
-        cols="12"
-        md="6"
-      >
-        <ContentCard
-          :description="formatDate(item.startTime)"
-          :title="item.content"
-          :subjects="[{ name: item.subject }]"
-        />
-      </v-col>
-    </v-row>
-
+    <period-card
+      v-if="classData.getLessonsByDisplayDate.length"
+      :class-data="classData"
+    />
     <v-row v-else-if="today" class="DataBlock">
       <h1 style="color: white; width: 100vw; text-align: center;">
         今日の時間割はまだ届いていないみたいです
@@ -33,7 +22,7 @@ import Vue from 'vue'
 import dayjs from 'dayjs'
 import isToday from 'date-fns/isToday'
 import { vxm } from '@/store'
-import ContentCard from '@/components/ContentCard.vue'
+import PeriodCard from '@/components/PeriodCard.vue'
 
 type Data = {
   classData: typeof vxm.classData
@@ -42,7 +31,7 @@ type Data = {
 }
 
 export default Vue.extend({
-  components: { ContentCard },
+  components: { PeriodCard },
   layout: 'classes',
   data(): Data {
     return {
