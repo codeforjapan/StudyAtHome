@@ -18,7 +18,7 @@
       </template>
     </v-app-bar>
     <v-content class="content">
-      <v-container class="px-4 py-8">
+      <v-container class="classes-container px-4 py-8">
         <nuxt />
       </v-container>
     </v-content>
@@ -89,5 +89,8 @@ export default Vue.extend({
   width: 100%;
   max-width: 640px;
   height: 40px;
+}
+.classes-container {
+  height: 100%;
 }
 </style>
