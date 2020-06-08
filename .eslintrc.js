@@ -1,4 +1,5 @@
 module.exports = {
+  root: true,
   plugins: ['eslint-plugin-tsdoc'],
   extends: [
     '@nuxtjs/eslint-config-typescript',
