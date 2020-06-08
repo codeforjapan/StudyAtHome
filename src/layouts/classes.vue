@@ -1,6 +1,6 @@
 <template>
   <v-app>
-    <v-overlay v-if="loading" color="#0071C2" opacity="1" z-index="9999">
+    <v-overlay :value="loading" color="#0071C2" opacity="1" z-index="9999">
       <div class="loader">
         Loading
       </div>
