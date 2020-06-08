@@ -52,12 +52,12 @@ export default Vue.extend({
 })
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 .lessoncaption-title {
   display: flex;
   flex-direction: column;
-  background: #015998;
-  color: #fff;
+  background: $color-base-color-07;
+  color: $color-white;
   height: 66px;
   border-radius: 22px !important;
   margin: 0 8px;
@@ -71,7 +71,7 @@ export default Vue.extend({
   font-size: 28px;
   padding: 10px 2px 0 2px;
   display: flex;
-  color: #fff !important;
+  color: $color-white !important;
   align-items: center;
   text-align: center;
 }
@@ -80,7 +80,7 @@ export default Vue.extend({
   font-size: 8px;
   margin-top: 0;
   display: flex;
-  color: #fff !important;
+  color: $color-white !important;
   align-items: center;
   text-align: center;
 }
@@ -91,7 +91,7 @@ export default Vue.extend({
   font-weight: normal;
   font-size: 10px;
   text-align: center;
-  color: #fff;
+  color: $color-white;
   flex: none;
   order: 4;
   align-self: center;
