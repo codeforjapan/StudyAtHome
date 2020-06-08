@@ -4,6 +4,7 @@
     v-model="value"
     :color="textFieldColor"
     :type="show ? 'text' : 'password'"
+    :hint="hint"
     :label="label"
     background-color="white"
     class="elevation-0"
@@ -27,6 +28,7 @@
     v-model="value"
     :color="textFieldColor"
     type="text"
+    :hint="hint"
     :label="label"
     background-color="white"
     class="elevation-0"
@@ -43,6 +45,7 @@
     v-model="value"
     :color="textFieldColor"
     type="text"
+    :hint="hint"
     :label="label"
     background-color="white"
     class="elevation-0"
@@ -59,6 +62,7 @@
     v-model="value"
     :color="textFieldColor"
     type="text"
+    :hint="hint"
     :label="label"
     background-color="white"
     class="elevation-0"
@@ -115,11 +119,16 @@ export default Vue.extend({
   },
   computed: {
     prependIconColor(): string {
+      const classIdPattern = /^[あ-ん]{6}$/
       if (this.type === 'classId') {
-        if (!this.value || this.value.length !== 6) return '#C01B61'
+        if (!this.value || !classIdPattern.test(this.value)) return '#C01B61'
       }
       if (this.type === 'email') {
-        if (!this.value || !this.value.match(/.+@.+\..+/)) return '#C01B61'
+        if (
+          !this.value ||
+          !this.value.match(/^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/)
+        )
+          return '#C01B61'
       }
       if (this.require) {
         if (!this.value) return '#C01B61'
@@ -130,11 +139,16 @@ export default Vue.extend({
       return '#BDBDBD'
     },
     textFieldColor(): string {
+      const classIdPattern = /^[あ-ん]{6}$/
       if (this.type === 'classId') {
-        if (!this.value || this.value.length !== 6) return '#C01B61'
+        if (!this.value || !classIdPattern.test(this.value)) return '#C01B61'
       }
       if (this.type === 'email') {
-        if (!this.value || !this.value.match(/.+@.+\..+/)) return '#C01B61'
+        if (
+          !this.value ||
+          !this.value.match(/^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/)
+        )
+          return '#C01B61'
       }
       if (this.require) {
         if (!this.value) return '#C01B61'
@@ -142,11 +156,16 @@ export default Vue.extend({
       return '#0071C2'
     },
     prependIcon(): string {
+      const classIdPattern = /^[あ-ん]{6}$/
       if (this.type === 'classId') {
-        if (!this.value || this.value.length !== 6) return 'mdi-alert-circle'
+        if (!this.value || !classIdPattern.test(this.value))
+          return 'mdi-alert-circle'
       }
       if (this.type === 'email') {
-        if (!this.value || !this.value.match(/.+@.+\..+/))
+        if (
+          !this.value ||
+          !this.value.match(/^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/)
+        )
           return 'mdi-alert-circle'
       }
       if (this.require) {

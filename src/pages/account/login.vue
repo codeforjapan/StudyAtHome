@@ -73,10 +73,8 @@ export default Vue.extend({
       firebase
         .auth()
         .signInWithEmailAndPassword(this.email, this.password)
-        .then(_userInfo => {
-          vxm.user.login(/* _userInfo */)
-        })
         .then(() => {
+          vxm.user.login()
           this.$router.push('/edit')
         })
         .catch(error => {
