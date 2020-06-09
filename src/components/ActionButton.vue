@@ -5,24 +5,22 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue'
+import { Vue, Component, Prop } from 'vue-property-decorator'
 
 type Theme = 'primary' | 'secondary' | 'border' | 'transparent'
 
-export default Vue.extend({
-  props: {
-    theme: {
-      type: String as () => Theme,
-      required: false,
-      default: 'primary'
-    },
-    text: {
-      type: String,
-      required: true,
-      default: ''
-    }
+@Component
+export default class ActionButton extends Vue {
+  @Prop({ default: 'primary' })
+  theme!: Theme
+
+  @Prop({ default: '' })
+  text!: string | undefined
+
+  onClick(): void {
+    this.$router.push('/')
   }
-})
+}
 </script>
 
 <style lang="scss" scoped>
@@ -47,6 +45,7 @@ export default Vue.extend({
   }
 
   &-border {
+    background-color: $color-white;
     border: 1px solid $color-base-color-01;
     color: $color-base-color-01;
     box-shadow: none;
