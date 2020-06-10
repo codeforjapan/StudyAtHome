@@ -50,7 +50,8 @@ export default Vue.extend({
   },
   methods: {
     addButtonClicked() {
-      this.$emit('addButtonClicked')
+      this.sheet = !this.sheet
+      this.$emit('addButtonClicked', this.sheet)
     }
   }
 })
