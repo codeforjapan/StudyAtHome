@@ -93,6 +93,9 @@ class DateListWindowImpl implements DateListWindow {
       this.startWeekOn,
       vxm.classData.displayDate
     )
+    vxm.classData.$watch('displayDate', () => {
+      this.list = this.generateDateList()
+    })
   }
 
   nextDay(): DateListWindow {
@@ -124,7 +127,6 @@ class DateListWindowImpl implements DateListWindow {
       this.view,
       isValid(date) ? date : new Date()
     )
-    this.list = this.generateDateList()
     return this
   }
 
