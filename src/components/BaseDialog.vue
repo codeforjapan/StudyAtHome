@@ -1,5 +1,5 @@
 <template>
-  <v-dialog :value="value" @input="$emit('input', $event)">
+  <v-dialog :value="value" :persistent="modal" @input="$emit('input', $event)">
     <v-card class="DialogCard">
       <v-card-title class="DialogCardTitle">
         <v-icon class="DialogCardTitleIcon" size="48">{{ iconName }}</v-icon>
@@ -45,6 +45,7 @@ type Props = {
   hideDefaultCancelButton: boolean
   defaultCancelButtonLabel: string
   actions: DialogAction[]
+  modal: boolean
   value: boolean
 }
 
@@ -73,6 +74,11 @@ export default Vue.extend<unknown, Methods, unknown, Props>({
     actions: {
       type: Array as () => DialogAction[],
       required: true
+    },
+    modal: {
+      type: Boolean,
+      required: false,
+      default: false
     },
     value: {
       type: Boolean,
