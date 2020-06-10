@@ -5,6 +5,7 @@
     fullscreen
     hide-overlay
     persistent
+    scrollable
   >
     <v-card class="card">
       <v-card-title class="card-title" />
@@ -163,7 +164,7 @@ export default Vue.extend({
   padding: 0;
   width: 100%;
   max-width: 640px;
-  margin: 10px 0 30px 0;
+  margin: 10px 0 20px 0;
 }
 
 .col {
@@ -201,7 +202,7 @@ export default Vue.extend({
 }
 .divider {
   width: 90vw;
-  margin: 10px 0 50px 0;
+  margin: 10px 0 20px 0;
   border: 0.5px solid $color-base-color-01;
 }
 .input-field {
