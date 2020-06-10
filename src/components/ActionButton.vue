@@ -1,5 +1,5 @@
 <template>
-  <button :class="`ActionButton ActionButton-${theme}`" @click="onClick">
+  <button :class="`ActionButton ActionButton-${theme}`" @click="$emit('click')">
     <span>{{ text }}</span>
   </button>
 </template>
@@ -16,10 +16,6 @@ export default class ActionButton extends Vue {
 
   @Prop({ default: '' })
   text!: string | undefined
-
-  onClick(): void {
-    this.$router.push('/')
-  }
 }
 </script>
 
