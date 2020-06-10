@@ -18,7 +18,7 @@
         cols="12"
         md="6"
       >
-        <ContentCard
+        <content-card
           :description="formatDate(item.startTime)"
           :title="item.content"
           :subjects="[{ name: item.subject }]"
