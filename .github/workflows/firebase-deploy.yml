@@ -32,6 +32,7 @@ jobs:
     - name: Build
       run: |
         yarn install
+        node pre_build_script/swEnvBuild.js
         yarn build
       env:
         APIKEY: ${{ secrets.APIKEY }}
