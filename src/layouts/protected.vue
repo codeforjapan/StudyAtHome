@@ -9,11 +9,14 @@
       <HeaderLogo />
       <v-spacer />
       <div class="admin-buttons">
-        <v-btn outlined rounded color="#0071C2">
+        <v-btn fab x-small outlined rounded color="#0071C2">
           <v-icon>mdi-calendar-today</v-icon>
         </v-btn>
-        <v-btn outlined rounded color="#0071C2">
+        <v-btn fab x-small outlined rounded color="#0071C2">
           <v-icon>mdi-clipboard-account</v-icon>
+        </v-btn>
+        <v-btn fab x-small outlined rounded color="#0071C2">
+          <v-icon>mdi-cog</v-icon>
         </v-btn>
       </div>
       <template v-slot:extension>
@@ -23,7 +26,7 @@
       </template>
     </v-app-bar>
     <v-content class="content">
-      <v-container class="px-4 py-8">
+      <v-container class="classes-container px-4 py-8">
         <nuxt />
       </v-container>
     </v-content>
@@ -41,7 +44,7 @@ type LocalData = {
 }
 
 export default Vue.extend({
-  middleware: 'authenticated',
+  // middleware: 'authenticated',
   components: {
     CalendarBar,
     HeaderLogo
@@ -65,8 +68,6 @@ export default Vue.extend({
 
 <style scoped lang="scss">
 .v-btn {
-  font-family: 'Noto Sans', 'Noto Sans JP', sans-serif;
-  font-style: normal;
   font-weight: bold;
   font-size: 12px;
   line-height: 16px;
@@ -83,7 +84,6 @@ export default Vue.extend({
 }
 .bar {
   background-color: $color-back-gray;
-  text-align: center;
 }
 .content {
   background-color: $color-base-color-01;
@@ -93,6 +93,9 @@ export default Vue.extend({
   width: 100%;
   max-width: 640px;
   height: 40px;
+}
+.classes-container {
+  height: 100%;
 }
 .admin-buttons {
   padding: 0 4px;

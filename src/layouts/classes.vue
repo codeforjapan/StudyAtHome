@@ -8,9 +8,8 @@
     <v-app-bar fixed app class="bar" elevation="0">
       <HeaderLogo />
       <v-spacer />
-      <v-btn outlined rounded color="#0071C2">
-        ログアウト
-        <v-icon right>mdi-exit-to-app</v-icon>
+      <v-btn fab small outlined rounded color="#0071C2">
+        <v-icon>mdi-clipboard-account</v-icon>
       </v-btn>
       <template v-slot:extension>
         <div class="header-calender">
@@ -19,7 +18,7 @@
       </template>
     </v-app-bar>
     <v-content class="content">
-      <v-container class="px-4 py-8">
+      <v-container class="classes-container px-4 py-8">
         <nuxt />
       </v-container>
     </v-content>
@@ -62,8 +61,6 @@ export default Vue.extend({
 
 <style scoped lang="scss">
 .v-btn {
-  font-family: 'Noto Sans', 'Noto Sans JP', sans-serif;
-  font-style: normal;
   font-weight: bold;
   font-size: 12px;
   line-height: 16px;
@@ -90,5 +87,8 @@ export default Vue.extend({
   width: 100%;
   max-width: 640px;
   height: 40px;
+}
+.classes-container {
+  height: 100%;
 }
 </style>

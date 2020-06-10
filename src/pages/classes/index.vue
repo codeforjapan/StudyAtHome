@@ -1,30 +1,18 @@
 <template>
   <div class="MainPage">
-    <v-row v-if="classData.getLessonsByDisplayDate.length" class="DataBlock">
-      <v-col
-        v-for="(item, i) in classData.getLessonsByDisplayDate"
-        :key="i"
-        cols="12"
-        md="6"
-      >
-        <ContentCard
-          :description="formatDate(item.startTime)"
-          :title="item.content"
-          :subjects="[{ name: item.subject }]"
-        />
-      </v-col>
-    </v-row>
-
-    <v-row v-else-if="today" class="DataBlock">
-      <h1 style="color: white; width: 100vw; text-align: center;">
+    <div v-if="classData.getLessonsByDisplayDate.length">
+      <period-card :class-data="classData" />
+    </div>
+    <div v-else-if="today" class="Classes-Outer">
+      <h1 class="Classes-Title">
         今日の時間割はまだ届いていないみたいです
       </h1>
-    </v-row>
-    <v-row v-else class="DataBlock">
-      <h1 style="color: white; width: 100vw; text-align: center;">
+    </div>
+    <div v-else class="Classes-Outer">
+      <h1 class="Classes-Title">
         {{ dateTitle }} の時間割はまだ届いていないみたいです
       </h1>
-    </v-row>
+    </div>
   </div>
 </template>
 
@@ -33,7 +21,7 @@ import Vue from 'vue'
 import dayjs from 'dayjs'
 import isToday from 'date-fns/isToday'
 import { vxm } from '@/store'
-import ContentCard from '@/components/ContentCard.vue'
+import PeriodCard from '@/components/PeriodCard.vue'
 
 type Data = {
   classData: typeof vxm.classData
@@ -42,7 +30,7 @@ type Data = {
 }
 
 export default Vue.extend({
-  components: { ContentCard },
+  components: { PeriodCard },
   layout: 'classes',
   data(): Data {
     return {
@@ -67,14 +55,19 @@ export default Vue.extend({
 
 <style lang="scss" scoped>
 .MainPage {
-  .Logo {
-    text-align: center;
-  }
-  .DataBlock {
-    margin: 0 -12px;
-    .studycard {
-      margin-bottom: 20px;
-    }
-  }
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+.Classes-Outer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 1 0 auto;
+}
+.Classes-Title {
+  font-size: 21px;
+  font-weight: normal;
+  color: $color-white;
 }
 </style>
