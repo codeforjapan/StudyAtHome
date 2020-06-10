@@ -276,7 +276,6 @@ export default class CalendarBar extends Vue {
   background: rgba(0, 0, 0, 0);
   height: 68px;
   min-width: 12px;
-  font-family: 'Noto Sans JP', sans-serif;
 
   .title {
     color: $color-base-color-01;
@@ -308,12 +307,12 @@ export default class CalendarBar extends Vue {
   flex-direction: column;
   background: $color-white;
   height: 68px;
-  min-width: 16px;
-  border-radius: 30px !important;
+  min-width: 1rem;
+  max-width: 3rem;
+  border-radius: 3em !important;
   align-items: center;
   justify-content: center;
   color: $color-gray;
-  font-family: 'Noto Sans JP', sans-serif;
   margin: 0 3px;
 }
 

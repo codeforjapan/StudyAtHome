@@ -1,6 +1,6 @@
 <template>
-  <v-card class="ContentCard">
-    <v-card-actions>
+  <v-card class="ContentCard elevation-4">
+    <v-card-actions class="ContentCard-Actions">
       <subject-tag
         v-for="(item, idx) in subjects"
         :key="idx"
@@ -10,11 +10,20 @@
         :icon-color="item.iconColor || 'white'"
         :background-color="item.backgroundColor || '#A5D8FF'"
       />
+      <subject-tag
+        class="ContentCard-SubjectTag"
+        :name="'動画'"
+        :icon="'mdi-video'"
+        :icon-color="'#424242'"
+        :background-color="'#E0E0E0'"
+      />
     </v-card-actions>
     <v-card-title>
       <h2 class="ContentCard-Title">{{ title }}</h2>
     </v-card-title>
-    <v-card-text class="ContentCard-Description">{{ description }}</v-card-text>
+    <v-card-text>
+      <p class="ContentCard-Description">{{ description }}</p>
+    </v-card-text>
   </v-card>
 </template>
 
@@ -43,27 +52,23 @@ export default Vue.extend({
 
 <style scoped lang="scss">
 .ContentCard {
-  color: 'black';
+  color: $color-gray;
   border-radius: 14px !important;
+  .ContentCard-Actions {
+    padding: 16px 16px 0;
+  }
   .ContentCard-SubjectTag {
     margin-right: 4px;
   }
   .ContentCard-Title {
-    font-family: 'Noto Sans', sans-serif;
-    font-style: normal;
     font-weight: bold;
     font-size: 14px;
-    line-height: 19px;
-    color: #424242;
+    line-height: 1.75;
   }
   .ContentCard-Description {
-    white-space: pre-wrap;
-    font-family: 'Noto Sans', sans-serif;
-    font-style: normal;
-    font-weight: normal;
     font-size: 12px;
-    line-height: 16px;
-    color: #424242;
+    color: $color-gray;
+    margin: 0;
   }
 }
 </style>
