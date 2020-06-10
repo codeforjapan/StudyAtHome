@@ -24,7 +24,7 @@
         <v-card
           class="calendar-bar-date elevation-4"
           :class="{
-            current: fmtft(date) === fmtft(dateListWindow.currentDate)
+            current: fmtft(date) === fmtft(classData.displayDate)
           }"
           @click="dateListWindow.selectDate(date)"
         >
@@ -41,12 +41,13 @@
 </template>
 
 <script lang="ts">
-import { Vue, Component, Prop, Emit, Watch } from 'vue-property-decorator'
+import { Vue, Component, Prop } from 'vue-property-decorator'
 import add from 'date-fns/add'
 import format from 'date-fns/format'
 import formatISO from 'date-fns/formatISO'
 import isValid from 'date-fns/isValid'
 import ja from 'date-fns/locale/ja'
+import { vxm } from '@/store'
 
 export type View = 'Day' | 'Weekday' | 'Week'
 export type StartWeekOn =
@@ -64,7 +65,6 @@ export type CalendarBarConfig = {
 
 export interface DateListWindow {
   list: Array<Date>
-  currentDate: Date
   selectDate(date: Date): DateListWindow
   nextDay(): DateListWindow
   prevDay(): DateListWindow
@@ -77,29 +77,26 @@ export interface DateListWindow {
 class DateListWindowImpl implements DateListWindow {
   view: View
   startWeekOn: StartWeekOn
-  currentDate: Date
   list: Array<Date>
 
-  constructor(
-    view: View = 'Week',
-    startWeekOn: StartWeekOn = 'Monday',
-    date: Date = new Date()
-  ) {
+  constructor(view: View = 'Week', startWeekOn: StartWeekOn = 'Monday') {
     this.view = view
     this.startWeekOn = view === 'Weekday' ? 'Monday' : startWeekOn
-    this.currentDate = this.calcCurrentDate(
+    vxm.classData.displayDate = this.calcCurrentDate(
       view,
-      isValid(date) ? date : new Date()
+      isValid(vxm.classData.displayDate)
+        ? vxm.classData.displayDate
+        : new Date()
     )
     this.list = this.generateDateList(
       this.view,
       this.startWeekOn,
-      this.currentDate
+      vxm.classData.displayDate
     )
   }
 
   nextDay(): DateListWindow {
-    if (this.view === 'Weekday' && this.currentDate.getDay() === 6) {
+    if (this.view === 'Weekday' && vxm.classData.displayDate.getDay() === 6) {
       return this.addDays(2)
     } else {
       return this.addDays(1)
@@ -107,7 +104,7 @@ class DateListWindowImpl implements DateListWindow {
   }
 
   prevDay(): DateListWindow {
-    if (this.view === 'Weekday' && this.currentDate.getDay() === 1) {
+    if (this.view === 'Weekday' && vxm.classData.displayDate.getDay() === 1) {
       return this.addDays(-2)
     } else {
       return this.addDays(-1)
@@ -123,7 +120,7 @@ class DateListWindowImpl implements DateListWindow {
     this.view === 'Day' ? this.prevDay() : this.prevWeek()
 
   selectDate(date: Date): DateListWindow {
-    this.currentDate = this.calcCurrentDate(
+    vxm.classData.displayDate = this.calcCurrentDate(
       this.view,
       isValid(date) ? date : new Date()
     )
@@ -140,7 +137,7 @@ class DateListWindowImpl implements DateListWindow {
   }
 
   private addDays(value: number): DateListWindow {
-    return this.selectDate(add(this.currentDate, { days: value }))
+    return this.selectDate(add(vxm.classData.displayDate, { days: value }))
   }
 
   private firstDateOfList: (
@@ -180,7 +177,7 @@ class DateListWindowImpl implements DateListWindow {
   private generateDateList(
     view: View = this.view,
     startWeekOn: StartWeekOn = this.startWeekOn,
-    date: Date = this.currentDate
+    date: Date = vxm.classData.displayDate
   ): Array<Date> {
     const firstDate = this.firstDateOfList(view, startWeekOn, date)
     const size: number = this.sizeOfList(view)
@@ -201,46 +198,19 @@ export default class CalendarBar extends Vue {
   })
   config: CalendarBarConfig | undefined
 
-  @Prop({
-    default() {
-      return new Date()
-    }
-  })
-  public value!: Date
+  classData: typeof vxm.classData = vxm.classData
 
   dateListWindow: DateListWindow = new DateListWindowImpl(
     this.config?.view ?? 'Week',
-    this.config?.startWeekOn ?? 'Monday',
-    this.date ?? new Date()
+    this.config?.startWeekOn ?? 'Monday'
   )
 
-  @Emit('changeCurrentDate')
-  changeCurrentDate(): Date {
-    return this.dateListWindow.currentDate
-  }
-
-  private get date(): Date {
-    return this.value
-  }
-
-  @Emit()
-  public input(value: Date) {
-    return value
-  }
-
-  @Watch('dateListWindow.currentDate', { immediate: true })
-  // @Watch('dateListWindow.currentDate')
-  onChangeCurrentDate() {
-    this.input(this.dateListWindow.currentDate)
-    this.changeCurrentDate()
-  }
-
   get currentMonthString(): string {
-    return format(this.dateListWindow.currentDate, 'M') + '月'
+    return format(this.classData.displayDate, 'M') + '月'
   }
 
   get currentYearString(): string {
-    return format(this.dateListWindow.currentDate, 'yyyy')
+    return format(this.classData.displayDate, 'yyyy')
   }
 
   fmtd(date: Date): String {
