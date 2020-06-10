@@ -1,5 +1,9 @@
 <template>
-  <button :class="`ActionButton ActionButton-${theme}`" @click="onClick">
+  <button
+    :class="`ActionButton ActionButton-${theme}`"
+    :disabled="isDisabled"
+    @click="onClick"
+  >
     <span>{{ text }}</span>
   </button>
 </template>
@@ -16,6 +20,9 @@ export default class ActionButton extends Vue {
 
   @Prop({ default: '' })
   text!: string | undefined
+
+  @Prop({ default: false })
+  isDisabled?: boolean
 
   onClick(): void {
     this.$router.push('/')
