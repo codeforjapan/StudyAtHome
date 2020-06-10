@@ -38,6 +38,7 @@
             color="#FFDB6C"
             height="60px"
             class="registerButton"
+            to="terms"
             block
             rounded
           >
@@ -50,13 +51,15 @@
           <v-footer color="#004170" padless>
             <v-row justify="center" no-gutters>
               <v-col class="white--text text-center footerText" cols="12">
-                <a class="white--text"> - おうちで時間割について </a>
+                <a class="white--text" href="#"> - おうちで時間割について </a>
               </v-col>
               <v-col class="white--text text-center footerText" cols="12">
-                <a class="white--text"> - お問い合わせ </a>
+                <a class="white--text" href="#"> - お問い合わせ </a>
               </v-col>
               <v-col class="white--text text-center footerText" cols="12">
-                <a class="white--text"> - サイトポリシー </a>
+                <nuxt-link class="white--text" to="policy">
+                  - サイトポリシー
+                </nuxt-link>
               </v-col>
             </v-row>
           </v-footer>
