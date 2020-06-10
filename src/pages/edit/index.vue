@@ -1,7 +1,7 @@
 <template>
   <div class="MainPage">
     <div v-if="classData.getLessonsByDisplayDate.length">
-      <period-card :class-data="classData" />
+      <period-card-editable :class-data="classData" />
     </div>
     <div v-else class="Classes-Outer">
       <h1 class="Classes-Title">
@@ -20,7 +20,7 @@
 <script lang="ts">
 import Vue from 'vue'
 import { vxm } from '@/store'
-import PeriodCard from '@/components/PeriodCard.vue'
+import PeriodCardEditable from '@/components/PeriodCardEditable.vue'
 import SimpleBottomSheet from '@/components/SimpleBottomSheet.vue'
 
 type Data = {
@@ -30,7 +30,7 @@ type Data = {
 
 export default Vue.extend({
   components: {
-    PeriodCard,
+    PeriodCardEditable,
     SimpleBottomSheet
   },
   layout: 'protected',
