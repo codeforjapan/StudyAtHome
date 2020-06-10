@@ -53,7 +53,7 @@ type Methods = {
 }
 
 export default Vue.extend<unknown, Methods, unknown, Props>({
-  name: 'SimpleModalDialog',
+  name: 'BaseModalDialog',
   components: { ActionButton },
   props: {
     iconName: {
