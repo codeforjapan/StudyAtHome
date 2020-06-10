@@ -1,16 +1,13 @@
 <template>
   <v-layout justify-center="true" align-center="true">
-    <v-flex style="max-width: 630px !important;">
+    <v-flex class="indexFlex">
       <v-row justify="center" class="mb-3">
         <v-icon color="white" size="60px">mdi-library</v-icon>
       </v-row>
       <v-row justify="center">
         <span class="description mb-3">授業をうける生徒・児童の方</span>
       </v-row>
-      <v-row
-        justify="center"
-        style="margin-left: auto !important; margin-right: auto !important;"
-      >
+      <v-row class="loginFieldRow" justify="center">
         <input-field
           v-model="classId"
           class="classIdField"
@@ -40,43 +37,25 @@
           <v-btn
             color="#FFDB6C"
             height="60px"
-            style="font-size: 16px; font-weight: bold;"
+            class="registerButton"
             block
             rounded
           >
             ユーザー登録する
           </v-btn>
 
-          <v-btn
-            color="white"
-            height="50px"
-            style="font-size: 16px; font-weight: bold; margin-top: 10px;"
-            block
-            rounded
-          >
+          <v-btn block class="loginButton" color="white" height="50px" rounded>
             ログインする
           </v-btn>
-          <v-footer padless color="#004170" style="margin-top: 15px;">
+          <v-footer color="#004170" padless>
             <v-row justify="center" no-gutters>
-              <v-col
-                class="white--text text-center md-16"
-                cols="12"
-                style="margin-top: 15px; font-size: 12px;"
-              >
+              <v-col class="white--text text-center footerText" cols="12">
                 <a class="white--text"> - おうちで時間割について </a>
               </v-col>
-              <v-col
-                class="white--text text-center"
-                cols="12"
-                style="margin-top: 15px; font-size: 12px;"
-              >
+              <v-col class="white--text text-center footerText" cols="12">
                 <a class="white--text"> - お問い合わせ </a>
               </v-col>
-              <v-col
-                class="white--text text-center"
-                cols="12"
-                style="margin-top: 15px; font-size: 12px;"
-              >
+              <v-col class="white--text text-center footerText" cols="12">
                 <a class="white--text"> - サイトポリシー </a>
               </v-col>
             </v-row>
@@ -146,5 +125,26 @@ export default Vue.extend({
   border-radius: 24px 24px 24px 24px;
   padding-top: 4px;
   padding-bottom: 24px;
+}
+.indexFlex {
+  max-width: 640px !important;
+}
+.loginFieldRow {
+  margin-left: auto !important;
+  margin-right: auto !important;
+}
+.loginButton {
+  font-size: 16px;
+  font-weight: bold;
+  margin-top: 10px;
+  margin-bottom: 15px;
+}
+.registerButton {
+  font-size: 16px;
+  font-weight: bold;
+}
+.footerText {
+  margin-top: 15px;
+  font-size: 12px;
 }
 </style>
