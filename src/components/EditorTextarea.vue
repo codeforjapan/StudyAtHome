@@ -61,7 +61,4 @@ export default Vue.extend({
   color: $color-white;
   margin-bottom: 4px;
 }
-.v-input__slot {
-  box-shadow: inset 2px 2px 5px rgba(0, 0, 0, 0.3);
-}
 </style>
