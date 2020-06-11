@@ -1,16 +1,15 @@
 <template>
   <div>
-    <span v-if="title" class="EditorField-Title">{{ title }}</span>
+    <span v-if="title" class="EditorTextarea-Title">{{ title }}</span>
     <v-textarea
       v-model="value"
       :hint="hint"
       :label="label"
       :placeholder="placeholder"
       background-color="white"
-      class="Textarea"
+      class="elevation-0"
       solo
       flat
-      outlined
     />
   </div>
 </template>
@@ -53,8 +52,8 @@ export default Vue.extend({
 })
 </script>
 
-<style lang="scss">
-.EditorField-Title {
+<style lang="scss" scoped>
+.EditorTextarea-Title {
   display: block;
   font-size: 16px;
   font-weight: bold;
