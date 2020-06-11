@@ -14,7 +14,7 @@
             <v-col class="col message">{{ message }}</v-col>
             <v-col cols="2">
               <span class="add-button">
-                <AddButton @addButtonClicked="addButtonClicked" />
+                <add-button @addButtonClicked="addButtonClicked" />
               </span>
             </v-col>
           </v-row>
@@ -50,7 +50,8 @@ export default Vue.extend({
   },
   methods: {
     addButtonClicked() {
-      this.$emit('addButtonClicked')
+      this.sheet = !this.sheet
+      this.$emit('addButtonClicked', this.sheet)
     }
   }
 })
