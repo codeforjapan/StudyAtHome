@@ -2,7 +2,11 @@
   <div>
     <span v-if="title" class="EditorField-Title">{{ title }}</span>
     <div class="EditorField-Form">
-      <input-field :label="label" :placeholder="placeholder" />
+      <editor-input-field
+        :label="label"
+        :placeholder="placeholder"
+        :transparent="transparent"
+      />
       <content-card-editor-button
         v-if="iconName"
         class="Button"
@@ -14,11 +18,11 @@
 
 <script lang="ts">
 import Vue from 'vue'
-import InputField from '@/components/InputField.vue'
+import EditorInputField from '@/components/EditorInputField.vue'
 import ContentCardEditorButton from '@/components/ContentCardEditorButton.vue'
 
 export default Vue.extend({
-  components: { InputField, ContentCardEditorButton },
+  components: { EditorInputField, ContentCardEditorButton },
   props: {
     title: {
       type: String,
@@ -34,6 +38,11 @@ export default Vue.extend({
       type: String,
       required: false,
       default: ''
+    },
+    transparent: {
+      type: Boolean,
+      required: false,
+      default: false
     },
     iconName: {
       type: String,
