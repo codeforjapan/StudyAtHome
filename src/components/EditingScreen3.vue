@@ -6,16 +6,20 @@
       placeholder="https://"
       icon-name="mdi-link"
     />
-    <editor-textarea title="動画サムネイル・キャプション表示" />
+    <video-thumbnail
+      title="動画サムネイル・キャプション表示"
+      thumbnail-url="http://img.youtube.com/vi/1o6Dg8OOJB8/sddefault.jpg"
+      caption="動画のキャプションが入ります"
+    />
   </div>
 </template>
 
 <script lang="ts">
 import Vue from 'vue'
 import EditorField from '@/components/EditorField.vue'
-import EditorTextarea from '@/components/EditorTextarea.vue'
+import VideoThumbnail from '@/components/VideoThumbnail.vue'
 
 export default Vue.extend({
-  components: { EditorField, EditorTextarea }
+  components: { EditorField, VideoThumbnail }
 })
 </script>
