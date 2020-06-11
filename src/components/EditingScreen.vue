@@ -111,6 +111,7 @@ export default Vue.extend({
   background-color: $color-base-color-07;
   border-radius: 24px 24px 0 0 !important;
   padding: 16px;
+  margin-top: -40px;
 }
 .EditingScreen-CardElements {
   padding: 0 !important;
