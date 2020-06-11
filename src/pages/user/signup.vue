@@ -4,7 +4,7 @@
       <dl>
         <dt class="SignUp-ItemTitle">お名前（表示名）</dt>
         <dd>
-          <input-field label="name" placeholder="山田花子" />
+          <input-field label="name" placeholder="山田花子" require />
         </dd>
         <dt class="SignUp-ItemTitle">メールアドレス</dt>
         <dd>
@@ -12,15 +12,16 @@
             label="email"
             placeholder="hogehoge@hogehoge.com"
             type="email"
+            require
           />
         </dd>
         <dt class="SignUp-ItemTitle">パスワード</dt>
         <dd>
-          <input-field label="password" type="password" />
+          <input-field label="password" type="password" require />
         </dd>
         <dt class="SignUp-ItemTitle">パスワード（確認用）</dt>
         <dd>
-          <input-field label="confirmation" type="password" />
+          <input-field label="confirmation" type="password" require />
         </dd>
       </dl>
     </template>
