@@ -4,6 +4,7 @@
       title="日付設定"
       label="date"
       placeholder="XX月XX日"
+      :transparent="true"
       icon-name="mdi-calendar"
     />
     <div class="EditingScreen-Flex EditingScreen-Time">
@@ -11,6 +12,7 @@
         title="時間設定"
         label="start_time"
         placeholder="00:00"
+        :transparent="true"
         icon-name="mdi-clock-outline"
         class="TimeField"
       />
@@ -18,6 +20,7 @@
       <editor-field
         label="end_time"
         placeholder="00:00"
+        :transparent="true"
         icon-name="mdi-clock-outline"
         class="TimeField"
       />
