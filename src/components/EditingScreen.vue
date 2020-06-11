@@ -1,36 +1,55 @@
 <template>
   <v-bottom-sheet v-model="screen" persistent scrollable>
     <v-card class="EditingScreen">
-      <v-card-title class="EditingScreen-Header">
-        <span class="En">CREATE TIMETABLE</span>
-        <h2 class="Title">時間割作成</h2>
+      <v-card-title class="EditingScreen-CardElements">
+        <v-container class="EditingScreen-Container">
+          <div class="EditingScreen-Header">
+            <span class="En">CREATE TIMETABLE</span>
+            <h2 class="Title">時間割作成</h2>
+          </div>
+        </v-container>
       </v-card-title>
-      <v-card-text class="EditingScreen-Form">
-        <editing-screen1 v-show="page === 1" />
-        <editing-screen2 v-show="page === 2" />
-        <editing-screen3 v-show="page === 3" />
-        <editing-screen4 v-show="page === 4" />
+      <v-card-text class="EditingScreen-CardText">
+        <v-container class="EditingScreen-FormContainer">
+          <editing-screen1 v-show="page === 1" />
+          <editing-screen2 v-show="page === 2" />
+          <editing-screen3 v-show="page === 3" />
+          <editing-screen4 v-show="page === 4" />
+        </v-container>
       </v-card-text>
-      <div class="EditingScreen-Footer">
-        <div class="EditingScreen-Paging">
-          <v-btn color="white" fab :disabled="isDisabled" @click="goBack">
-            <v-icon color="#0071c2" large>mdi-chevron-left</v-icon>
-          </v-btn>
-          <span class="PagingNumber">{{ page }}/4</span>
-          <v-btn color="white" fab :disabled="isDisabled" @click="goForward">
-            <v-icon color="#0071c2" large>mdi-chevron-right</v-icon>
-          </v-btn>
-        </div>
-        <div class="EditingScreen-ActionButtons">
-          <action-button class="Button" theme="transparent" text="キャンセル" />
-          <action-button
-            class="Button"
-            theme="primary"
-            text="保存する"
-            :is-disabled="isDisabled"
-          />
-        </div>
-      </div>
+      <v-card-actions class="EditingScreen-CardElements">
+        <v-container class="EditingScreen-Container">
+          <div class="EditingScreen-Footer">
+            <div class="EditingScreen-Paging">
+              <v-btn color="white" fab :disabled="isDisabled" @click="goBack">
+                <v-icon color="#0071c2" large>mdi-chevron-left</v-icon>
+              </v-btn>
+              <span class="PagingNumber">{{ page }}/4</span>
+              <v-btn
+                color="white"
+                fab
+                :disabled="isDisabled"
+                @click="goForward"
+              >
+                <v-icon color="#0071c2" large>mdi-chevron-right</v-icon>
+              </v-btn>
+            </div>
+            <div class="EditingScreen-ActionButtons">
+              <action-button
+                class="Button"
+                theme="transparent"
+                text="キャンセル"
+              />
+              <action-button
+                class="Button"
+                theme="primary"
+                text="保存する"
+                :is-disabled="isDisabled"
+              />
+            </div>
+          </div>
+        </v-container>
+      </v-card-actions>
     </v-card>
   </v-bottom-sheet>
 </template>
@@ -91,14 +110,27 @@ export default Vue.extend({
 .EditingScreen {
   background-color: $color-base-color-07;
   border-radius: 24px 24px 0 0 !important;
-  padding: 16px 0 16px 16px;
+  padding: 16px;
+}
+.EditingScreen-CardElements {
+  padding: 0 !important;
+}
+.EditingScreen-CardText {
+  padding: 16px 8px 0 0 !important;
+}
+.EditingScreen-FormContainer {
+  padding: 0 !important;
+}
+.EditingScreen-Container {
+  padding: 0;
 }
 .EditingScreen-Header {
+  display: flex;
   flex-direction: column;
+  align-items: center;
   color: $color-white;
   border-bottom: 1px solid $color-base-color-01;
   padding: 0 0 4px !important;
-  margin-right: 16px;
 
   .En {
     font-size: 12px;
@@ -121,11 +153,10 @@ export default Vue.extend({
   }
 }
 .EditingScreen-Form {
-  padding: 16px 8px 0 0 !important;
+  padding: 16px 16px 0 0 !important;
 }
 .EditingScreen-Footer {
   border-top: 1px solid $color-base-color-01;
-  margin-right: 16px;
 }
 .EditingScreen-ActionButtons {
   display: flex;
