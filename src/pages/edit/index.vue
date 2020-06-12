@@ -1,6 +1,6 @@
 <template>
   <div class="MainPage">
-    <div v-if="classData.getLessonsByCurrentDate.length">
+    <div v-if="classData.lessonsOnCurrentDate.length">
       <period-card-editable :class-data="classData" />
     </div>
     <div v-else class="Classes-Outer">
