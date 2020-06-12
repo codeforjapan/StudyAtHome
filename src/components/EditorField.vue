@@ -7,6 +7,7 @@
         :label="label"
         :placeholder="placeholder"
         :transparent="transparent"
+        :readonly="readonly"
       />
       <content-card-editor-button
         v-if="iconName"
@@ -55,6 +56,11 @@ export default Vue.extend({
       required: false,
       default: ''
     },
+    readonly: {
+      type: Boolean,
+      required: false,
+      default: false
+    },
     value: {
       type: String,
       required: false,
@@ -69,6 +75,9 @@ export default Vue.extend({
   watch: {
     modelValue(value) {
       this.$emit('input', value)
+    },
+    value(value) {
+      this.modelValue = value
     }
   }
 })

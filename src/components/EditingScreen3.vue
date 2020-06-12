@@ -5,7 +5,6 @@
       title="参考動画URL"
       label="video"
       placeholder="https://"
-      icon-name="mdi-link"
     />
     <video-thumbnail
       v-if="tempFormData.videoTitle && tempFormData.videoThumbnailUrl"
