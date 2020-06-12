@@ -1,17 +1,38 @@
 <template>
   <div>
+    {{ tempFormData }}
+    <v-dialog
+      ref="dialog"
+      v-model="datePickerOpen"
+      :return-value.sync="tempFormData.date"
+      width="290px"
+    >
+      <v-date-picker v-model="tempFormData.date">
+        <v-spacer />
+        <v-btn text color="primary" @click="datePickerOpen = false"
+          >Cancel</v-btn
+        >
+        <v-btn
+          text
+          color="primary"
+          @click="$refs.dialog.save(tempFormData.date)"
+          >OK</v-btn
+        >
+      </v-date-picker>
+    </v-dialog>
     <editor-field
-      v-model="form.date"
-      title="日付設定"
+      v-model="tempFormData.date"
+      title="日付設定 *"
       label="date"
-      placeholder="XX月XX日"
+      placeholder="2020/05/30"
       :transparent="true"
       icon-name="mdi-calendar"
+      @buttonClick="datePickerOpen = true"
     />
     <div class="EditingScreen-Flex EditingScreen-Time">
       <editor-field
         v-model="form.startTime"
-        title="時間設定"
+        title="時間設定 *"
         label="start_time"
         placeholder="00:00"
         :transparent="true"
@@ -28,11 +49,16 @@
         class="TimeField"
       />
     </div>
-    <editor-field title="タイトル" label="title" placeholder="例）理科" />
+    <editor-field
+      v-model="form.title"
+      title="タイトル *"
+      label="title"
+      placeholder="例）理科"
+    />
     <div class="EditingScreen-Flex">
       <editor-field
         v-model="form.subjectName"
-        title="教科名"
+        title="教科名 *"
         label="lesson"
         placeholder="例）理科"
         class="LessonField"
@@ -55,6 +81,7 @@ export type formData = {
   date: string
   startTime: string
   endTime: string
+  title: string
   subjectName: string
   subjectColor: string
 }
@@ -68,9 +95,12 @@ export default class EditingScreen1 extends Vue {
     date: this.form.date,
     startTime: this.form.startTime,
     endTime: this.form.endTime,
+    title: this.form.title,
     subjectName: this.form.subjectName,
     subjectColor: this.form.subjectColor
   }
+
+  datePickerOpen = false
 
   @Prop({
     type: Object as () => formData,
@@ -79,6 +109,7 @@ export default class EditingScreen1 extends Vue {
       date: '',
       startTime: '',
       endTime: '',
+      title: '',
       subjectName: '',
       subjectColor: ''
     })

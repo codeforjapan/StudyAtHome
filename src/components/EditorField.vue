@@ -12,6 +12,7 @@
         v-if="iconName"
         class="Button"
         :icon-name="iconName"
+        @click="$emit('buttonClick')"
       />
     </div>
   </div>
