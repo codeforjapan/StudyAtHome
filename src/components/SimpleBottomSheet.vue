@@ -5,6 +5,7 @@
     persistent
     scrollable
     hide-overlay
+    no-click-animationv
   >
     <v-card class="card">
       <v-card-title class="card-title" />
