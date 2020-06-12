@@ -94,8 +94,8 @@ export class ClassDataStore extends VuexModule implements ClassData {
       .collection('Lessons')
       .orderBy('startTime')
       .get()
-      .then(QuerySnapshot => {
-        QuerySnapshot.forEach(function(doc) {
+      .then(querySnapshot => {
+        querySnapshot.forEach(function(doc) {
           const data = doc.data() as RawLesson
           const reformatData = {
             subject: data.subject,
