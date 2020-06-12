@@ -64,6 +64,9 @@
         </div>
       </v-flex>
     </v-flex>
+    <v-snackbar :timeout="5000" :value="error" absolute top color="#C01B61">
+      クラスIDが正しくありません
+    </v-snackbar>
   </v-layout>
 </template>
 
@@ -77,7 +80,6 @@ type DataType = {
   classId: string
   loading: boolean
   error: boolean
-  errorMessages: string
   valid: boolean
 }
 
@@ -91,7 +93,6 @@ export default Vue.extend({
       classId: '',
       loading: false,
       error: false,
-      errorMessages: '',
       valid: true
     }
   },
@@ -103,10 +104,9 @@ export default Vue.extend({
         .then(() => {
           this.$router.push('/classes')
         })
-        .catch((e: Error) => {
+        .catch(() => {
           this.loading = false
           this.error = true
-          this.errorMessages = e.message
         })
     }
   }
