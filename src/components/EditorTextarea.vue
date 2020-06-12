@@ -57,6 +57,9 @@ export default Vue.extend({
   watch: {
     modelValue(value) {
       this.$emit('input', value)
+    },
+    value(value) {
+      this.modelValue = value
     }
   }
 })

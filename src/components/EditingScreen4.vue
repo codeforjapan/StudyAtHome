@@ -17,7 +17,6 @@
       title="副教材URL"
       label="sub_text_url"
       placeholder="https://"
-      icon-name="mdi-link"
     />
   </div>
 </template>

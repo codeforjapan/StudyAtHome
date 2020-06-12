@@ -1,12 +1,13 @@
 <template>
   <v-text-field
-    v-model="modelValue"
+    v-model="value"
     :color="transparent ? 'white' : '#424242'"
     type="text"
     :hint="hint"
     :label="label"
     :placeholder="placeholder"
     :background-color="transparent ? 'transparent' : 'white'"
+    :readonly="readonly"
     class="elevation-0"
     solo
     flat
@@ -51,6 +52,11 @@ export default Vue.extend({
       required: false,
       default: false
     },
+    readonly: {
+      type: Boolean,
+      required: false,
+      default: false
+    },
     value: {
       type: String,
       required: true,
@@ -65,13 +71,16 @@ export default Vue.extend({
   watch: {
     modelValue(value) {
       this.$emit('input', value)
+    },
+    value(value) {
+      this.modelValue = value
     }
   }
 })
 </script>
 
 <style lang="scss">
-.v-input__slot {
+.v-text-field > .v-input__control > .v-input__slot {
   box-shadow: inset 2px 2px 5px rgba(0, 0, 0, 0.3);
   border-radius: 14px !important;
 
