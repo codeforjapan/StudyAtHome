@@ -1,7 +1,7 @@
 <template>
   <div>
     <editor-field
-      v-model="formData.date"
+      v-model="form.date"
       title="日付設定"
       label="date"
       placeholder="XX月XX日"
@@ -10,7 +10,7 @@
     />
     <div class="EditingScreen-Flex EditingScreen-Time">
       <editor-field
-        v-model="formData.startTime"
+        v-model="form.startTime"
         title="時間設定"
         label="start_time"
         placeholder="00:00"
@@ -20,7 +20,7 @@
       />
       <span class="Hyphen">-</span>
       <editor-field
-        v-model="formData.endTime"
+        v-model="form.endTime"
         label="end_time"
         placeholder="00:00"
         :transparent="true"
@@ -31,14 +31,14 @@
     <editor-field title="タイトル" label="title" placeholder="例）理科" />
     <div class="EditingScreen-Flex">
       <editor-field
-        v-model="formData.subjectName"
+        v-model="form.subjectName"
         title="教科名"
         label="lesson"
         placeholder="例）理科"
         class="LessonField"
       />
       <editor-field
-        v-model="formData.subjectColor"
+        v-model="form.subjectColor"
         title="ラベル色"
         icon-name="mdi-palette"
         class="LabelField"
@@ -48,23 +48,57 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue'
+import { Vue, Component, Prop, Emit, Watch } from 'vue-property-decorator'
 import EditorField from '~/components/EditorField.vue'
 
-export default Vue.extend({
-  components: { EditorField },
-  data() {
-    return {
-      formData: {
-        date: '',
-        startTime: '',
-        endTime: '',
-        subjectName: '',
-        subjectColor: ''
-      }
-    }
+export type formData = {
+  date: string
+  startTime: string
+  endTime: string
+  subjectName: string
+  subjectColor: string
+}
+@Component({
+  components: {
+    EditorField
   }
 })
+export default class EditingScreen extends Vue {
+  tempFormData = {
+    date: this.form.date,
+    startTime: this.form.startTime,
+    endTime: this.form.endTime,
+    subjectName: this.form.subjectName,
+    subjectColor: this.form.subjectColor
+  }
+
+  @Prop({
+    type: Object as () => formData,
+    required: true,
+    default: () => ({
+      date: '',
+      startTime: '',
+      endTime: '',
+      subjectName: '',
+      subjectColor: ''
+    })
+  })
+  public value!: formData
+
+  private get form(): formData {
+    return this.value
+  }
+
+  @Watch('tempFormData')
+  onChangeTempFormData() {
+    this.input(this.tempFormData)
+  }
+
+  @Emit()
+  public input(value: formData) {
+    return value
+  }
+}
 </script>
 
 <style lang="scss" scoped>

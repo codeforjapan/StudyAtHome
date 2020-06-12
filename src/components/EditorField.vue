@@ -3,6 +3,7 @@
     <span v-if="title" class="EditorField-Title">{{ title }}</span>
     <div class="EditorField-Form">
       <editor-input-field
+        v-model="modelValue"
         :label="label"
         :placeholder="placeholder"
         :transparent="transparent"
@@ -20,6 +21,10 @@
 import Vue from 'vue'
 import EditorInputField from '@/components/EditorInputField.vue'
 import ContentCardEditorButton from '@/components/ContentCardEditorButton.vue'
+
+type DataType = {
+  modelValue: string
+}
 
 export default Vue.extend({
   components: { EditorInputField, ContentCardEditorButton },
@@ -48,6 +53,21 @@ export default Vue.extend({
       type: String,
       required: false,
       default: ''
+    },
+    value: {
+      type: String,
+      required: true,
+      default: ''
+    }
+  },
+  data(): DataType {
+    return {
+      modelValue: this.value
+    }
+  },
+  watch: {
+    modelValue(value) {
+      this.$emit('input', value)
     }
   }
 })
