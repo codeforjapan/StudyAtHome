@@ -20,6 +20,7 @@
         >
       </v-date-picker>
     </v-dialog>
+    {{ tempFormData.date }}
     <editor-field
       v-model="tempFormData.date"
       title="日付設定 *"
@@ -31,7 +32,7 @@
     />
     <div class="EditingScreen-Flex EditingScreen-Time">
       <editor-field
-        v-model="form.startTime"
+        v-model="tempFormData.startTime"
         title="時間設定 *"
         label="start_time"
         placeholder="00:00"
@@ -41,7 +42,7 @@
       />
       <span class="Hyphen">-</span>
       <editor-field
-        v-model="form.endTime"
+        v-model="tempFormData.endTime"
         label="end_time"
         placeholder="00:00"
         :transparent="true"
@@ -50,21 +51,21 @@
       />
     </div>
     <editor-field
-      v-model="form.title"
+      v-model="tempFormData.title"
       title="タイトル *"
       label="title"
       placeholder="例）理科"
     />
     <div class="EditingScreen-Flex">
       <editor-field
-        v-model="form.subjectName"
+        v-model="tempFormData.subjectName"
         title="教科名 *"
         label="lesson"
         placeholder="例）理科"
         class="LessonField"
       />
       <editor-field
-        v-model="form.subjectColor"
+        v-model="tempFormData.subjectColor"
         title="ラベル色"
         icon-name="mdi-palette"
         class="LabelField"
@@ -120,8 +121,9 @@ export default class EditingScreen1 extends Vue {
     return this.value
   }
 
-  @Watch('tempFormData')
+  @Watch('tempFormData', { deep: true })
   onChangeTempFormData() {
+    alert('test')
     this.input(this.tempFormData)
   }
 

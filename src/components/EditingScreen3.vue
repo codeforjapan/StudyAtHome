@@ -1,7 +1,7 @@
 <template>
   <div>
     <editor-field
-      v-model="form.videoUrl"
+      v-model="tempFormData.videoUrl"
       title="参考動画URL"
       label="video"
       placeholder="https://"
@@ -55,7 +55,7 @@ export default class EditingScreen3 extends Vue {
     return this.value
   }
 
-  @Watch('tempFormData')
+  @Watch('tempFormData', { deep: true })
   onChangeTempFormData() {
     this.input(this.tempFormData)
   }
