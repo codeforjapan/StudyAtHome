@@ -11,10 +11,11 @@
       </v-card-title>
       <v-card-text class="EditingScreen-CardText">
         <v-container class="EditingScreen-FormContainer">
+          {{ fourthPageData }}
           <editing-screen1 v-show="page === 1" v-model="firstPageData" />
           <editing-screen2 v-show="page === 2" v-model="secondPageData" />
           <editing-screen3 v-show="page === 3" v-model="thirdPageData" />
-          <editing-screen4 v-show="page === 4" />
+          <editing-screen4 v-show="page === 4" v-model="fourthPageData" />
         </v-container>
       </v-card-text>
       <v-card-actions class="EditingScreen-CardElements">
@@ -69,6 +70,7 @@ type DataType = {
   firstPageData: Object
   secondPageData: Object
   thirdPageData: Object
+  fourthPageData: Object
 }
 
 export default Vue.extend({
@@ -106,6 +108,11 @@ export default Vue.extend({
         videoUrl: '',
         videoTitle: '',
         videoThumbnailUrl: ''
+      },
+      fourthPageData: {
+        textBookPage: '',
+        subTextTitle: '',
+        subTextUrl: ''
       }
     }
   },
