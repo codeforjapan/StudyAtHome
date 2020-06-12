@@ -11,7 +11,9 @@
       </v-card-title>
       <v-card-text class="EditingScreen-CardText">
         <v-container class="EditingScreen-FormContainer">
-          {{ fourthPageData }}
+          <span class="EditingScreen-Note">
+            *マークのあるものは必須項目です
+          </span>
           <editing-screen1 v-show="page === 1" v-model="firstPageData" />
           <editing-screen2 v-show="page === 2" v-model="secondPageData" />
           <editing-screen3 v-show="page === 3" v-model="thirdPageData" />
@@ -65,7 +67,6 @@ import EditingScreen4 from '@/components/EditingScreen4.vue'
 
 type DataType = {
   screen: boolean
-  isDisabled: boolean
   page: number
   firstPageData: Object
   secondPageData: Object
@@ -91,7 +92,6 @@ export default Vue.extend({
   data(): DataType {
     return {
       screen: this.expanded,
-      isDisabled: false,
       page: 1,
       firstPageData: {
         date: '',
@@ -116,6 +116,11 @@ export default Vue.extend({
       }
     }
   },
+  computed: {
+    isDisabled() {
+      return false
+    }
+  },
   watch: {
     expanded(newValue) {
       this.screen = newValue
@@ -138,6 +143,13 @@ export default Vue.extend({
   border-radius: 24px 24px 0 0 !important;
   padding: 16px;
   margin-top: -40px;
+}
+.EditingScreen-Note {
+  display: block;
+  font-size: 16px;
+  font-weight: bold;
+  color: $color-white;
+  margin-bottom: 4px;
 }
 .EditingScreen-CardElements {
   padding: 0 !important;
