@@ -2,7 +2,7 @@
   <div>
     <span v-if="title" class="EditorTextarea-Title">{{ title }}</span>
     <v-textarea
-      v-model="value"
+      v-model="modelValue"
       :hint="hint"
       :label="label"
       :placeholder="placeholder"
@@ -18,7 +18,7 @@
 import Vue from 'vue'
 
 type DataType = {
-  value: string
+  modelValue: string
 }
 
 export default Vue.extend({
@@ -42,11 +42,21 @@ export default Vue.extend({
       type: String,
       required: false,
       default: ''
+    },
+    value: {
+      type: String,
+      required: false,
+      default: ''
     }
   },
   data(): DataType {
     return {
-      value: ''
+      modelValue: this.value
+    }
+  },
+  watch: {
+    modelValue(value) {
+      this.$emit('input', value)
     }
   }
 })

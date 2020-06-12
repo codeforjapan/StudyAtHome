@@ -12,7 +12,7 @@
       <v-card-text class="EditingScreen-CardText">
         <v-container class="EditingScreen-FormContainer">
           <editing-screen1 v-show="page === 1" v-model="firstPageData" />
-          <editing-screen2 v-show="page === 2" />
+          <editing-screen2 v-show="page === 2" v-model="secondPageData" />
           <editing-screen3 v-show="page === 3" />
           <editing-screen4 v-show="page === 4" />
         </v-container>
@@ -67,6 +67,7 @@ type DataType = {
   isDisabled: boolean
   page: number
   firstPageData: Object
+  secondPageData: Object
 }
 
 export default Vue.extend({
@@ -95,6 +96,10 @@ export default Vue.extend({
         endTime: '',
         subjectName: '',
         subjectColor: ''
+      },
+      secondPageData: {
+        objectives: '',
+        description: ''
       }
     }
   },
