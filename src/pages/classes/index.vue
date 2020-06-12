@@ -46,10 +46,10 @@ export default Vue.extend<Data, Methods, Computed, unknown>({
   },
   computed: {
     today() {
-      return isToday(this.classData.displayDate)
+      return isToday(vxm.app.displayDate)
     },
     dateTitle() {
-      return dayjs(this.classData.displayDate).format('M/D')
+      return dayjs(vxm.app.displayDate).format('M/D')
     }
   },
   methods: {
