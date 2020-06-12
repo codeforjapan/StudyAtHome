@@ -1,51 +1,60 @@
 <template>
-  <bottom-sheet-layer fullscreen title="ログインしてください" title-en="LOGIN">
-    <template v-slot:LayerContents>
-      <dl>
-        <dt class="SignIn-ItemTitle">メールアドレス</dt>
-        <dd class="SignIn-Item">
-          <input-field
-            v-model="email"
-            label="studyathome@example.com"
-            require
-            type="email"
+  <div>
+    <bottom-sheet-layer
+      fullscreen
+      title="ログインしてください"
+      title-en="LOGIN"
+    >
+      <template v-slot:LayerContents>
+        <dl>
+          <dt class="SignIn-ItemTitle">メールアドレス</dt>
+          <dd class="SignIn-Item">
+            <input-field
+              v-model="email"
+              label="studyathome@example.com"
+              require
+              type="email"
+            />
+          </dd>
+          <dt class="SignIn-ItemTitle">パスワード</dt>
+          <dd class="SignIn-Item">
+            <input-field
+              v-model="password"
+              label="パスワード"
+              require
+              type="password"
+            />
+          </dd>
+        </dl>
+      </template>
+      <template v-slot:LayerFooter>
+        <div class="SignIn-ButtonOuter">
+          <action-button
+            :is-disabled="disableLogin"
+            :is-loading="loading"
+            class="SignIn-Button"
+            text="ログイン"
+            theme="primary"
+            @click="doLogin"
           />
-        </dd>
-        <dt class="SignIn-ItemTitle">パスワード</dt>
-        <dd class="SignIn-Item">
-          <input-field
-            v-model="password"
-            label="パスワード"
-            require
-            type="password"
-          />
-        </dd>
-      </dl>
-    </template>
-    <template v-slot:LayerFooter>
-      <div class="SignIn-ButtonOuter">
-        <action-button
-          :is-disabled="disableLogin"
-          :is-loading="loading"
-          class="SignIn-Button"
-          text="ログイン"
-          theme="primary"
-          @click="doLogin"
-        />
-        <v-btn
-          :disabled="loading"
-          block
-          class="button"
-          color="#ffffff"
-          height="60px"
-          text
-          to="/"
-        >
-          <span>パスワードを忘れた方へ</span>
-        </v-btn>
-      </div>
-    </template>
-  </bottom-sheet-layer>
+          <v-btn
+            :disabled="loading"
+            block
+            class="button"
+            color="#ffffff"
+            height="60px"
+            text
+            to="/"
+          >
+            <span>パスワードを忘れた方へ</span>
+          </v-btn>
+        </div>
+      </template>
+    </bottom-sheet-layer>
+    <v-snackbar :timeout="5000" :value="error" absolute top color="#C01B61">
+      メールアドレスまたはパスワードが正しくありません
+    </v-snackbar>
+  </div>
 </template>
 
 <script lang="ts">
@@ -63,7 +72,8 @@ export default Vue.extend({
     return {
       email: '',
       password: '',
-      loading: false
+      loading: false,
+      error: false
     }
   },
   computed: {
@@ -85,9 +95,9 @@ export default Vue.extend({
           vxm.user.login()
           this.$router.push('/edit')
         })
-        .catch(error => {
+        .catch(() => {
           this.loading = false
-          alert(error)
+          this.error = true
         })
     }
   }
