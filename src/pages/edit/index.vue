@@ -13,7 +13,12 @@
         <li>サイトポリシー</li>
       </ul>
     </div>
-    <simple-bottom-sheet message="2年B組の授業を追加・編集する" />
+    <simple-bottom-sheet
+      message="2年B組の授業を追加・編集する"
+      :expanded="isExpandedButton"
+      @addButtonClicked="handler"
+    />
+    <editing-screen :expanded="!isExpandedButton" />
   </div>
 </template>
 
@@ -22,22 +27,31 @@ import Vue from 'vue'
 import { vxm } from '@/store'
 import PeriodCardEditable from '@/components/PeriodCardEditable.vue'
 import SimpleBottomSheet from '@/components/SimpleBottomSheet.vue'
+import EditingScreen from '@/components/EditingScreen.vue'
 
-type Data = {
+type DataType = {
   classData: typeof vxm.classData
   dateTitle: string
+  isExpandedButton: boolean
 }
 
 export default Vue.extend({
   components: {
     PeriodCardEditable,
-    SimpleBottomSheet
+    SimpleBottomSheet,
+    EditingScreen
   },
   layout: 'protected',
-  data(): Data {
+  data(): DataType {
     return {
       classData: vxm.classData,
-      dateTitle: '25日'
+      dateTitle: '25日',
+      isExpandedButton: true
+    }
+  },
+  methods: {
+    handler(): void {
+      this.isExpandedButton = !this.isExpandedButton
     }
   }
 })
