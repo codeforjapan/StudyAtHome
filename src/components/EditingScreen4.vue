@@ -1,19 +1,19 @@
 <template>
   <div>
     <editor-field
-      v-model="tempFormData.textBookPage"
+      v-model="tempFormData.pages"
       title="教科書ページ"
       label="textbook_page"
       placeholder="例）10〜14ページ"
     />
     <editor-field
-      v-model="tempFormData.subTextTitle"
+      v-model="tempFormData.materialsTitle"
       title="副教材タイトル"
       label="sub_text"
       placeholder="例）やさしい理科教材"
     />
     <editor-field
-      v-model="tempFormData.subTextUrl"
+      v-model="tempFormData.materialsUrl"
       title="副教材URL"
       label="sub_text_url"
       placeholder="https://"
@@ -26,9 +26,9 @@ import { Vue, Component, Prop, Emit, Watch } from 'vue-property-decorator'
 import EditorField from '~/components/EditorField.vue'
 
 export type formData = {
-  textBookPage: string
-  subTextTitle: string
-  subTextUrl: string
+  pages: string
+  materialsTitle: string
+  materialsUrl: string
 }
 @Component({
   components: {
@@ -37,18 +37,18 @@ export type formData = {
 })
 export default class EditingScreen1 extends Vue {
   tempFormData = {
-    textBookPage: this.form.textBookPage,
-    subTextTitle: this.form.subTextTitle,
-    subTextUrl: this.form.subTextUrl
+    pages: this.form.pages,
+    materialsTitle: this.form.materialsTitle,
+    materialsUrl: this.form.materialsUrl
   }
 
   @Prop({
     type: Object as () => formData,
     required: true,
     default: () => ({
-      textBookPage: '',
-      subTextTitle: '',
-      subTextUrl: ''
+      pages: '',
+      materialsTitle: '',
+      materialsUrl: ''
     })
   })
   public value!: formData

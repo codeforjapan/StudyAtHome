@@ -1,6 +1,6 @@
 <template>
   <div>
-    <editor-textarea v-model="tempFormData.objectives" title="学習の目的" />
+    <editor-textarea v-model="tempFormData.goal" title="学習の目的" />
     <editor-textarea v-model="tempFormData.description" title="詳細説明" />
   </div>
 </template>
@@ -10,7 +10,7 @@ import { Vue, Component, Prop, Emit, Watch } from 'vue-property-decorator'
 import EditorTextarea from '@/components/EditorTextarea.vue'
 
 export type formData = {
-  objectives: string
+  goal: string
   description: string
 }
 @Component({
@@ -20,7 +20,7 @@ export type formData = {
 })
 export default class EditingScreen2 extends Vue {
   tempFormData = {
-    objectives: this.form.objectives,
+    goal: this.form.goal,
     description: this.form.description
   }
 
@@ -28,7 +28,7 @@ export default class EditingScreen2 extends Vue {
     type: Object as () => formData,
     required: true,
     default: () => ({
-      objectives: '',
+      goal: '',
       description: ''
     })
   })
