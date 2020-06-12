@@ -6,6 +6,7 @@
     :type="show ? 'text' : 'password'"
     :hint="hint"
     :label="label"
+    :placeholder="placeholder"
     background-color="white"
     class="elevation-0"
     solo
@@ -30,6 +31,7 @@
     type="text"
     :hint="hint"
     :label="label"
+    :placeholder="placeholder"
     background-color="white"
     class="elevation-0"
     solo
@@ -47,6 +49,7 @@
     type="text"
     :hint="hint"
     :label="label"
+    :placeholder="placeholder"
     background-color="white"
     class="elevation-0"
     solo
@@ -64,6 +67,7 @@
     type="text"
     :hint="hint"
     :label="label"
+    :placeholder="placeholder"
     background-color="white"
     class="elevation-0"
     solo
@@ -109,6 +113,11 @@ export default Vue.extend({
       type: Boolean,
       required: false,
       default: false
+    },
+    placeholder: {
+      type: String,
+      required: false,
+      default: ''
     }
   },
   data(): DataType {
@@ -185,5 +194,6 @@ export default Vue.extend({
 <style lang="scss">
 .v-input__slot {
   box-shadow: inset 2px 2px 5px rgba(0, 0, 0, 0.3);
+  border-radius: 14px !important;
 }
 </style>

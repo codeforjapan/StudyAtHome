@@ -25,28 +25,35 @@ import PeriodCard from '@/components/PeriodCard.vue'
 
 type Data = {
   classData: typeof vxm.classData
+}
+
+type Methods = {
+  formatDate(date: Date): string
+}
+
+type Computed = {
   today: boolean
   dateTitle: string
 }
 
-export default Vue.extend({
+export default Vue.extend<Data, Methods, Computed, unknown>({
   components: { PeriodCard },
   layout: 'classes',
-  data(): Data {
+  data() {
     return {
-      classData: vxm.classData,
-      today: true,
-      dateTitle: '1/1'
+      classData: vxm.classData
     }
   },
-  mounted() {
-    vxm.classData.$subscribe('setDate', () => {
-      this.today = isToday(this.classData.displayDate)
-      this.dateTitle = dayjs(this.classData.displayDate).format('M/D')
-    })
+  computed: {
+    today() {
+      return isToday(this.classData.displayDate)
+    },
+    dateTitle() {
+      return dayjs(this.classData.displayDate).format('M/D')
+    }
   },
   methods: {
-    formatDate(date: Date): string {
+    formatDate(date: Date) {
       return dayjs(date).format('HH:MM')
     }
   }
