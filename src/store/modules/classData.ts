@@ -1,6 +1,11 @@
-import { createModule, mutation, action } from 'vuex-class-component'
-import dayjs from 'dayjs'
+import {
+  createModule,
+  mutation,
+  action,
+  createProxy
+} from 'vuex-class-component'
 import firebase from '@/plugins/firebase'
+import { AppStore } from '@/store/modules/app'
 import Timestamp = firebase.firestore.Timestamp
 
 const VuexModule = createModule({
@@ -12,7 +17,6 @@ const VuexModule = createModule({
 type ClassId = string
 type ClassName = string
 type Lessons = Lesson[]
-type DisplayDate = Date
 
 interface Lesson {
   subject: string
@@ -37,28 +41,27 @@ interface ClassData {
   classId: ClassId
   className: ClassName
   lessons: Lessons
-  displayDate: DisplayDate
 }
 
 export class ClassDataStore extends VuexModule implements ClassData {
   classId: ClassId = ''
   className: ClassName = ''
   lessons: Lessons = []
-  displayDate: DisplayDate = new Date()
 
   public get getLessonsByDisplayDate(): Lessons {
+    const appStore = createProxy(this.$store, AppStore)
     const dateStart = new Date(
-      this.displayDate.getFullYear(),
-      this.displayDate.getMonth(),
-      this.displayDate.getDate(),
+      appStore.displayDate.getFullYear(),
+      appStore.displayDate.getMonth(),
+      appStore.displayDate.getDate(),
       0,
       0,
       0
     )
     const dateEnd = new Date(
-      this.displayDate.getFullYear(),
-      this.displayDate.getMonth(),
-      this.displayDate.getDate(),
+      appStore.displayDate.getFullYear(),
+      appStore.displayDate.getMonth(),
+      appStore.displayDate.getDate(),
       23,
       59,
       59
@@ -85,25 +88,6 @@ export class ClassDataStore extends VuexModule implements ClassData {
   private setDataFromRawClassData({ className, lessons }: RawClassData) {
     this.className = className
     this.lessons = lessons
-  }
-
-  @mutation
-  public nextDate() {
-    this.displayDate = dayjs(this.displayDate)
-      .add(1, 'd')
-      .toDate()
-  }
-
-  @mutation
-  public prevDate() {
-    this.displayDate = dayjs(this.displayDate)
-      .subtract(1, 'd')
-      .toDate()
-  }
-
-  @mutation
-  public setDate(date: Date) {
-    this.displayDate = date
   }
 
   @action
