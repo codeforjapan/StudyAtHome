@@ -1,6 +1,5 @@
 <template>
   <div>
-    {{ tempFormData }}
     <v-dialog
       ref="dialog"
       v-model="datePickerOpen"
@@ -20,7 +19,93 @@
         >
       </v-date-picker>
     </v-dialog>
-    {{ tempFormData.date }}
+    <v-dialog
+      ref="startTimeDialog"
+      v-model="startTimePickerOpen"
+      :return-value.sync="tempFormData.startTime"
+      persistent
+      width="290px"
+    >
+      <v-time-picker
+        v-if="startTimePickerOpen"
+        v-model="tempFormData.startTime"
+        format="24hr"
+        :max="tempFormData.endTime"
+        full-width
+      >
+        <v-spacer />
+        <v-btn text color="primary" @click="startTimePickerOpen = false">
+          Cancel
+        </v-btn>
+        <v-btn
+          text
+          color="primary"
+          @click="$refs.startTimeDialog.save(tempFormData.startTime)"
+        >
+          OK
+        </v-btn>
+      </v-time-picker>
+    </v-dialog>
+    <v-dialog
+      ref="endTimeDialog"
+      v-model="endTimePickerOpen"
+      :return-value.sync="tempFormData.endTime"
+      persistent
+      width="290px"
+    >
+      <v-time-picker
+        v-if="endTimePickerOpen"
+        v-model="tempFormData.endTime"
+        :min="tempFormData.startTime"
+        format="24hr"
+        full-width
+      >
+        <v-spacer />
+        <v-btn text color="primary" @click="endTimePickerOpen = false">
+          Cancel
+        </v-btn>
+        <v-btn
+          text
+          color="primary"
+          @click="$refs.endTimeDialog.save(tempFormData.endTime)"
+        >
+          OK
+        </v-btn>
+      </v-time-picker>
+    </v-dialog>
+    <v-dialog
+      ref="colorDialog"
+      v-model="colorPickerOpen"
+      :return-value.sync="tempFormData.subjectColor"
+      persistent
+      width="290px"
+    >
+      <v-card>
+        <v-color-picker
+          v-if="colorPickerOpen"
+          v-model="tempFormData.subjectColor"
+          disabled
+          hide-canvas
+          hide-inputs
+          hide-mode-switch
+          show-swatches
+          :swatches="colorArray"
+          full-width
+        />
+        <v-card-actions>
+          <v-spacer />
+          <v-btn text @click="colorPickerOpen = false">
+            Cancel
+          </v-btn>
+          <v-btn
+            text
+            @click="$refs.colorDialog.save(tempFormData.subjectColor)"
+          >
+            OK
+          </v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
     <editor-field
       v-model="tempFormData.date"
       title="日付設定 *"
@@ -28,6 +113,7 @@
       placeholder="2020/05/30"
       :transparent="true"
       icon-name="mdi-calendar"
+      :readonly="true"
       @buttonClick="datePickerOpen = true"
     />
     <div class="EditingScreen-Flex EditingScreen-Time">
@@ -39,6 +125,8 @@
         :transparent="true"
         icon-name="mdi-clock-outline"
         class="TimeField"
+        :readonly="true"
+        @buttonClick="startTimePickerOpen = true"
       />
       <span class="Hyphen">-</span>
       <editor-field
@@ -48,6 +136,8 @@
         :transparent="true"
         icon-name="mdi-clock-outline"
         class="TimeField"
+        :readonly="true"
+        @buttonClick="endTimePickerOpen = true"
       />
     </div>
     <editor-field
@@ -64,11 +154,13 @@
         placeholder="例）理科"
         class="LessonField"
       />
-      <editor-field
-        v-model="tempFormData.subjectColor"
+      <editor-color-picker-field
         title="ラベル色"
         icon-name="mdi-palette"
+        :subject-color="tempFormData.subjectColor"
+        :subject-name="tempFormData.subjectName"
         class="LabelField"
+        @buttonClick="colorPickerOpen = true"
       />
     </div>
   </div>
@@ -76,7 +168,9 @@
 
 <script lang="ts">
 import { Vue, Component, Prop, Emit, Watch } from 'vue-property-decorator'
-import EditorField from '~/components/EditorField.vue'
+import EditorField from '@/components/EditorField.vue'
+import SubjectTag from '@/components/SubjectTag.vue'
+import EditorColorPickerField from '@/components/EditorColorPickerField.vue'
 
 export type formData = {
   date: string
@@ -88,7 +182,9 @@ export type formData = {
 }
 @Component({
   components: {
-    EditorField
+    EditorField,
+    SubjectTag,
+    EditorColorPickerField
   }
 })
 export default class EditingScreen1 extends Vue {
@@ -102,6 +198,16 @@ export default class EditingScreen1 extends Vue {
   }
 
   datePickerOpen = false
+  startTimePickerOpen = false
+  endTimePickerOpen = false
+  colorPickerOpen = false
+  colorArray = [
+    ['#BAC8FF', '#748FFC'],
+    ['#D0BFFF', '#9775FA'],
+    ['#FCC2D7', '#F783AC'],
+    ['#FFD8A8', '#FFA94D'],
+    ['#D8F5A2', '#A9E34B']
+  ]
 
   @Prop({
     type: Object as () => formData,
@@ -112,7 +218,7 @@ export default class EditingScreen1 extends Vue {
       endTime: '',
       title: '',
       subjectName: '',
-      subjectColor: ''
+      subjectColor: '#BAC8FF'
     })
   })
   public value!: formData
@@ -123,8 +229,12 @@ export default class EditingScreen1 extends Vue {
 
   @Watch('tempFormData', { deep: true })
   onChangeTempFormData() {
-    alert('test')
     this.input(this.tempFormData)
+  }
+
+  @Watch('value', { deep: true })
+  onChangeValueFormData() {
+    this.tempFormData = this.value
   }
 
   @Emit()
@@ -155,9 +265,10 @@ export default class EditingScreen1 extends Vue {
   }
 }
 .LessonField {
-  flex: 0 1 52%;
+  flex: 1 0 auto;
 }
 .LabelField {
-  flex: 0 1 45%;
+  margin-left: 3%;
+  flex: 0 1 auto;
 }
 </style>
