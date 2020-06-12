@@ -151,4 +151,18 @@ export class ClassDataStore extends VuexModule implements ClassData {
       lessons
     })
   }
+
+  @action
+  public async addLesson(lessonData: Object) {
+    await firebase
+      .firestore()
+      .collection('classData')
+      .doc(this.classId)
+      .collection('Lessons')
+      .add(lessonData)
+      .catch(() => {
+        return Promise.reject(new Error('エラーによって処理に失敗しました'))
+      })
+    this.loadClassData(this.classId)
+  }
 }

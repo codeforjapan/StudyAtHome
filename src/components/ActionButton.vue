@@ -2,8 +2,9 @@
   <v-btn
     :class="`ActionButton ActionButton-${theme}`"
     :disabled="isDisabled"
+    :loading="isLoading"
     rounded
-    @click="onClick"
+    @click="$emit('click')"
   >
     <span>{{ text }}</span>
   </v-btn>
@@ -25,9 +26,8 @@ export default class ActionButton extends Vue {
   @Prop({ default: false })
   isDisabled?: boolean
 
-  onClick(): void {
-    this.$router.push('/')
-  }
+  @Prop({ default: false })
+  isLoading?: boolean
 }
 </script>
 

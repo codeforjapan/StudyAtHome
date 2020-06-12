@@ -24,14 +24,14 @@
         <v-container class="EditingScreen-Container">
           <div class="EditingScreen-Footer">
             <div class="EditingScreen-Paging">
-              <v-btn color="white" fab :disabled="isDisabled" @click="goBack">
+              <v-btn color="white" fab :disabled="page === 1" @click="goBack">
                 <v-icon color="#0071c2" large>mdi-chevron-left</v-icon>
               </v-btn>
               <span class="PagingNumber">{{ page }}/4</span>
               <v-btn
                 color="white"
                 fab
-                :disabled="isDisabled"
+                :disabled="page === 4"
                 @click="goForward"
               >
                 <v-icon color="#0071c2" large>mdi-chevron-right</v-icon>
@@ -48,6 +48,7 @@
                 theme="primary"
                 text="保存する"
                 :is-disabled="isDisabled"
+                @click="addLesson"
               />
             </div>
           </div>
@@ -59,19 +60,73 @@
 
 <script lang="ts">
 import Vue from 'vue'
+import dayjs from 'dayjs'
+import { vxm } from '@/store'
 import ActionButton from '@/components/ActionButton.vue'
 import EditingScreen1 from '@/components/EditingScreen1.vue'
 import EditingScreen2 from '@/components/EditingScreen2.vue'
 import EditingScreen3 from '@/components/EditingScreen3.vue'
 import EditingScreen4 from '@/components/EditingScreen4.vue'
 
+type FirstPageDataType = {
+  date: string
+  startTime: string
+  endTime: string
+  title: string
+  subjectName: string
+  subjectColor: string
+}
+
+type SecondPageDataType = {
+  goal: string
+  description: string
+}
+
+type ThirdPageDataType = {
+  videoUrl: string
+  videoTitle: string
+  videoThumbnailUrl: string
+}
+
+type FourthPageDataType = {
+  pages: string
+  materialsTitle: string
+  materialsUrl: string
+}
+
 type DataType = {
   screen: boolean
   page: number
-  firstPageData: Object
-  secondPageData: Object
-  thirdPageData: Object
-  fourthPageData: Object
+  firstPageData: FirstPageDataType
+  secondPageData: SecondPageDataType
+  thirdPageData: ThirdPageDataType
+  fourthPageData: FourthPageDataType
+}
+
+type LessonVideoType = {
+  url: string
+  title: string
+  thumbnailUrl: string
+}
+
+type LessonMaterialsType = {
+  title: string
+  url: string
+}
+
+type LessonDataType = {
+  startTime: Date
+  endTime: Date
+  title: string
+  subject: {
+    name: string
+    color: string
+  }
+  goal: string
+  description: string
+  videos: LessonVideoType[]
+  pages: string
+  materials: LessonMaterialsType[]
 }
 
 export default Vue.extend({
@@ -97,11 +152,12 @@ export default Vue.extend({
         date: '',
         startTime: '',
         endTime: '',
+        title: '',
         subjectName: '',
         subjectColor: '#BAC8FF'
       },
       secondPageData: {
-        objectives: '',
+        goal: '',
         description: ''
       },
       thirdPageData: {
@@ -110,15 +166,20 @@ export default Vue.extend({
         videoThumbnailUrl: ''
       },
       fourthPageData: {
-        textBookPage: '',
-        subTextTitle: '',
-        subTextUrl: ''
+        pages: '',
+        materialsTitle: '',
+        materialsUrl: ''
       }
     }
   },
   computed: {
-    isDisabled() {
-      return false
+    isDisabled(): boolean {
+      return (
+        !this.firstPageData.date ||
+        !this.firstPageData.startTime ||
+        !this.firstPageData.title ||
+        !this.firstPageData.subjectName
+      )
     }
   },
   watch: {
@@ -132,6 +193,47 @@ export default Vue.extend({
     },
     goBack(): Number {
       return this.page > 1 ? (this.page -= 1) : 1
+    },
+    addLesson() {
+      const startTimeStr: string =
+        this.firstPageData.date + ' ' + this.firstPageData.startTime
+      const startTimeDate: Date = dayjs(startTimeStr).toDate()
+      const endTimeStr: string =
+        this.firstPageData.date + ' ' + this.firstPageData.endTime
+      const endTimeDate: Date = dayjs(endTimeStr).toDate()
+      const lessonData: LessonDataType = {
+        startTime: startTimeDate,
+        endTime: endTimeDate,
+        title: this.firstPageData.title,
+        subject: {
+          name: this.firstPageData.subjectName,
+          color: this.firstPageData.subjectColor
+        },
+        goal: this.secondPageData.goal,
+        description: this.secondPageData.description,
+        videos: [
+          {
+            url: this.thirdPageData.videoUrl,
+            title: this.thirdPageData.videoTitle,
+            thumbnailUrl: this.thirdPageData.videoThumbnailUrl
+          }
+        ],
+        pages: this.fourthPageData.pages,
+        materials: [
+          {
+            title: this.fourthPageData.materialsTitle,
+            url: this.fourthPageData.materialsUrl
+          }
+        ]
+      }
+      vxm.classData
+        .addLesson(lessonData)
+        .then(() => {
+          return true
+        })
+        .catch(() => {
+          return false
+        })
     }
   }
 })
