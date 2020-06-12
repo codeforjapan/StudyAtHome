@@ -34,20 +34,18 @@
           <span class="description mb-3">時間割をつくる先生方</span>
         </v-row>
         <div style="margin: 0 10px;">
-          <v-btn
-            color="#FFDB6C"
-            height="60px"
+          <action-button
+            text="ユーザー登録する"
             class="registerButton"
-            to="terms"
-            block
-            rounded
-          >
-            ユーザー登録する
-          </v-btn>
+            @click="$router.push('/terms')"
+          />
 
-          <v-btn block class="loginButton" color="white" height="50px" rounded>
-            ログインする
-          </v-btn>
+          <action-button
+            text="ログインする"
+            class="loginButton"
+            theme="secondary"
+            @click="$router.push('/account/login')"
+          />
           <v-footer color="#004170" padless>
             <v-row justify="center" no-gutters>
               <v-col class="white--text text-center footerText" cols="12">
@@ -73,6 +71,7 @@
 import Vue from 'vue'
 import { vxm } from '@/store'
 import InputField from '@/components/InputField.vue'
+import ActionButton from '@/components/ActionButton.vue'
 
 type DataType = {
   classId: string
@@ -84,6 +83,7 @@ type DataType = {
 
 export default Vue.extend({
   components: {
+    ActionButton,
     InputField
   },
   data(): DataType {
