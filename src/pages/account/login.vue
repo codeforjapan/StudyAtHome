@@ -30,7 +30,7 @@
           class="SignIn-Button"
           text="ログイン"
           theme="primary"
-          @onClick="doLogin"
+          @click="doLogin"
         />
         <v-btn
           :disabled="loading"
