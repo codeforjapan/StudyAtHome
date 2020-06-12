@@ -4,16 +4,16 @@ import { Context } from '@nuxt/types/app'
 import { createProxy, extractVuexModule } from 'vuex-class-component'
 import jwtDecode from 'jwt-decode'
 import { AppStore } from '@/store/modules/app'
-import { UserStore } from '@/store/modules/user'
 import { ClassDataStore } from '@/store/modules/classData'
+import { UserStore } from '@/store/modules/user'
 
 Vue.use(Vuex)
 
 export const store = new Vuex.Store({
   modules: {
     ...extractVuexModule(AppStore),
-    ...extractVuexModule(UserStore),
-    ...extractVuexModule(ClassDataStore)
+    ...extractVuexModule(ClassDataStore),
+    ...extractVuexModule(UserStore)
   }
 })
 
@@ -32,6 +32,6 @@ export const actions = {
 
 export const vxm = {
   app: createProxy(store, AppStore),
-  user: createProxy(store, UserStore),
-  classData: createProxy(store, ClassDataStore)
+  classData: createProxy(store, ClassDataStore),
+  user: createProxy(store, UserStore)
 }
