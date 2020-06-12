@@ -11,7 +11,7 @@
       </v-card-title>
       <v-card-text class="EditingScreen-CardText">
         <v-container class="EditingScreen-FormContainer">
-          <editing-screen1 v-show="page === 1" />
+          <editing-screen1 v-show="page === 1" v-model="firstPageData" />
           <editing-screen2 v-show="page === 2" />
           <editing-screen3 v-show="page === 3" />
           <editing-screen4 v-show="page === 4" />
@@ -66,6 +66,7 @@ type DataType = {
   screen: boolean
   isDisabled: boolean
   page: number
+  firstPageData: Object
 }
 
 export default Vue.extend({
@@ -87,7 +88,14 @@ export default Vue.extend({
     return {
       screen: this.expanded,
       isDisabled: false,
-      page: 1
+      page: 1,
+      firstPageData: {
+        date: '',
+        startTime: '',
+        endTime: '',
+        subjectName: '',
+        subjectColor: ''
+      }
     }
   },
   watch: {
