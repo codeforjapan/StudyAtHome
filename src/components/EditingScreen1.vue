@@ -63,7 +63,7 @@ export type formData = {
     EditorField
   }
 })
-export default class EditingScreen extends Vue {
+export default class EditingScreen1 extends Vue {
   tempFormData = {
     date: this.form.date,
     startTime: this.form.startTime,
