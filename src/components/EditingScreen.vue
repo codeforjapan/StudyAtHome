@@ -13,7 +13,7 @@
         <v-container class="EditingScreen-FormContainer">
           <editing-screen1 v-show="page === 1" v-model="firstPageData" />
           <editing-screen2 v-show="page === 2" v-model="secondPageData" />
-          <editing-screen3 v-show="page === 3" />
+          <editing-screen3 v-show="page === 3" v-model="thirdPageData" />
           <editing-screen4 v-show="page === 4" />
         </v-container>
       </v-card-text>
@@ -68,6 +68,7 @@ type DataType = {
   page: number
   firstPageData: Object
   secondPageData: Object
+  thirdPageData: Object
 }
 
 export default Vue.extend({
@@ -100,6 +101,11 @@ export default Vue.extend({
       secondPageData: {
         objectives: '',
         description: ''
+      },
+      thirdPageData: {
+        videoUrl: '',
+        videoTitle: '',
+        videoThumbnailUrl: ''
       }
     }
   },
