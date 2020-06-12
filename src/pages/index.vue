@@ -58,7 +58,7 @@
               </v-col>
               <v-col class="white--text text-center footerText" cols="12">
                 <nuxt-link class="white--text" to="policy">
-                  - サイトポリシー
+                  - 利用規約
                 </nuxt-link>
               </v-col>
             </v-row>
