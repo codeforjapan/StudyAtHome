@@ -4,7 +4,7 @@
     :disabled="isDisabled"
     :loading="isLoading"
     rounded
-    @click="onClick"
+    @click="$emit('click')"
   >
     <span>{{ text }}</span>
   </v-btn>
@@ -28,10 +28,6 @@ export default class ActionButton extends Vue {
 
   @Prop({ default: false })
   isLoading?: boolean
-
-  onClick(): void {
-    this.$emit('onClick')
-  }
 }
 </script>
 
