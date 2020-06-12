@@ -98,7 +98,7 @@ export default Vue.extend({
         startTime: '',
         endTime: '',
         subjectName: '',
-        subjectColor: ''
+        subjectColor: '#BAC8FF'
       },
       secondPageData: {
         objectives: '',
