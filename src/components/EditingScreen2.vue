@@ -1,7 +1,7 @@
 <template>
   <div>
-    <editor-textarea v-model="form.objectives" title="学習の目的" />
-    <editor-textarea v-model="form.description" title="詳細説明" />
+    <editor-textarea v-model="tempFormData.objectives" title="学習の目的" />
+    <editor-textarea v-model="tempFormData.description" title="詳細説明" />
   </div>
 </template>
 
@@ -38,7 +38,7 @@ export default class EditingScreen2 extends Vue {
     return this.value
   }
 
-  @Watch('tempFormData')
+  @Watch('tempFormData', { deep: true })
   onChangeTempSecondFormData() {
     this.input(this.tempFormData)
   }

@@ -1,19 +1,19 @@
 <template>
   <div>
     <editor-field
-      v-model="form.textBookPage"
+      v-model="tempFormData.textBookPage"
       title="教科書ページ"
       label="textbook_page"
       placeholder="例）10〜14ページ"
     />
     <editor-field
-      v-model="form.subTextTitle"
+      v-model="tempFormData.subTextTitle"
       title="副教材タイトル"
       label="sub_text"
       placeholder="例）やさしい理科教材"
     />
     <editor-field
-      v-model="form.subTextUrl"
+      v-model="tempFormData.subTextUrl"
       title="副教材URL"
       label="sub_text_url"
       placeholder="https://"
@@ -58,7 +58,7 @@ export default class EditingScreen1 extends Vue {
     return this.value
   }
 
-  @Watch('tempFormData')
+  @Watch('tempFormData', { deep: true })
   onChangeTempFormData() {
     this.input(this.tempFormData)
   }
