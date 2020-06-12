@@ -48,20 +48,20 @@ export class ClassDataStore extends VuexModule implements ClassData {
   className: ClassName = ''
   lessons: Lessons = []
 
-  public get getLessonsByDisplayDate(): Lessons {
+  public get getLessonsByCurrentDate(): Lessons {
     const appStore = createProxy(this.$store, AppStore)
     const dateStart = new Date(
-      appStore.displayDate.getFullYear(),
-      appStore.displayDate.getMonth(),
-      appStore.displayDate.getDate(),
+      appStore.currentDate.getFullYear(),
+      appStore.currentDate.getMonth(),
+      appStore.currentDate.getDate(),
       0,
       0,
       0
     )
     const dateEnd = new Date(
-      appStore.displayDate.getFullYear(),
-      appStore.displayDate.getMonth(),
-      appStore.displayDate.getDate(),
+      appStore.currentDate.getFullYear(),
+      appStore.currentDate.getMonth(),
+      appStore.currentDate.getDate(),
       23,
       59,
       59

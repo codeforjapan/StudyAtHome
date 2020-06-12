@@ -7,31 +7,31 @@ const VuexModule = createModule({
   target: 'nuxt'
 })
 
-type DisplayDate = Date
+type CurrentDate = Date
 
 interface App {
-  displayDate: DisplayDate
+  currentDate: CurrentDate
 }
 
 export class AppStore extends VuexModule implements App {
-  displayDate: DisplayDate = new Date()
+  currentDate: CurrentDate = new Date()
 
   @mutation
   public goNextDate() {
-    this.displayDate = dayjs(this.displayDate)
+    this.currentDate = dayjs(this.currentDate)
       .add(1, 'd')
       .toDate()
   }
 
   @mutation
   public goPreviousDate() {
-    this.displayDate = dayjs(this.displayDate)
+    this.currentDate = dayjs(this.currentDate)
       .subtract(1, 'd')
       .toDate()
   }
 
   @mutation
   public setDate(date: Date) {
-    this.displayDate = date
+    this.currentDate = date
   }
 }

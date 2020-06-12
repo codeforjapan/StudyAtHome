@@ -13,7 +13,7 @@
     </div>
     <v-row>
       <v-col
-        v-for="(item, i) in classData.getLessonsByDisplayDate"
+        v-for="(item, i) in classData.getLessonsByCurrentDate"
         :key="i"
         cols="12"
         md="6"
