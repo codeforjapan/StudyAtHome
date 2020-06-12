@@ -8,7 +8,7 @@ declare namespace classData {
 
   // ID型の定義
   export type ClassId = string
-  export type LessonId = string
+  export type LessonId = string // unused
 
   export interface ClassData {
     classId: ClassId
