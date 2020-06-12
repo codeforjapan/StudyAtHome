@@ -50,29 +50,22 @@ export class ClassDataStore extends VuexModule implements ClassData {
 
   public get lessonsOnCurrentDate(): Lessons {
     const appStore = createProxy(this.$store, AppStore)
-    const dateStart = new Date(
-      appStore.currentDate.getFullYear(),
-      appStore.currentDate.getMonth(),
-      appStore.currentDate.getDate(),
-      0,
-      0,
-      0
-    )
-    const dateEnd = new Date(
-      appStore.currentDate.getFullYear(),
-      appStore.currentDate.getMonth(),
-      appStore.currentDate.getDate(),
-      23,
-      59,
-      59
-    )
-    const lessonsByDate: Lessons = []
-    this.lessons.forEach(value => {
-      const sec = value.startTime.getTime()
-      if (dateStart.getTime() <= sec && dateEnd.getTime() >= sec)
-        lessonsByDate.push(value)
+
+    // Generate a new Date object with a specified date & time
+    const d = (date: Date, hours: number, minutes: number, seconds: number) => {
+      const newDate = new Date(date)
+      newDate.setHours(hours)
+      newDate.setMinutes(minutes)
+      newDate.setSeconds(seconds)
+      return newDate
+    }
+    const start = d(appStore.currentDate, 0, 0, 0).getTime()
+    const end = d(appStore.currentDate, 23, 59, 59).getTime()
+
+    return this.lessons.filter(lesson => {
+      const startOfLesson = lesson.startTime.getTime()
+      return start <= startOfLesson && end >= startOfLesson
     })
-    return lessonsByDate
   }
 
   public get isLoaded(): boolean {
