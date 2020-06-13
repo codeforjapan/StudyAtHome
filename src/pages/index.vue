@@ -1,65 +1,99 @@
 <template>
-  <div class="LoginPage">
-    <v-flex>
-      <div class="Logo">
-        <Logo style="height: 80vw; max-height: 350px; width: 100%;" />
-      </div>
-      {{ errorMessages }}
-      <div class="LoginForm">
-        <v-form ref="form" v-model="valid">
-          <v-text-field
-            v-model="classId"
-            :counter="6"
-            label="クラスID"
-            :rules="nameRules"
-            outlined
-            dark
-            required
+  <v-layout justify-center="true" align-center="true">
+    <v-flex class="indexFlex">
+      <v-row justify="center" class="mb-3">
+        <v-icon color="white" size="60px">mdi-library</v-icon>
+      </v-row>
+      <v-row justify="center">
+        <span class="description mb-3">授業をうける生徒・児童の方</span>
+      </v-row>
+      <v-row class="loginFieldRow" justify="center">
+        <input-field
+          v-model="classId"
+          class="classIdField"
+          type="classId"
+          label="クラスID"
+        />
+        <v-btn
+          class="classLoginButton ml-3"
+          color="#FFDB6C"
+          width="56px"
+          height="56px"
+          :disabled="!/^[あ-ん]{6}$/.test(classId)"
+          :loading="loading"
+          @click="loginToClass"
+        >
+          <v-icon color="black">mdi-arrow-right-bold</v-icon>
+        </v-btn>
+      </v-row>
+      <v-flex fill-width justify="center" class="forTeachers">
+        <v-row class="mt-10 mb-3" justify="center">
+          <v-icon color="white" size="60px">mdi-account-circle</v-icon>
+        </v-row>
+        <v-row justify="center">
+          <span class="description mb-3">時間割をつくる先生方</span>
+        </v-row>
+        <div style="margin: 0 10px;">
+          <action-button
+            text="ユーザー登録する"
+            class="registerButton"
+            @click="$router.push('/terms')"
           />
-          <v-btn
-            block
-            outlined
-            color="white"
-            height="40px"
-            :loading="loading"
-            :disabled="loading || !valid"
-            @click="loginToClass"
-          >
-            LOGIN
-          </v-btn>
-        </v-form>
-      </div>
+
+          <action-button
+            text="ログインする"
+            class="loginButton"
+            theme="secondary"
+            @click="$router.push('/account/login')"
+          />
+          <v-footer color="#004170" padless>
+            <v-row justify="center" no-gutters>
+              <v-col class="white--text text-center footerText" cols="12">
+                <a class="white--text" href="#"> - おうちで時間割について </a>
+              </v-col>
+              <v-col class="white--text text-center footerText" cols="12">
+                <a class="white--text" href="#"> - お問い合わせ </a>
+              </v-col>
+              <v-col class="white--text text-center footerText" cols="12">
+                <nuxt-link class="white--text" to="policy">
+                  - 利用規約
+                </nuxt-link>
+              </v-col>
+            </v-row>
+          </v-footer>
+        </div>
+      </v-flex>
     </v-flex>
-  </div>
+    <v-snackbar :timeout="5000" :value="error" absolute top color="#C01B61">
+      クラスIDが正しくありません
+    </v-snackbar>
+  </v-layout>
 </template>
 
 <script lang="ts">
 import Vue from 'vue'
 import { vxm } from '@/store'
-import Logo from '@/assets/svgs/logo.svg'
+import InputField from '@/components/InputField.vue'
+import ActionButton from '@/components/ActionButton.vue'
 
 type DataType = {
   classId: string
   loading: boolean
   error: boolean
-  errorMessages: string
   valid: boolean
-  nameRules: ((v: string) => boolean | string)[]
 }
 
 export default Vue.extend({
-  components: { Logo },
+  components: {
+    ActionButton,
+    InputField
+  },
   data(): DataType {
     return {
       classId: '',
       loading: false,
       error: false,
-      errorMessages: '',
-      valid: true,
-      nameRules: [
-        v => !!v || 'クラスIDは必須です',
-        v => (v && v.length === 6) || 'クラスIDは6文字のひらがなです'
-      ]
+      valid: true
     }
   },
   methods: {
@@ -70,10 +104,9 @@ export default Vue.extend({
         .then(() => {
           this.$router.push('/classes')
         })
-        .catch((e: Error) => {
+        .catch(() => {
           this.loading = false
           this.error = true
-          this.errorMessages = e.message
         })
     }
   }
@@ -81,15 +114,40 @@ export default Vue.extend({
 </script>
 
 <style lang="scss" scoped>
-.MainPage {
-  .Logo {
-    text-align: center;
-  }
-  .DataBlock {
-    margin: 0 -12px;
-    .studycard {
-      margin-bottom: 20px;
-    }
-  }
+.classLoginButton {
+  border-radius: 14px;
+  min-width: 48px !important;
+}
+.description {
+  color: white;
+  font-weight: bold;
+  font-family: 'Noto Sans JP', sans-serif;
+}
+.forTeachers {
+  background-color: $color-base-color-07;
+  border-radius: 24px 24px 24px 24px;
+  padding-top: 4px;
+  padding-bottom: 24px;
+}
+.indexFlex {
+  max-width: 640px !important;
+}
+.loginFieldRow {
+  margin-left: auto !important;
+  margin-right: auto !important;
+}
+.loginButton {
+  font-size: 16px;
+  font-weight: bold;
+  margin-top: 10px;
+  margin-bottom: 15px;
+}
+.registerButton {
+  font-size: 16px;
+  font-weight: bold;
+}
+.footerText {
+  margin-top: 15px;
+  font-size: 12px;
 }
 </style>
