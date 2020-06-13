@@ -1,70 +1,88 @@
 <template>
-  <div class="LoginPage">
-    <v-flex>
-      <div class="Logo">
-        <Logo style="height: 80vw; max-height: 350px; width: 100%;" />
-      </div>
-      <div class="LoginForm">
-        <v-form>
-          <v-text-field
-            v-model="email"
-            :counter="32"
-            label="email"
-            outlined
-            dark
-            prepend-icon="mdi-email"
-          />
-          <v-text-field
-            v-model="password"
-            :append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
-            :type="showPassword ? 'text' : 'password'"
-            :counter="32"
-            label="Password"
-            outlined
-            dark
-            prepend-icon="mdi-lock"
-            @click:append="showPassword = !showPassword"
+  <div>
+    <bottom-sheet-layer
+      fullscreen
+      title="ログインしてください"
+      title-en="LOGIN"
+    >
+      <template v-slot:LayerContents>
+        <dl>
+          <dt class="SignIn-ItemTitle">メールアドレス</dt>
+          <dd class="SignIn-Item">
+            <input-field
+              v-model="email"
+              label="studyathome@example.com"
+              require
+              type="email"
+            />
+          </dd>
+          <dt class="SignIn-ItemTitle">パスワード</dt>
+          <dd class="SignIn-Item">
+            <input-field
+              v-model="password"
+              label="パスワード"
+              require
+              type="password"
+            />
+          </dd>
+        </dl>
+      </template>
+      <template v-slot:LayerFooter>
+        <div class="SignIn-ButtonOuter">
+          <action-button
+            :is-disabled="disableLogin"
+            :is-loading="loading"
+            class="SignIn-Button"
+            text="ログイン"
+            theme="primary"
+            @click="doLogin"
           />
           <v-btn
-            block
-            outlined
-            color="white"
-            height="40px"
-            :loading="loading"
             :disabled="loading"
-            @click="doLogin"
+            block
+            class="button"
+            color="#ffffff"
+            height="60px"
+            text
+            to="/"
           >
-            LOGIN
+            <span>パスワードを忘れた方へ</span>
           </v-btn>
-        </v-form>
-      </div>
-    </v-flex>
+        </div>
+      </template>
+    </bottom-sheet-layer>
+    <v-snackbar :timeout="5000" :value="error" absolute top color="#C01B61">
+      メールアドレスまたはパスワードが正しくありません
+    </v-snackbar>
   </div>
 </template>
 
 <script lang="ts">
 import Vue from 'vue'
-import { vxm } from '@/store'
+import BottomSheetLayer from '@/components/BottomSheetLayer.vue'
+import ActionButton from '@/components/ActionButton.vue'
+import InputField from '@/components/InputField.vue'
 import firebase from '@/plugins/firebase'
-import Logo from '@/assets/svgs/logo.svg'
-
-export type DataType = {
-  email: string
-  password: string
-  showPassword: boolean
-  loading: boolean
-}
+import { vxm } from '~/store'
 
 export default Vue.extend({
-  components: {
-    Logo
-  },
-  data(): DataType {
+  components: { BottomSheetLayer, ActionButton, InputField },
+  layout: 'background',
+  data() {
     return {
       email: '',
       password: '',
-      showPassword: false,
-      loading: false
+      loading: false,
+      error: false
+    }
+  },
+  computed: {
+    disableLogin(): boolean {
+      return !(
+        this.email &&
+        this.password &&
+        this.email.match(/^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/)
+      )
     }
   },
   methods: {
@@ -77,9 +95,9 @@ export default Vue.extend({
           vxm.user.login()
           this.$router.push('/edit')
         })
-        .catch(error => {
+        .catch(() => {
           this.loading = false
-          alert(error)
+          this.error = true
         })
     }
   }
@@ -87,26 +105,20 @@ export default Vue.extend({
 </script>
 
 <style lang="scss" scoped>
-.LoginPage {
+.SignIn-ItemTitle {
+  font-size: 16px;
+  font-weight: bold;
+  color: $color-white;
   text-align: center;
-  .Logo {
-    text-align: center;
-  }
-  .LoginTitle {
-    color: #fff;
-    font-family: 'Noto Sans JP', sans-serif;
-    font-size: 5em;
-  }
-  .DataBlock {
-    margin: 0 -12px;
-    .studycard {
-      margin-bottom: 20px;
-    }
-  }
-  .LoginForm {
-    width: 90%;
-    max-width: 600px;
-    margin: 50px auto;
-  }
+  margin: 4px 0;
+}
+.SignIn-Item {
+  margin: 20px 0;
+}
+.SignIn-ButtonOuter {
+  justify-content: space-between;
+}
+.SignIn-Button {
+  flex: 0 1 48%;
 }
 </style>
