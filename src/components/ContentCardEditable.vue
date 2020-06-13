@@ -29,7 +29,7 @@
       <content-card-editor-button
         class="ContentCard-Button"
         icon-name="mdi-eye-off"
-        @click="$emit('changeHide')"
+        @click="$emit('toggleHidden')"
       />
       <content-card-editor-button
         class="ContentCard-Button"
