@@ -3,6 +3,7 @@
     v-model="layer"
     persistent
     scrollable
+    no-click-animation
     :fullscreen="fullscreen"
   >
     <v-card class="Layer">
