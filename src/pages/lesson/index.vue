@@ -1,0 +1,319 @@
+<template>
+  <div class="lesson">
+    <div>
+      <v-sheet class="lesson-meta">
+        <div>
+          <span class="lesson-meta-date"> {{ dateString }}</span
+          ><span class="lesson-meta-caption"
+            >{{ caption.title }}{{ caption.unit }}</span
+          ><span class="lesson-meta-period"
+            >&nbsp;/&nbsp;{{ startTime }}&nbsp;-&nbsp;{{ endTime }}</span
+          >
+        </div>
+        <div>
+          <SubjectTag
+            class="subject-tag"
+            :name="lesson.subjectName"
+            :background-color="lesson.subjectColor"
+          />
+          <SubjectTag
+            class="subject-tag"
+            :name="'動画'"
+            :icon="'mdi-video-outline'"
+            :icon-color="'#FFFFFF'"
+            :background-color="'#D0BFFF'"
+          />
+        </div>
+      </v-sheet>
+    </div>
+    <div>
+      <v-sheet class="lesson-data">
+        <div class="lesson-title">
+          {{ lesson.title }}
+        </div>
+        <div class="item-label">
+          教科書
+        </div>
+        <div class="item-value">
+          <span> {{ lesson.text.title }} {{ lesson.text.page }} </span>
+        </div>
+        <div class="divider">
+          <v-divider />
+        </div>
+        <div class="item-label">
+          学習の目的
+        </div>
+        <div class="item-value">
+          {{ lesson.objectives }}
+        </div>
+        <div class="item-label">
+          詳細
+        </div>
+        <div class="item-value">
+          {{ lesson.description }}
+        </div>
+        <div class="item-label">
+          参考動画
+        </div>
+        <div v-for="(item, index) in lesson.videos" :key="index">
+          <v-img :src="item.thumbnailUrl" class="video-thumbnail-image" />
+          <div class="item-label">
+            <a
+              :href="item.url"
+              target="_blank"
+              rel="noopener"
+              class="external-link"
+            >
+              {{ item.title }}
+            </a>
+          </div>
+        </div>
+        <div class="item-label">
+          副教材
+        </div>
+        <div
+          v-for="(item, index) in lesson.materials"
+          :key="index"
+          class="item-value material-box"
+        >
+          <span>{{ item.title }}</span>
+          <span>
+            <v-icon
+              class="material-box-icon"
+              @click="openExternalLink(item.url)"
+              >mdi-open-in-new</v-icon
+            >
+          </span>
+        </div>
+        <div class="divider">
+          <v-divider style="border-color:transparent" />
+        </div>
+      </v-sheet>
+    </div>
+  </div>
+</template>
+
+<script lang="ts">
+import Vue from 'vue'
+import dayjs from 'dayjs'
+import 'dayjs/locale/ja'
+import add from 'date-fns/add'
+import { vxm } from '@/store'
+import { Lesson } from '@/store/modules/ClassData'
+import SubjectTag from '@/components/SubjectTag.vue'
+type Data = {
+  lesson: Lesson
+}
+
+type Methods = {
+  formatDate(date: Date): string
+}
+
+export default Vue.extend({
+  layout: 'lesson',
+  components: { SubjectTag },
+  props: {
+    caption: {
+      type: Object,
+      required: false,
+      default() {
+        return { title: '1', unit: '時間目' }
+      }
+    },
+    lesson: {
+      type: Object,
+      required: true,
+      default() {
+        const subjectName = '教科名'
+        return {
+          startTime: new Date(),
+          endTime: add(new Date(), { minutes: 40 }),
+          title: '授業のタイトル',
+          subjectName,
+          subjectColor: '#7FFFD4',
+          objectives:
+            '' +
+            '学習の目的' +
+            '学習の目的' +
+            '学習の目的' +
+            '学習の目的' +
+            '学習の目的' +
+            '学習の目的' +
+            '学習の目的' +
+            '学習の目的' +
+            '学習の目的' +
+            '学習の目的' +
+            '学習の目的' +
+            '学習の目的' +
+            '学習の目的' +
+            '学習の目的' +
+            '学習の目的' +
+            '学習の目的' +
+            '学習の目的' +
+            '学習の目的' +
+            '',
+          description: '詳細説明',
+          text: {
+            title: 'テキストX',
+            page: '12~19'
+          },
+          videos: [
+            {
+              title: '動画タイトル',
+              url: 'http://example.com/',
+              thumbnailUrl: 'https://picsum.photos/1280/720'
+            },
+            {
+              title: '動画2タイトル',
+              url: 'http://example.com/',
+              thumbnailUrl: 'https://picsum.photos/1280/720'
+            }
+          ],
+          materials: [
+            {
+              title: '副教材のタイトル',
+              url: 'http://example.com/'
+            },
+            {
+              title: '副教材Xのタイトル',
+              url: 'http://example.com/'
+            }
+          ]
+        }
+      }
+    }
+  },
+  // data() {
+  //   return {
+  //     classData: vxm.classData.lessonsOnCurrentDate
+  //   }
+  // },
+  computed: {
+    dateTitle() {
+      return dayjs(vxm.app.currentDate).format('M/D')
+    },
+    dateString() {
+      return dayjs(this.lesson.startTime)
+        .locale('ja')
+        .format('M月D日（ddd）')
+    },
+    startTime() {
+      return dayjs(this.lesson.startTime).format('H:mm')
+    },
+    endTime() {
+      return dayjs(this.lesson.startTime).format('YYYY-MM-DD') ===
+        dayjs(this.lesson.endTime).format('YYYY-MM-DD')
+        ? dayjs(this.lesson.endTime).format('H:mm')
+        : dayjs(this.lesson.endTime).format('H:mm（M/D）')
+    }
+  },
+  methods: {
+    openExternalLink(url: string): void {
+      window.open(url, '_blank', 'noopener')
+    }
+  }
+})
+</script>
+
+<style lang="scss" scoped>
+.lesson {
+  height: 100%;
+}
+
+.lesson-meta {
+  background: transparent;
+}
+
+.lesson-meta-date {
+  vertical-align: middle;
+  font-family: 'Noto Sans JP', sans-serif;
+  color: $color-back-gray;
+  font-size: 21px;
+}
+
+.lesson-meta-caption {
+  vertical-align: middle;
+  font-family: 'Noto Sans JP', sans-serif;
+  color: $color-back-gray;
+  font-size: 12px;
+  white-space: nowrap;
+}
+
+.lesson-meta-period {
+  vertical-align: middle;
+  font-family: 'Noto Sans JP', sans-serif;
+  color: $color-back-gray;
+  font-size: 12px;
+  white-space: nowrap;
+}
+
+.lesson-data {
+  border-radius: 14px;
+  width: 100%;
+}
+
+.meta-period {
+  margin: 4px 16px;
+}
+
+.lesson-title {
+  margin: 24px 16px 0;
+  padding: 24px 0 0;
+  font-size: 21px;
+}
+
+.lesson-body {
+  width: 100%;
+}
+
+.subject-tag {
+  margin: 10px 6px 0;
+}
+
+.item-label {
+  margin: 32px 10px 10px;
+  font-family: 'Noto Sans', sans-serif;
+  font-size: 14px;
+  color: $color-grey-inactive;
+}
+
+.item-value {
+  margin: 0 16px;
+  font-family: 'Noto Sans JP', sans-serif;
+  font-size: 16px;
+  color: $color-gray;
+}
+
+.lesson-material {
+  margin: 0 16px 0;
+  text-decoration-color: red;
+}
+
+.video-thumbnail-image {
+  margin: 4px 0;
+}
+
+.external-link {
+  text-decoration: none;
+}
+
+.divider {
+  margin: 16px 0 0;
+}
+
+.material-box {
+  margin: 0 16px 16px;
+  padding: 16px;
+  border-radius: 12px;
+  border-width: 1px;
+  border-color: $color-base-color-01;
+  border-style: solid;
+  color: $color-base-color-01;
+}
+
+.material-box-icon {
+  color: $color-base-color-01;
+  align-self: start;
+  float: right;
+}
+</style>
