@@ -122,7 +122,7 @@ export default Vue.extend({
           date:
             value.startTime.getFullYear() +
             '-' +
-            value.startTime.getMonth() +
+            (value.startTime.getMonth() + 1) +
             '-' +
             value.startTime.getDate(),
           startTime:
