@@ -200,6 +200,14 @@ export default Vue.extend({
   watch: {
     expanded(newValue) {
       this.screen = newValue
+    },
+    value(value) {
+      this.isHidden = value.isHidden
+      this.lessonId = value.lessonId
+      this.firstPageData = value.firstPageData
+      this.secondPageData = value.secondPageData
+      this.thirdPageData = value.thirdPageData
+      this.fourthPageData = value.fourthPageData
     }
   },
   methods: {
@@ -217,8 +225,8 @@ export default Vue.extend({
       }
     },
     setLesson() {
-      const lessonOnlyAddData: classData.onlyadd.Lesson = this.makeLessonData()
-      const lessonData: classData.Lesson = {
+      const lessonOnlyAddData: classData.Lesson = this.makeLessonData()
+      const lessonData: classData.LessonWithId = {
         startTime: lessonOnlyAddData.startTime,
         endTime: lessonOnlyAddData.endTime,
         title: lessonOnlyAddData.title,
@@ -241,7 +249,7 @@ export default Vue.extend({
         })
     },
     addLesson() {
-      const lessonData: classData.onlyadd.Lesson = this.makeLessonData()
+      const lessonData: classData.Lesson = this.makeLessonData()
       vxm.classData
         .addLesson(lessonData)
         .then(() => {
@@ -251,7 +259,7 @@ export default Vue.extend({
           this.error = true
         })
     },
-    makeLessonData(): classData.onlyadd.Lesson {
+    makeLessonData(): classData.Lesson {
       const startTimeStr: string =
         this.firstPageData.date + ' ' + this.firstPageData.startTime
       const startTimeDate: Date = dayjs(startTimeStr).toDate()
@@ -274,7 +282,7 @@ export default Vue.extend({
           title: this.fourthPageData.materialsTitle,
           url: this.fourthPageData.materialsUrl
         })
-      const lessonData: classData.onlyadd.Lesson = {
+      const lessonData: classData.Lesson = {
         startTime: startTimeDate,
         endTime: endTimeDate,
         title: this.firstPageData.title,
