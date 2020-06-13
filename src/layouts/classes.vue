@@ -50,7 +50,7 @@ export default Vue.extend({
   },
   watch: {
     date(value) {
-      vxm.classData.setDate(value)
+      vxm.app.setDate(value)
     }
   },
   mounted(): void {
