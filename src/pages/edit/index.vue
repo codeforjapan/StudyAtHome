@@ -34,7 +34,7 @@
     <editing-screen
       :value="editPageValue"
       :expanded="!isExpandedButton"
-      @closeExpand="handler"
+      @closeExpand="closeToReset"
     />
   </div>
 </template>
@@ -105,6 +105,35 @@ export default Vue.extend({
   methods: {
     handler(): void {
       this.isExpandedButton = !this.isExpandedButton
+    },
+    closeToReset(): void {
+      this.handler()
+      this.editPageValue = {
+        isHidden: false,
+        lessonId: '',
+        firstPageData: {
+          date: '',
+          startTime: '',
+          endTime: '',
+          title: '',
+          subjectName: '',
+          subjectColor: '#BAC8FF'
+        },
+        secondPageData: {
+          goal: '',
+          description: ''
+        },
+        thirdPageData: {
+          videoUrl: '',
+          videoTitle: '',
+          videoThumbnailUrl: ''
+        },
+        fourthPageData: {
+          pages: '',
+          materialsTitle: '',
+          materialsUrl: ''
+        }
+      }
     },
     doEdit(value: classData.LessonWithId): void {
       const videoUrl = value.videos.length === 0 ? '' : value.videos[0].url
