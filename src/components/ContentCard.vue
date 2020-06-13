@@ -60,8 +60,7 @@ export default Vue.extend({
   props: {
     lesson: {
       type: Object as () => classData.Lesson,
-      required: true,
-      default: () => {}
+      required: true
     },
     editable: {
       type: Boolean,
