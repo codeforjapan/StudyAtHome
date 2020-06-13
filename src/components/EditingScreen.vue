@@ -192,6 +192,7 @@ export default Vue.extend({
       return (
         !this.firstPageData.date ||
         !this.firstPageData.startTime ||
+        !this.firstPageData.endTime ||
         !this.firstPageData.title ||
         !this.firstPageData.subjectName
       )
