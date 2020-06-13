@@ -18,11 +18,7 @@
         cols="12"
         md="6"
       >
-        <content-card
-          :description="formatDate(item.startTime)"
-          :title="item.content"
-          :subjects="[{ name: item.subject }]"
-        />
+        <content-card :lesson="item" />
       </v-col>
     </v-row>
   </div>

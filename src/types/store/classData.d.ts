@@ -8,12 +8,12 @@ declare namespace classData {
 
   // ID型の定義
   export type ClassId = string
-  export type LessonId = string // unused
+  export type LessonId = string
 
   export interface ClassData {
     classId: ClassId
     className: string
-    lessons: Lesson[]
+    lessons: LessonWithId[]
   }
 
   export interface Lesson {
@@ -27,6 +27,10 @@ declare namespace classData {
     pages: string
     materials: Material[]
     isHidden: boolean
+  }
+
+  export interface LessonWithId extends Lesson {
+    docId: LessonId
   }
 
   export interface Subject {

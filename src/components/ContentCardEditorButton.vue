@@ -1,5 +1,10 @@
 <template>
-  <v-btn class="editorButton" width="48px" height="48px">
+  <v-btn
+    class="editorButton"
+    width="48px"
+    height="48px"
+    @click="$emit('click')"
+  >
     <v-icon :color="iconColor" :size="iconSize">{{ iconName }}</v-icon>
   </v-btn>
 </template>
