@@ -103,7 +103,7 @@ export class ClassDataStore extends VuexModule implements classData.ClassData {
   }
 
   @action
-  public async addLesson(lessonData: classData.Lesson) {
+  public async registerLesson(lessonData: classData.Lesson) {
     const classIdStr = 'あけしめたす'
     await firebase
       .firestore()
@@ -118,16 +118,20 @@ export class ClassDataStore extends VuexModule implements classData.ClassData {
   }
 
   @action
-  public async editLessonData(editData: classData.LessonWithId) {
+  public async changeLesson({
+    editData,
+    id
+  }: {
+    editData: classData.Lesson
+    id: classData.LessonId
+  }) {
     const classIdStr = 'あけしめたす'
-    const docId = editData.docId
-    delete editData.docId
     await firebase
       .firestore()
       .collection('classData')
       .doc(classIdStr)
       .collection('Lessons')
-      .doc(docId)
+      .doc(id)
       .set(editData)
       .catch(() => {
         return Promise.reject(new Error('エラーによって処理に失敗しました'))

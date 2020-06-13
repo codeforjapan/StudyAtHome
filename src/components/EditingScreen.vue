@@ -219,28 +219,15 @@ export default Vue.extend({
     },
     saveLessonData() {
       if (this.lessonId === '') {
-        this.addLesson()
+        this.registerLesson()
       } else {
-        this.setLesson()
+        this.changeLesson()
       }
     },
-    setLesson() {
-      const lessonOnlyAddData: classData.Lesson = this.buildLessonData()
-      const lessonData: classData.LessonWithId = {
-        startTime: lessonOnlyAddData.startTime,
-        endTime: lessonOnlyAddData.endTime,
-        title: lessonOnlyAddData.title,
-        subject: lessonOnlyAddData.subject,
-        goal: lessonOnlyAddData.goal,
-        description: lessonOnlyAddData.description,
-        videos: lessonOnlyAddData.videos,
-        pages: lessonOnlyAddData.pages,
-        materials: lessonOnlyAddData.materials,
-        isHidden: lessonOnlyAddData.isHidden,
-        docId: this.lessonId
-      }
+    changeLesson() {
+      const lessonData: classData.Lesson = this.buildLessonData()
       vxm.classData
-        .editLessonData(lessonData)
+        .changeLesson({ editData: lessonData, id: this.lessonId })
         .then(() => {
           this.$emit('collapse')
         })
@@ -248,10 +235,10 @@ export default Vue.extend({
           this.error = true
         })
     },
-    addLesson() {
+    registerLesson() {
       const lessonData: classData.Lesson = this.buildLessonData()
       vxm.classData
-        .addLesson(lessonData)
+        .registerLesson(lessonData)
         .then(() => {
           this.$emit('collapse')
         })
