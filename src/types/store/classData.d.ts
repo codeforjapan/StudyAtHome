@@ -17,6 +17,7 @@ declare namespace classData {
   }
 
   export interface Lesson {
+    docId: string
     startTime: Date
     endTime: Date
     title: string
@@ -49,6 +50,21 @@ declare namespace classData {
     export interface Lesson {
       startTime: FireStoreTimestamp
       endTime: FireStoreTimestamp
+      title: string
+      subject: Subject
+      goal: string
+      description: string
+      videos: Video[]
+      pages: string
+      materials: Material[]
+      isHidden: boolean
+    }
+  }
+
+  namespace onlyadd {
+    export interface Lesson {
+      startTime: Date
+      endTime: Date
       title: string
       subject: Subject
       goal: string
