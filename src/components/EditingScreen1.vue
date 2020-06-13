@@ -143,7 +143,7 @@
     <editor-field
       v-model="tempFormData.title"
       title="タイトル *"
-      label="title"
+      label="タイトル"
       placeholder="例）理科"
     />
     <div class="EditingScreen-Flex">

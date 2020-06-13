@@ -1,6 +1,6 @@
 <template>
   <v-text-field
-    v-model="value"
+    v-model="modelValue"
     :color="transparent ? 'white' : '#424242'"
     type="text"
     :hint="hint"
