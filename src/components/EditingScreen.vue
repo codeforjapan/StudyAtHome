@@ -236,8 +236,7 @@ export default Vue.extend({
         .then(() => {
           this.$emit('closeExpand')
         })
-        .catch(error => {
-          console.error(error)
+        .catch(() => {
           this.error = true
         })
     },
@@ -248,8 +247,7 @@ export default Vue.extend({
         .then(() => {
           this.$emit('closeExpand')
         })
-        .catch(error => {
-          console.error(error)
+        .catch(() => {
           this.error = true
         })
     },

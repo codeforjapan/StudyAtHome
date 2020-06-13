@@ -34,10 +34,12 @@
         class="ContentCard-Button"
         icon-name="mdi-pencil"
       />
+      <!--
       <content-card-editor-button
         class="ContentCard-Button"
         icon-name="mdi-file-multiple"
       />
+      -->
     </div>
   </div>
 </template>
