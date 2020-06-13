@@ -48,6 +48,11 @@ export default Vue.extend({
       sheet: this.expanded
     }
   },
+  watch: {
+    expanded(newValue) {
+      this.sheet = newValue
+    }
+  },
   methods: {
     addButtonClicked() {
       this.sheet = !this.sheet
