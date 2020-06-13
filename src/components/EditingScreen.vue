@@ -42,7 +42,7 @@
                 class="Button"
                 theme="transparent"
                 text="キャンセル"
-                @click="$emit('closeExpand')"
+                @click="$emit('collapse')"
               />
               <action-button
                 class="Button"
@@ -242,7 +242,7 @@ export default Vue.extend({
       vxm.classData
         .editLessonData(lessonData)
         .then(() => {
-          this.$emit('closeExpand')
+          this.$emit('collapse')
         })
         .catch(() => {
           this.error = true
@@ -253,7 +253,7 @@ export default Vue.extend({
       vxm.classData
         .addLesson(lessonData)
         .then(() => {
-          this.$emit('closeExpand')
+          this.$emit('collapse')
         })
         .catch(() => {
           this.error = true

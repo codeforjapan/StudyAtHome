@@ -34,7 +34,7 @@
     <editing-screen
       :value="editPageValue"
       :expanded="!isExpandedButton"
-      @closeExpand="closeToReset"
+      @collapse="closeToReset"
     />
   </div>
 </template>
