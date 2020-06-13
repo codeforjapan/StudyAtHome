@@ -21,7 +21,7 @@
       </div>
       <template v-slot:extension>
         <div class="header-calender">
-          <CalendarBar v-model="date" />
+          <CalendarBar v-model="app.currentDate" />
         </div>
       </template>
     </v-app-bar>
@@ -41,7 +41,7 @@ import CalendarBar from '@/components/CalendarBar.vue'
 
 type LocalData = {
   loading: boolean
-  date: Date
+  app: typeof vxm.app
 }
 
 export default Vue.extend({
@@ -53,12 +53,7 @@ export default Vue.extend({
   data(): LocalData {
     return {
       loading: true,
-      date: new Date()
-    }
-  },
-  watch: {
-    date(value) {
-      vxm.app.setDate(value)
+      app: vxm.app
     }
   },
   mounted(): void {
