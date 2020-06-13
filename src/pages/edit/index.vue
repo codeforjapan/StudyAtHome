@@ -138,6 +138,7 @@ export default Vue.extend({
         }
       }
     },
+    // @todo doEdit の中身を整理する
     doEdit(value: classData.LessonWithId): void {
       const videoUrl = value.videos.length === 0 ? '' : value.videos[0].url
       const videoTitle = value.videos.length === 0 ? '' : value.videos[0].title
