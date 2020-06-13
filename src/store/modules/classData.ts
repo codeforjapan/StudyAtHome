@@ -41,7 +41,7 @@ interface ClassData {
 }
 
 export class ClassDataStore extends VuexModule implements ClassData {
-  classId: ClassId = ''
+  classId: ClassId = 'あけしめたす'
   className: ClassName = ''
   lessons: Lessons = []
   displayDate: DisplayDate = new Date()

@@ -42,6 +42,7 @@
                 class="Button"
                 theme="transparent"
                 text="キャンセル"
+                @click="$emit('closeExpand')"
               />
               <action-button
                 class="Button"
@@ -55,6 +56,9 @@
         </v-container>
       </v-card-actions>
     </v-card>
+    <v-snackbar :timeout="5000" :value="error" absolute top color="#C01B61">
+      エラーにより授業の追加に失敗しました。時間をおいて再度お試しください。
+    </v-snackbar>
   </v-bottom-sheet>
 </template>
 
@@ -97,6 +101,7 @@ type FourthPageDataType = {
 type DataType = {
   screen: boolean
   page: number
+  error: boolean
   firstPageData: FirstPageDataType
   secondPageData: SecondPageDataType
   thirdPageData: ThirdPageDataType
@@ -148,6 +153,7 @@ export default Vue.extend({
     return {
       screen: this.expanded,
       page: 1,
+      error: false,
       firstPageData: {
         date: '',
         startTime: '',
@@ -229,10 +235,10 @@ export default Vue.extend({
       vxm.classData
         .addLesson(lessonData)
         .then(() => {
-          return true
+          this.$emit('closeExpand')
         })
         .catch(() => {
-          return false
+          this.error = true
         })
     }
   }

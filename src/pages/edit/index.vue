@@ -18,7 +18,7 @@
       :expanded="isExpandedButton"
       @addButtonClicked="handler"
     />
-    <editing-screen :expanded="!isExpandedButton" />
+    <editing-screen :expanded="!isExpandedButton" @closeExpand="handler" />
   </div>
 </template>
 
