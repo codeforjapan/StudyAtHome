@@ -1,6 +1,11 @@
-import { createModule, mutation, action } from 'vuex-class-component'
-import dayjs from 'dayjs'
+import {
+  createModule,
+  mutation,
+  action,
+  createProxy
+} from 'vuex-class-component'
 import firebase from '@/plugins/firebase'
+import { AppStore } from '@/store/modules/app'
 import Timestamp = firebase.firestore.Timestamp
 
 const VuexModule = createModule({
@@ -12,7 +17,6 @@ const VuexModule = createModule({
 type ClassId = string
 type ClassName = string
 type Lessons = Lesson[]
-type DisplayDate = Date
 
 interface Lesson {
   subject: string
@@ -37,39 +41,31 @@ interface ClassData {
   classId: ClassId
   className: ClassName
   lessons: Lessons
-  displayDate: DisplayDate
 }
 
 export class ClassDataStore extends VuexModule implements ClassData {
   classId: ClassId = 'あけしめたす'
   className: ClassName = ''
   lessons: Lessons = []
-  displayDate: DisplayDate = new Date()
 
-  public get getLessonsByDisplayDate(): Lessons {
-    const dateStart = new Date(
-      this.displayDate.getFullYear(),
-      this.displayDate.getMonth(),
-      this.displayDate.getDate(),
-      0,
-      0,
-      0
-    )
-    const dateEnd = new Date(
-      this.displayDate.getFullYear(),
-      this.displayDate.getMonth(),
-      this.displayDate.getDate(),
-      23,
-      59,
-      59
-    )
-    const lessonsByDate: Lessons = []
-    this.lessons.forEach(value => {
-      const sec = value.startTime.getTime()
-      if (dateStart.getTime() <= sec && dateEnd.getTime() >= sec)
-        lessonsByDate.push(value)
+  public get lessonsOnCurrentDate(): Lessons {
+    const appStore = createProxy(this.$store, AppStore)
+
+    // Generate a new Date object with a specified date & time
+    const d = (date: Date, hours: number, minutes: number, seconds: number) => {
+      const newDate = new Date(date)
+      newDate.setHours(hours)
+      newDate.setMinutes(minutes)
+      newDate.setSeconds(seconds)
+      return newDate
+    }
+    const start = d(appStore.currentDate, 0, 0, 0).getTime()
+    const end = d(appStore.currentDate, 23, 59, 59).getTime()
+
+    return this.lessons.filter(lesson => {
+      const startOfLesson = lesson.startTime.getTime()
+      return start <= startOfLesson && end >= startOfLesson
     })
-    return lessonsByDate
   }
 
   public get isLoaded(): boolean {
@@ -87,25 +83,6 @@ export class ClassDataStore extends VuexModule implements ClassData {
     this.lessons = lessons
   }
 
-  @mutation
-  public nextDate() {
-    this.displayDate = dayjs(this.displayDate)
-      .add(1, 'd')
-      .toDate()
-  }
-
-  @mutation
-  public prevDate() {
-    this.displayDate = dayjs(this.displayDate)
-      .subtract(1, 'd')
-      .toDate()
-  }
-
-  @mutation
-  public setDate(date: Date) {
-    this.displayDate = date
-  }
-
   @action
   public async loadClassData(classId: ClassId) {
     let className = ''
@@ -117,8 +94,8 @@ export class ClassDataStore extends VuexModule implements ClassData {
       .collection('Lessons')
       .orderBy('startTime')
       .get()
-      .then(QuerySnapshot => {
-        QuerySnapshot.forEach(function(doc) {
+      .then(querySnapshot => {
+        querySnapshot.forEach(function(doc) {
           const data = doc.data() as RawLesson
           const reformatData = {
             subject: data.subject,
