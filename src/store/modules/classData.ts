@@ -1,7 +1,12 @@
-import { createModule, mutation, action } from 'vuex-class-component'
-import dayjs from 'dayjs'
+import {
+  createModule,
+  mutation,
+  action,
+  createProxy
+} from 'vuex-class-component'
 import firebase from '@/plugins/firebase'
-import Timestamp = firebase.firestore.Timestamp
+import { AppStore } from '@/store/modules/app'
+import { classData } from '@/types/store/classData'
 
 const VuexModule = createModule({
   namespaced: 'classData',
@@ -9,67 +14,29 @@ const VuexModule = createModule({
   target: 'nuxt'
 })
 
-type ClassId = string
-type ClassName = string
-type Lessons = Lesson[]
-type DisplayDate = Date
+export class ClassDataStore extends VuexModule implements classData.ClassData {
+  classId: classData.ClassId = ''
+  className: string = ''
+  lessons: classData.Lesson[] = []
 
-interface Lesson {
-  subject: string
-  content: string
-  startTime: Date
-  endTime: Date
-}
+  public get lessonsOnCurrentDate(): classData.Lesson[] {
+    const appStore = createProxy(this.$store, AppStore)
 
-interface RawLesson {
-  subject: string
-  content: string
-  startTime: Timestamp
-  endTime: Timestamp
-}
+    // Generate a new Date object with a specified date & time
+    const d = (date: Date, hours: number, minutes: number, seconds: number) => {
+      const newDate = new Date(date)
+      newDate.setHours(hours)
+      newDate.setMinutes(minutes)
+      newDate.setSeconds(seconds)
+      return newDate
+    }
+    const start = d(appStore.currentDate, 0, 0, 0).getTime()
+    const end = d(appStore.currentDate, 23, 59, 59).getTime()
 
-interface RawClassData {
-  className: ClassName
-  lessons: Lessons
-}
-
-interface ClassData {
-  classId: ClassId
-  className: ClassName
-  lessons: Lessons
-  displayDate: DisplayDate
-}
-
-export class ClassDataStore extends VuexModule implements ClassData {
-  classId: ClassId = ''
-  className: ClassName = ''
-  lessons: Lessons = []
-  displayDate: DisplayDate = new Date()
-
-  public get getLessonsByDisplayDate(): Lessons {
-    const dateStart = new Date(
-      this.displayDate.getFullYear(),
-      this.displayDate.getMonth(),
-      this.displayDate.getDate(),
-      0,
-      0,
-      0
-    )
-    const dateEnd = new Date(
-      this.displayDate.getFullYear(),
-      this.displayDate.getMonth(),
-      this.displayDate.getDate(),
-      23,
-      59,
-      59
-    )
-    const lessonsByDate: Lessons = []
-    this.lessons.forEach(value => {
-      const sec = value.startTime.getTime()
-      if (dateStart.getTime() <= sec && dateEnd.getTime() >= sec)
-        lessonsByDate.push(value)
+    return this.lessons.filter(lesson => {
+      const startOfLesson = lesson.startTime.getTime()
+      return start <= startOfLesson && end >= startOfLesson
     })
-    return lessonsByDate
   }
 
   public get isLoaded(): boolean {
@@ -77,76 +44,58 @@ export class ClassDataStore extends VuexModule implements ClassData {
   }
 
   @mutation
-  private setClassId(classId: ClassId) {
+  private setClassData({ classId, className, lessons }: classData.ClassData) {
     this.classId = classId
-  }
-
-  @mutation
-  private setDataFromRawClassData({ className, lessons }: RawClassData) {
     this.className = className
     this.lessons = lessons
   }
 
-  @mutation
-  public nextDate() {
-    this.displayDate = dayjs(this.displayDate)
-      .add(1, 'd')
-      .toDate()
-  }
-
-  @mutation
-  public prevDate() {
-    this.displayDate = dayjs(this.displayDate)
-      .subtract(1, 'd')
-      .toDate()
-  }
-
-  @mutation
-  public setDate(date: Date) {
-    this.displayDate = date
-  }
-
   @action
-  public async loadClassData(classId: ClassId) {
-    let className = ''
-    const lessons: Lesson[] = []
-    await firebase
+  public async loadClassData(classId: classData.ClassId) {
+    const lessons: classData.Lesson[] = []
+
+    const classDataDocument = firebase
       .firestore()
       .collection('classData')
       .doc(classId)
+
+    // classData ドキュメントのフィールドを取得
+    const classDataSnapshot = await classDataDocument.get()
+
+    if (!classDataSnapshot.exists) throw new Error('クラスIDが間違っています')
+    const classData = classDataSnapshot.data() as classData.ClassData
+    const className = classData.className
+
+    // classData ドキュメント下の lessons コレクションを取得
+    const classDataLessonsSnapshot = await classDataDocument
       .collection('Lessons')
       .orderBy('startTime')
       .get()
-      .then(QuerySnapshot => {
-        QuerySnapshot.forEach(function(doc) {
-          const data = doc.data() as RawLesson
-          const reformatData = {
-            subject: data.subject,
-            content: data.content,
-            startTime: data.startTime.toDate(),
-            endTime: new Date()
-          }
-          lessons.push(reformatData)
-        })
-      })
-      .catch(() => {
-        return Promise.reject(new Error('クラスIDが間違っています'))
-      })
 
-    await firebase
-      .firestore()
-      .collection('classData')
-      .doc(classId)
-      .get()
-      .then(snapshot => {
-        if (!snapshot.exists)
-          return Promise.reject(new Error('クラスIDが間違っています'))
+    try {
+      classDataLessonsSnapshot.forEach(doc => {
+        const retrieved = doc.data() as classData.database.Lesson
+        const converted: classData.Lesson = {
+          startTime: retrieved.startTime.toDate(),
+          endTime: retrieved.endTime.toDate(),
+          title: retrieved.title,
+          subject: retrieved.subject,
+          goal: retrieved.goal,
+          description: retrieved.description,
+          videos: retrieved.videos,
+          pages: retrieved.pages,
+          materials: retrieved.materials,
+          isHidden: retrieved.isHidden
+        }
 
-        const data = snapshot.data() as ClassData
-        className = data.className
+        lessons.push(converted)
       })
-    this.setClassId(classId)
-    this.setDataFromRawClassData({
+    } catch {
+      throw new Error('クラスIDが間違っています')
+    }
+
+    this.setClassData({
+      classId,
       className,
       lessons
     })

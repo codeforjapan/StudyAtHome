@@ -1,6 +1,6 @@
 <template>
   <div class="MainPage">
-    <div v-if="classData.getLessonsByDisplayDate.length">
+    <div v-if="classData.lessonsOnCurrentDate.length">
       <period-card :class-data="classData" />
     </div>
     <div v-else-if="today" class="Classes-Outer">
@@ -46,10 +46,10 @@ export default Vue.extend<Data, Methods, Computed, unknown>({
   },
   computed: {
     today() {
-      return isToday(this.classData.displayDate)
+      return isToday(vxm.app.currentDate)
     },
     dateTitle() {
-      return dayjs(this.classData.displayDate).format('M/D')
+      return dayjs(vxm.app.currentDate).format('M/D')
     }
   },
   methods: {
