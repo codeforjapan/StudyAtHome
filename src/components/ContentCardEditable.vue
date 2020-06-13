@@ -50,6 +50,8 @@
 import Vue from 'vue'
 import SubjectTag from '@/components/SubjectTag.vue'
 import ContentCardEditorButton from '@/components/ContentCardEditorButton.vue'
+import { classData } from '~/types/store/classData'
+
 export default Vue.extend({
   components: {
     SubjectTag,
@@ -57,7 +59,7 @@ export default Vue.extend({
   },
   props: {
     lesson: {
-      type: Object,
+      type: Object as () => classData.Lesson,
       required: true,
       default: () => {}
     }

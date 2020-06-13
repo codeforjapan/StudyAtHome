@@ -31,12 +31,13 @@
 import Vue from 'vue'
 import dayjs from 'dayjs'
 import ContentCardEditable from '@/components/ContentCardEditable.vue'
+import { classData } from '~/types/store/classData'
 
 export default Vue.extend({
   components: { ContentCardEditable },
   props: {
     classData: {
-      type: Object,
+      type: Object as () => classData.Lesson,
       default: () => {}
     }
   },
