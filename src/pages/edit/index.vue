@@ -104,16 +104,16 @@ export default Vue.extend({
   },
   methods: {
     onClickAddButton(): void {
-      this.handler()
+      this.toggleScreen()
     },
     onCollapseEditingScreen(): void {
-      this.handler()
-      this.closeToReset()
+      this.toggleScreen()
+      this.resetEditingScreen()
     },
-    handler(): void {
+    toggleScreen(): void {
       this.isExpandedButton = !this.isExpandedButton
     },
-    closeToReset(): void {
+    resetEditingScreen(): void {
       this.editPageValue = {
         isHidden: false,
         lessonId: '',
@@ -182,7 +182,7 @@ export default Vue.extend({
           materialsUrl: materialUrl
         }
       }
-      this.handler()
+      this.toggleScreen()
     }
   }
 })
