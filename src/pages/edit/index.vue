@@ -2,6 +2,19 @@
   <div class="MainPage">
     <div v-if="classData.lessonsOnCurrentDate.length">
       <period-card-editable :class-data="classData" />
+      <ul class="Classes-List">
+        <li>おうちで時間割について</li>
+        <li>お問い合わせ</li>
+        <li>サイトポリシー</li>
+      </ul>
+    </div>
+    <div v-else-if="today" class="Classes-Outer">
+      <h1 class="Classes-Title">まだ今日の時間割はありません</h1>
+      <ul class="Classes-List">
+        <li>おうちで時間割について</li>
+        <li>お問い合わせ</li>
+        <li>サイトポリシー</li>
+      </ul>
     </div>
     <div v-else class="Classes-Outer">
       <h1 class="Classes-Title">
@@ -24,6 +37,8 @@
 
 <script lang="ts">
 import Vue from 'vue'
+import dayjs from 'dayjs'
+import isToday from 'date-fns/isToday'
 import { vxm } from '@/store'
 import PeriodCardEditable from '@/components/PeriodCardEditable.vue'
 import SimpleBottomSheet from '@/components/SimpleBottomSheet.vue'
@@ -31,7 +46,6 @@ import EditingScreen from '@/components/EditingScreen.vue'
 
 type DataType = {
   classData: typeof vxm.classData
-  dateTitle: string
   isExpandedButton: boolean
 }
 
@@ -45,8 +59,15 @@ export default Vue.extend({
   data(): DataType {
     return {
       classData: vxm.classData,
-      dateTitle: '25日',
       isExpandedButton: true
+    }
+  },
+  computed: {
+    today() {
+      return isToday(vxm.app.currentDate)
+    },
+    dateTitle() {
+      return dayjs(vxm.app.currentDate).format('M/D')
     }
   },
   methods: {
