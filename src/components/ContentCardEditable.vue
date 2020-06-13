@@ -3,15 +3,14 @@
     <v-card class="ContentCard elevation-4">
       <v-card-actions class="ContentCard-Actions">
         <subject-tag
-          v-for="(item, idx) in subjects"
-          :key="idx"
           class="ContentCard-SubjectTag"
-          :name="item.name || '教科名'"
-          :icon="item.icon || ''"
-          :icon-color="item.iconColor || 'white'"
-          :background-color="item.backgroundColor || '#A5D8FF'"
+          :name="lesson.subject.name || '教科名'"
+          :icon="lesson.subject.icon || ''"
+          :icon-color="lesson.subject.iconColor || 'white'"
+          :background-color="lesson.subject.color || '#A5D8FF'"
         />
         <subject-tag
+          v-if="lesson.videos.url"
           class="ContentCard-SubjectTag"
           :name="'動画'"
           :icon="'mdi-video'"
@@ -20,10 +19,10 @@
         />
       </v-card-actions>
       <v-card-title>
-        <h2 class="ContentCard-Title">{{ title }}</h2>
+        <h2 class="ContentCard-Title">{{ lesson.title }}</h2>
       </v-card-title>
       <v-card-text>
-        <p class="ContentCard-Description">{{ description }}</p>
+        <p class="ContentCard-Description">{{ lesson.description }}</p>
       </v-card-text>
     </v-card>
     <div class="ContentCard-Button-Outer">
@@ -47,24 +46,16 @@
 import Vue from 'vue'
 import SubjectTag from '@/components/SubjectTag.vue'
 import ContentCardEditorButton from '@/components/ContentCardEditorButton.vue'
-
 export default Vue.extend({
   components: {
     SubjectTag,
     ContentCardEditorButton
   },
   props: {
-    subjects: {
-      type: Array,
-      default: () => []
-    },
-    title: {
-      type: String,
-      default: ''
-    },
-    description: {
-      type: String,
-      default: ''
+    lesson: {
+      type: Object,
+      required: true,
+      default: () => {}
     }
   }
 })

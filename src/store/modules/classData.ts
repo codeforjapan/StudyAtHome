@@ -1,8 +1,8 @@
 import {
-  createModule,
-  mutation,
   action,
-  createProxy
+  createModule,
+  createProxy,
+  mutation
 } from 'vuex-class-component'
 import firebase from '@/plugins/firebase'
 import { AppStore } from '@/store/modules/app'
@@ -76,6 +76,7 @@ export class ClassDataStore extends VuexModule implements classData.ClassData {
       classDataLessonsSnapshot.forEach(doc => {
         const retrieved = doc.data() as classData.database.Lesson
         const converted: classData.Lesson = {
+          docId: doc.id,
           startTime: retrieved.startTime.toDate(),
           endTime: retrieved.endTime.toDate(),
           title: retrieved.title,
@@ -102,16 +103,35 @@ export class ClassDataStore extends VuexModule implements classData.ClassData {
   }
 
   @action
-  public async addLesson(lessonData: Object) {
+  public async addLesson(lessonData: classData.onlyadd.Lesson) {
+    const classIdStr = 'あけしめたす'
     await firebase
       .firestore()
       .collection('classData')
-      .doc(this.classId)
+      .doc(classIdStr)
       .collection('Lessons')
       .add(lessonData)
       .catch(() => {
         return Promise.reject(new Error('エラーによって処理に失敗しました'))
       })
-    this.loadClassData(this.classId)
+    this.loadClassData(classIdStr)
+  }
+
+  @action
+  public async editLessonData(editData: classData.Lesson) {
+    const classIdStr = 'あけしめたす'
+    const docId = editData.docId
+    delete editData.docId
+    await firebase
+      .firestore()
+      .collection('classData')
+      .doc(classIdStr)
+      .collection('Lessons')
+      .doc(docId)
+      .set(editData)
+      .catch(() => {
+        return Promise.reject(new Error('エラーによって処理に失敗しました'))
+      })
+    this.loadClassData(classIdStr)
   }
 }

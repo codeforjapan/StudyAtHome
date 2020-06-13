@@ -49,7 +49,7 @@
                 theme="primary"
                 text="保存する"
                 :is-disabled="isDisabled"
-                @click="addLesson"
+                @click="checkLessonIdonClick"
               />
             </div>
           </div>
@@ -71,6 +71,7 @@ import EditingScreen1 from '@/components/EditingScreen1.vue'
 import EditingScreen2 from '@/components/EditingScreen2.vue'
 import EditingScreen3 from '@/components/EditingScreen3.vue'
 import EditingScreen4 from '@/components/EditingScreen4.vue'
+import { classData } from '@/types/store/classData'
 
 type FirstPageDataType = {
   date: string
@@ -102,36 +103,12 @@ type DataType = {
   screen: boolean
   page: number
   error: boolean
+  lessonId: string
+  isHidden: boolean
   firstPageData: FirstPageDataType
   secondPageData: SecondPageDataType
   thirdPageData: ThirdPageDataType
   fourthPageData: FourthPageDataType
-}
-
-type LessonVideoType = {
-  url: string
-  title: string
-  thumbnailUrl: string
-}
-
-type LessonMaterialsType = {
-  title: string
-  url: string
-}
-
-type LessonDataType = {
-  startTime: Date
-  endTime: Date
-  title: string
-  subject: {
-    name: string
-    color: string
-  }
-  goal: string
-  description: string
-  videos: LessonVideoType[]
-  pages: string
-  materials: LessonMaterialsType[]
 }
 
 export default Vue.extend({
@@ -147,6 +124,36 @@ export default Vue.extend({
       type: Boolean,
       required: false,
       default: false
+    },
+    value: {
+      type: Object,
+      required: false,
+      default: () => ({
+        isHidden: false,
+        lessonId: '',
+        firstPageData: {
+          date: '',
+          startTime: '',
+          endTime: '',
+          title: '',
+          subjectName: '',
+          subjectColor: '#BAC8FF'
+        },
+        secondPageData: {
+          goal: '',
+          description: ''
+        },
+        thirdPageData: {
+          videoUrl: '',
+          videoTitle: '',
+          videoThumbnailUrl: ''
+        },
+        fourthPageData: {
+          pages: '',
+          materialsTitle: '',
+          materialsUrl: ''
+        }
+      })
     }
   },
   data(): DataType {
@@ -154,27 +161,29 @@ export default Vue.extend({
       screen: this.expanded,
       page: 1,
       error: false,
+      isHidden: this.value.isHidden,
+      lessonId: this.value.lessonId,
       firstPageData: {
-        date: '',
-        startTime: '',
-        endTime: '',
-        title: '',
-        subjectName: '',
-        subjectColor: '#BAC8FF'
+        date: this.value.lessonId,
+        startTime: this.value.lessonId,
+        endTime: this.value.lessonId,
+        title: this.value.lessonId,
+        subjectName: this.value.lessonId,
+        subjectColor: this.value.lessonId
       },
       secondPageData: {
-        goal: '',
-        description: ''
+        goal: this.value.lessonId,
+        description: this.value.lessonId
       },
       thirdPageData: {
-        videoUrl: '',
-        videoTitle: '',
-        videoThumbnailUrl: ''
+        videoUrl: this.value.lessonId,
+        videoTitle: this.value.lessonId,
+        videoThumbnailUrl: this.value.lessonId
       },
       fourthPageData: {
-        pages: '',
-        materialsTitle: '',
-        materialsUrl: ''
+        pages: this.value.lessonId,
+        materialsTitle: this.value.lessonId,
+        materialsUrl: this.value.lessonId
       }
     }
   },
@@ -200,7 +209,51 @@ export default Vue.extend({
     goBack(): Number {
       return this.page > 1 ? (this.page -= 1) : 1
     },
+    checkLessonIdonClick() {
+      if (this.lessonId === '') {
+        this.addLesson()
+      } else {
+        this.setLesson()
+      }
+    },
+    setLesson() {
+      const lessonOnlyAddData: classData.onlyadd.Lesson = this.makeLessonData()
+      const lessonData: classData.Lesson = {
+        startTime: lessonOnlyAddData.startTime,
+        endTime: lessonOnlyAddData.endTime,
+        title: lessonOnlyAddData.title,
+        subject: lessonOnlyAddData.subject,
+        goal: lessonOnlyAddData.goal,
+        description: lessonOnlyAddData.description,
+        videos: lessonOnlyAddData.videos,
+        pages: lessonOnlyAddData.pages,
+        materials: lessonOnlyAddData.materials,
+        isHidden: lessonOnlyAddData.isHidden,
+        docId: this.lessonId
+      }
+      vxm.classData
+        .editLessonData(lessonData)
+        .then(() => {
+          this.$emit('closeExpand')
+        })
+        .catch(error => {
+          console.error(error)
+          this.error = true
+        })
+    },
     addLesson() {
+      const lessonData: classData.onlyadd.Lesson = this.makeLessonData()
+      vxm.classData
+        .addLesson(lessonData)
+        .then(() => {
+          this.$emit('closeExpand')
+        })
+        .catch(error => {
+          console.error(error)
+          this.error = true
+        })
+    },
+    makeLessonData(): classData.onlyadd.Lesson {
       const startTimeStr: string =
         this.firstPageData.date + ' ' + this.firstPageData.startTime
       const startTimeDate: Date = dayjs(startTimeStr).toDate()
@@ -214,7 +267,6 @@ export default Vue.extend({
           title: this.thirdPageData.videoTitle,
           thumbnailUrl: this.thirdPageData.videoThumbnailUrl
         })
-      alert(videoData)
       const materialData = []
       if (
         this.fourthPageData.materialsTitle &&
@@ -224,8 +276,7 @@ export default Vue.extend({
           title: this.fourthPageData.materialsTitle,
           url: this.fourthPageData.materialsUrl
         })
-      alert(materialData)
-      const lessonData: LessonDataType = {
+      const lessonData: classData.onlyadd.Lesson = {
         startTime: startTimeDate,
         endTime: endTimeDate,
         title: this.firstPageData.title,
@@ -237,17 +288,10 @@ export default Vue.extend({
         description: this.secondPageData.description,
         videos: videoData,
         pages: this.fourthPageData.pages,
-        materials: materialData
+        materials: materialData,
+        isHidden: this.isHidden
       }
-      vxm.classData
-        .addLesson(lessonData)
-        .then(() => {
-          this.$emit('closeExpand')
-        })
-        .catch(error => {
-          console.error(error)
-          this.error = true
-        })
+      return lessonData
     }
   }
 })
