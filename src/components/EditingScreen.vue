@@ -164,26 +164,26 @@ export default Vue.extend({
       isHidden: this.value.isHidden,
       lessonId: this.value.lessonId,
       firstPageData: {
-        date: this.value.lessonId,
-        startTime: this.value.lessonId,
-        endTime: this.value.lessonId,
-        title: this.value.lessonId,
-        subjectName: this.value.lessonId,
-        subjectColor: this.value.lessonId
+        date: this.value.firstPageData.date,
+        startTime: this.value.firstPageData.startTime,
+        endTime: this.value.firstPageData.endTime,
+        title: this.value.firstPageData.title,
+        subjectName: this.value.firstPageData.subjectName,
+        subjectColor: this.value.firstPageData.subjectColor
       },
       secondPageData: {
-        goal: this.value.lessonId,
-        description: this.value.lessonId
+        goal: this.value.secondPageData.goal,
+        description: this.value.secondPageData.description
       },
       thirdPageData: {
-        videoUrl: this.value.lessonId,
-        videoTitle: this.value.lessonId,
-        videoThumbnailUrl: this.value.lessonId
+        videoUrl: this.value.thirdPageData.videoUrl,
+        videoTitle: this.value.thirdPageData.videoTitle,
+        videoThumbnailUrl: this.value.thirdPageData.videoThumbnailUrl
       },
       fourthPageData: {
-        pages: this.value.lessonId,
-        materialsTitle: this.value.lessonId,
-        materialsUrl: this.value.lessonId
+        pages: this.value.fourthPageData.pages,
+        materialsTitle: this.value.fourthPageData.materialsTitle,
+        materialsUrl: this.value.fourthPageData.materialsUrl
       }
     }
   },
