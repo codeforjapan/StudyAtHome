@@ -29,12 +29,12 @@
     <simple-bottom-sheet
       message="2年B組の授業を追加・編集する"
       :expanded="isExpandedButton"
-      @clickAddButton="handler"
+      @clickAddButton="onClickAddButton"
     />
     <editing-screen
       :value="editPageValue"
       :expanded="!isExpandedButton"
-      @collapse="closeToReset"
+      @collapse="onCollapseEditingScreen"
     />
   </div>
 </template>
@@ -103,11 +103,17 @@ export default Vue.extend({
     }
   },
   methods: {
+    onClickAddButton(): void {
+      this.handler()
+    },
+    onCollapseEditingScreen(): void {
+      this.handler()
+      this.closeToReset()
+    },
     handler(): void {
       this.isExpandedButton = !this.isExpandedButton
     },
     closeToReset(): void {
-      this.handler()
       this.editPageValue = {
         isHidden: false,
         lessonId: '',
