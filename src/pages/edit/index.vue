@@ -29,7 +29,7 @@
     <simple-bottom-sheet
       message="2年B組の授業を追加・編集する"
       :expanded="!editingMode"
-      @clickAddButton="onClickAddButton"
+      @clickAddButton="toggleScreen"
     />
     <editing-screen
       :value="editPageValue"
@@ -103,9 +103,6 @@ export default Vue.extend({
     }
   },
   methods: {
-    onClickAddButton(): void {
-      this.toggleScreen()
-    },
     onCollapseEditingScreen(): void {
       this.toggleScreen()
       this.resetEditingScreen()
