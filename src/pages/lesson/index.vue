@@ -19,7 +19,7 @@
           <SubjectTag
             class="subject-tag"
             :name="'動画'"
-            :icon="'mdi-video-outline'"
+            :icon="'mdi-video'"
             :icon-color="'#FFFFFF'"
             :background-color="'#D0BFFF'"
           />
