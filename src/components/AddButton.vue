@@ -44,7 +44,7 @@ export default Vue.extend({
   },
   methods: {
     onClick(): void {
-      this.$emit('addButtonClicked')
+      this.$emit('clickAddButton')
     }
   }
 })
