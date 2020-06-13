@@ -1,7 +1,7 @@
 <template>
   <div class="MainPage">
     <div v-if="classData.lessonsOnCurrentDate.length">
-      <period-card-editable :class-data="classData" @editButtonClick="doEdit" />
+      <period-card-editable :class-data="classData" @clickEditButton="doEdit" />
       <ul class="Classes-List">
         <li>おうちで時間割について</li>
         <li>お問い合わせ</li>
