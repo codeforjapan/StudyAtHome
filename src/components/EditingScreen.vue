@@ -207,6 +207,24 @@ export default Vue.extend({
       const endTimeStr: string =
         this.firstPageData.date + ' ' + this.firstPageData.endTime
       const endTimeDate: Date = dayjs(endTimeStr).toDate()
+      const videoData = []
+      if (this.thirdPageData.videoUrl)
+        videoData.push({
+          url: this.thirdPageData.videoUrl,
+          title: this.thirdPageData.videoTitle,
+          thumbnailUrl: this.thirdPageData.videoThumbnailUrl
+        })
+      alert(videoData)
+      const materialData = []
+      if (
+        this.fourthPageData.materialsTitle &&
+        this.fourthPageData.materialsTitle
+      )
+        materialData.push({
+          title: this.fourthPageData.materialsTitle,
+          url: this.fourthPageData.materialsUrl
+        })
+      alert(materialData)
       const lessonData: LessonDataType = {
         startTime: startTimeDate,
         endTime: endTimeDate,
@@ -217,27 +235,17 @@ export default Vue.extend({
         },
         goal: this.secondPageData.goal,
         description: this.secondPageData.description,
-        videos: [
-          {
-            url: this.thirdPageData.videoUrl,
-            title: this.thirdPageData.videoTitle,
-            thumbnailUrl: this.thirdPageData.videoThumbnailUrl
-          }
-        ],
+        videos: videoData,
         pages: this.fourthPageData.pages,
-        materials: [
-          {
-            title: this.fourthPageData.materialsTitle,
-            url: this.fourthPageData.materialsUrl
-          }
-        ]
+        materials: materialData
       }
       vxm.classData
         .addLesson(lessonData)
         .then(() => {
           this.$emit('closeExpand')
         })
-        .catch(() => {
+        .catch(error => {
+          console.error(error)
           this.error = true
         })
     }

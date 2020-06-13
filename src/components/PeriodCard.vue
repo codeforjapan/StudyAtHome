@@ -19,9 +19,12 @@
         md="6"
       >
         <content-card
-          :description="formatDate(item.startTime)"
-          :title="item.content"
-          :subjects="[{ name: item.subject }]"
+          :description="item.description"
+          :title="item.title"
+          :subjects="[
+            { name: item.subject.name, backgroundColor: item.subject.color }
+          ]"
+          :has-video="item.videos.length !== 0"
         />
       </v-col>
     </v-row>

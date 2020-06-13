@@ -11,6 +11,7 @@
         :background-color="item.backgroundColor || '#A5D8FF'"
       />
       <subject-tag
+        v-if="hasVideo"
         class="ContentCard-SubjectTag"
         :name="'動画'"
         :icon="'mdi-video'"
@@ -45,6 +46,10 @@ export default Vue.extend({
     description: {
       type: String,
       default: ''
+    },
+    hasVideo: {
+      type: Boolean,
+      default: false
     }
   }
 })
