@@ -276,7 +276,7 @@ export default Vue.extend({
       const materialData = []
       if (
         this.fourthPageData.materialsTitle &&
-        this.fourthPageData.materialsTitle
+        this.fourthPageData.materialsUrl
       )
         materialData.push({
           title: this.fourthPageData.materialsTitle,
