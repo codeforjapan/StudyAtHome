@@ -18,14 +18,7 @@
         cols="12"
         md="6"
       >
-        <content-card
-          :description="item.description"
-          :title="item.title"
-          :subjects="[
-            { name: item.subject.name, backgroundColor: item.subject.color }
-          ]"
-          :has-video="item.videos.length !== 0"
-        />
+        <content-card :lesson="item" />
       </v-col>
     </v-row>
   </div>

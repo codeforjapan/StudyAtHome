@@ -18,8 +18,9 @@
         cols="12"
         md="6"
       >
-        <content-card-editable
+        <content-card
           :lesson="item"
+          :editable="true"
           @clickEditButton="$emit('clickEditButton', item)"
         />
       </v-col>
@@ -30,11 +31,11 @@
 <script lang="ts">
 import Vue from 'vue'
 import dayjs from 'dayjs'
-import ContentCardEditable from '@/components/ContentCardEditable.vue'
+import ContentCard from '~/components/ContentCard.vue'
 import { classData } from '~/types/store/classData'
 
 export default Vue.extend({
-  components: { ContentCardEditable },
+  components: { ContentCard },
   props: {
     classData: {
       type: Object as () => classData.Lesson,
