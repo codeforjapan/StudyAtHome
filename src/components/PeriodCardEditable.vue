@@ -18,7 +18,10 @@
         cols="12"
         md="6"
       >
-        <content-card-editable :lesson="item" />
+        <content-card-editable
+          :lesson="item"
+          @editButtonClick="$emit('editButtonClick', item)"
+        />
       </v-col>
     </v-row>
   </div>

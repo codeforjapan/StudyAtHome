@@ -17,9 +17,9 @@ const VuexModule = createModule({
 export class ClassDataStore extends VuexModule implements classData.ClassData {
   classId: classData.ClassId = ''
   className: string = ''
-  lessons: classData.Lesson[] = []
+  lessons: classData.LessonWithId[] = []
 
-  public get lessonsOnCurrentDate(): classData.Lesson[] {
+  public get lessonsOnCurrentDate(): classData.LessonWithId[] {
     const appStore = createProxy(this.$store, AppStore)
 
     // Generate a new Date object with a specified date & time
@@ -52,7 +52,7 @@ export class ClassDataStore extends VuexModule implements classData.ClassData {
 
   @action
   public async loadClassData(classId: classData.ClassId) {
-    const lessons: classData.Lesson[] = []
+    const lessons: classData.LessonWithId[] = []
 
     const classDataDocument = firebase
       .firestore()
@@ -75,7 +75,7 @@ export class ClassDataStore extends VuexModule implements classData.ClassData {
     try {
       classDataLessonsSnapshot.forEach(doc => {
         const retrieved = doc.data() as classData.database.Lesson
-        const converted: classData.Lesson = {
+        const converted: classData.LessonWithId = {
           docId: doc.id,
           startTime: retrieved.startTime.toDate(),
           endTime: retrieved.endTime.toDate(),
@@ -103,7 +103,7 @@ export class ClassDataStore extends VuexModule implements classData.ClassData {
   }
 
   @action
-  public async addLesson(lessonData: classData.onlyadd.Lesson) {
+  public async addLesson(lessonData: classData.Lesson) {
     const classIdStr = 'あけしめたす'
     await firebase
       .firestore()
@@ -118,7 +118,7 @@ export class ClassDataStore extends VuexModule implements classData.ClassData {
   }
 
   @action
-  public async editLessonData(editData: classData.Lesson) {
+  public async editLessonData(editData: classData.LessonWithId) {
     const classIdStr = 'あけしめたす'
     const docId = editData.docId
     delete editData.docId

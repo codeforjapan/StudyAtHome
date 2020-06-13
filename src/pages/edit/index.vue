@@ -1,7 +1,7 @@
 <template>
   <div class="MainPage">
     <div v-if="classData.lessonsOnCurrentDate.length">
-      <period-card-editable :class-data="classData" />
+      <period-card-editable :class-data="classData" @editButtonClick="doEdit" />
       <ul class="Classes-List">
         <li>おうちで時間割について</li>
         <li>お問い合わせ</li>
@@ -31,7 +31,11 @@
       :expanded="isExpandedButton"
       @addButtonClicked="handler"
     />
-    <editing-screen :expanded="!isExpandedButton" @closeExpand="handler" />
+    <editing-screen
+      :value="editPageValue"
+      :expanded="!isExpandedButton"
+      @closeExpand="handler"
+    />
   </div>
 </template>
 
@@ -43,10 +47,12 @@ import { vxm } from '@/store'
 import PeriodCardEditable from '@/components/PeriodCardEditable.vue'
 import SimpleBottomSheet from '@/components/SimpleBottomSheet.vue'
 import EditingScreen from '@/components/EditingScreen.vue'
+import { classData } from '~/types/store/classData'
 
 type DataType = {
   classData: typeof vxm.classData
   isExpandedButton: boolean
+  editPageValue: object
 }
 
 export default Vue.extend({
@@ -59,7 +65,33 @@ export default Vue.extend({
   data(): DataType {
     return {
       classData: vxm.classData,
-      isExpandedButton: true
+      isExpandedButton: true,
+      editPageValue: {
+        isHidden: false,
+        lessonId: '',
+        firstPageData: {
+          date: '',
+          startTime: '',
+          endTime: '',
+          title: '',
+          subjectName: '',
+          subjectColor: '#BAC8FF'
+        },
+        secondPageData: {
+          goal: '',
+          description: ''
+        },
+        thirdPageData: {
+          videoUrl: '',
+          videoTitle: '',
+          videoThumbnailUrl: ''
+        },
+        fourthPageData: {
+          pages: '',
+          materialsTitle: '',
+          materialsUrl: ''
+        }
+      }
     }
   },
   computed: {
@@ -73,6 +105,49 @@ export default Vue.extend({
   methods: {
     handler(): void {
       this.isExpandedButton = !this.isExpandedButton
+    },
+    doEdit(value: classData.LessonWithId): void {
+      const videoUrl = value.videos.length === 0 ? '' : value.videos[0].url
+      const videoTitle = value.videos.length === 0 ? '' : value.videos[0].title
+      const videoThumbnailUrl =
+        value.videos.length === 0 ? '' : value.videos[0].thumbnailUrl
+      const materialTitle =
+        value.materials.length === 0 ? '' : value.materials[0].title
+      const materialUrl =
+        value.materials.length === 0 ? '' : value.materials[0].url
+      this.editPageValue = {
+        isHidden: value.isHidden,
+        lessonId: value.docId,
+        firstPageData: {
+          date:
+            value.startTime.getFullYear() +
+            '-' +
+            value.startTime.getMonth() +
+            '-' +
+            value.startTime.getDate(),
+          startTime:
+            value.startTime.getHours() + ':' + value.startTime.getMinutes(),
+          endTime: value.endTime.getHours() + ':' + value.endTime.getMinutes(),
+          title: value.title,
+          subjectName: value.subject.name,
+          subjectColor: value.subject.color
+        },
+        secondPageData: {
+          goal: value.goal,
+          description: value.description
+        },
+        thirdPageData: {
+          videoUrl,
+          videoTitle,
+          videoThumbnailUrl
+        },
+        fourthPageData: {
+          pages: value.pages,
+          materialsTitle: materialTitle,
+          materialsUrl: materialUrl
+        }
+      }
+      this.handler()
     }
   }
 })

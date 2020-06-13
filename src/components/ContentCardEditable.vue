@@ -29,10 +29,12 @@
       <content-card-editor-button
         class="ContentCard-Button"
         icon-name="mdi-eye-off"
+        @click="$emit('changeHide')"
       />
       <content-card-editor-button
         class="ContentCard-Button"
         icon-name="mdi-pencil"
+        @click="$emit('editButtonClick')"
       />
       <!--
       <content-card-editor-button
