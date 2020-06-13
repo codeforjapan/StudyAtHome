@@ -49,7 +49,7 @@
                 theme="primary"
                 text="保存する"
                 :is-disabled="isDisabled"
-                @click="checkLessonIdonClick"
+                @click="saveLessonData"
               />
             </div>
           </div>
@@ -217,7 +217,7 @@ export default Vue.extend({
     goBack(): Number {
       return this.page > 1 ? (this.page -= 1) : 1
     },
-    checkLessonIdonClick() {
+    saveLessonData() {
       if (this.lessonId === '') {
         this.addLesson()
       } else {
