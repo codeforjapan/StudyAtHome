@@ -1,11 +1,5 @@
 <template>
-  <v-bottom-sheet
-    :value="expanded"
-    no-click-animation
-    persistent
-    scrollable
-    @input="$emit('update:expanded', $event)"
-  >
+  <v-bottom-sheet :value="expanded" no-click-animation persistent scrollable>
     <v-card class="EditingScreen">
       <v-card-title class="EditingScreen-CardElements">
         <v-container class="EditingScreen-Container">
