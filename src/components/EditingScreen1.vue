@@ -114,7 +114,7 @@
       :transparent="true"
       icon-name="mdi-calendar"
       :readonly="true"
-      @buttonClick="datePickerOpen = true"
+      @clickButton="datePickerOpen = true"
     />
     <div class="EditingScreen-Flex EditingScreen-Time">
       <editor-field
@@ -126,7 +126,7 @@
         icon-name="mdi-clock-outline"
         class="TimeField"
         :readonly="true"
-        @buttonClick="startTimePickerOpen = true"
+        @clickButton="startTimePickerOpen = true"
       />
       <span class="Hyphen">-</span>
       <editor-field
@@ -137,7 +137,7 @@
         icon-name="mdi-clock-outline"
         class="TimeField"
         :readonly="true"
-        @buttonClick="endTimePickerOpen = true"
+        @clickButton="endTimePickerOpen = true"
       />
     </div>
     <editor-field
@@ -160,7 +160,7 @@
         :subject-color="tempFormData.subjectColor"
         :subject-name="tempFormData.subjectName"
         class="LabelField"
-        @buttonClick="colorPickerOpen = true"
+        @clickPickerButton="colorPickerOpen = true"
       />
     </div>
   </div>
