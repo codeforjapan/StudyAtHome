@@ -225,7 +225,7 @@ export default Vue.extend({
       }
     },
     setLesson() {
-      const lessonOnlyAddData: classData.Lesson = this.makeLessonData()
+      const lessonOnlyAddData: classData.Lesson = this.buildLessonData()
       const lessonData: classData.LessonWithId = {
         startTime: lessonOnlyAddData.startTime,
         endTime: lessonOnlyAddData.endTime,
@@ -249,7 +249,7 @@ export default Vue.extend({
         })
     },
     addLesson() {
-      const lessonData: classData.Lesson = this.makeLessonData()
+      const lessonData: classData.Lesson = this.buildLessonData()
       vxm.classData
         .addLesson(lessonData)
         .then(() => {
@@ -259,7 +259,7 @@ export default Vue.extend({
           this.error = true
         })
     },
-    makeLessonData(): classData.Lesson {
+    buildLessonData(): classData.Lesson {
       const startTimeStr: string =
         this.firstPageData.date + ' ' + this.firstPageData.startTime
       const startTimeDate: Date = dayjs(startTimeStr).toDate()
