@@ -10,7 +10,7 @@
           :background-color="lesson.subject.color || '#A5D8FF'"
         />
         <subject-tag
-          v-if="lesson.videos.url"
+          v-if="lesson.videos.length >= 1"
           class="ContentCard-SubjectTag"
           :name="'動画'"
           :icon="'mdi-video'"
