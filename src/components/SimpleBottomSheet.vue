@@ -5,6 +5,7 @@
     persistent
     scrollable
     hide-overlay
+    no-click-animation
   >
     <v-card class="card">
       <v-card-title class="card-title" />
@@ -46,6 +47,11 @@ export default Vue.extend({
   data() {
     return {
       sheet: this.expanded
+    }
+  },
+  watch: {
+    expanded(newValue) {
+      this.sheet = newValue
     }
   },
   methods: {

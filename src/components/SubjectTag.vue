@@ -7,7 +7,8 @@
       />
       <v-icon v-else :color="iconColor">{{ icon }}</v-icon>
     </v-avatar>
-    <span class="SubjectTagText">{{ name }}</span>
+    <span v-if="!name" class="SubjectTagText">教科名</span>
+    <span v-else class="SubjectTagText">{{ name }}</span>
   </v-chip>
 </template>
 
