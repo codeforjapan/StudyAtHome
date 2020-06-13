@@ -1,5 +1,11 @@
 <template>
-  <v-bottom-sheet v-model="screen" no-click-animation persistent scrollable>
+  <v-bottom-sheet
+    :value="expanded"
+    no-click-animation
+    persistent
+    scrollable
+    @input="$emit('update:expanded', $event)"
+  >
     <v-card class="EditingScreen">
       <v-card-title class="EditingScreen-CardElements">
         <v-container class="EditingScreen-Container">
@@ -100,7 +106,6 @@ type FourthPageDataType = {
 }
 
 type DataType = {
-  screen: boolean
   page: number
   error: boolean
   lessonId: string
@@ -158,7 +163,6 @@ export default Vue.extend({
   },
   data(): DataType {
     return {
-      screen: this.expanded,
       page: 1,
       error: false,
       isHidden: this.value.isHidden,
@@ -199,9 +203,6 @@ export default Vue.extend({
     }
   },
   watch: {
-    expanded(newValue) {
-      this.screen = newValue
-    },
     value(value) {
       this.isHidden = value.isHidden
       this.lessonId = value.lessonId
