@@ -5,6 +5,9 @@
         Loading
       </div>
     </v-overlay>
+    <v-app-bar fixed app class="bar" elevation="0">
+      <HeaderLogo />
+    </v-app-bar>
     <v-content class="content">
       <v-container class="px-4 py-8">
         <nuxt />
@@ -15,12 +18,16 @@
 
 <script lang="ts">
 import Vue from 'vue'
+import HeaderLogo from '@/assets/svgs/header_logo.svg'
 
 type LocalData = {
   loading: boolean
 }
 
 export default Vue.extend({
+  components: {
+    HeaderLogo
+  },
   data(): LocalData {
     return {
       loading: true
