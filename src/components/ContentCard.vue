@@ -5,12 +5,11 @@
         <subject-tag
           class="ContentCard-SubjectTag"
           :name="lesson.subject.name || '教科名'"
-          :icon="lesson.subject.icon || ''"
-          :icon-color="lesson.subject.iconColor || 'white'"
+          icon-color="white"
           :background-color="lesson.subject.color || '#A5D8FF'"
         />
         <subject-tag
-          v-if="lesson.videos.length >= 1"
+          v-if="lesson.videos.length > 0"
           class="ContentCard-SubjectTag"
           :name="'動画'"
           :icon="'mdi-video'"
