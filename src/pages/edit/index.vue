@@ -34,6 +34,7 @@
     <editing-screen
       :value="editPageValue"
       :expanded="!isExpandedButton"
+      @update:expanded="isExpandedButton = $event"
       @collapse="closeToReset"
     />
   </div>
