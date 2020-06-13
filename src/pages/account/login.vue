@@ -51,7 +51,7 @@
         </div>
       </template>
     </bottom-sheet-layer>
-    <v-snackbar :timeout="5000" :value="error" absolute top color="#C01B61">
+    <v-snackbar v-model="error" :timeout="5000" absolute top color="#C01B61">
       メールアドレスまたはパスワードが正しくありません
     </v-snackbar>
   </div>
