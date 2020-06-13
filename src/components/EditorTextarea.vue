@@ -2,7 +2,7 @@
   <div>
     <span v-if="title" class="EditorTextarea-Title">{{ title }}</span>
     <v-textarea
-      v-model="modelValue"
+      :value="value"
       :hint="hint"
       :label="label"
       :placeholder="placeholder"
@@ -10,16 +10,13 @@
       class="elevation-0"
       solo
       flat
+      @input="$emit('input', $event)"
     />
   </div>
 </template>
 
 <script lang="ts">
 import Vue from 'vue'
-
-type DataType = {
-  modelValue: string
-}
 
 export default Vue.extend({
   props: {
@@ -47,19 +44,6 @@ export default Vue.extend({
       type: String,
       required: false,
       default: ''
-    }
-  },
-  data(): DataType {
-    return {
-      modelValue: this.value
-    }
-  },
-  watch: {
-    modelValue(value) {
-      this.$emit('input', value)
-    },
-    value(value) {
-      this.modelValue = value
     }
   }
 })
