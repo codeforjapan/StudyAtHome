@@ -15,7 +15,7 @@
             <v-col class="col message">{{ message }}</v-col>
             <v-col cols="2">
               <span class="add-button">
-                <add-button @addButtonClicked="$emit('addButtonClicked')" />
+                <add-button @clickAddButton="$emit('clickAddButton')" />
               </span>
             </v-col>
           </v-row>
