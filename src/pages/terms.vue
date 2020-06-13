@@ -22,8 +22,19 @@
       <v-icon v-if="isCheck" color="#0071C2">mdi-check-box-outline</v-icon>
       <v-icon v-else color="#0071C2">mdi-checkbox-blank-outline</v-icon>
     </label>
-    <action-button class="Button" theme="primary" text="利用を開始する" />
-    <action-button class="Button" theme="border" text="同意しない" />
+    <action-button
+      :is-disabled="!isCheck"
+      class="Button"
+      theme="primary"
+      text="利用を開始する"
+      @click="$emit('clickAgreeButton')"
+    />
+    <action-button
+      class="Button"
+      theme="border"
+      text="同意しない"
+      @click="$router.push('/')"
+    />
   </div>
 </template>
 

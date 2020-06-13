@@ -39,7 +39,7 @@ export default Vue.extend({
   props: {
     classData: {
       type: Object as () => classData.Lesson,
-      default: () => {}
+      required: true
     }
   },
   methods: {
