@@ -1,5 +1,5 @@
 <template>
-  <v-bottom-sheet v-model="screen" persistent scrollable>
+  <v-bottom-sheet v-model="screen" no-click-animation persistent scrollable>
     <v-card class="EditingScreen">
       <v-card-title class="EditingScreen-CardElements">
         <v-container class="EditingScreen-Container">
