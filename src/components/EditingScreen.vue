@@ -282,7 +282,7 @@ export default Vue.extend({
           title: this.fourthPageData.materialsTitle,
           url: this.fourthPageData.materialsUrl
         })
-      const lessonData: classData.Lesson = {
+      return {
         startTime: startTimeDate,
         endTime: endTimeDate,
         title: this.firstPageData.title,
@@ -297,7 +297,6 @@ export default Vue.extend({
         materials: materialData,
         isHidden: this.isHidden
       }
-      return lessonData
     }
   }
 })
