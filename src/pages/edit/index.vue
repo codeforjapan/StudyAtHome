@@ -28,12 +28,12 @@
     </div>
     <simple-bottom-sheet
       message="2年B組の授業を追加・編集する"
-      :expanded="isExpandedButton"
+      :expanded="!editingMode"
       @clickAddButton="onClickAddButton"
     />
     <editing-screen
       :value="editPageValue"
-      :expanded="!isExpandedButton"
+      :expanded="editingMode"
       @collapse="onCollapseEditingScreen"
     />
   </div>
@@ -51,7 +51,7 @@ import { classData } from '~/types/store/classData'
 
 type DataType = {
   classData: typeof vxm.classData
-  isExpandedButton: boolean
+  editingMode: boolean
   editPageValue: object
 }
 
@@ -65,7 +65,7 @@ export default Vue.extend({
   data(): DataType {
     return {
       classData: vxm.classData,
-      isExpandedButton: true,
+      editingMode: false,
       editPageValue: {
         isHidden: false,
         lessonId: '',
@@ -111,7 +111,7 @@ export default Vue.extend({
       this.resetEditingScreen()
     },
     toggleScreen(): void {
-      this.isExpandedButton = !this.isExpandedButton
+      this.editingMode = !this.editingMode
     },
     resetEditingScreen(): void {
       this.editPageValue = {
