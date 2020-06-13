@@ -20,7 +20,7 @@
       >
         <content-card-editable
           :lesson="item"
-          @editButtonClick="$emit('editButtonClick', item)"
+          @clickEditButton="$emit('clickEditButton', item)"
         />
       </v-col>
     </v-row>

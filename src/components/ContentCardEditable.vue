@@ -34,7 +34,7 @@
       <content-card-editor-button
         class="ContentCard-Button"
         icon-name="mdi-pencil"
-        @click="$emit('editButtonClick')"
+        @click="$emit('clickEditButton')"
       />
       <!--
       <content-card-editor-button
