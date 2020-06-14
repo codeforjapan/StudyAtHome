@@ -53,7 +53,6 @@ export class ClassDataStore extends VuexModule implements classData.ClassData {
     isEditor: boolean
   }) {
     const lessons: classData.LessonWithId[] = []
-    console.log(classId)
     const classDataDocument = firebase
       .firestore()
       .collection('classData')
@@ -61,9 +60,7 @@ export class ClassDataStore extends VuexModule implements classData.ClassData {
 
     // classData ドキュメントのフィールドを取得
     const classDataSnapshot = await classDataDocument.get()
-    console.log(classDataSnapshot)
-    if (!classDataSnapshot.exists)
-      throw new Error('クラスIDが間違っています: 0001')
+    if (!classDataSnapshot.exists) throw new Error('クラスIDが間違っています')
     const classData = classDataSnapshot.data() as classData.ClassData
     const className = classData.className
 
@@ -93,7 +90,7 @@ export class ClassDataStore extends VuexModule implements classData.ClassData {
         lessons.push(converted)
       })
     } catch {
-      throw new Error('クラスIDが間違っています0002')
+      throw new Error('クラスIDが間違っています')
     }
     if (isEditor) {
       const editorClassDataDocument = firebase
@@ -105,7 +102,7 @@ export class ClassDataStore extends VuexModule implements classData.ClassData {
       const editorClassDataSnapshot = await editorClassDataDocument.get()
 
       if (!editorClassDataSnapshot.exists)
-        throw new Error('クラスIDが間違っています:0003')
+        throw new Error('クラスIDが間違っています')
       const schoolName = editorClassDataSnapshot.get('schoolName')
 
       this.setClassData({
@@ -125,7 +122,6 @@ export class ClassDataStore extends VuexModule implements classData.ClassData {
 
   @action
   public async registerClass(classData: classData.ClassData) {
-    console.log(classData)
     this.setClassData(classData)
   }
 
@@ -140,7 +136,6 @@ export class ClassDataStore extends VuexModule implements classData.ClassData {
       .catch(() => {
         return Promise.reject(new Error('エラーによって処理に失敗しました'))
       })
-    console.log(this.classId)
     this.loadClassData({ classId: this.classId, isEditor: true })
   }
 
