@@ -1,8 +1,8 @@
 import {
-  createModule,
-  mutation,
   action,
-  createProxy
+  createModule,
+  createProxy,
+  mutation
 } from 'vuex-class-component'
 import firebase from '@/plugins/firebase'
 import { AppStore } from '@/store/modules/app'
@@ -17,9 +17,9 @@ const VuexModule = createModule({
 export class ClassDataStore extends VuexModule implements classData.ClassData {
   classId: classData.ClassId = ''
   className: string = ''
-  lessons: classData.Lesson[] = []
+  lessons: classData.LessonWithId[] = []
 
-  public get lessonsOnCurrentDate(): classData.Lesson[] {
+  public get lessonsOnCurrentDate(): classData.LessonWithId[] {
     const appStore = createProxy(this.$store, AppStore)
 
     // Generate a new Date object with a specified date & time
@@ -52,7 +52,7 @@ export class ClassDataStore extends VuexModule implements classData.ClassData {
 
   @action
   public async loadClassData(classId: classData.ClassId) {
-    const lessons: classData.Lesson[] = []
+    const lessons: classData.LessonWithId[] = []
 
     const classDataDocument = firebase
       .firestore()
@@ -75,7 +75,8 @@ export class ClassDataStore extends VuexModule implements classData.ClassData {
     try {
       classDataLessonsSnapshot.forEach(doc => {
         const retrieved = doc.data() as classData.database.Lesson
-        const converted: classData.Lesson = {
+        const converted: classData.LessonWithId = {
+          docId: doc.id,
           startTime: retrieved.startTime.toDate(),
           endTime: retrieved.endTime.toDate(),
           title: retrieved.title,
@@ -99,5 +100,42 @@ export class ClassDataStore extends VuexModule implements classData.ClassData {
       className,
       lessons
     })
+  }
+
+  @action
+  public async registerLesson(lessonData: classData.Lesson) {
+    const classIdStr = 'あけしめたす'
+    await firebase
+      .firestore()
+      .collection('classData')
+      .doc(classIdStr)
+      .collection('Lessons')
+      .add(lessonData)
+      .catch(() => {
+        return Promise.reject(new Error('エラーによって処理に失敗しました'))
+      })
+    this.loadClassData(classIdStr)
+  }
+
+  @action
+  public async changeLesson({
+    editData,
+    id
+  }: {
+    editData: classData.Lesson
+    id: classData.LessonId
+  }) {
+    const classIdStr = 'あけしめたす'
+    await firebase
+      .firestore()
+      .collection('classData')
+      .doc(classIdStr)
+      .collection('Lessons')
+      .doc(id)
+      .set(editData)
+      .catch(() => {
+        return Promise.reject(new Error('エラーによって処理に失敗しました'))
+      })
+    this.loadClassData(classIdStr)
   }
 }

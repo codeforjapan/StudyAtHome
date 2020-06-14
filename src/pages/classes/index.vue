@@ -27,16 +27,12 @@ type Data = {
   classData: typeof vxm.classData
 }
 
-type Methods = {
-  formatDate(date: Date): string
-}
-
 type Computed = {
   today: boolean
   dateTitle: string
 }
 
-export default Vue.extend<Data, Methods, Computed, unknown>({
+export default Vue.extend<Data, unknown, Computed, unknown>({
   components: { PeriodCard },
   layout: 'classes',
   data() {
@@ -50,11 +46,6 @@ export default Vue.extend<Data, Methods, Computed, unknown>({
     },
     dateTitle() {
       return dayjs(vxm.app.currentDate).format('M/D')
-    }
-  },
-  methods: {
-    formatDate(date: Date) {
-      return dayjs(date).format('HH:MM')
     }
   }
 })
