@@ -9,8 +9,12 @@ const VuexModule = createModule({
 type Email = string | null
 type EmailVerified = boolean
 type DisplayName = string | null
-type AllowAccess = ClassId[]
-type ClassId = string
+type AllowAccess = AllowAccessData[]
+type AllowAccessData = {
+  classId: string
+  schoolName: string
+  className: string
+}
 type Uid = string | null
 
 interface User {
@@ -19,6 +23,11 @@ interface User {
   displayName: DisplayName
   allowAccess: AllowAccess
   uid: Uid
+}
+
+interface userData {
+  allowAccess: string[]
+  username: string
 }
 
 export class UserStore extends VuexModule implements User {
@@ -51,19 +60,38 @@ export class UserStore extends VuexModule implements User {
   public async login() {
     const user = firebase.auth().currentUser
     if (!user) return
-    /*
+
     const data = await firebase
       .firestore()
       .collection('users')
       .doc(user.uid)
       .get()
-     */
+
+    const allowAccessData: string[] = data.get('allow_access')
+    const allowAccess = []
+    for (const value of allowAccessData) {
+      const classData = await firebase
+        .firestore()
+        .collection('classData')
+        .doc(value)
+        .get()
+      const editorClassData = await firebase
+        .firestore()
+        .collection('editorClassData')
+        .doc(value)
+        .get()
+      allowAccess.push({
+        classId: value,
+        schoolName: editorClassData.get('schoolName'),
+        className: classData.get('className')
+      })
+    }
 
     this.setUser({
       email: user.email,
       emailVerified: user.emailVerified,
-      displayName: user.displayName,
-      allowAccess: [],
+      displayName: data.get('username'),
+      allowAccess,
       uid: user.uid
     })
   }
@@ -71,12 +99,19 @@ export class UserStore extends VuexModule implements User {
   @action
   public async loginFromUserObject(user: any) {
     if (!user) return
+
+    const data = await firebase
+      .firestore()
+      .collection('users')
+      .doc(user.user_id)
+      .get()
+
     this.setUser({
       email: user.email,
-      emailVerified: user.email_verified,
-      displayName: user.display_name,
-      allowAccess: [],
-      uid: user.user_id
+      emailVerified: user.emailVerified,
+      displayName: data.get('username'),
+      allowAccess: data.get('allow_access'),
+      uid: user.uid
     })
   }
 

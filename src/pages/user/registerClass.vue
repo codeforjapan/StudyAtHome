@@ -53,6 +53,7 @@ import { vxm } from '@/store'
 export default Vue.extend({
   components: { BottomSheetLayer, ActionButton, InputField },
   layout: 'background',
+  middleware: 'authenticated',
   data() {
     return {
       schoolName: '',

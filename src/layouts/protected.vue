@@ -45,7 +45,7 @@ type LocalData = {
 }
 
 export default Vue.extend({
-  // middleware: 'authenticated',
+  middleware: ['authenticated', 'checkClassData'],
   components: {
     CalendarBar,
     HeaderLogo
