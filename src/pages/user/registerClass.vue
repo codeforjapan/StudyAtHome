@@ -4,11 +4,21 @@
       <dl class="RegisterClass-List">
         <dt class="RegisterClass-ItemTitle">学校名</dt>
         <dd>
-          <input-field label="school" placeholder="おひさま小学校" require />
+          <input-field
+            v-model="schoolName"
+            label="school"
+            placeholder="おひさま小学校"
+            require
+          />
         </dd>
         <dt class="RegisterClass-ItemTitle">クラス名</dt>
         <dd>
-          <input-field label="class" placeholder="2年B組" require />
+          <input-field
+            v-model="className"
+            label="class"
+            placeholder="2年B組"
+            require
+          />
           <span class="RegisterClass-ItemNote">
             クラス名は表示されますのでご注意ください
           </span>
@@ -16,7 +26,12 @@
       </dl>
     </template>
     <template v-slot:LayerFooter>
-      <action-button theme="primary" text="登録を完了する" />
+      <action-button
+        :is-disabled="disableButton"
+        :is-loading="loading"
+        text="登録を完了する"
+        theme="primary"
+      />
     </template>
   </bottom-sheet-layer>
 </template>
@@ -29,7 +44,25 @@ import InputField from '@/components/InputField.vue'
 
 export default Vue.extend({
   components: { BottomSheetLayer, ActionButton, InputField },
-  layout: 'background'
+  layout: 'background',
+  data() {
+    return {
+      schoolName: '',
+      className: '',
+      loading: false
+    }
+  },
+  computed: {
+    disableButton(): boolean {
+      return !(this.schoolName && this.className)
+    }
+  },
+  methods: {
+    doRegister() {
+      this.loading = true
+      this.loading = false
+    }
+  }
 })
 </script>
 

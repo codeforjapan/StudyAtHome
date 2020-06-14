@@ -23,7 +23,11 @@
         text="選択クラスでログインする"
         class="ClassList-Button"
       />
-      <action-button theme="secondary" text="クラスを登録する" />
+      <action-button
+        text="クラスを登録する"
+        theme="secondary"
+        @click="$router.push('/user/registerClass')"
+      />
     </template>
   </bottom-sheet-layer>
 </template>
