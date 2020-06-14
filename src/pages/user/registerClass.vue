@@ -69,7 +69,7 @@ export default Vue.extend({
   methods: {
     doRegister() {
       this.loading = true
-      const classId = this.generateUniqueId()
+      let classId = this.generateUniqueId()
       firebase
         .firestore()
         .collection('classData')
@@ -77,55 +77,51 @@ export default Vue.extend({
         .get()
         .then(doc => {
           if (doc.exists) {
-            this.error = true
-            this.loading = false
-          } else {
-            if (vxm.user.uid) {
-              firebase
-                .firestore()
-                .collection('users')
-                .doc(vxm.user.uid)
-                .update({
-                  allow_access: firebase.firestore.FieldValue.arrayUnion(
-                    classId
-                  )
-                })
-            }
+            classId = this.generateUniqueId()
+          }
+          if (vxm.user.uid) {
             firebase
               .firestore()
-              .collection('classData')
-              .doc(classId)
-              .set({
-                className: this.className
-              })
-              .then(() => {
-                firebase
-                  .firestore()
-                  .collection('editorClassData')
-                  .doc(classId)
-                  .set({
-                    schoolName: this.schoolName
-                  })
-                  .then(() => {
-                    vxm.classData.registerClass({
-                      classId,
-                      schoolName: this.schoolName,
-                      className: this.className,
-                      lessons: []
-                    })
-                    this.loading = false
-                    this.$router.push('/user/registered')
-                  })
-                  .catch(() => {
-                    this.error = true
-                    this.loading = false
-                  })
-              })
-              .catch(() => {
-                this.error = true
-                this.loading = false
+              .collection('users')
+              .doc(vxm.user.uid)
+              .update({
+                allow_access: firebase.firestore.FieldValue.arrayUnion(classId)
               })
           }
+          firebase
+            .firestore()
+            .collection('classData')
+            .doc(classId)
+            .set({
+              className: this.className
+            })
+            .then(() => {
+              firebase
+                .firestore()
+                .collection('editorClassData')
+                .doc(classId)
+                .set({
+                  schoolName: this.schoolName
+                })
+                .then(() => {
+                  vxm.classData.registerClass({
+                    classId,
+                    schoolName: this.schoolName,
+                    className: this.className,
+                    lessons: []
+                  })
+                  this.loading = false
+                  this.$router.push('/user/registered')
+                })
+                .catch(() => {
+                  this.error = true
+                  this.loading = false
+                })
+            })
+            .catch(() => {
+              this.error = true
+              this.loading = false
+            })
         })
     },
     generateUniqueId() {
