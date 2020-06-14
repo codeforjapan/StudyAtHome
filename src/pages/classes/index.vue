@@ -28,7 +28,12 @@ import dayjs from 'dayjs'
 import isToday from 'date-fns/isToday'
 import { vxm } from '@/store'
 import PeriodCard from '@/components/PeriodCard.vue'
+import { classData } from '@/types/store/classData'
+import LessonWithId = classData.LessonWithId
 
+type LessonsGroupedBy = {
+  [key: string]: LessonWithId[]
+}
 type Data = {
   classData: typeof vxm.classData
 }
@@ -36,7 +41,7 @@ type Data = {
 type Computed = {
   today: boolean
   dateTitle: string
-  lessonsGroupByPeriod: object
+  lessonsGroupByPeriod: LessonsGroupedBy
 }
 
 export default Vue.extend<Data, unknown, Computed, unknown>({
@@ -55,10 +60,11 @@ export default Vue.extend<Data, unknown, Computed, unknown>({
       return dayjs(vxm.app.currentDate).format('M/D')
     },
     lessonsGroupByPeriod() {
-      const groupBy = (objects: any[], key: string) =>
-        objects.reduce((acc, obj) => {
-          acc[obj[key]] = acc[obj[key]] || []
-          acc[obj[key]].push(obj)
+      const groupBy = (targets: LessonWithId[], key: keyof LessonWithId) =>
+        targets.reduce((acc: LessonsGroupedBy, currentLesson: LessonWithId) => {
+          const valueToGroup = currentLesson[key].toString()
+          acc[valueToGroup] = acc[valueToGroup] || []
+          acc[valueToGroup].push(currentLesson)
           return acc
         }, {})
       return groupBy(this.classData.lessonsOnCurrentDate, 'startTime')
