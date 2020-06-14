@@ -33,7 +33,7 @@
   "dependencies": {
     "@babel/runtime-corejs3": "^7.9.6",
     "@nuxt/typescript-runtime": "^0.4.6",
-    "@nuxtjs/axios": "^5.10.3",
+    "@nuxtjs/axios": "^5.11.0",
     "@nuxtjs/dotenv": "^1.4.1",
     "@nuxtjs/pwa": "^3.0.0-0",
     "@types/js-cookie": "^2.2.6",
