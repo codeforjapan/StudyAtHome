@@ -4,7 +4,7 @@
     :color="buttonColor"
     :width="buttonSize"
     :height="buttonSize"
-    @click="onClick"
+    @click="$emit('clickAddButton')"
   >
     <v-icon :size="iconSize" :color="iconColor">{{ iconName }}</v-icon>
   </v-btn>
@@ -40,11 +40,6 @@ export default Vue.extend({
       type: [String, Number],
       required: false,
       default: '40'
-    }
-  },
-  methods: {
-    onClick(): void {
-      this.$emit('addButtonClicked')
     }
   }
 })
