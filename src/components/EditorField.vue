@@ -3,11 +3,12 @@
     <span v-if="title" class="EditorField-Title">{{ title }}</span>
     <div class="EditorField-Form">
       <editor-input-field
-        v-model="modelValue"
+        :value="value"
         :label="label"
         :placeholder="placeholder"
         :transparent="transparent"
         :readonly="readonly"
+        @input="$emit('input', $event)"
       />
       <content-card-editor-button
         v-if="iconName"
@@ -23,10 +24,6 @@
 import Vue from 'vue'
 import EditorInputField from '@/components/EditorInputField.vue'
 import ContentCardEditorButton from '@/components/ContentCardEditorButton.vue'
-
-type DataType = {
-  modelValue: string
-}
 
 export default Vue.extend({
   components: { EditorInputField, ContentCardEditorButton },
@@ -65,19 +62,6 @@ export default Vue.extend({
       type: String,
       required: false,
       default: ''
-    }
-  },
-  data(): DataType {
-    return {
-      modelValue: this.value
-    }
-  },
-  watch: {
-    modelValue(value) {
-      this.$emit('input', value)
-    },
-    value(value) {
-      this.modelValue = value
     }
   }
 })

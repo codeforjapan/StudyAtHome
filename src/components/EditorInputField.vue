@@ -1,6 +1,6 @@
 <template>
   <v-text-field
-    v-model="modelValue"
+    :value="value"
     :color="transparent ? 'white' : '#424242'"
     type="text"
     :hint="hint"
@@ -11,14 +11,13 @@
     class="elevation-0"
     solo
     flat
+    @input="$emit('input', $event)"
   />
 </template>
 
 <script lang="ts">
 import Vue from 'vue'
-type DataType = {
-  modelValue: string
-}
+
 export default Vue.extend({
   name: 'InputField',
   props: {
@@ -61,19 +60,6 @@ export default Vue.extend({
       type: String,
       required: true,
       default: ''
-    }
-  },
-  data(): DataType {
-    return {
-      modelValue: this.value
-    }
-  },
-  watch: {
-    modelValue(value) {
-      this.$emit('input', value)
-    },
-    value(value) {
-      this.modelValue = value
     }
   }
 })
