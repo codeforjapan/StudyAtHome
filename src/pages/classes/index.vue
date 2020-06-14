@@ -1,7 +1,13 @@
 <template>
   <div class="MainPage">
     <div v-if="classData.lessonsOnCurrentDate.length">
-      <period-card :class-data="classData" />
+      <period-card
+        v-for="(lessons, time, index) in lessonsGroupByPeriod"
+        :key="index"
+        :period="index"
+        :time="time"
+        :class-data="lessons"
+      />
     </div>
     <div v-else-if="today" class="Classes-Outer">
       <h1 class="Classes-Title">
@@ -30,6 +36,7 @@ type Data = {
 type Computed = {
   today: boolean
   dateTitle: string
+  lessonsGroupByPeriod: object
 }
 
 export default Vue.extend<Data, unknown, Computed, unknown>({
@@ -46,6 +53,15 @@ export default Vue.extend<Data, unknown, Computed, unknown>({
     },
     dateTitle() {
       return dayjs(vxm.app.currentDate).format('M/D')
+    },
+    lessonsGroupByPeriod() {
+      const groupBy = (objects: any[], key: string) =>
+        objects.reduce((acc, obj) => {
+          acc[obj[key]] = acc[obj[key]] || []
+          acc[obj[key]].push(obj)
+          return acc
+        }, {})
+      return groupBy(this.classData.lessonsOnCurrentDate, 'startTime')
     }
   }
 })
