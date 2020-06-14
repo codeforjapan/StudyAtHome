@@ -64,7 +64,7 @@
     "@nuxtjs/eslint-config-typescript": "^2.0.0",
     "@nuxtjs/stylelint-module": "^3.2.2",
     "@nuxtjs/vuetify": "^1.11.2",
-    "@types/jest": "^25.2.3",
+    "@types/jest": "^26.0.0",
     "@vue/test-utils": "^1.0.3",
     "babel-core": "^6.26.3",
     "babel-eslint": "^10.1.0",
