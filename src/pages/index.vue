@@ -37,7 +37,7 @@
           <action-button
             text="ユーザー登録する"
             class="registerButton"
-            @click="$router.push('/terms')"
+            @click="$router.push('/user/terms')"
           />
 
           <action-button
