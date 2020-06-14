@@ -17,6 +17,7 @@ const VuexModule = createModule({
 export class ClassDataStore extends VuexModule implements classData.ClassData {
   classId: classData.ClassId = ''
   className: string = ''
+  schoolName: string = ''
   lessons: classData.LessonWithId[] = []
 
   public get lessonsOnCurrentDate(): classData.LessonWithId[] {
@@ -43,17 +44,16 @@ export class ClassDataStore extends VuexModule implements classData.ClassData {
     return !!this.className
   }
 
-  @mutation
-  private setClassData({ classId, className, lessons }: classData.ClassData) {
-    this.classId = classId
-    this.className = className
-    this.lessons = lessons
-  }
-
   @action
-  public async loadClassData(classId: classData.ClassId) {
+  public async loadClassData({
+    classId,
+    isEditor
+  }: {
+    classId: classData.ClassId
+    isEditor: boolean
+  }) {
     const lessons: classData.LessonWithId[] = []
-
+    console.log(classId)
     const classDataDocument = firebase
       .firestore()
       .collection('classData')
@@ -61,8 +61,9 @@ export class ClassDataStore extends VuexModule implements classData.ClassData {
 
     // classData ドキュメントのフィールドを取得
     const classDataSnapshot = await classDataDocument.get()
-
-    if (!classDataSnapshot.exists) throw new Error('クラスIDが間違っています')
+    console.log(classDataSnapshot)
+    if (!classDataSnapshot.exists)
+      throw new Error('クラスIDが間違っています: 0001')
     const classData = classDataSnapshot.data() as classData.ClassData
     const className = classData.className
 
@@ -92,29 +93,55 @@ export class ClassDataStore extends VuexModule implements classData.ClassData {
         lessons.push(converted)
       })
     } catch {
-      throw new Error('クラスIDが間違っています')
+      throw new Error('クラスIDが間違っています0002')
     }
+    if (isEditor) {
+      const editorClassDataDocument = firebase
+        .firestore()
+        .collection('editorClassData')
+        .doc(classId)
 
+      // classData ドキュメントのフィールドを取得
+      const editorClassDataSnapshot = await editorClassDataDocument.get()
+
+      if (!editorClassDataSnapshot.exists)
+        throw new Error('クラスIDが間違っています:0003')
+      const schoolName = editorClassDataSnapshot.get('schoolName')
+
+      this.setClassData({
+        classId,
+        schoolName,
+        className,
+        lessons
+      })
+    }
     this.setClassData({
       classId,
+      schoolName: '',
       className,
       lessons
     })
   }
 
   @action
+  public async registerClass(classData: classData.ClassData) {
+    console.log(classData)
+    this.setClassData(classData)
+  }
+
+  @action
   public async registerLesson(lessonData: classData.Lesson) {
-    const classIdStr = 'あけしめたす'
     await firebase
       .firestore()
       .collection('classData')
-      .doc(classIdStr)
+      .doc(this.classId)
       .collection('Lessons')
       .add(lessonData)
       .catch(() => {
         return Promise.reject(new Error('エラーによって処理に失敗しました'))
       })
-    this.loadClassData(classIdStr)
+    console.log(this.classId)
+    this.loadClassData({ classId: this.classId, isEditor: true })
   }
 
   @action
@@ -125,17 +152,29 @@ export class ClassDataStore extends VuexModule implements classData.ClassData {
     editData: classData.Lesson
     id: classData.LessonId
   }) {
-    const classIdStr = 'あけしめたす'
     await firebase
       .firestore()
       .collection('classData')
-      .doc(classIdStr)
+      .doc(this.classId)
       .collection('Lessons')
       .doc(id)
       .set(editData)
       .catch(() => {
         return Promise.reject(new Error('エラーによって処理に失敗しました'))
       })
-    this.loadClassData(classIdStr)
+    this.loadClassData({ classId: this.classId, isEditor: true })
+  }
+
+  @mutation
+  private setClassData({
+    classId,
+    schoolName,
+    className,
+    lessons
+  }: classData.ClassData) {
+    this.classId = classId
+    this.schoolName = schoolName
+    this.className = className
+    this.lessons = lessons
   }
 }
