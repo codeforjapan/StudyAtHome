@@ -50,7 +50,7 @@ export default Vue.extend({
   },
   methods: {
     formatDate(date: Date): string {
-      return dayjs(date).format('HH:MM')
+      return dayjs(date).format('HH:mm')
     }
   }
 })
