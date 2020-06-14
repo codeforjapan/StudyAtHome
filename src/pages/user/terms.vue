@@ -26,8 +26,8 @@
       :is-disabled="!isCheck"
       class="Button"
       theme="primary"
-      text="利用を開始する"
-      @click="doClassLogin"
+      text="登録へ進む"
+      @click="$router.push('/user/signup')"
     />
     <action-button
       class="Button"
@@ -57,9 +57,6 @@ export default Vue.extend({
         return value === 'check'
       })
     }
-  },
-  methods: {
-    doClassLogin(): void {}
   }
 })
 </script>
