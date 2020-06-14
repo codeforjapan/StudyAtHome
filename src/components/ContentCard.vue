@@ -1,6 +1,6 @@
 <template>
   <div class="ContentCard-Outer">
-    <v-card class="ContentCard elevation-4">
+    <v-card class="ContentCard elevation-4" @click="toLessonDetail">
       <v-card-actions class="ContentCard-Actions">
         <subject-tag
           class="ContentCard-SubjectTag"
@@ -50,6 +50,7 @@ import Vue from 'vue'
 import SubjectTag from '@/components/SubjectTag.vue'
 import ContentCardEditorButton from '@/components/ContentCardEditorButton.vue'
 import { classData } from '~/types/store/classData'
+import LessonWithId = classData.LessonWithId
 
 export default Vue.extend({
   components: {
@@ -65,6 +66,12 @@ export default Vue.extend({
       type: Boolean,
       default: false
     }
+  },
+  methods: {
+    toLessonDetail() {
+      const lesson = this.lesson as LessonWithId
+      this.$router.push('/lesson/?lessonId=' + lesson.docId)
+    }
   }
 })
 </script>
@@ -73,30 +80,37 @@ export default Vue.extend({
 .ContentCard-Outer {
   display: flex;
 }
+
 .ContentCard-Button-Outer {
   display: flex;
   flex-direction: column;
   flex: 0 1 auto;
   margin-left: 12px;
+
   .ContentCard-Button {
     margin-bottom: 12px;
   }
 }
+
 .ContentCard {
   flex: 1 1 auto;
   color: $color-gray;
   border-radius: 14px !important;
+
   .ContentCard-Actions {
     padding: 16px 16px 0;
   }
+
   .ContentCard-SubjectTag {
     margin-right: 4px;
   }
+
   .ContentCard-Title {
     font-weight: bold;
     font-size: 14px;
     line-height: 1.75;
   }
+
   .ContentCard-Description {
     font-size: 12px;
     color: $color-gray;
