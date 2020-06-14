@@ -2,18 +2,12 @@
   <div>
     <span v-if="title" class="EditorField-Title">{{ title }}</span>
     <div class="EditorField-Form">
-      <editor-input-field
-        v-model="modelValue"
-        :label="label"
-        :placeholder="placeholder"
-        :transparent="transparent"
-        :readonly="readonly"
-      />
+      <subject-tag :background-color="subjectColor" :name="subjectName" />
       <content-card-editor-button
         v-if="iconName"
         class="Button"
         :icon-name="iconName"
-        @click="$emit('clickButton')"
+        @click="$emit('clickPickerButton')"
       />
     </div>
   </div>
@@ -21,63 +15,31 @@
 
 <script lang="ts">
 import Vue from 'vue'
-import EditorInputField from '@/components/EditorInputField.vue'
 import ContentCardEditorButton from '@/components/ContentCardEditorButton.vue'
-
-type DataType = {
-  modelValue: string
-}
+import SubjectTag from '@/components/SubjectTag.vue'
 
 export default Vue.extend({
-  components: { EditorInputField, ContentCardEditorButton },
+  components: { SubjectTag, ContentCardEditorButton },
   props: {
     title: {
       type: String,
       required: false,
       default: ''
     },
-    label: {
-      type: String,
-      required: false,
-      default: ''
-    },
-    placeholder: {
-      type: String,
-      required: false,
-      default: ''
-    },
-    transparent: {
-      type: Boolean,
-      required: false,
-      default: false
-    },
     iconName: {
       type: String,
       required: false,
       default: ''
     },
-    readonly: {
-      type: Boolean,
-      required: false,
-      default: false
-    },
-    value: {
+    subjectName: {
       type: String,
       required: false,
       default: ''
-    }
-  },
-  data(): DataType {
-    return {
-      modelValue: this.value
-    }
-  },
-  watch: {
-    modelValue(value) {
-      this.$emit('input', value)
     },
-    value(value) {
-      this.modelValue = value
+    subjectColor: {
+      type: String,
+      required: false,
+      default: ''
     }
   }
 })
@@ -93,6 +55,7 @@ export default Vue.extend({
 }
 .EditorField-Form {
   display: flex;
+  align-items: center;
 
   .Button {
     flex: 0 1 auto;
