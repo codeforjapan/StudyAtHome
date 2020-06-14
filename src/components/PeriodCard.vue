@@ -24,6 +24,7 @@ import Vue from 'vue'
 import dayjs from 'dayjs'
 import minMax from 'dayjs/plugin/minMax'
 import ContentCard from '@/components/ContentCard.vue'
+import { classData } from '@/types/store/classData'
 dayjs.extend(minMax)
 
 export default Vue.extend({
@@ -38,7 +39,7 @@ export default Vue.extend({
       default: ''
     },
     classData: {
-      type: Array,
+      type: Array as () => classData.LessonWithId[],
       default: () => []
     }
   },
