@@ -60,7 +60,7 @@
     "vuex-persistedstate": "^3.0.1"
   },
   "devDependencies": {
-    "@nuxt/typescript-build": "^0.6.6",
+    "@nuxt/typescript-build": "^1.0.3",
     "@nuxtjs/eslint-config-typescript": "^2.0.0",
     "@nuxtjs/stylelint-module": "^3.2.2",
     "@nuxtjs/vuetify": "^1.11.2",
