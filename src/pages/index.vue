@@ -100,7 +100,7 @@ export default Vue.extend({
     loginToClass(): void {
       this.loading = true
       vxm.classData
-        .loadClassData(this.classId)
+        .loadClassData({ classId: this.classId, isEditor: false })
         .then(() => {
           this.$router.push('/classes')
         })
