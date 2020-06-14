@@ -28,13 +28,13 @@
     </div>
     <simple-bottom-sheet
       message="2年B組の授業を追加・編集する"
-      :expanded="isExpandedButton"
-      @addButtonClicked="handler"
+      :expanded="!editingMode"
+      @clickAddButton="toggleScreen"
     />
     <editing-screen
       :value="editPageValue"
-      :expanded="!isExpandedButton"
-      @collapse="closeToReset"
+      :expanded="editingMode"
+      @collapse="onCollapseEditingScreen"
     />
   </div>
 </template>
@@ -51,7 +51,7 @@ import { classData } from '~/types/store/classData'
 
 type DataType = {
   classData: typeof vxm.classData
-  isExpandedButton: boolean
+  editingMode: boolean
   editPageValue: object
 }
 
@@ -65,7 +65,7 @@ export default Vue.extend({
   data(): DataType {
     return {
       classData: vxm.classData,
-      isExpandedButton: true,
+      editingMode: false,
       editPageValue: {
         isHidden: false,
         lessonId: '',
@@ -103,11 +103,14 @@ export default Vue.extend({
     }
   },
   methods: {
-    handler(): void {
-      this.isExpandedButton = !this.isExpandedButton
+    onCollapseEditingScreen(): void {
+      this.toggleScreen()
+      this.resetEditingScreen()
     },
-    closeToReset(): void {
-      this.handler()
+    toggleScreen(): void {
+      this.editingMode = !this.editingMode
+    },
+    resetEditingScreen(): void {
       this.editPageValue = {
         isHidden: false,
         lessonId: '',
@@ -135,6 +138,7 @@ export default Vue.extend({
         }
       }
     },
+    // @todo doEdit の中身を整理する
     doEdit(value: classData.LessonWithId): void {
       const videoUrl = value.videos.length === 0 ? '' : value.videos[0].url
       const videoTitle = value.videos.length === 0 ? '' : value.videos[0].title
@@ -176,7 +180,7 @@ export default Vue.extend({
           materialsUrl: materialUrl
         }
       }
-      this.handler()
+      this.toggleScreen()
     }
   }
 })
