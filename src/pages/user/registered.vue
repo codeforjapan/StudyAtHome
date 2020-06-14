@@ -6,7 +6,7 @@
           mdi-clipboard-account
         </v-icon>
         <p class="Registered-Text">あなたのクラスIDです</p>
-        <div class="Registered-Id">ほげほげほげ</div>
+        <div class="Registered-Id">{{ classId }}</div>
       </div>
     </template>
     <template v-slot:LayerFooter>
@@ -14,8 +14,9 @@
         theme="primary"
         text="授業を追加・編集する"
         class="Registered-Button"
+        @click="$router.push('/edit')"
       />
-      <action-button theme="secondary" text="クラスIDを共有する" />
+      <!-- <action-button theme="secondary" text="クラスIDを共有する" /> -->
     </template>
   </bottom-sheet-layer>
 </template>
@@ -24,10 +25,16 @@
 import Vue from 'vue'
 import BottomSheetLayer from '@/components/BottomSheetLayer.vue'
 import ActionButton from '@/components/ActionButton.vue'
+import { vxm } from '@/store'
 
 export default Vue.extend({
   components: { BottomSheetLayer, ActionButton },
-  layout: 'background'
+  layout: 'background',
+  data() {
+    return {
+      classId: vxm.classData.classId
+    }
+  }
 })
 </script>
 
