@@ -8,7 +8,7 @@
     <v-app-bar fixed app class="bar" elevation="0">
       <HeaderLogo />
       <v-spacer />
-      <v-btn outlined rounded color="#0071C2" @click="$router.back">
+      <v-btn outlined rounded color="#0071C2" @click="back">
         <v-icon>mdi-arrow-left</v-icon>
         もどる
       </v-btn>
@@ -49,6 +49,11 @@ export default Vue.extend({
   // },
   mounted(): void {
     this.loading = false
+  },
+  methods: {
+    back() {
+      this.$router.back()
+    }
   }
 })
 </script>
@@ -60,28 +65,34 @@ export default Vue.extend({
   line-height: 16px;
   background-color: $color-white;
 }
+
 .date-icon {
   margin-right: 15px;
 }
+
 .date {
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
 }
+
 .bar {
   background-color: $color-back-gray;
   text-align: center;
 }
+
 .content {
   background-color: $color-base-color-01;
 }
+
 .header-calender {
   margin: 0 auto;
   width: 100%;
   max-width: 640px;
   height: 40px;
 }
+
 .classes-container {
   height: 100%;
 }
