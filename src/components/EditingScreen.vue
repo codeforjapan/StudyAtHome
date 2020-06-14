@@ -56,7 +56,7 @@
         </v-container>
       </v-card-actions>
     </v-card>
-    <v-snackbar :timeout="5000" :value="error" absolute top color="#C01B61">
+    <v-snackbar v-model="error" :timeout="5000" absolute top color="#C01B61">
       エラーにより授業の追加に失敗しました。時間をおいて再度お試しください。
     </v-snackbar>
   </v-bottom-sheet>
