@@ -1,5 +1,5 @@
 <template>
-  <v-bottom-sheet v-model="screen" no-click-animation persistent scrollable>
+  <v-bottom-sheet :value="expanded" no-click-animation persistent scrollable>
     <v-card class="EditingScreen">
       <v-card-title class="EditingScreen-CardElements">
         <v-container class="EditingScreen-Container">
@@ -56,7 +56,7 @@
         </v-container>
       </v-card-actions>
     </v-card>
-    <v-snackbar :timeout="5000" :value="error" absolute top color="#C01B61">
+    <v-snackbar v-model="error" :timeout="5000" absolute top color="#C01B61">
       エラーにより授業の追加に失敗しました。時間をおいて再度お試しください。
     </v-snackbar>
   </v-bottom-sheet>
@@ -100,7 +100,6 @@ type FourthPageDataType = {
 }
 
 type DataType = {
-  screen: boolean
   page: number
   error: boolean
   lessonId: string
@@ -158,7 +157,6 @@ export default Vue.extend({
   },
   data(): DataType {
     return {
-      screen: this.expanded,
       page: 1,
       error: false,
       isHidden: this.value.isHidden,
@@ -199,9 +197,6 @@ export default Vue.extend({
     }
   },
   watch: {
-    expanded(newValue) {
-      this.screen = newValue
-    },
     value(value) {
       this.isHidden = value.isHidden
       this.lessonId = value.lessonId
