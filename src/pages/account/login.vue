@@ -92,8 +92,9 @@ export default Vue.extend({
         .auth()
         .signInWithEmailAndPassword(this.email, this.password)
         .then(() => {
-          vxm.user.login()
-          this.$router.push('/user/classlist')
+          vxm.user.login().then(() => {
+            this.$router.push('/user/classlist')
+          })
         })
         .catch(() => {
           this.loading = false
