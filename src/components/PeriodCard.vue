@@ -44,10 +44,8 @@ export default Vue.extend({
   },
   computed: {
     maxEndTime() {
-      const endTimeArray = this.classData.map((_value, index, array) => {
-        return array[index].endTime
-      })
-      return dayjs.max(endTimeArray)
+      const endTimeArray = this.classData.map(value => dayjs(value.endTime))
+      return dayjs.max(...endTimeArray)
     }
   },
   methods: {
