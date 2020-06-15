@@ -82,19 +82,6 @@ export default Vue.extend({
           this.error = true
           this.loading = false
         })
-    },
-    generateUniqueId(): string {
-      const c =
-        'あいうえおかきくけこさしすせそたちつてとなにぬねのはひふへほまみむめもやゆよらりるれろわをん'
-      const cl = c.length
-      return (
-        c[Math.floor(Math.random() * cl)] +
-        c[Math.floor(Math.random() * cl)] +
-        c[Math.floor(Math.random() * cl)] +
-        c[Math.floor(Math.random() * cl)] +
-        c[Math.floor(Math.random() * cl)] +
-        c[Math.floor(Math.random() * cl)]
-      )
     }
   }
 })
