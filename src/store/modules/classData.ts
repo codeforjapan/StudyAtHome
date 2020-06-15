@@ -155,7 +155,7 @@ export class ClassDataStore extends VuexModule implements classData.ClassData {
           className
         })
     } catch {
-      return Promise.reject(new Error('エラーによって処理に失敗しました'))
+      throw new Error('エラーによって処理に失敗しました')
     }
     this.setClassData({
       classId,
