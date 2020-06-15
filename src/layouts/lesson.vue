@@ -8,25 +8,14 @@
     <v-app-bar fixed app class="bar" elevation="0">
       <HeaderLogo />
       <v-spacer />
-      <div class="admin-buttons">
-        <v-btn fab x-small outlined rounded color="#0071C2">
-          <v-icon>mdi-calendar-today</v-icon>
-        </v-btn>
-        <v-btn fab x-small outlined rounded color="#0071C2">
-          <v-icon>mdi-clipboard-account</v-icon>
-        </v-btn>
-        <v-btn fab x-small outlined rounded color="#0071C2">
-          <v-icon>mdi-cog</v-icon>
-        </v-btn>
-      </div>
-      <template v-slot:extension>
-        <div class="header-calender">
-          <CalendarBar v-model="app.currentDate" />
-        </div>
-      </template>
+      <v-btn outlined rounded color="#0071C2" @click="back">
+        <v-icon>mdi-arrow-left</v-icon>
+        もどる
+      </v-btn>
     </v-app-bar>
     <v-content class="content">
-      <v-container class="classes-container px-4 py-8">
+      <!--      <v-container class="classes-container px-4 py-8">-->
+      <v-container class="classes-container px-4 py-4">
         <nuxt />
       </v-container>
     </v-content>
@@ -35,34 +24,35 @@
 
 <script lang="ts">
 import Vue from 'vue'
-import { vxm } from '@/store'
 import HeaderLogo from '@/assets/svgs/header_logo.svg'
-import CalendarBar from '@/components/CalendarBar.vue'
+// import { vxm } from '@/store'
 
 type LocalData = {
   loading: boolean
-  app: typeof vxm.app
+  date: Date
 }
 
 export default Vue.extend({
-  // middleware: 'authenticated',
   components: {
-    CalendarBar,
     HeaderLogo
   },
   data(): LocalData {
     return {
       loading: true,
-      app: vxm.app
+      date: new Date()
     }
   },
+  // watch: {
+  //   date(value) {
+  //     vxm.app.setDate(value)
+  //   }
+  // },
   mounted(): void {
     this.loading = false
   },
   methods: {
-    signout() {
-      vxm.user.logout()
-      this.$router.push('/')
+    back() {
+      this.$router.back()
     }
   }
 })
@@ -75,31 +65,35 @@ export default Vue.extend({
   line-height: 16px;
   background-color: $color-white;
 }
+
 .date-icon {
   margin-right: 15px;
 }
+
 .date {
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
 }
+
 .bar {
   background-color: $color-back-gray;
+  text-align: center;
 }
+
 .content {
   background-color: $color-base-color-01;
 }
+
 .header-calender {
   margin: 0 auto;
   width: 100%;
   max-width: 640px;
   height: 40px;
 }
+
 .classes-container {
   height: 100%;
-}
-.admin-buttons {
-  padding: 0 4px;
 }
 </style>

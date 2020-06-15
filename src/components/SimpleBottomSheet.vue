@@ -1,6 +1,6 @@
 <template>
   <v-bottom-sheet
-    v-model="sheet"
+    :value="expanded"
     class="sheet"
     persistent
     scrollable
@@ -15,7 +15,7 @@
             <v-col class="col message">{{ message }}</v-col>
             <v-col cols="2">
               <span class="add-button">
-                <add-button @addButtonClicked="addButtonClicked" />
+                <add-button @clickAddButton="$emit('clickAddButton')" />
               </span>
             </v-col>
           </v-row>
@@ -42,22 +42,6 @@ export default Vue.extend({
       type: Boolean,
       required: false,
       default: true
-    }
-  },
-  data() {
-    return {
-      sheet: this.expanded
-    }
-  },
-  watch: {
-    expanded(newValue) {
-      this.sheet = newValue
-    }
-  },
-  methods: {
-    addButtonClicked() {
-      this.sheet = !this.sheet
-      this.$emit('addButtonClicked', this.sheet)
     }
   }
 })
