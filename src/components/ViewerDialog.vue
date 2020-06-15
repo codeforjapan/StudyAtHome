@@ -23,10 +23,11 @@
         />
         <action-button
           v-if="!hideDefaultCancelButton"
+          :logout-icon="true"
           :text="defaultCancelButtonLabel"
           theme="border"
           class="my-3"
-          @click="$emit('input', false)"
+          @click="clickLogoutButton"
         />
       </v-card-actions>
     </v-card>
@@ -56,10 +57,11 @@ type Props = {
 
 type Methods = {
   doDialogAction(buttonIndex: number): void
+  clickLogoutButton(): void
 }
 
 export default Vue.extend<unknown, Methods, unknown, Props>({
-  name: 'BaseDialog',
+  name: 'ViewerDialog',
   components: { ActionButton },
   props: {
     iconName: {
@@ -95,6 +97,10 @@ export default Vue.extend<unknown, Methods, unknown, Props>({
       if (!this.actions[index].action()) {
         this.$emit('input', false)
       }
+    },
+    clickLogoutButton() {
+      this.$emit('input', false)
+      this.$emit('clickLogout')
     }
   }
 })

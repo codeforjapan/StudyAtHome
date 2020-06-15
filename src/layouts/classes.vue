@@ -1,5 +1,39 @@
 <template>
   <v-app>
+    <v-dialog v-model="openCalenderDialog" max-width="320px">
+      <v-date-picker
+        v-model="date"
+        locale="ja"
+        first-day-of-week="1"
+        @input="openCalenderDialog = false"
+      />
+    </v-dialog>
+    <viewer-dialog
+      v-model="openClassIdDialog"
+      icon-name="mdi-clipboard-account"
+      default-cancel-button-label="ログアウト"
+      :logout-icon="true"
+      :actions="[
+        {
+          buttonLabel: '閉じる',
+          action: () => {
+            return false
+          }
+        }
+      ]"
+      @clickLogout="clickLogout"
+    >
+      <template v-slot:title>
+        今、ログインしているクラスです
+      </template>
+      <template v-slot:default>
+        <div class="ClassIdModal-Contents">
+          <p class="ClassIdModal-ClassText">{{ className }}</p>
+          <p class="ClassIdModal-Text">クラスID</p>
+          <div class="ClassIdModal-Id">{{ classId }}</div>
+        </div>
+      </template>
+    </viewer-dialog>
     <v-overlay :value="loading" color="#0071C2" opacity="1" z-index="9999">
       <div class="loader">
         Loading
@@ -8,9 +42,28 @@
     <v-app-bar fixed app class="bar" elevation="0">
       <HeaderLogo />
       <v-spacer />
-      <v-btn fab small outlined rounded color="#0071C2">
-        <v-icon>mdi-clipboard-account</v-icon>
-      </v-btn>
+      <div class="classes-buttons">
+        <v-btn
+          fab
+          small
+          outlined
+          rounded
+          color="#0071C2"
+          @click="openCalenderDialog = true"
+        >
+          <v-icon>mdi-calendar-today</v-icon>
+        </v-btn>
+        <v-btn
+          fab
+          small
+          outlined
+          rounded
+          color="#0071C2"
+          @click="openClassIdDialog = true"
+        >
+          <v-icon>mdi-clipboard-account</v-icon>
+        </v-btn>
+      </div>
       <template v-slot:extension>
         <div class="header-calender">
           <CalendarBar v-model="app.currentDate" />
@@ -27,12 +80,18 @@
 
 <script lang="ts">
 import Vue from 'vue'
+import dayjs from 'dayjs'
 import HeaderLogo from '@/assets/svgs/header_logo.svg'
 import CalendarBar from '@/components/CalendarBar.vue'
+import ViewerDialog from '@/components/ViewerDialog.vue'
 import { vxm } from '@/store'
 
 type LocalData = {
   loading: boolean
+  openCalenderDialog: boolean
+  openClassIdDialog: boolean
+  classId: string
+  className: string
   app: typeof vxm.app
 }
 
@@ -40,16 +99,38 @@ export default Vue.extend({
   middleware: 'checkClassData',
   components: {
     CalendarBar,
+    ViewerDialog,
     HeaderLogo
   },
   data(): LocalData {
     return {
       loading: true,
+      openCalenderDialog: false,
+      openClassIdDialog: false,
+      classId: vxm.classData.classId,
+      className: vxm.classData.className,
       app: vxm.app
+    }
+  },
+  computed: {
+    date: {
+      get() {
+        return dayjs(vxm.app.currentDate).format('YYYY-MM-DD')
+      },
+      set(newValue: string) {
+        vxm.app.setDate(dayjs(newValue).toDate())
+      }
     }
   },
   mounted(): void {
     this.loading = false
+  },
+  methods: {
+    clickLogout() {
+      vxm.classData.unLoadClassData().then(() => {
+        this.$router.push('/')
+      })
+    }
   }
 })
 </script>
@@ -85,5 +166,38 @@ export default Vue.extend({
 }
 .classes-container {
   height: 100%;
+}
+.classes-buttons {
+  padding: 0 4px;
+}
+.ClassIdModal-Contents {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 0;
+}
+.ClassIdModal-Text {
+  font-size: 16px;
+  font-weight: bold;
+  color: $color-gray;
+  margin: 6px 0 12px;
+}
+.ClassIdModal-ClassText {
+  font-size: 16px;
+  color: $color-gray;
+  margin: 6px 0 12px;
+}
+.ClassIdModal-Id {
+  max-width: 9em;
+  padding: 16px 24px;
+  text-align: center;
+  background-color: $color-back-gray;
+  border: 2px solid $color-base-color-01;
+  border-radius: 14px;
+  letter-spacing: 0.2em;
+  line-height: 1.25;
+  font-size: 30px;
+  color: $color-gray;
 }
 </style>
