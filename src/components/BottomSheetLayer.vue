@@ -1,10 +1,11 @@
 <template>
   <v-bottom-sheet
-    v-model="layer"
+    :value="value"
     persistent
     scrollable
     no-click-animation
     :fullscreen="fullscreen"
+    @input="$emit('input', $event)"
   >
     <v-card class="Layer">
       <v-card-title class="Layer-CardElements Layer-CardTitle">
@@ -32,13 +33,9 @@
 <script lang="ts">
 import Vue from 'vue'
 
-type DataType = {
-  layer: boolean
-}
-
 export default Vue.extend({
   props: {
-    expanded: {
+    value: {
       type: Boolean,
       required: false,
       default: true
@@ -55,16 +52,6 @@ export default Vue.extend({
       type: Boolean,
       required: false,
       default: false
-    }
-  },
-  data(): DataType {
-    return {
-      layer: this.expanded
-    }
-  },
-  watch: {
-    expanded(newValue) {
-      this.layer = newValue
     }
   }
 })

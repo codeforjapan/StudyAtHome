@@ -65,6 +65,7 @@ export type CalendarBarConfig = {
 export interface DateListWindow {
   list: Array<Date>
   currentDate: Date
+  inputHandler: (value: Date) => Date
   selectDate(date: Date): DateListWindow
   nextDay(): DateListWindow
   prevDay(): DateListWindow
@@ -79,11 +80,13 @@ class DateListWindowImpl implements DateListWindow {
   startWeekOn: StartWeekOn
   currentDate: Date
   list: Array<Date>
+  inputHandler: (value: Date) => Date
 
   constructor(
     view: View = 'Week',
     startWeekOn: StartWeekOn = 'Monday',
-    date: Date = new Date()
+    date: Date = new Date(),
+    inputHandler: (value: Date) => Date
   ) {
     this.view = view
     this.startWeekOn = view === 'Weekday' ? 'Monday' : startWeekOn
@@ -96,6 +99,7 @@ class DateListWindowImpl implements DateListWindow {
       this.startWeekOn,
       this.currentDate
     )
+    this.inputHandler = inputHandler
   }
 
   nextDay(): DateListWindow {
@@ -128,6 +132,9 @@ class DateListWindowImpl implements DateListWindow {
       isValid(date) ? date : new Date()
     )
     this.list = this.generateDateList()
+
+    // CalendarBar を経由して変更を通知
+    this.inputHandler(this.currentDate)
     return this
   }
 
@@ -211,28 +218,18 @@ export default class CalendarBar extends Vue {
   dateListWindow: DateListWindow = new DateListWindowImpl(
     this.config?.view ?? 'Week',
     this.config?.startWeekOn ?? 'Monday',
-    this.date ?? new Date()
+    this.value ?? new Date(),
+    this.input
   )
-
-  @Emit('changeCurrentDate')
-  changeCurrentDate(): Date {
-    return this.dateListWindow.currentDate
-  }
-
-  private get date(): Date {
-    return this.value
-  }
 
   @Emit()
   public input(value: Date) {
     return value
   }
 
-  @Watch('dateListWindow.currentDate', { immediate: true })
-  // @Watch('dateListWindow.currentDate')
-  onChangeCurrentDate() {
-    this.input(this.dateListWindow.currentDate)
-    this.changeCurrentDate()
+  @Watch('value', { immediate: true })
+  onValueChanged(newValue: Date) {
+    this.dateListWindow.selectDate(newValue)
   }
 
   get currentMonthString(): string {

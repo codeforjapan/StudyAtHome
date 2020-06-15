@@ -1,7 +1,7 @@
 <template>
   <v-text-field
     v-if="type === 'password'"
-    v-model="value"
+    :value="value"
     :color="textFieldColor"
     :type="show ? 'text' : 'password'"
     :hint="hint"
@@ -12,6 +12,7 @@
     solo
     flat
     outlined
+    @input="$emit('input', $event)"
   >
     <template v-slot:prepend-inner>
       <v-icon :color="prependIconColor">{{ prependIcon }}</v-icon>
@@ -26,7 +27,7 @@
   </v-text-field>
   <v-text-field
     v-else-if="type === 'email'"
-    v-model="value"
+    :value="value"
     :color="textFieldColor"
     type="text"
     :hint="hint"
@@ -37,6 +38,7 @@
     solo
     flat
     outlined
+    @input="$emit('input', $event)"
   >
     <template v-slot:prepend-inner>
       <v-icon :color="prependIconColor">{{ prependIcon }}</v-icon>
@@ -44,7 +46,7 @@
   </v-text-field>
   <v-text-field
     v-else-if="type === 'classId'"
-    v-model="value"
+    :value="value"
     :color="textFieldColor"
     type="text"
     :hint="hint"
@@ -55,6 +57,7 @@
     solo
     flat
     outlined
+    @input="$emit('input', $event)"
   >
     <template v-slot:prepend-inner>
       <v-icon :color="prependIconColor">{{ prependIcon }}</v-icon>
@@ -62,7 +65,7 @@
   </v-text-field>
   <v-text-field
     v-else
-    v-model="value"
+    :value="value"
     :color="textFieldColor"
     type="text"
     :hint="hint"
@@ -73,6 +76,7 @@
     solo
     flat
     outlined
+    @input="$emit('input', $event)"
   >
     <template v-slot:prepend-inner>
       <v-icon :color="prependIconColor">{{ prependIcon }}</v-icon>
@@ -83,12 +87,15 @@
 <script lang="ts">
 import Vue from 'vue'
 type DataType = {
-  value: string
   show: boolean
 }
 export default Vue.extend({
   name: 'InputField',
   props: {
+    value: {
+      type: String,
+      default: ''
+    },
     type: {
       type: String,
       required: false,
@@ -122,8 +129,7 @@ export default Vue.extend({
   },
   data(): DataType {
     return {
-      show: false,
-      value: ''
+      show: false
     }
   },
   computed: {
@@ -181,11 +187,6 @@ export default Vue.extend({
         if (!this.value) return 'mdi-alert-circle'
       }
       return 'mdi-check-circle'
-    }
-  },
-  watch: {
-    value(value) {
-      this.$emit('input', value)
     }
   }
 })

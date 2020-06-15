@@ -51,7 +51,7 @@
         </div>
       </template>
     </bottom-sheet-layer>
-    <v-snackbar :timeout="5000" :value="error" absolute top color="#C01B61">
+    <v-snackbar v-model="error" :timeout="5000" absolute top color="#C01B61">
       メールアドレスまたはパスワードが正しくありません
     </v-snackbar>
   </div>
@@ -92,8 +92,9 @@ export default Vue.extend({
         .auth()
         .signInWithEmailAndPassword(this.email, this.password)
         .then(() => {
-          vxm.user.login()
-          this.$router.push('/edit')
+          vxm.user.login().then(() => {
+            this.$router.push('/user/classlist')
+          })
         })
         .catch(() => {
           this.loading = false
