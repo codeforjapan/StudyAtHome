@@ -44,7 +44,7 @@
             text="ログインする"
             class="loginButton"
             theme="secondary"
-            @click="$router.push('/account/login')"
+            @click="$router.push('/user/login')"
           />
           <v-footer color="#004170" padless>
             <v-row justify="center" no-gutters>
