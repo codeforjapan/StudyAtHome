@@ -141,8 +141,10 @@ export class ClassDataStore extends VuexModule implements classData.ClassData {
 
   @action
   public async unLoadClassData() {
-    this.classId = ''
-    this.className = ''
-    this.lessons = []
+    this.setClassData({
+      classId: '',
+      className: '',
+      lessons: []
+    })
   }
 }
