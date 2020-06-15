@@ -6,20 +6,17 @@ const VuexModule = createModule({
   strict: false,
   target: 'nuxt'
 })
-type Email = string | null
+type Email = string
 type EmailVerified = boolean
-type DisplayName = string | null
+type DisplayName = string
 type AllowAccess = AllowAccessData[]
 type AllowAccessData = {
   classId: string
   schoolName: string
   className: string
 }
-type AllowAccessFromUsers = {
-  classId: string
-  schoolName: string
-}
-type Uid = string | null
+
+type Uid = string
 
 interface User {
   email: Email
@@ -35,11 +32,11 @@ interface userData {
 }
 
 export class UserStore extends VuexModule implements User {
-  email: Email = null
+  email: Email = ''
   emailVerified: EmailVerified = false
-  displayName: DisplayName = null
+  displayName: DisplayName = ''
   allowAccess: AllowAccess = []
-  uid: Uid = null
+  uid: Uid = ''
 
   public get isAuthenticated(): boolean {
     return !!this.email && !!this.uid
@@ -71,28 +68,28 @@ export class UserStore extends VuexModule implements User {
       .doc(user.uid)
       .get()
 
-    const allowAccessData: AllowAccessFromUsers[] = data.get('allow_access')
+    const allowAccessData: string[] = data.get('allow_access')
     const allowAccess = []
     for (const value of allowAccessData) {
       const classData = await firebase
         .firestore()
         .collection('classData')
-        .doc(value.classId)
+        .doc(value)
         .get()
       const editorClassData = await firebase
         .firestore()
         .collection('editorClassData')
-        .doc(value.classId)
+        .doc(value)
         .get()
       allowAccess.push({
-        classId: value.classId,
+        classId: value,
         schoolName: editorClassData.get('schoolName'),
         className: classData.get('className')
       })
     }
 
     this.setUser({
-      email: user.email,
+      email: user.email ? user.email : '',
       emailVerified: user.emailVerified,
       displayName: data.get('username'),
       allowAccess,
@@ -108,21 +105,21 @@ export class UserStore extends VuexModule implements User {
       .doc(user.user_id)
       .get()
 
-    const allowAccessData: AllowAccessFromUsers[] = data.get('allow_access')
+    const allowAccessData: string[] = data.get('allow_access')
     const allowAccess = []
     for (const value of allowAccessData) {
       const classData = await firebase
         .firestore()
         .collection('classData')
-        .doc(value.classId)
+        .doc(value)
         .get()
       const editorClassData = await firebase
         .firestore()
         .collection('editorClassData')
-        .doc(value.classId)
+        .doc(value)
         .get()
       allowAccess.push({
-        classId: value.classId,
+        classId: value,
         schoolName: editorClassData.get('schoolName'),
         className: classData.get('className')
       })
@@ -141,10 +138,10 @@ export class UserStore extends VuexModule implements User {
   public async logout() {
     await firebase.auth().signOut()
     this.setUser({
-      uid: null,
-      email: null,
+      uid: '',
+      email: '',
       emailVerified: false,
-      displayName: null,
+      displayName: '',
       allowAccess: []
     })
   }

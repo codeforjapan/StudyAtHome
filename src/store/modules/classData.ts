@@ -15,6 +15,20 @@ const VuexModule = createModule({
   target: 'nuxt'
 })
 
+const generateUniqueId = (): string => {
+  const c =
+    'あいうえおかきくけこさしすせそたちつてとなにぬねのはひふへほまみむめもやゆよらりるれろわをん'
+  const cl = c.length
+  const result =
+    c[Math.floor(Math.random() * cl)] +
+    c[Math.floor(Math.random() * cl)] +
+    c[Math.floor(Math.random() * cl)] +
+    c[Math.floor(Math.random() * cl)] +
+    c[Math.floor(Math.random() * cl)] +
+    c[Math.floor(Math.random() * cl)]
+  return result + ''
+}
+
 export class ClassDataStore extends VuexModule implements classData.ClassData {
   classId: classData.ClassId = ''
   className: string = ''
@@ -101,9 +115,9 @@ export class ClassDataStore extends VuexModule implements classData.ClassData {
     className: string
     schoolName: string
   }) {
-    let classId = this.generateUniqueId()
-    if (!vxm.user.uid) {
-      return Promise.reject(new Error('ユーザーが正しくログインされていません'))
+    let classId = generateUniqueId()
+    if (!vxm.user.isAuthenticated) {
+      throw new Error('ユーザーが正しくログインされていません')
     }
     try {
       const doc = await firebase
@@ -112,10 +126,10 @@ export class ClassDataStore extends VuexModule implements classData.ClassData {
         .doc(classId)
         .get()
       if (doc.exists) {
-        classId = this.generateUniqueId()
+        classId = generateUniqueId()
       }
     } catch {
-      return Promise.reject(new Error('エラーによって処理に失敗しました'))
+      throw new Error('エラーによって処理に失敗しました')
     }
     try {
       await firebase
@@ -143,6 +157,11 @@ export class ClassDataStore extends VuexModule implements classData.ClassData {
     } catch {
       return Promise.reject(new Error('エラーによって処理に失敗しました'))
     }
+    this.setClassData({
+      classId,
+      className,
+      lessons: []
+    })
   }
 
   @action
@@ -178,20 +197,6 @@ export class ClassDataStore extends VuexModule implements classData.ClassData {
         return Promise.reject(new Error('エラーによって処理に失敗しました'))
       })
     this.loadClassData(this.classId)
-  }
-
-  private generateUniqueId(): string {
-    const c =
-      'あいうえおかきくけこさしすせそたちつてとなにぬねのはひふへほまみむめもやゆよらりるれろわをん'
-    const cl = c.length
-    const result =
-      c[Math.floor(Math.random() * cl)] +
-      c[Math.floor(Math.random() * cl)] +
-      c[Math.floor(Math.random() * cl)] +
-      c[Math.floor(Math.random() * cl)] +
-      c[Math.floor(Math.random() * cl)] +
-      c[Math.floor(Math.random() * cl)]
-    return result + ''
   }
 
   @mutation
