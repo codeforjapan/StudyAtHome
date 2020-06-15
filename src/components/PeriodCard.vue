@@ -2,22 +2,17 @@
   <div class="PeriodCard">
     <div class="PeriodCard-NumberBlock">
       <div class="PeriodCard-Number">
-        <span class="PeriodCard-Number-Num">1</span>
+        <span class="PeriodCard-Number-Num">{{ period + 1 }}</span>
         <span class="PeriodCard-Number-Text">時間目</span>
       </div>
       <div class="PeriodCard-Time">
-        <span>00:00</span>
+        <span>{{ formatDate(time) }}</span>
         <span>|</span>
-        <span>00:00</span>
+        <span>{{ formatDate(maxEndTime) }}</span>
       </div>
     </div>
     <v-row>
-      <v-col
-        v-for="(item, i) in classData.lessonsOnCurrentDate"
-        :key="i"
-        cols="12"
-        md="6"
-      >
+      <v-col v-for="(item, i) in classData" :key="i" cols="12" md="6">
         <content-card :lesson="item" />
       </v-col>
     </v-row>
@@ -27,19 +22,36 @@
 <script lang="ts">
 import Vue from 'vue'
 import dayjs from 'dayjs'
+import minMax from 'dayjs/plugin/minMax'
 import ContentCard from '@/components/ContentCard.vue'
+import { classData } from '@/types/store/classData'
+dayjs.extend(minMax)
 
 export default Vue.extend({
   components: { ContentCard },
   props: {
+    period: {
+      type: Number,
+      default: 0
+    },
+    time: {
+      type: String,
+      default: ''
+    },
     classData: {
-      type: Object,
-      default: () => {}
+      type: Array as () => classData.LessonWithId[],
+      default: () => []
+    }
+  },
+  computed: {
+    maxEndTime() {
+      const endTimeArray = this.classData.map(value => dayjs(value.endTime))
+      return dayjs.max(...endTimeArray)
     }
   },
   methods: {
     formatDate(date: Date): string {
-      return dayjs(date).format('HH:MM')
+      return dayjs(date).format('HH:mm')
     }
   }
 })
