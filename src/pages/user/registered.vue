@@ -30,7 +30,7 @@ import { vxm } from '@/store'
 export default Vue.extend({
   components: { BottomSheetLayer, ActionButton },
   layout: 'background',
-  middleware: ['authenticated', 'checkClassData'],
+  middleware: 'authenticated',
   data() {
     return {
       classId: vxm.classData.classId
