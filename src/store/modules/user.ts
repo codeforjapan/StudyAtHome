@@ -68,9 +68,9 @@ export class UserStore extends VuexModule implements User {
       .doc(user.uid)
       .get()
 
-    const allowAccessData: string[] = data.get('allow_access')
-    const allowAccess = []
-    for (const value of allowAccessData) {
+    const allowAccessClassIds: string[] = data.get('allow_access')
+    const allowAccessData: AllowAccessData[] = []
+    for (const value of allowAccessClassIds) {
       const classData = await firebase
         .firestore()
         .collection('classData')
@@ -81,7 +81,7 @@ export class UserStore extends VuexModule implements User {
         .collection('editorClassData')
         .doc(value)
         .get()
-      allowAccess.push({
+      allowAccessData.push({
         classId: value,
         schoolName: editorClassData.get('schoolName'),
         className: classData.get('className')
@@ -92,7 +92,7 @@ export class UserStore extends VuexModule implements User {
       email: user.email ? user.email : '',
       emailVerified: user.emailVerified,
       displayName: data.get('username'),
-      allowAccess,
+      allowAccess: allowAccessData,
       uid: user.uid
     })
   }
@@ -105,9 +105,9 @@ export class UserStore extends VuexModule implements User {
       .doc(user.user_id)
       .get()
 
-    const allowAccessData: string[] = data.get('allow_access')
-    const allowAccess = []
-    for (const value of allowAccessData) {
+    const allowAccessClassIds: string[] = data.get('allow_access')
+    const allowAccessData: AllowAccessData[] = []
+    for (const value of allowAccessClassIds) {
       const classData = await firebase
         .firestore()
         .collection('classData')
@@ -118,7 +118,7 @@ export class UserStore extends VuexModule implements User {
         .collection('editorClassData')
         .doc(value)
         .get()
-      allowAccess.push({
+      allowAccessData.push({
         classId: value,
         schoolName: editorClassData.get('schoolName'),
         className: classData.get('className')
@@ -129,7 +129,7 @@ export class UserStore extends VuexModule implements User {
       email: user.email,
       emailVerified: user.emailVerified,
       displayName: data.get('username'),
-      allowAccess,
+      allowAccess: allowAccessData,
       uid: user.user_id
     })
   }
