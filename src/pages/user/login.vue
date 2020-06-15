@@ -63,7 +63,7 @@ import BottomSheetLayer from '@/components/BottomSheetLayer.vue'
 import ActionButton from '@/components/ActionButton.vue'
 import InputField from '@/components/InputField.vue'
 import firebase from '@/plugins/firebase'
-import { vxm } from '~/store'
+import { vxm } from '@/store'
 
 export default Vue.extend({
   components: { BottomSheetLayer, ActionButton, InputField },
