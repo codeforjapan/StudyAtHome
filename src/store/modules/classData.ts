@@ -140,7 +140,7 @@ export class ClassDataStore extends VuexModule implements classData.ClassData {
   }
 
   @action
-  public async unLoadClassData() {
+  public async unloadClassData() {
     this.setClassData({
       classId: '',
       className: '',

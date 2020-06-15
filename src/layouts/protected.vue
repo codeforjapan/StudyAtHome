@@ -16,7 +16,7 @@
         {
           buttonLabel: 'クラスの切替・登録',
           action: () => {
-            vxm.classData.unLoadClassData()
+            vxm.classData.unloadClassData()
             this.$router.push('/user/classlist')
             return false
           }

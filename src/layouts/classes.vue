@@ -136,7 +136,7 @@ export default Vue.extend({
   },
   methods: {
     clickLogout() {
-      vxm.classData.unLoadClassData().then(() => {
+      vxm.classData.unloadClassData().then(() => {
         this.$router.push('/')
       })
     }
