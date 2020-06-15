@@ -1,5 +1,10 @@
 <template>
-  <v-dialog :value="value" :persistent="modal" @input="$emit('input', $event)">
+  <v-dialog
+    max-width="320px"
+    :value="value"
+    :persistent="modal"
+    @input="$emit('input', $event)"
+  >
     <v-card class="DialogCard">
       <v-card-title class="DialogCardTitle">
         <v-icon class="DialogCardTitleIcon" size="48">{{ iconName }}</v-icon>
@@ -13,6 +18,8 @@
           v-for="(action, i) in actions"
           :key="i"
           class="my-3"
+          :theme="action.theme"
+          :icon="action.iconName"
           :text="action.buttonLabel"
           @click="doDialogAction(i)"
         />
@@ -34,6 +41,8 @@ import ActionButton from '@/components/ActionButton.vue'
 
 export type DialogAction = {
   buttonLabel: string
+  iconName: string
+  theme: string
   /**
    * ボタン押下時に実行する処理。実行後に BaseModalDialog を閉じないようにするには true を返す。
    */
