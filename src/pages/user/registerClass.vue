@@ -47,7 +47,6 @@ import Vue from 'vue'
 import BottomSheetLayer from '@/components/BottomSheetLayer.vue'
 import ActionButton from '@/components/ActionButton.vue'
 import InputField from '@/components/InputField.vue'
-import firebase from '@/plugins/firebase'
 import { vxm } from '@/store'
 
 export default Vue.extend({
@@ -70,62 +69,21 @@ export default Vue.extend({
   methods: {
     doRegister() {
       this.loading = true
-      let classId = this.generateUniqueId()
-      firebase
-        .firestore()
-        .collection('classData')
-        .doc(classId)
-        .get()
-        .then(doc => {
-          if (doc.exists) {
-            classId = this.generateUniqueId()
-          }
-          if (vxm.user.uid) {
-            firebase
-              .firestore()
-              .collection('users')
-              .doc(vxm.user.uid)
-              .update({
-                allow_access: firebase.firestore.FieldValue.arrayUnion(classId)
-              })
-          }
-          firebase
-            .firestore()
-            .collection('classData')
-            .doc(classId)
-            .set({
-              className: this.className
-            })
-            .then(() => {
-              firebase
-                .firestore()
-                .collection('editorClassData')
-                .doc(classId)
-                .set({
-                  schoolName: this.schoolName
-                })
-                .then(() => {
-                  vxm.classData.registerClass({
-                    classId,
-                    schoolName: this.schoolName,
-                    className: this.className,
-                    lessons: []
-                  })
-                  this.loading = false
-                  this.$router.push('/user/registered')
-                })
-                .catch(() => {
-                  this.error = true
-                  this.loading = false
-                })
-            })
-            .catch(() => {
-              this.error = true
-              this.loading = false
-            })
+      vxm.classData
+        .registerClass({
+          schoolName: this.schoolName,
+          className: this.className
+        })
+        .then(() => {
+          this.loading = false
+          this.$router.push('/user/registered')
+        })
+        .catch(() => {
+          this.error = true
+          this.loading = false
         })
     },
-    generateUniqueId() {
+    generateUniqueId(): string {
       const c =
         'あいうえおかきくけこさしすせそたちつてとなにぬねのはひふへほまみむめもやゆよらりるれろわをん'
       const cl = c.length
