@@ -64,7 +64,7 @@
         </div>
       </v-flex>
     </v-flex>
-    <v-snackbar :timeout="5000" :value="error" absolute top color="#C01B61">
+    <v-snackbar v-model="error" :timeout="5000" absolute top color="#C01B61">
       クラスIDが正しくありません
     </v-snackbar>
   </v-layout>
