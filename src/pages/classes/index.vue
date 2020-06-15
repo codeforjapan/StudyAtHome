@@ -1,7 +1,13 @@
 <template>
   <div class="MainPage">
     <div v-if="classData.lessonsOnCurrentDate.length">
-      <period-card :class-data="classData" />
+      <period-card
+        v-for="(lessons, time, index) in lessonsGroupByPeriod"
+        :key="index"
+        :period="index"
+        :time="time"
+        :class-data="lessons"
+      />
     </div>
     <div v-else-if="today" class="Classes-Outer">
       <h1 class="Classes-Title">
@@ -22,7 +28,12 @@ import dayjs from 'dayjs'
 import isToday from 'date-fns/isToday'
 import { vxm } from '@/store'
 import PeriodCard from '@/components/PeriodCard.vue'
+import { classData } from '@/types/store/classData'
+import LessonWithId = classData.LessonWithId
 
+type LessonsGroupedBy = {
+  [key: string]: LessonWithId[]
+}
 type Data = {
   classData: typeof vxm.classData
 }
@@ -30,6 +41,7 @@ type Data = {
 type Computed = {
   today: boolean
   dateTitle: string
+  lessonsGroupByPeriod: LessonsGroupedBy
 }
 
 export default Vue.extend<Data, unknown, Computed, unknown>({
@@ -46,6 +58,16 @@ export default Vue.extend<Data, unknown, Computed, unknown>({
     },
     dateTitle() {
       return dayjs(vxm.app.currentDate).format('M/D')
+    },
+    lessonsGroupByPeriod() {
+      const groupBy = (targets: LessonWithId[], key: keyof LessonWithId) =>
+        targets.reduce((acc: LessonsGroupedBy, currentLesson: LessonWithId) => {
+          const valueToGroup = currentLesson[key].toString()
+          acc[valueToGroup] = acc[valueToGroup] || []
+          acc[valueToGroup].push(currentLesson)
+          return acc
+        }, {})
+      return groupBy(this.classData.lessonsOnCurrentDate, 'startTime')
     }
   }
 })
