@@ -40,8 +40,8 @@
 
 <script lang="ts">
 import Vue from 'vue'
-import PrjLogo from '@/assets/svgs/prj_logo.svg'
-import ActionButton from '@/components/ActionButton.vue'
+import PrjLogo from '~/assets/svgs/prj_logo.svg'
+import ActionButton from '~/components/ActionButton.vue'
 
 export default Vue.extend({
   components: { PrjLogo, ActionButton },
