@@ -8,20 +8,29 @@
         @input="openCalenderDialog = false"
       />
     </v-dialog>
-    <viewer-dialog
+    <base-dialog
       v-model="openClassIdDialog"
       icon-name="mdi-clipboard-account"
-      default-cancel-button-label="ログアウト"
-      :logout-icon="true"
+      hide-default-cancel-button
       :actions="[
         {
           buttonLabel: '閉じる',
+          iconName: '',
+          theme: 'primary',
           action: () => {
+            return false
+          }
+        },
+        {
+          buttonLabel: 'ログアウト',
+          iconName: 'mdi-login-variant',
+          theme: 'border',
+          action: () => {
+            clickLogout()
             return false
           }
         }
       ]"
-      @clickLogout="clickLogout"
     >
       <template v-slot:title>
         今、ログインしているクラスです
@@ -33,7 +42,7 @@
           <div class="ClassIdModal-Id">{{ classId }}</div>
         </div>
       </template>
-    </viewer-dialog>
+    </base-dialog>
     <v-overlay :value="loading" color="#0071C2" opacity="1" z-index="9999">
       <div class="loader">
         Loading
@@ -83,7 +92,7 @@ import Vue from 'vue'
 import dayjs from 'dayjs'
 import HeaderLogo from '@/assets/svgs/header_logo.svg'
 import CalendarBar from '@/components/CalendarBar.vue'
-import ViewerDialog from '@/components/ViewerDialog.vue'
+import BaseDialog from '@/components/BaseDialog.vue'
 import { vxm } from '@/store'
 
 type LocalData = {
@@ -99,7 +108,7 @@ export default Vue.extend({
   middleware: 'checkClassData',
   components: {
     CalendarBar,
-    ViewerDialog,
+    BaseDialog,
     HeaderLogo
   },
   data(): LocalData {
