@@ -1,7 +1,7 @@
 <template>
   <bottom-sheet-layer title="クラス一覧" title-en="CLASS LIST" fullscreen>
     <template v-slot:LayerContents>
-      <h1 v-if="!items || items.length < 0">
+      <h1 v-if="!items || items.length < 1">
         編集可能なクラスがありません。クラスの登録を行ってください
       </h1>
       <v-list v-else>
@@ -58,24 +58,19 @@ export default Vue.extend({
   data(): DataType {
     return {
       items: vxm.user.allowAccess,
-      selectedClassId: vxm.user.allowAccess[0].classId,
+      selectedClassId: '',
       loading: false
     }
   },
   methods: {
-    doSelectClassLogin() {
+    async doSelectClassLogin() {
       this.loading = true
-      vxm.classData
-        .loadClassData({
-          classId: this.selectedClassId,
-          isEditor: true
-        })
-        .then(() => {
-          this.$router.push('/edit')
-        })
-        .catch(() => {
-          this.loading = false
-        })
+      try {
+        await vxm.classData.loadClassData(this.selectedClassId)
+        await this.$router.push('/edit')
+      } catch {
+        this.loading = false
+      }
     }
   }
 })

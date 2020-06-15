@@ -15,6 +15,10 @@ type AllowAccessData = {
   schoolName: string
   className: string
 }
+type AllowAccessFromUsers = {
+  classId: string
+  schoolName: string
+}
 type Uid = string | null
 
 interface User {
@@ -67,21 +71,21 @@ export class UserStore extends VuexModule implements User {
       .doc(user.uid)
       .get()
 
-    const allowAccessData: string[] = data.get('allow_access')
+    const allowAccessData: AllowAccessFromUsers[] = data.get('allow_access')
     const allowAccess = []
     for (const value of allowAccessData) {
       const classData = await firebase
         .firestore()
         .collection('classData')
-        .doc(value)
+        .doc(value.classId)
         .get()
       const editorClassData = await firebase
         .firestore()
         .collection('editorClassData')
-        .doc(value)
+        .doc(value.classId)
         .get()
       allowAccess.push({
-        classId: value,
+        classId: value.classId,
         schoolName: editorClassData.get('schoolName'),
         className: classData.get('className')
       })
@@ -98,20 +102,38 @@ export class UserStore extends VuexModule implements User {
 
   @action
   public async loginFromUserObject(user: any) {
-    if (!user) return
-
     const data = await firebase
       .firestore()
       .collection('users')
       .doc(user.user_id)
       .get()
 
+    const allowAccessData: AllowAccessFromUsers[] = data.get('allow_access')
+    const allowAccess = []
+    for (const value of allowAccessData) {
+      const classData = await firebase
+        .firestore()
+        .collection('classData')
+        .doc(value.classId)
+        .get()
+      const editorClassData = await firebase
+        .firestore()
+        .collection('editorClassData')
+        .doc(value.classId)
+        .get()
+      allowAccess.push({
+        classId: value.classId,
+        schoolName: editorClassData.get('schoolName'),
+        className: classData.get('className')
+      })
+    }
+
     this.setUser({
       email: user.email,
       emailVerified: user.emailVerified,
       displayName: data.get('username'),
-      allowAccess: data.get('allow_access'),
-      uid: user.uid
+      allowAccess,
+      uid: user.user_id
     })
   }
 
