@@ -7,6 +7,7 @@
     @click="$emit('click')"
   >
     <span>{{ text }}</span>
+    <v-icon v-if="icon">{{ icon }}</v-icon>
   </v-btn>
 </template>
 
@@ -28,6 +29,9 @@ export default class ActionButton extends Vue {
 
   @Prop({ default: false })
   isLoading?: boolean
+
+  @Prop({ default: '' })
+  icon?: string
 }
 </script>
 
