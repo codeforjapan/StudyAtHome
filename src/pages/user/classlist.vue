@@ -1,16 +1,21 @@
 <template>
   <bottom-sheet-layer title="クラス一覧" title-en="CLASS LIST" fullscreen>
     <template v-slot:LayerContents>
-      <v-list>
-        <v-radio-group v-model="selectedItem">
+      <h1 v-if="!items || items.length < 1">
+        編集可能なクラスがありません。クラスの登録を行ってください
+      </h1>
+      <v-list v-else>
+        <v-radio-group v-model="selectedClassId">
           <v-list-item
             v-for="(item, index) in items"
             :key="index"
             class="ClassList-Item"
           >
-            <v-radio :value="item.num">
+            <v-radio :value="item.classId">
               <template v-slot:label>
-                <span class="ClassList-Label">{{ item.name }}</span>
+                <span class="ClassList-Label">
+                  {{ item.schoolName }} {{ item.className }}
+                </span>
               </template>
             </v-radio>
           </v-list-item>
@@ -22,8 +27,14 @@
         theme="primary"
         text="選択クラスでログインする"
         class="ClassList-Button"
+        :is-loading="loading"
+        @click="doSelectClassLogin"
       />
-      <action-button theme="secondary" text="クラスを登録する" />
+      <action-button
+        text="クラスを登録する"
+        theme="secondary"
+        @click="$router.push('/user/registerClass')"
+      />
     </template>
   </bottom-sheet-layer>
 </template>
@@ -32,29 +43,34 @@
 import Vue from 'vue'
 import BottomSheetLayer from '@/components/BottomSheetLayer.vue'
 import ActionButton from '@/components/ActionButton.vue'
+import { vxm } from '@/store'
 
 type DataType = {
   items: Object[]
-  selectedItem: number
+  selectedClassId: string
+  loading: boolean
 }
 
 export default Vue.extend({
   components: { BottomSheetLayer, ActionButton },
   layout: 'background',
+  middleware: 'authenticated',
   data(): DataType {
     return {
-      items: [
-        { name: 'ほげほげ学校１年２組', num: 1 },
-        { name: 'ほげほげ学校１年２組', num: 2 },
-        { name: 'ほげほげ学校１年２組', num: 3 },
-        { name: 'ほげほげ学校１年２組', num: 4 },
-        { name: 'ほげほげ学校１年２組', num: 5 },
-        { name: 'ほげほげ学校１年２組', num: 6 },
-        { name: 'ほげほげ学校１年２組', num: 7 },
-        { name: 'ほげほげ学校１年２組', num: 8 },
-        { name: 'ほげほげ学校１年２組', num: 9 }
-      ],
-      selectedItem: 1
+      items: vxm.user.allowAccess,
+      selectedClassId: '',
+      loading: false
+    }
+  },
+  methods: {
+    async doSelectClassLogin() {
+      this.loading = true
+      try {
+        await vxm.classData.loadClassData(this.selectedClassId)
+        await this.$router.push('/edit')
+      } catch {
+        this.loading = false
+      }
     }
   }
 })
