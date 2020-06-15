@@ -3,7 +3,7 @@ import { vxm } from '@/store'
 
 const authenticated: Middleware = async ({ redirect }) => {
   if (!vxm.user.isAuthenticated) {
-    redirect('/account/login')
+    redirect('/user/login')
   }
 }
 
