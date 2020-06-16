@@ -177,8 +177,8 @@ export default {
   },
   workbox: {
     importScripts: [
-      'https://www.gstatic.com/firebasejs/7.14.6/firebase-app.js',
-      'https://www.gstatic.com/firebasejs/7.14.6/firebase-auth.js',
+      'https://www.gstatic.com/firebasejs/7.15.1/firebase-app.js',
+      'https://www.gstatic.com/firebasejs/7.15.1/firebase-auth.js',
       'swenv.js',
       'sw-firebase-auth.js'
     ],
