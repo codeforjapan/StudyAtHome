@@ -10,13 +10,13 @@
       </div>
     </template>
     <template v-slot:LayerFooter>
-      <action-button
+      <base-action-button
         theme="primary"
         text="授業を追加・編集する"
         class="Registered-Button"
         @click="$router.push('/edit')"
       />
-      <!-- <action-button theme="secondary" text="クラスIDを共有する" /> -->
+      <!-- <base-action-button theme="secondary" text="クラスIDを共有する" /> -->
     </template>
   </bottom-sheet-layer>
 </template>
@@ -24,11 +24,11 @@
 <script lang="ts">
 import Vue from 'vue'
 import BottomSheetLayer from '@/components/BottomSheetLayer.vue'
-import ActionButton from '@/components/ActionButton.vue'
+import BaseActionButton from '@/components/BaseActionButton.vue'
 import { vxm } from '@/store'
 
 export default Vue.extend({
-  components: { BottomSheetLayer, ActionButton },
+  components: { BottomSheetLayer, BaseActionButton },
   layout: 'background',
   middleware: 'authenticated',
   data() {

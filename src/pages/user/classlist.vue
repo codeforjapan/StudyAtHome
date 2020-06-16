@@ -23,14 +23,14 @@
       </v-list>
     </template>
     <template v-slot:LayerFooter>
-      <action-button
+      <base-action-button
         theme="primary"
         text="選択クラスでログインする"
         class="ClassList-Button"
         :is-loading="loading"
         @click="doSelectClassLogin"
       />
-      <action-button
+      <base-action-button
         text="クラスを登録する"
         theme="secondary"
         @click="$router.push('/user/registerClass')"
@@ -42,7 +42,7 @@
 <script lang="ts">
 import Vue from 'vue'
 import BottomSheetLayer from '@/components/BottomSheetLayer.vue'
-import ActionButton from '@/components/ActionButton.vue'
+import BaseActionButton from '@/components/BaseActionButton.vue'
 import { vxm } from '@/store'
 
 type DataType = {
@@ -52,7 +52,7 @@ type DataType = {
 }
 
 export default Vue.extend({
-  components: { BottomSheetLayer, ActionButton },
+  components: { BottomSheetLayer, BaseActionButton },
   layout: 'background',
   middleware: 'authenticated',
   data(): DataType {

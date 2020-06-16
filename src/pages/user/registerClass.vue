@@ -27,7 +27,7 @@
         </dl>
       </template>
       <template v-slot:LayerFooter>
-        <action-button
+        <base-action-button
           :is-disabled="disableButton"
           :is-loading="loading"
           text="登録を完了する"
@@ -45,12 +45,12 @@
 <script lang="ts">
 import Vue from 'vue'
 import BottomSheetLayer from '@/components/BottomSheetLayer.vue'
-import ActionButton from '@/components/ActionButton.vue'
+import BaseActionButton from '@/components/BaseActionButton.vue'
 import InputField from '@/components/InputField.vue'
 import { vxm } from '@/store'
 
 export default Vue.extend({
-  components: { BottomSheetLayer, ActionButton, InputField },
+  components: { BottomSheetLayer, BaseActionButton, InputField },
   layout: 'background',
   middleware: 'authenticated',
   data() {

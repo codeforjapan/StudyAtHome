@@ -34,13 +34,13 @@
           <span class="description mb-3">時間割をつくる先生方</span>
         </v-row>
         <div style="margin: 0 10px;">
-          <action-button
+          <base-action-button
             text="ユーザー登録する"
             class="registerButton"
             @click="$router.push('/user/terms')"
           />
 
-          <action-button
+          <base-action-button
             text="ログインする"
             class="loginButton"
             theme="secondary"
@@ -89,7 +89,7 @@
 import Vue from 'vue'
 import { vxm } from '@/store'
 import InputField from '@/components/InputField.vue'
-import ActionButton from '@/components/ActionButton.vue'
+import BaseActionButton from '@/components/BaseActionButton.vue'
 
 type DataType = {
   classId: string
@@ -100,7 +100,7 @@ type DataType = {
 
 export default Vue.extend({
   components: {
-    ActionButton,
+    BaseActionButton,
     InputField
   },
   data(): DataType {
