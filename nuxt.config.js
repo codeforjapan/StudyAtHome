@@ -17,32 +17,62 @@ export default {
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
       {
-        hid: 'description',
-        name: 'description',
-        content:
-          'おうちにいても先生から課題が届きます！時間割に合わせて楽しく学んでコロナ休校を乗り切ろう！'
-      },
-      { hid: 'robots', name: 'robots', content: 'noindex' }
-    ],
-    link: [
-      { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
-      { rel: 'apple-touch-icon', href: '/apple-touch-icon-precomposed.png' },
-      { hid: 'og:type', property: 'og:type', content: 'website' },
-      {
-        hid: 'og:image',
-        property: 'og:image',
-        content: 'https://studyathome.web.app/ogp.png'
+        hid: 'keyword',
+        name: 'keyword',
+        content: 'CodeforJapan, おうちで時間割, デジタル, 学び, 今後の学習'
       },
       {
-        hid: 'twitter:image',
-        name: 'twitter:image',
-        content: 'https://studyathome.web.app/ogp.png'
+        hid: 'author',
+        name: 'author',
+        content: 'Code for Japan'
+      },
+      {
+        hid: 'og:site_name',
+        property: 'og:site_name',
+        content: 'おうちで時間割'
+      },
+      {
+        hid: 'og:url',
+        property: 'og:url',
+        content: `https://app.studyathome.jp/`
       },
       {
         hid: 'og:title',
         property: 'og:title',
         content: 'おうちで時間割'
+      },
+      {
+        hid: 'og:description',
+        property: 'og:description',
+        content:
+          '子どもの学びにデジタルの活用を - 臨時休校期間と今後の学習に向けて 簡単に楽しく学べる環境を今だから、みんなでつくろう。'
+      },
+      {
+        hid: 'apple-mobile-web-app-title',
+        name: 'apple-mobile-web-app-title',
+        content: 'おうちで時間割'
+      },
+      {
+        hid: 'description',
+        name: 'description',
+        content:
+          '子どもの学びにデジタルの活用を - 臨時休校期間と今後の学習に向けて 簡単に楽しく学べる環境を今だから、みんなでつくろう。'
+      },
+      { hid: 'og:type', property: 'og:type', content: 'website' },
+      {
+        hid: 'og:image',
+        property: 'og:image',
+        content: 'https://app.studyathome.jp/'
+      },
+      {
+        hid: 'twitter:image',
+        name: 'twitter:image',
+        content: 'https://app.studyathome.jp/'
       }
+    ],
+    link: [
+      { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
+      { rel: 'apple-touch-icon', href: '/apple-touch-icon-precomposed.png' }
     ]
   },
   /*
