@@ -25,18 +25,18 @@
       </v-card-text>
     </v-card>
     <div v-if="editable" class="ContentCard-Button-Outer">
-      <content-card-editor-button
+      <base-editor-button
         class="ContentCard-Button"
         icon-name="mdi-eye-off"
         @click="$emit('toggleHidden')"
       />
-      <content-card-editor-button
+      <base-editor-button
         class="ContentCard-Button"
         icon-name="mdi-pencil"
         @click="$emit('clickEditButton')"
       />
       <!--
-      <content-card-editor-button
+      <base-editor-button
         class="ContentCard-Button"
         icon-name="mdi-file-multiple"
       />
@@ -48,14 +48,14 @@
 <script lang="ts">
 import Vue from 'vue'
 import SubjectTag from '@/components/SubjectTag.vue'
-import ContentCardEditorButton from '@/components/ContentCardEditorButton.vue'
+import BaseEditorButton from '@/components/BaseEditorButton.vue'
 import { classData } from '~/types/store/classData'
 import LessonWithId = classData.LessonWithId
 
 export default Vue.extend({
   components: {
     SubjectTag,
-    ContentCardEditorButton
+    BaseEditorButton
   },
   props: {
     lesson: {
