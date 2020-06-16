@@ -1,7 +1,15 @@
 <template>
   <div class="MainPage">
     <div v-if="classData.lessonsOnCurrentDate.length">
-      <period-card-editable :class-data="classData" @clickEditButton="doEdit" />
+      <period-card
+        v-for="(lessons, time, index) in lessonsGroupByPeriod"
+        :key="index"
+        :period="index"
+        :time="time"
+        :class-data="lessons"
+        :editable="true"
+        @clickEditButton="doEdit"
+      />
       <ul class="Classes-List">
         <li>おうちで時間割について</li>
         <li>お問い合わせ</li>
@@ -44,10 +52,15 @@ import Vue from 'vue'
 import dayjs from 'dayjs'
 import isToday from 'date-fns/isToday'
 import { vxm } from '@/store'
-import PeriodCardEditable from '@/components/PeriodCardEditable.vue'
+import PeriodCard from '@/components/PeriodCard.vue'
 import SimpleBottomSheet from '@/components/SimpleBottomSheet.vue'
 import EditingScreen from '@/components/EditingScreen.vue'
-import { classData } from '~/types/store/classData'
+import { classData } from '@/types/store/classData'
+import LessonWithId = classData.LessonWithId
+
+type LessonsGroupedBy = {
+  [key: string]: LessonWithId[]
+}
 
 type DataType = {
   classData: typeof vxm.classData
@@ -55,9 +68,15 @@ type DataType = {
   editPageValue: object
 }
 
+type Computed = {
+  today: boolean
+  dateTitle: string
+  lessonsGroupByPeriod: LessonsGroupedBy
+}
+
 export default Vue.extend({
   components: {
-    PeriodCardEditable,
+    PeriodCard,
     SimpleBottomSheet,
     EditingScreen
   },
@@ -100,6 +119,16 @@ export default Vue.extend({
     },
     dateTitle() {
       return dayjs(vxm.app.currentDate).format('M/D')
+    },
+    lessonsGroupByPeriod() {
+      const groupBy = (targets: LessonWithId[], key: keyof LessonWithId) =>
+        targets.reduce((acc: LessonsGroupedBy, currentLesson: LessonWithId) => {
+          const valueToGroup = currentLesson[key].toString()
+          acc[valueToGroup] = acc[valueToGroup] || []
+          acc[valueToGroup].push(currentLesson)
+          return acc
+        }, {})
+      return groupBy(this.classData.lessonsOnCurrentDate, 'startTime')
     }
   },
   methods: {
