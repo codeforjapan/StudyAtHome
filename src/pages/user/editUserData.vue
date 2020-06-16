@@ -1,6 +1,6 @@
 <template>
   <div>
-    <bottom-sheet-layer
+    <base-bottom-sheet-layer
       title="ユーザー情報の変更"
       title-en="USER SETTING"
       fullscreen
@@ -76,7 +76,7 @@
           <span>ログアウト</span>
         </v-btn>
       </template>
-    </bottom-sheet-layer>
+    </base-bottom-sheet-layer>
     <v-snackbar v-model="error" :timeout="5000" absolute top color="#C01B61">
       何らかのエラーが発生しました。時間をおいて再度お試しください。
     </v-snackbar>
@@ -85,14 +85,14 @@
 
 <script lang="ts">
 import Vue from 'vue'
-import BottomSheetLayer from '@/components/BottomSheetLayer.vue'
+import BaseBottomSheetLayer from '@/components/BaseBottomSheetLayer.vue'
 import BaseActionButton from '@/components/BaseActionButton.vue'
 import InputField from '@/components/InputField.vue'
 import firebase from '@/plugins/firebase'
 import { vxm } from '~/store'
 
 export default Vue.extend({
-  components: { BottomSheetLayer, BaseActionButton, InputField },
+  components: { BaseBottomSheetLayer, BaseActionButton, InputField },
   layout: 'background',
   data() {
     return {

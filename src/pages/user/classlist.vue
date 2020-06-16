@@ -1,5 +1,5 @@
 <template>
-  <bottom-sheet-layer title="クラス一覧" title-en="CLASS LIST" fullscreen>
+  <base-bottom-sheet-layer title="クラス一覧" title-en="CLASS LIST" fullscreen>
     <template v-slot:LayerContents>
       <h1 v-if="!items || items.length < 1">
         編集可能なクラスがありません。クラスの登録を行ってください
@@ -36,12 +36,12 @@
         @click="$router.push('/user/registerClass')"
       />
     </template>
-  </bottom-sheet-layer>
+  </base-bottom-sheet-layer>
 </template>
 
 <script lang="ts">
 import Vue from 'vue'
-import BottomSheetLayer from '@/components/BottomSheetLayer.vue'
+import BaseBottomSheetLayer from '@/components/BaseBottomSheetLayer.vue'
 import BaseActionButton from '@/components/BaseActionButton.vue'
 import { vxm } from '@/store'
 
@@ -52,7 +52,7 @@ type DataType = {
 }
 
 export default Vue.extend({
-  components: { BottomSheetLayer, BaseActionButton },
+  components: { BaseBottomSheetLayer, BaseActionButton },
   layout: 'background',
   middleware: 'authenticated',
   data(): DataType {
