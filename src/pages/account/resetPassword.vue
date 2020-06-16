@@ -21,7 +21,7 @@
             height="40px"
             :loading="loading"
             :disabled="loading"
-            @click="doSignup"
+            @click="doResetPassword"
           >
             再設定メールを送信する
           </v-btn>
@@ -31,24 +31,28 @@
   </div>
 </template>
 
-<script>
-import { mapActions } from 'vuex'
+<script lang="ts">
+import Vue from 'vue'
 import firebase from '@/plugins/firebase'
 import Logo from '@/assets/svgs/logo.svg'
 
-export default {
+type DataType = {
+  email: string
+  loading: boolean
+}
+
+export default Vue.extend({
   components: {
-    Logo,
+    Logo
   },
-  data() {
+  data(): DataType {
     return {
       email: '',
-      loading: false,
+      loading: false
     }
   },
   methods: {
-    ...mapActions('modules/user', ['login']),
-    doSignup() {
+    doResetPassword(): void {
       this.loading = true
       firebase
         .auth()
@@ -56,19 +60,13 @@ export default {
         .then(() => {
           this.$router.push('/account/signin')
         })
-        .catch((error) => {
+        .catch(error => {
           this.loading = false
           alert(error)
         })
-    },
-    gotoSignin() {
-      this.$router.push('/account/signin')
-    },
-    gotoResetPassword() {
-      this.$router.push('/reset-password')
-    },
-  },
-}
+    }
+  }
+})
 </script>
 
 <style lang="scss" scoped>
@@ -78,8 +76,8 @@ export default {
     text-align: center;
   }
   .SignUpTitle {
-    color: #ffffff;
-    font-family: 'Noto Sans JP';
+    color: #fff;
+    font-family: 'Noto Sans JP', sans-serif;
     font-size: 5em;
   }
   .DataBlock {
