@@ -14,7 +14,7 @@
 import Vue from 'vue'
 
 export default Vue.extend({
-  name: 'AddButton',
+  name: 'EditLessonScreenBottomSheetAddButton',
   props: {
     buttonColor: {
       type: [String, Number],
