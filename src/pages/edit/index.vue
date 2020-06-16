@@ -103,7 +103,7 @@
         </li>
       </ul>
     </div>
-    <simple-bottom-sheet
+    <edit-lesson-screen-bottom-sheet
       message="2年B組の授業を追加・編集する"
       :expanded="!editingMode"
       @clickAddButton="toggleScreen"
@@ -122,7 +122,7 @@ import dayjs from 'dayjs'
 import isToday from 'date-fns/isToday'
 import { vxm } from '@/store'
 import PeriodSection from '@/components/PeriodSection.vue'
-import SimpleBottomSheet from '@/components/SimpleBottomSheet.vue'
+import EditLessonScreenBottomSheet from '@/components/EditLessonScreenBottomSheet.vue'
 import EditLessonScreen from '@/components/EditLessonScreen.vue'
 import { classData } from '@/types/store/classData'
 import LessonWithId = classData.LessonWithId
@@ -146,7 +146,7 @@ type Computed = {
 export default Vue.extend({
   components: {
     PeriodSection,
-    SimpleBottomSheet,
+    EditLessonScreenBottomSheet,
     EditLessonScreen
   },
   layout: 'protected',
