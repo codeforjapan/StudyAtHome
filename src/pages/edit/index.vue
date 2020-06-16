@@ -11,17 +11,63 @@
         @clickEditButton="doEdit"
       />
       <ul class="Classes-List">
-        <li>おうちで時間割について</li>
-        <li>お問い合わせ</li>
-        <li>サイトポリシー</li>
+        <li>
+          <a
+            class="white--text"
+            href="http://www.studyathome.jp/"
+            target="_blank"
+            rel="noopener"
+          >
+            おうちで時間割について
+          </a>
+        </li>
+        <li>
+          <a
+            class="white--text"
+            href="https://forms.gle/G91PJ7T8ipTtYeGA6"
+            target="_blank"
+            rel="noopener"
+          >
+            お問い合わせ
+          </a>
+        </li>
+
+        <li>
+          <nuxt-link class="white--text" to="policy">
+            利用規約
+          </nuxt-link>
+        </li>
       </ul>
     </div>
     <div v-else-if="today" class="Classes-Outer">
       <h1 class="Classes-Title">まだ今日の時間割はありません</h1>
       <ul class="Classes-List">
-        <li>おうちで時間割について</li>
-        <li>お問い合わせ</li>
-        <li>サイトポリシー</li>
+        <li>
+          <a
+            class="white--text"
+            href="http://www.studyathome.jp/"
+            target="_blank"
+            rel="noopener"
+          >
+            おうちで時間割について
+          </a>
+        </li>
+        <li>
+          <a
+            class="white--text"
+            href="https://forms.gle/G91PJ7T8ipTtYeGA6"
+            target="_blank"
+            rel="noopener"
+          >
+            お問い合わせ
+          </a>
+        </li>
+
+        <li>
+          <nuxt-link class="white--text" to="policy">
+            利用規約
+          </nuxt-link>
+        </li>
       </ul>
     </div>
     <div v-else class="Classes-Outer">
@@ -29,9 +75,32 @@
         まだ{{ dateTitle }}の時間割は<br />ありません
       </h1>
       <ul class="Classes-List">
-        <li>おうちで時間割について</li>
-        <li>お問い合わせ</li>
-        <li>サイトポリシー</li>
+        <li>
+          <a
+            class="white--text"
+            href="http://www.studyathome.jp/"
+            target="_blank"
+            rel="noopener"
+          >
+            おうちで時間割について
+          </a>
+        </li>
+        <li>
+          <a
+            class="white--text"
+            href="https://forms.gle/G91PJ7T8ipTtYeGA6"
+            target="_blank"
+            rel="noopener"
+          >
+            お問い合わせ
+          </a>
+        </li>
+
+        <li>
+          <nuxt-link class="white--text" to="policy">
+            利用規約
+          </nuxt-link>
+        </li>
       </ul>
     </div>
     <simple-bottom-sheet
