@@ -62,12 +62,12 @@ export default {
       {
         hid: 'og:image',
         property: 'og:image',
-        content: 'https://app.studyathome.jp/'
+        content: 'https://app.studyathome.jp/ogp.png'
       },
       {
         hid: 'twitter:image',
         name: 'twitter:image',
-        content: 'https://app.studyathome.jp/'
+        content: 'https://app.studyathome.jp/ogp.png'
       }
     ],
     link: [
@@ -164,6 +164,16 @@ export default {
     MESSAGINGSENDERID: process.env.MESSAGINGSENDERID,
     APPID: process.env.APPID,
     MEASUREMENTID: process.env.MEASUREMENTID
+  },
+  manifest: {
+    name: 'おうちで時間割',
+    short_name: 'おうちで時間割',
+    theme_color: '#0071C2',
+    background_color: '#ffffff',
+    display: 'standalone',
+    Scope: '/',
+    start_url: '/',
+    splash_pages: null
   },
   workbox: {
     importScripts: [
