@@ -13,7 +13,7 @@
     </div>
     <v-row>
       <v-col v-for="(item, i) in classData" :key="i" cols="12" md="6">
-        <content-card
+        <lesson-summary-card
           :lesson="item"
           :editable="editable"
           @clickEditButton="$emit('clickEditButton', item)"
@@ -27,12 +27,12 @@
 import Vue from 'vue'
 import dayjs from 'dayjs'
 import minMax from 'dayjs/plugin/minMax'
-import ContentCard from '@/components/ContentCard.vue'
+import LessonSummaryCard from '@/components/LessonSummaryCard.vue'
 import { classData } from '@/types/store/classData'
 dayjs.extend(minMax)
 
 export default Vue.extend({
-  components: { ContentCard },
+  components: { LessonSummaryCard },
   props: {
     period: {
       type: Number,
