@@ -128,7 +128,7 @@ export default Vue.extend({
           acc[valueToGroup].push(currentLesson)
           return acc
         }, {})
-      return groupBy(this.classData.lessonsOnCurrentDate, 'startTime')
+      return groupBy(vxm.classData.lessonsOnCurrentDate, 'startTime')
     }
   },
   methods: {
