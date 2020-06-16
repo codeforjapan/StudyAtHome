@@ -32,7 +32,7 @@ import Vue from 'vue'
 import EditLessonScreenBottomSheetAddButton from '@/components/EditLessonScreenBottomSheetAddButton.vue'
 
 export default Vue.extend({
-  name: 'SimpleBottomSheet',
+  name: 'EditLessonScreenBottomSheet',
   components: { EditLessonScreenBottomSheetAddButton },
   props: {
     message: {
