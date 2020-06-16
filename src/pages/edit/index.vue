@@ -108,10 +108,10 @@
       :expanded="!editingMode"
       @clickAddButton="toggleScreen"
     />
-    <editing-screen
+    <edit-lesson-screen
       :value="editPageValue"
       :expanded="editingMode"
-      @collapse="onCollapseEditingScreen"
+      @collapse="onCollapseEditLessonScreen"
     />
   </div>
 </template>
@@ -123,7 +123,7 @@ import isToday from 'date-fns/isToday'
 import { vxm } from '@/store'
 import PeriodCard from '@/components/PeriodCard.vue'
 import SimpleBottomSheet from '@/components/SimpleBottomSheet.vue'
-import EditingScreen from '@/components/EditingScreen.vue'
+import EditLessonScreen from '@/components/EditLessonScreen.vue'
 import { classData } from '@/types/store/classData'
 import LessonWithId = classData.LessonWithId
 
@@ -147,7 +147,7 @@ export default Vue.extend({
   components: {
     PeriodCard,
     SimpleBottomSheet,
-    EditingScreen
+    EditLessonScreen
   },
   layout: 'protected',
   data(): DataType {
@@ -201,14 +201,14 @@ export default Vue.extend({
     }
   },
   methods: {
-    onCollapseEditingScreen(): void {
+    onCollapseEditLessonScreen(): void {
       this.toggleScreen()
-      this.resetEditingScreen()
+      this.resetEditLessonScreen()
     },
     toggleScreen(): void {
       this.editingMode = !this.editingMode
     },
-    resetEditingScreen(): void {
+    resetEditLessonScreen(): void {
       this.editPageValue = {
         isHidden: false,
         lessonId: '',
