@@ -32,7 +32,7 @@ export type formData = {
     VideoThumbnail
   }
 })
-export default class EditingScreen3 extends Vue {
+export default class EditLessonScreenInner3 extends Vue {
   tempFormData = {
     videoUrl: this.form.videoUrl,
     videoTitle: this.form.videoTitle,

@@ -35,7 +35,7 @@ export type formData = {
     EditorField
   }
 })
-export default class EditingScreen1 extends Vue {
+export default class EditLessonScreenInner1 extends Vue {
   tempFormData = {
     pages: this.form.pages,
     materialsTitle: this.form.materialsTitle,
