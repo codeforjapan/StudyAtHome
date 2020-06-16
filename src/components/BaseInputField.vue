@@ -90,7 +90,7 @@ type DataType = {
   show: boolean
 }
 export default Vue.extend({
-  name: 'InputField',
+  name: 'BaseInputField',
   props: {
     value: {
       type: String,

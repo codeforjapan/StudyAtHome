@@ -9,7 +9,7 @@
         <dl>
           <dt class="SignIn-ItemTitle">メールアドレス</dt>
           <dd class="SignIn-Item">
-            <input-field
+            <base-input-field
               v-model="email"
               label="studyathome@example.com"
               require
@@ -18,7 +18,7 @@
           </dd>
           <dt class="SignIn-ItemTitle">パスワード</dt>
           <dd class="SignIn-Item">
-            <input-field
+            <base-input-field
               v-model="password"
               label="パスワード"
               require
@@ -61,12 +61,12 @@
 import Vue from 'vue'
 import BaseBottomSheetLayer from '@/components/BaseBottomSheetLayer.vue'
 import BaseActionButton from '@/components/BaseActionButton.vue'
-import InputField from '@/components/InputField.vue'
+import BaseInputField from '@/components/BaseInputField.vue'
 import firebase from '@/plugins/firebase'
 import { vxm } from '@/store'
 
 export default Vue.extend({
-  components: { BaseBottomSheetLayer, BaseActionButton, InputField },
+  components: { BaseBottomSheetLayer, BaseActionButton, BaseInputField },
   layout: 'background',
   data() {
     return {
