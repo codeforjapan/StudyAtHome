@@ -13,7 +13,11 @@
     </div>
     <v-row>
       <v-col v-for="(item, i) in classData" :key="i" cols="12" md="6">
-        <content-card :lesson="item" />
+        <content-card
+          :lesson="item"
+          :editable="editable"
+          @clickEditButton="$emit('clickEditButton', item)"
+        />
       </v-col>
     </v-row>
   </div>
@@ -41,6 +45,10 @@ export default Vue.extend({
     classData: {
       type: Array as () => classData.LessonWithId[],
       default: () => []
+    },
+    editable: {
+      type: Boolean,
+      default: false
     }
   },
   computed: {
