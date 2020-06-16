@@ -18,7 +18,7 @@ export type formData = {
     EditorTextarea
   }
 })
-export default class EditingScreen2 extends Vue {
+export default class EditLessonScreenInner2 extends Vue {
   tempFormData = {
     goal: this.form.goal,
     description: this.form.description

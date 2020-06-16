@@ -187,7 +187,7 @@ export type formData = {
     EditorColorPickerField
   }
 })
-export default class EditingScreen1 extends Vue {
+export default class EditLessonScreenInner1 extends Vue {
   tempFormData = {
     date: this.form.date,
     startTime: this.form.startTime,

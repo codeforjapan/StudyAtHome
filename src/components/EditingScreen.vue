@@ -14,10 +14,22 @@
           <span class="EditingScreen-Note">
             *マークのあるものは必須項目です
           </span>
-          <editing-screen1 v-show="page === 1" v-model="firstPageData" />
-          <editing-screen2 v-show="page === 2" v-model="secondPageData" />
-          <editing-screen3 v-show="page === 3" v-model="thirdPageData" />
-          <editing-screen4 v-show="page === 4" v-model="fourthPageData" />
+          <edit-lesson-screen-inner1
+            v-show="page === 1"
+            v-model="firstPageData"
+          />
+          <edit-lesson-screen-inner2
+            v-show="page === 2"
+            v-model="secondPageData"
+          />
+          <edit-lesson-screen-inner3
+            v-show="page === 3"
+            v-model="thirdPageData"
+          />
+          <edit-lesson-screen-inner4
+            v-show="page === 4"
+            v-model="fourthPageData"
+          />
         </v-container>
       </v-card-text>
       <v-card-actions class="EditingScreen-CardElements">
@@ -67,10 +79,10 @@ import Vue from 'vue'
 import dayjs from 'dayjs'
 import { vxm } from '@/store'
 import BaseActionButton from '@/components/BaseActionButton.vue'
-import EditingScreen1 from '@/components/EditingScreen1.vue'
-import EditingScreen2 from '@/components/EditingScreen2.vue'
-import EditingScreen3 from '@/components/EditingScreen3.vue'
-import EditingScreen4 from '@/components/EditingScreen4.vue'
+import EditLessonScreenInner1 from '@/components/EditLessonScreenInner1.vue'
+import EditLessonScreenInner2 from '@/components/EditLessonScreenInner2.vue'
+import EditLessonScreenInner3 from '@/components/EditLessonScreenInner3.vue'
+import EditLessonScreenInner4 from '@/components/EditLessonScreenInner4.vue'
 import { classData } from '@/types/store/classData'
 
 type FirstPageDataType = {
@@ -113,10 +125,10 @@ type DataType = {
 export default Vue.extend({
   components: {
     BaseActionButton,
-    EditingScreen1,
-    EditingScreen2,
-    EditingScreen3,
-    EditingScreen4
+    EditLessonScreenInner1,
+    EditLessonScreenInner2,
+    EditLessonScreenInner3,
+    EditLessonScreenInner4
   },
   props: {
     expanded: {
