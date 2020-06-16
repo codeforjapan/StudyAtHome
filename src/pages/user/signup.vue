@@ -45,13 +45,13 @@
       </template>
       <template v-slot:LayerFooter>
         <div class="SignUp-ButtonOuter">
-          <action-button
+          <base-action-button
             theme="transparent"
             text="キャンセル"
             class="SignUp-Button"
             @click="$router.push('/')"
           />
-          <action-button
+          <base-action-button
             theme="primary"
             text="登録"
             class="SignUp-Button"
@@ -72,7 +72,7 @@
           メールに記載されているURLから認証を行ってください。
         </v-container>
         <v-card-actions class="DialogCardButtons px-4">
-          <action-button
+          <base-action-button
             text="トップに戻る"
             theme="border"
             class="my-3"
@@ -87,12 +87,12 @@
 <script lang="ts">
 import Vue from 'vue'
 import BottomSheetLayer from '@/components/BottomSheetLayer.vue'
-import ActionButton from '@/components/ActionButton.vue'
+import BaseActionButton from '@/components/BaseActionButton.vue'
 import InputField from '@/components/InputField.vue'
 import firebase from '@/plugins/firebase'
 
 export default Vue.extend({
-  components: { BottomSheetLayer, ActionButton, InputField },
+  components: { BottomSheetLayer, BaseActionButton, InputField },
   layout: 'background',
   data() {
     return {

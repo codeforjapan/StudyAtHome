@@ -38,13 +38,13 @@
               </v-btn>
             </div>
             <div class="EditingScreen-ActionButtons">
-              <action-button
+              <base-action-button
                 class="Button"
                 theme="transparent"
                 text="キャンセル"
                 @click="$emit('collapse')"
               />
-              <action-button
+              <base-action-button
                 class="Button"
                 theme="primary"
                 text="保存する"
@@ -66,7 +66,7 @@
 import Vue from 'vue'
 import dayjs from 'dayjs'
 import { vxm } from '@/store'
-import ActionButton from '@/components/ActionButton.vue'
+import BaseActionButton from '@/components/BaseActionButton.vue'
 import EditingScreen1 from '@/components/EditingScreen1.vue'
 import EditingScreen2 from '@/components/EditingScreen2.vue'
 import EditingScreen3 from '@/components/EditingScreen3.vue'
@@ -112,7 +112,7 @@ type DataType = {
 
 export default Vue.extend({
   components: {
-    ActionButton,
+    BaseActionButton,
     EditingScreen1,
     EditingScreen2,
     EditingScreen3,

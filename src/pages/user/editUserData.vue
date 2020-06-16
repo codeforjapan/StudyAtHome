@@ -49,13 +49,13 @@
       </template>
       <template v-slot:LayerFooter>
         <div class="SignUp-ButtonOuter">
-          <action-button
+          <base-action-button
             theme="transparent"
             text="キャンセル"
             class="SignUp-Button"
             @click="$router.push('/edit')"
           />
-          <action-button
+          <base-action-button
             theme="primary"
             text="保存"
             class="SignUp-Button"
@@ -86,13 +86,13 @@
 <script lang="ts">
 import Vue from 'vue'
 import BottomSheetLayer from '@/components/BottomSheetLayer.vue'
-import ActionButton from '@/components/ActionButton.vue'
+import BaseActionButton from '@/components/BaseActionButton.vue'
 import InputField from '@/components/InputField.vue'
 import firebase from '@/plugins/firebase'
 import { vxm } from '~/store'
 
 export default Vue.extend({
-  components: { BottomSheetLayer, ActionButton, InputField },
+  components: { BottomSheetLayer, BaseActionButton, InputField },
   layout: 'background',
   data() {
     return {
