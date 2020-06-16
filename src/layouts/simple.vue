@@ -8,7 +8,7 @@
     <v-app-bar fixed app class="bar" elevation="0">
       <HeaderLogo />
       <v-spacer />
-      <v-btn outlined rounded color="#0071C2">
+      <v-btn outlined rounded color="#0071C2" @click="$router.back()">
         <v-icon left>mdi-arrow-left</v-icon>
         もどる
       </v-btn>
