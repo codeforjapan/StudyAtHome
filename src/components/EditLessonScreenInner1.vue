@@ -154,7 +154,7 @@
         placeholder="例）理科"
         class="LessonField"
       />
-      <editor-color-picker-field
+      <edit-lesson-screen-subject-field-color-pickable
         title="ラベル色"
         icon-name="mdi-palette"
         :subject-color="tempFormData.subjectColor"
@@ -170,7 +170,7 @@
 import { Vue, Component, Prop, Emit, Watch } from 'vue-property-decorator'
 import EditorField from '@/components/EditorField.vue'
 import SubjectTag from '@/components/SubjectTag.vue'
-import EditorColorPickerField from '@/components/EditorColorPickerField.vue'
+import EditLessonScreenSubjectFieldColorPickable from '@/components/EditLessonScreenSubjectFieldColorPickable.vue'
 
 export type formData = {
   date: string
@@ -184,7 +184,7 @@ export type formData = {
   components: {
     EditorField,
     SubjectTag,
-    EditorColorPickerField
+    EditLessonScreenSubjectFieldColorPickable
   }
 })
 export default class EditLessonScreenInner1 extends Vue {
