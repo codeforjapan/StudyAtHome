@@ -1,5 +1,5 @@
 <template>
-  <bottom-sheet-layer title="登録されました！" title-en="THANK YOU!">
+  <base-bottom-sheet-layer title="登録されました！" title-en="THANK YOU!">
     <template v-slot:LayerContents>
       <div class="Registered-Contents">
         <v-icon color="white" class="Registered-Icon">
@@ -18,17 +18,17 @@
       />
       <!-- <base-action-button theme="secondary" text="クラスIDを共有する" /> -->
     </template>
-  </bottom-sheet-layer>
+  </base-bottom-sheet-layer>
 </template>
 
 <script lang="ts">
 import Vue from 'vue'
-import BottomSheetLayer from '@/components/BottomSheetLayer.vue'
+import BaseBottomSheetLayer from '@/components/BaseBottomSheetLayer.vue'
 import BaseActionButton from '@/components/BaseActionButton.vue'
 import { vxm } from '@/store'
 
 export default Vue.extend({
-  components: { BottomSheetLayer, BaseActionButton },
+  components: { BaseBottomSheetLayer, BaseActionButton },
   layout: 'background',
   middleware: 'authenticated',
   data() {
