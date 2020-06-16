@@ -8,7 +8,7 @@
         <span class="description mb-3">授業をうける生徒・児童の方</span>
       </v-row>
       <v-row class="loginFieldRow" justify="center">
-        <input-field
+        <base-input-field
           v-model="classId"
           class="classIdField"
           type="classId"
@@ -88,7 +88,7 @@
 <script lang="ts">
 import Vue from 'vue'
 import { vxm } from '@/store'
-import InputField from '@/components/InputField.vue'
+import BaseInputField from '@/components/BaseInputField.vue'
 import BaseActionButton from '@/components/BaseActionButton.vue'
 
 type DataType = {
@@ -101,7 +101,7 @@ type DataType = {
 export default Vue.extend({
   components: {
     BaseActionButton,
-    InputField
+    BaseInputField
   },
   data(): DataType {
     return {

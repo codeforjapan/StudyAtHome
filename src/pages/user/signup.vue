@@ -5,7 +5,7 @@
         <dl>
           <dt class="SignUp-ItemTitle">お名前（表示名）</dt>
           <dd>
-            <input-field
+            <base-input-field
               v-model="name"
               label="name"
               placeholder="山田花子"
@@ -14,7 +14,7 @@
           </dd>
           <dt class="SignUp-ItemTitle">メールアドレス</dt>
           <dd>
-            <input-field
+            <base-input-field
               v-model="email"
               label="email"
               placeholder="hogehoge@hogehoge.com"
@@ -24,7 +24,7 @@
           </dd>
           <dt class="SignUp-ItemTitle">パスワード</dt>
           <dd>
-            <input-field
+            <base-input-field
               v-model="password"
               label="password"
               type="password"
@@ -33,7 +33,7 @@
           </dd>
           <dt class="SignUp-ItemTitle">パスワード（確認用）</dt>
           <dd>
-            <input-field
+            <base-input-field
               v-model="confirmation"
               label="confirmation"
               type="password"
@@ -88,11 +88,11 @@
 import Vue from 'vue'
 import BaseBottomSheetLayer from '@/components/BaseBottomSheetLayer.vue'
 import BaseActionButton from '@/components/BaseActionButton.vue'
-import InputField from '@/components/InputField.vue'
+import BaseInputField from '@/components/BaseInputField.vue'
 import firebase from '@/plugins/firebase'
 
 export default Vue.extend({
-  components: { BaseBottomSheetLayer, BaseActionButton, InputField },
+  components: { BaseBottomSheetLayer, BaseActionButton, BaseInputField },
   layout: 'background',
   data() {
     return {

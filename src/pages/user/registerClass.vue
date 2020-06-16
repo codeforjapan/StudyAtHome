@@ -5,7 +5,7 @@
         <dl class="RegisterClass-List">
           <dt class="RegisterClass-ItemTitle">学校名</dt>
           <dd>
-            <input-field
+            <base-input-field
               v-model="schoolName"
               label="school"
               placeholder="おひさま小学校"
@@ -14,7 +14,7 @@
           </dd>
           <dt class="RegisterClass-ItemTitle">クラス名</dt>
           <dd>
-            <input-field
+            <base-input-field
               v-model="className"
               label="class"
               placeholder="2年B組"
@@ -46,11 +46,11 @@
 import Vue from 'vue'
 import BaseBottomSheetLayer from '@/components/BaseBottomSheetLayer.vue'
 import BaseActionButton from '@/components/BaseActionButton.vue'
-import InputField from '@/components/InputField.vue'
+import BaseInputField from '@/components/BaseInputField.vue'
 import { vxm } from '@/store'
 
 export default Vue.extend({
-  components: { BaseBottomSheetLayer, BaseActionButton, InputField },
+  components: { BaseBottomSheetLayer, BaseActionButton, BaseInputField },
   layout: 'background',
   middleware: 'authenticated',
   data() {
