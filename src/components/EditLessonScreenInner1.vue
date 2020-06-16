@@ -106,7 +106,7 @@
         </v-card-actions>
       </v-card>
     </v-dialog>
-    <editor-field
+    <editor-input-field-pickable
       v-model="tempFormData.date"
       title="日付設定 *"
       label="date"
@@ -117,7 +117,7 @@
       @clickButton="datePickerOpen = true"
     />
     <div class="EditingScreen-Flex EditingScreen-Time">
-      <editor-field
+      <editor-input-field-pickable
         v-model="tempFormData.startTime"
         title="時間設定 *"
         label="start_time"
@@ -129,7 +129,7 @@
         @clickButton="startTimePickerOpen = true"
       />
       <span class="Hyphen">-</span>
-      <editor-field
+      <editor-input-field-pickable
         v-model="tempFormData.endTime"
         label="end_time"
         placeholder="00:00"
@@ -140,14 +140,14 @@
         @clickButton="endTimePickerOpen = true"
       />
     </div>
-    <editor-field
+    <editor-input-field-pickable
       v-model="tempFormData.title"
       title="タイトル *"
       label="タイトル"
       placeholder="例）理科"
     />
     <div class="EditingScreen-Flex">
-      <editor-field
+      <editor-input-field-pickable
         v-model="tempFormData.subjectName"
         title="教科名 *"
         label="lesson"
@@ -168,7 +168,7 @@
 
 <script lang="ts">
 import { Vue, Component, Prop, Emit, Watch } from 'vue-property-decorator'
-import EditorField from '@/components/EditorField.vue'
+import EditorInputFieldPickable from '@/components/EditorInputFieldPickable.vue'
 import SubjectTag from '@/components/SubjectTag.vue'
 import EditLessonScreenSubjectFieldColorPickable from '@/components/EditLessonScreenSubjectFieldColorPickable.vue'
 
@@ -182,7 +182,7 @@ export type formData = {
 }
 @Component({
   components: {
-    EditorField,
+    EditorInputFieldPickable,
     SubjectTag,
     EditLessonScreenSubjectFieldColorPickable
   }

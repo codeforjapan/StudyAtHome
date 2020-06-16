@@ -1,6 +1,6 @@
 <template>
   <div>
-    <editor-field
+    <editor-input-field-pickable
       v-model="tempFormData.videoUrl"
       title="参考動画URL"
       label="video"
@@ -17,7 +17,7 @@
 
 <script lang="ts">
 import { Vue, Component, Prop, Emit, Watch } from 'vue-property-decorator'
-import EditorField from '~/components/EditorField.vue'
+import EditorInputFieldPickable from '~/components/EditorInputFieldPickable.vue'
 
 import VideoThumbnail from '@/components/VideoThumbnail.vue'
 
@@ -28,7 +28,7 @@ export type formData = {
 }
 @Component({
   components: {
-    EditorField,
+    EditorInputFieldPickable,
     VideoThumbnail
   }
 })
