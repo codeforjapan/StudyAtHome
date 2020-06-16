@@ -56,7 +56,7 @@
     "nuxt-webfontloader": "^1.1.0",
     "uuid": "^8.0.0",
     "vue-property-decorator": "^8.4.2",
-    "vuex-class-component": "^2.3.2",
+    "vuex-class-component": "^2.3.3",
     "vuex-persistedstate": "^3.0.1"
   },
   "devDependencies": {
