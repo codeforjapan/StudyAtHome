@@ -1,7 +1,7 @@
 <template>
   <div class="MainPage">
     <div v-if="classData.lessonsOnCurrentDate.length">
-      <period-card
+      <period-section
         v-for="(lessons, time, index) in lessonsGroupByPeriod"
         :key="index"
         :period="index"
@@ -121,7 +121,7 @@ import Vue from 'vue'
 import dayjs from 'dayjs'
 import isToday from 'date-fns/isToday'
 import { vxm } from '@/store'
-import PeriodCard from '@/components/PeriodCard.vue'
+import PeriodSection from '@/components/PeriodSection.vue'
 import SimpleBottomSheet from '@/components/SimpleBottomSheet.vue'
 import EditLessonScreen from '@/components/EditLessonScreen.vue'
 import { classData } from '@/types/store/classData'
@@ -145,7 +145,7 @@ type Computed = {
 
 export default Vue.extend({
   components: {
-    PeriodCard,
+    PeriodSection,
     SimpleBottomSheet,
     EditLessonScreen
   },
