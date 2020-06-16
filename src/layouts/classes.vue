@@ -1,100 +1,156 @@
 <template>
   <v-app>
-    <v-overlay v-if="loading" color="#F8F9FA" opacity="1" z-index="9999">
+    <v-dialog v-model="openCalenderDialog" max-width="320px">
+      <v-date-picker
+        v-model="date"
+        locale="ja"
+        first-day-of-week="1"
+        @input="openCalenderDialog = false"
+      />
+    </v-dialog>
+    <base-dialog
+      v-model="openClassIdDialog"
+      icon-name="mdi-clipboard-account"
+      hide-default-cancel-button
+      :actions="[
+        {
+          buttonLabel: '閉じる',
+          iconName: '',
+          theme: 'primary',
+          action: () => {
+            return false
+          }
+        },
+        {
+          buttonLabel: 'ログアウト',
+          iconName: 'mdi-login-variant',
+          theme: 'border',
+          action: () => {
+            clickLogout()
+            return false
+          }
+        }
+      ]"
+    >
+      <template v-slot:title>
+        今、ログインしているクラスです
+      </template>
+      <template v-slot:default>
+        <div class="ClassIdModal-Contents">
+          <p class="ClassIdModal-ClassText">{{ className }}</p>
+          <p class="ClassIdModal-Text">クラスID</p>
+          <div class="ClassIdModal-Id">{{ classId }}</div>
+        </div>
+      </template>
+    </base-dialog>
+    <v-overlay :value="loading" color="#0071C2" opacity="1" z-index="9999">
       <div class="loader">
         Loading
       </div>
     </v-overlay>
-    <!--
-    <v-navigation-drawer
-      v-model="drawer"
-      :mini-variant="miniVariant"
-      :clipped="clipped"
-      fixed
-      app
-    >
-      <v-list>
-        <v-list-item
-          v-for="(item, i) in items"
-          :key="i"
-          :to="item.to"
-          router
-          exact
-        >
-          <v-list-item-action>
-            <v-icon>{{ item.icon }}</v-icon>
-          </v-list-item-action>
-          <v-list-item-content>
-            <v-list-item-title v-text="item.title" />
-          </v-list-item-content>
-        </v-list-item>
-      </v-list>
-    </v-navigation-drawer>
-    -->
-    <v-app-bar
-      fixed
-      app
-      dense
-      style="
-        background-color: rgba(0, 0, 0, 0);
-        color: white;
-        text-align: center;
-      "
-      elevation="0"
-    >
-      <span>
-        {{ schoolName }}
-      </span>
+    <v-app-bar fixed app class="bar" elevation="0">
+      <HeaderLogo />
       <v-spacer />
-      <div class="date">
-        <v-btn icon small dark @click="prevDate">
-          <v-icon>mdi-chevron-left</v-icon>
+      <div class="classes-buttons">
+        <v-btn
+          fab
+          small
+          outlined
+          rounded
+          color="#0071C2"
+          @click="openCalenderDialog = true"
+        >
+          <v-icon>mdi-calendar-today</v-icon>
         </v-btn>
-        <v-btn text dark style="padding: 0 0;">
-          {{ ViewDate }}
-        </v-btn>
-        <v-btn icon small dark @click="nextDate">
-          <v-icon>mdi-chevron-right</v-icon>
+        <v-btn
+          fab
+          small
+          outlined
+          rounded
+          color="#0071C2"
+          @click="openClassIdDialog = true"
+        >
+          <v-icon>mdi-clipboard-account</v-icon>
         </v-btn>
       </div>
-      <span>
-        {{ className }}
-      </span>
+      <template v-slot:extension>
+        <div class="header-calender">
+          <CalendarBar v-model="app.currentDate" />
+        </div>
+      </template>
     </v-app-bar>
-    <v-content style="background-color: #0071c2;">
-      <v-container class="px-4 py-8">
+    <v-content class="content">
+      <v-container class="classes-container px-4 py-8">
         <nuxt />
       </v-container>
     </v-content>
-    <v-footer dark color="#0071c2">
-      <span>&copy; Code For Japan {{ new Date().getFullYear() }}</span>
-    </v-footer>
   </v-app>
 </template>
 
-<script>
-import { mapGetters, mapActions } from 'vuex'
-export default {
+<script lang="ts">
+import Vue from 'vue'
+import dayjs from 'dayjs'
+import HeaderLogo from '@/assets/svgs/header_logo.svg'
+import CalendarBar from '@/components/CalendarBar.vue'
+import BaseDialog from '@/components/BaseDialog.vue'
+import { vxm } from '@/store'
+
+type LocalData = {
+  loading: boolean
+  openCalenderDialog: boolean
+  openClassIdDialog: boolean
+  classId: string
+  className: string
+  app: typeof vxm.app
+}
+
+export default Vue.extend({
   middleware: 'checkClassData',
-  computed: {
-    ...mapGetters('modules/class', ['schoolName', 'className', 'ViewDate']),
+  components: {
+    CalendarBar,
+    BaseDialog,
+    HeaderLogo
   },
-  data() {
+  data(): LocalData {
     return {
       loading: true,
+      openCalenderDialog: false,
+      openClassIdDialog: false,
+      classId: vxm.classData.classId,
+      className: vxm.classData.className,
+      app: vxm.app
     }
   },
-  mounted() {
+  computed: {
+    date: {
+      get() {
+        return dayjs(vxm.app.currentDate).format('YYYY-MM-DD')
+      },
+      set(newValue: string) {
+        vxm.app.setDate(dayjs(newValue).toDate())
+      }
+    }
+  },
+  mounted(): void {
     this.loading = false
-    this.setViewDate(this.$dayjs().format('YYYY-MM-DD'))
   },
   methods: {
-    ...mapActions('modules/class', ['setViewDate', 'prevDate', 'nextDate']),
-  },
-}
+    clickLogout() {
+      vxm.classData.unloadClassData().then(() => {
+        this.$router.push('/')
+      })
+    }
+  }
+})
 </script>
 
-<style scoped>
+<style scoped lang="scss">
+.v-btn {
+  font-weight: bold;
+  font-size: 12px;
+  line-height: 16px;
+  background-color: $color-white;
+}
 .date-icon {
   margin-right: 15px;
 }
@@ -103,5 +159,54 @@ export default {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+}
+.bar {
+  background-color: $color-back-gray;
+  text-align: center;
+}
+.content {
+  background-color: $color-base-color-01;
+}
+.header-calender {
+  margin: 0 auto;
+  width: 100%;
+  max-width: 640px;
+  height: 40px;
+}
+.classes-container {
+  height: 100%;
+}
+.classes-buttons {
+  padding: 0 4px;
+}
+.ClassIdModal-Contents {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 0;
+}
+.ClassIdModal-Text {
+  font-size: 16px;
+  font-weight: bold;
+  color: $color-gray;
+  margin: 6px 0 12px;
+}
+.ClassIdModal-ClassText {
+  font-size: 16px;
+  color: $color-gray;
+  margin: 6px 0 12px;
+}
+.ClassIdModal-Id {
+  max-width: 9em;
+  padding: 16px 24px;
+  text-align: center;
+  background-color: $color-back-gray;
+  border: 2px solid $color-base-color-01;
+  border-radius: 14px;
+  letter-spacing: 0.2em;
+  line-height: 1.25;
+  font-size: 30px;
+  color: $color-gray;
 }
 </style>

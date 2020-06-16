@@ -1,1 +1,7 @@
 functions/nuxt
+node_modules/
+src/static/
+src/assets/
+dist/
+.nuxt/
+src/pages/print.vue
