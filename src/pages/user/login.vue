@@ -46,7 +46,7 @@
             text
             to="/"
           >
-            <span>パスワードを忘れた方へ</span>
+            <span>戻る</span>
           </v-btn>
         </div>
       </template>
