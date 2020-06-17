@@ -22,16 +22,19 @@
           本サービスでは、HTML5及びJavaScript、CSS3、SVGを使用するものとします。なお、以下の推奨ブラウザをご利用の場合、ブラウザの設定でこれら機能を有効にしておくことで、最善のレイアウトで本サイトを閲覧することができます。
           <ul>
             <li>
-              Windows Google Chrome、Firefox （各ブラウザ最新版）
+              Windows Google Chrome、Firefox、Opera （各ブラウザ最新版）
             </li>
             <li>
-              Mac OS Google Chrome、Safari、Firefox （各ブラウザ最新版）
+              macOS Google Chrome、Safari、Firefox （各ブラウザ最新版）
             </li>
             <li>
-              iOS（iPhone、iPad） Mobile Safari（OSバージョン 8.4以降）
+              iOS（iPhone、iPad） Safari（OSバージョン 12.0以降）
             </li>
             <li>
-              Android Chrome Browser（OSバージョン 4.2.2以降）
+              iPadOS Safari（OSバージョン 13.0以降）
+            </li>
+            <li>
+              Android Chrome（OSバージョン 6.0以降）
             </li>
           </ul>
         </li>
@@ -54,7 +57,7 @@
           「弊団体」とは、一般社団法人コード・フォー・ジャパンを意味します。
         </li>
         <li>
-          「弊団体ウェブサイト」とは、そのドメインが「code4japan.org」である、弊団体が運営するウェブサイト（理由の如何を問わず、弊団体のウェブサイトのドメインまたは内容が変更された場合は、当該変更後のウェブサイトを含みます。）を意味します。
+          「弊団体ウェブサイト」とは、そのドメインが「code4japan.org」もしくは「studyathome.jp」である、弊団体が運営するウェブサイト（理由の如何を問わず、弊団体のウェブサイトのドメインまたは内容が変更された場合は、当該変更後のウェブサイトを含みます。）を意味します。
         </li>
         <li>
           「登録ユーザー」とは、第3条（登録）に基づいて本サービスの利用者としての登録がなされたユーザーを意味します。
