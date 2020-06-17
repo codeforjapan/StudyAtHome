@@ -47,19 +47,34 @@
             @click="$router.push('/user/login')"
           />
           <v-footer color="#004170" padless>
-            <v-row justify="center" no-gutters>
-              <v-col class="white--text text-center footerText" cols="12">
-                <a class="white--text" href="#"> - おうちで時間割について </a>
-              </v-col>
-              <v-col class="white--text text-center footerText" cols="12">
-                <a class="white--text" href="#"> - お問い合わせ </a>
-              </v-col>
-              <v-col class="white--text text-center footerText" cols="12">
+            <ul class="Index-Footer-List">
+              <li>
+                <a
+                  class="white--text"
+                  href="http://www.studyathome.jp/"
+                  target="_blank"
+                  rel="noopener"
+                >
+                  おうちで時間割について
+                </a>
+              </li>
+              <li>
+                <a
+                  class="white--text"
+                  href="https://forms.gle/G91PJ7T8ipTtYeGA6"
+                  target="_blank"
+                  rel="noopener"
+                >
+                  お問い合わせ
+                </a>
+              </li>
+
+              <li>
                 <nuxt-link class="white--text" to="policy">
-                  - 利用規約
+                  利用規約
                 </nuxt-link>
-              </v-col>
-            </v-row>
+              </li>
+            </ul>
           </v-footer>
         </div>
       </v-flex>
@@ -146,8 +161,21 @@ export default Vue.extend({
   font-size: 16px;
   font-weight: bold;
 }
-.footerText {
-  margin-top: 15px;
+.Index-Footer-List {
+  margin: 15px auto 0 auto;
   font-size: 12px;
+  color: $color-white;
+  text-align: center;
+  list-style: none;
+  padding: 0;
+
+  li {
+    margin-bottom: 12px;
+
+    &::before {
+      content: '-';
+      padding-right: 8px;
+    }
+  }
 }
 </style>
