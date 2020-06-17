@@ -1,8 +1,9 @@
 import Vue from 'vue'
-import Vuex, { ActionContext } from 'vuex'
-import { Context } from '@nuxt/types/app'
+import Vuex from 'vuex'
+// import Vuex, { ActionContext } from 'vuex'
+// import { Context } from '@nuxt/types/app'
 import { createProxy, extractVuexModule } from 'vuex-class-component'
-import jwtDecode from 'jwt-decode'
+// import jwtDecode from 'jwt-decode'
 import { AppStore } from '@/store/modules/app'
 import { ClassDataStore } from '@/store/modules/classData'
 import { UserStore } from '@/store/modules/user'
@@ -16,7 +17,7 @@ export const store = new Vuex.Store({
     ...extractVuexModule(UserStore)
   }
 })
-
+/*
 export const actions = {
   async nuxtServerInit(_ctx: ActionContext<any, any>, { req }: Context) {
     const authorizationHeader = req.headers.authorization || ''
@@ -29,6 +30,7 @@ export const actions = {
     }
   }
 }
+*/
 
 export const vxm = {
   app: createProxy(store, AppStore),
