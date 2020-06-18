@@ -75,6 +75,9 @@ export default Vue.extend({
           className: this.className
         })
         .then(() => {
+          vxm.user.login()
+        })
+        .then(() => {
           this.loading = false
           this.$router.push('/user/registered')
         })
