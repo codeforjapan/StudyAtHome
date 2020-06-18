@@ -104,7 +104,7 @@
       </ul>
     </div>
     <simple-bottom-sheet
-      message="2年B組の授業を追加・編集する"
+      :message="`${classData.className}の授業を追加・編集する`"
       :expanded="!editingMode"
       @clickAddButton="toggleScreen"
     />
