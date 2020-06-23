@@ -82,7 +82,7 @@
     "prettier": "^1.19.1",
     "rimraf": "^3.0.2",
     "sass-loader": "^8.0.2",
-    "stylelint": "^13.3.3",
+    "stylelint": "^13.6.1",
     "stylelint-config-prettier": "^8.0.1",
     "stylelint-config-standard": "^20.0.0",
     "stylelint-scss": "^3.18.0",
