@@ -50,7 +50,7 @@
     "js-cookie": "^2.2.1",
     "jwt-decode": "^2.2.0",
     "lodash.clonedeep": "^4.5.0",
-    "nuxt": "^2.12.2",
+    "nuxt": "^2.13.0",
     "nuxt-property-decorator": "^2.7.2",
     "nuxt-svg-loader": "^1.2.0",
     "nuxt-webfontloader": "^1.1.0",
@@ -70,7 +70,7 @@
     "babel-eslint": "^10.1.0",
     "babel-jest": "^26.0.1",
     "cpx": "^1.5.0",
-    "eslint": "^7.2.0",
+    "eslint": "^7.3.0",
     "eslint-config-prettier": "^6.11.0",
     "eslint-loader": "^4.0.2",
     "eslint-plugin-prettier": "^3.1.4",
@@ -86,7 +86,7 @@
     "stylelint-config-prettier": "^8.0.1",
     "stylelint-config-standard": "^20.0.0",
     "stylelint-scss": "^3.17.2",
-    "ts-jest": "^26.1.0",
+    "ts-jest": "^26.1.1",
     "vue-jest": "^3.0.5"
   }
 }
