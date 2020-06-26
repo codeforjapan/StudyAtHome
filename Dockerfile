@@ -1,18 +1,16 @@
-FROM node:10.19-alpine
+FROM node:12.18.1-alpine
 
-ENV PROJECT_ROOTDIR /app/
-
-WORKDIR $PROJECT_ROOTDIR
-
-COPY package.json yarn.lock $PROJECT_ROOTDIR
-
-RUN set -x && \
-    yarn install
-
-COPY . $PROJECT_ROOTDIR
-
-EXPOSE 3000
 ENV HOST 0.0.0.0
 
-CMD ["yarn", "dev"]
+RUN mkdir -p /app
+COPY . /app
+WORKDIR /app
 
+ARG ENV
+ENV ENV $ENV
+
+RUN yarn && yarn build
+
+EXPOSE 3000
+
+CMD ["yarn", "start"]
