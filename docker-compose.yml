@@ -1,16 +1,10 @@
-version: "3"
+version: "3.7"
 services:
-  app:
-    container_name: studyathome
-    build:
-      context: .
-      dockerfile: Dockerfile
-    tty: true
+  studyathome:
+    build: .
+    command: yarn install & yarn dev
     ports:
         - 3000:3000
     volumes:
         - .:/app
-        - node_modules:/app/node_modules
-volumes:
-  node_modules: {}
 
