@@ -51,8 +51,8 @@
         </div>
 
         <div class="item-label">学習の目的</div>
-        <div v-if="lesson.objectives" class="item-value">
-          {{ lesson.objectives }}
+        <div v-if="lesson.goal" class="item-value">
+          {{ lesson.goal }}
         </div>
 
         <div class="item-label">詳細</div>
@@ -63,7 +63,6 @@
         <div class="item-label">参考動画</div>
         <div v-if="lesson.videos.length > 0">
           <div v-for="(item, index) in lesson.videos" :key="index">
-            <v-img :src="item.thumbnailUrl" class="video-thumbnail-image" />
             <div class="item-label">
               <a
                 :href="item.url"
@@ -71,9 +70,10 @@
                 rel="noopener"
                 class="external-link"
               >
-                {{ item.title }}
+                {{ item.url }}
               </a>
             </div>
+            <v-img :src="item.thumbnailUrl" class="video-thumbnail-image" />
           </div>
         </div>
 
