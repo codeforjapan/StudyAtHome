@@ -63,7 +63,6 @@
         <div class="item-label">参考動画</div>
         <div v-if="lesson.videos.length > 0">
           <div v-for="(item, index) in lesson.videos" :key="index">
-            <v-img :src="item.thumbnailUrl" class="video-thumbnail-image" />
             <div class="item-label">
               <a
                 :href="item.url"
@@ -74,6 +73,7 @@
                 {{ item.url }}
               </a>
             </div>
+            <v-img :src="item.thumbnailUrl" class="video-thumbnail-image" />
           </div>
         </div>
 
