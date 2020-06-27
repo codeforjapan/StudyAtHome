@@ -71,7 +71,7 @@
                 rel="noopener"
                 class="external-link"
               >
-                {{ item.title }}
+                {{ item.url }}
               </a>
             </div>
           </div>
