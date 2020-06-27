@@ -51,8 +51,8 @@
         </div>
 
         <div class="item-label">学習の目的</div>
-        <div v-if="lesson.objectives" class="item-value">
-          {{ lesson.objectives }}
+        <div v-if="lesson.goal" class="item-value">
+          {{ lesson.goal }}
         </div>
 
         <div class="item-label">詳細</div>
