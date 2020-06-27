@@ -24,6 +24,7 @@
     </template>
     <template v-slot:LayerFooter>
       <action-button
+        v-if="items && items.length > 0"
         theme="primary"
         text="選択クラスでログインする"
         class="ClassList-Button"
