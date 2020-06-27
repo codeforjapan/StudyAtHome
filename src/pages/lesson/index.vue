@@ -314,6 +314,7 @@ export default Vue.extend({
   font-family: 'Noto Sans JP', sans-serif;
   font-size: 16px;
   color: $color-gray;
+  word-break: break-all;
 }
 
 .lesson-material {
