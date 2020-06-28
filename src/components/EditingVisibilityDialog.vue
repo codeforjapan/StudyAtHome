@@ -1,16 +1,16 @@
 <template>
   <div>
-    <p v-if="openEditingVisibilityDialog">Good!</p>
     <base-dialog
       v-model="openEditingVisibilityDialog"
       icon-name="mdi-eye-off"
       hide-default-cancel-button
       :actions="[
         {
-          buttonLabel: '非公開にする',
+          buttonLabel: actionButtonLabel,
           iconName: '',
           theme: 'primary',
           action: () => {
+            toggleIsHidden()
             return false
           }
         },
@@ -19,10 +19,12 @@
           iconName: '',
           theme: 'border',
           action: () => {
+            closeModal()
             return false
           }
         }
       ]"
+      @click-outside="closeModal"
     >
       <template v-slot:title>
         {{ title }}
@@ -32,11 +34,17 @@
           <p class="EditingVisibilityModal-Text">
             {{ date }} <br />
             {{ time }} <br />
-            {{ value.firstPageData.subjectName }}
+            {{ value.subjectName }}
           </p>
         </div>
       </template>
     </base-dialog>
+    <v-snackbar v-model="error" :timeout="5000" absolute top color="#C01B61">
+      エラーにより公開ステータスの変更に失敗しました。時間をおいて再度お試しください。
+    </v-snackbar>
+    <v-snackbar v-model="success" :timeout="5000" absolute top color="success">
+      授業の公開ステータスを変更しました。
+    </v-snackbar>
   </div>
 </template>
 
@@ -45,83 +53,100 @@ import Vue from 'vue'
 import dayjs from 'dayjs'
 import BaseDialog from '@/components/BaseDialog.vue'
 import { vxm } from '@/store'
+import { classData } from '@/types/store/classData'
 
 type LocalData = {
-  app: typeof vxm.app
+  openEditingVisibilityDialog: boolean
+  error: boolean
+  success: boolean
 }
 
 export default Vue.extend({
-  middleware: 'checkClassData',
   components: {
     BaseDialog
   },
   props: {
-    openEditingVisibilityDialog: {
+    editingVisibilityMode: {
       type: Boolean,
+      required: true,
       default: false
     },
     value: {
-      type: Object,
-      required: false,
-      default: () => ({
-        isHidden: false,
-        lessonId: '',
-        firstPageData: {
-          date: '',
-          startTime: '',
-          endTime: '',
-          title: '',
-          subjectName: '',
-          subjectColor: '#BAC8FF'
-        }
-      })
+      type: Object as () => classData.LessonWithId,
+      required: true,
+      default: {
+        docId: ''
+      }
     }
   },
   data(): LocalData {
     return {
-      app: vxm.app
+      openEditingVisibilityDialog: false,
+      error: false,
+      success: false
     }
   },
   computed: {
-    title() {
+    title(): string {
       return this.value.isHidden
         ? '時間割を公開にします'
         : '時間割を非公開にします'
     },
-    date() {
-      return this.value.firstPageData && this.value.firstPageData.date
-        ? dayjs(this.value.firstPageData.date).format('MM月DD日(ddd)')
-        : null
+    date(): string {
+      return this.value.startTime
+        ? dayjs(this.value.startTime).format('MM月DD日(ddd)')
+        : ''
     },
-    time() {
+    time(): string {
       return (
-        (this.value.firstPageData && this.value.firstPageData.startTime
-          ? this.value.firstPageData.startTime
-          : null) +
+        (this.value.startTime
+          ? dayjs(this.value.startTime).format('HH:mm')
+          : '') +
         ' - ' +
-        (this.value.firstPageData && this.value.firstPageData.endTime
-          ? this.value.firstPageData.endTime
-          : null)
+        (this.value.endTime ? dayjs(this.value.endTime).format('HH:mm') : '')
       )
+    },
+    actionButtonLabel(): string {
+      return this.value.isHidden ? '公開する' : '非公開にする'
+    }
+  },
+  watch: {
+    editingVisibilityMode(value) {
+      this.openEditingVisibilityDialog = value
+    }
+  },
+  methods: {
+    toggleIsHidden() {
+      const lesson = Object.assign({}, this.value, {
+        isHidden: !this.value.isHidden
+      }) as classData.Lesson
+      vxm.classData
+        .changeLesson({
+          editData: lesson,
+          id: this.value.docId
+        })
+        .then(() => {
+          this.success = true
+          setTimeout(() => {
+            this.success = false
+          }, 5000)
+          this.$emit('close')
+        })
+        .catch(() => {
+          this.error = true
+          setTimeout(() => {
+            this.error = false
+          }, 5000)
+        })
+    },
+    closeModal() {
+      this.$emit('close')
     }
   }
 })
 </script>
 
 <style scoped lang="scss">
-.v-btn {
-  font-weight: bold;
-  font-size: 12px;
-  line-height: 16px;
-  background-color: $color-white;
-}
-.bar {
-  background-color: $color-back-gray;
-  text-align: center;
-}
-.content {
-  background-color: $color-base-color-01;
-}
 .EditingVisibilityModal-Text {
   font-size: 16px;
   font-weight: bold;
