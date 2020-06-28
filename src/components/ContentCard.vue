@@ -1,6 +1,10 @@
 <template>
   <div class="ContentCard-Outer">
-    <v-card class="ContentCard elevation-4" @click="toLessonDetail">
+    <v-card
+      v-if="displayClassData"
+      class="ContentCard elevation-4"
+      @click="toLessonDetail"
+    >
       <v-card-actions class="ContentCard-Actions">
         <subject-tag
           class="ContentCard-SubjectTag"
@@ -26,11 +30,19 @@
     </v-card>
     <div v-if="editable" class="ContentCard-Button-Outer">
       <content-card-editor-button
+        v-if="displayClassData"
         class="ContentCard-Button"
         icon-name="mdi-eye-off"
-        @click="$emit('toggleHidden')"
+        @click="changeDisplayFlag"
       />
       <content-card-editor-button
+        v-if="!displayClassData"
+        class="ContentCard-Button"
+        icon-name="mdi-eye"
+        @click="changeDisplayFlag"
+      />
+      <content-card-editor-button
+        v-if="displayClassData"
         class="ContentCard-Button"
         icon-name="mdi-pencil"
         @click="$emit('clickEditButton')"
@@ -52,6 +64,10 @@ import ContentCardEditorButton from '@/components/ContentCardEditorButton.vue'
 import { classData } from '~/types/store/classData'
 import LessonWithId = classData.LessonWithId
 
+type DataType = {
+  displayClassData: boolean
+}
+
 export default Vue.extend({
   components: {
     SubjectTag,
@@ -67,10 +83,20 @@ export default Vue.extend({
       default: false
     }
   },
+  data(): DataType {
+    return {
+      displayClassData: true
+    }
+  },
   methods: {
     toLessonDetail() {
       const lesson = this.lesson as LessonWithId
       this.$router.push('/lesson/?lessonId=' + lesson.docId)
+    },
+
+    changeDisplayFlag() {
+      this.displayClassData = !this.displayClassData
+      this.$emit('clickToggleHidden')
     }
   }
 })

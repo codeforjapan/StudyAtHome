@@ -1,11 +1,11 @@
 <template>
   <div class="PeriodCard">
     <div class="PeriodCard-NumberBlock">
-      <div class="PeriodCard-Number">
+      <div v-if="displayPeriodCard" class="PeriodCard-Number">
         <span class="PeriodCard-Number-Num">{{ period + 1 }}</span>
         <span class="PeriodCard-Number-Text">時間目</span>
       </div>
-      <div class="PeriodCard-Time">
+      <div v-if="displayPeriodCard" class="PeriodCard-Time">
         <span>{{ formatDate(time) }}</span>
         <span>|</span>
         <span>{{ formatDate(maxEndTime) }}</span>
@@ -16,6 +16,7 @@
         <content-card
           :lesson="item"
           :editable="editable"
+          @clickToggleHidden="toggleHidden"
           @clickEditButton="$emit('clickEditButton', item)"
         />
       </v-col>
@@ -30,6 +31,10 @@ import minMax from 'dayjs/plugin/minMax'
 import ContentCard from '@/components/ContentCard.vue'
 import { classData } from '@/types/store/classData'
 dayjs.extend(minMax)
+
+type DataType = {
+  displayPeriodCard: boolean
+}
 
 export default Vue.extend({
   components: { ContentCard },
@@ -51,6 +56,11 @@ export default Vue.extend({
       default: false
     }
   },
+  data(): DataType {
+    return {
+      displayPeriodCard: true
+    }
+  },
   computed: {
     maxEndTime() {
       const endTimeArray = this.classData.map(value => dayjs(value.endTime))
@@ -60,6 +70,10 @@ export default Vue.extend({
   methods: {
     formatDate(date: Date): string {
       return dayjs(date).format('HH:mm')
+    },
+
+    toggleHidden() {
+      this.displayPeriodCard = !this.displayPeriodCard
     }
   }
 })
