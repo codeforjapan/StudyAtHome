@@ -250,15 +250,9 @@ export default Vue.extend({
         isHidden: value.isHidden,
         lessonId: value.docId,
         firstPageData: {
-          date:
-            value.startTime.getFullYear() +
-            '-' +
-            (value.startTime.getMonth() + 1) +
-            '-' +
-            value.startTime.getDate(),
-          startTime:
-            value.startTime.getHours() + ':' + value.startTime.getMinutes(),
-          endTime: value.endTime.getHours() + ':' + value.endTime.getMinutes(),
+          date: dayjs(value.startTime).format('YYYY-MM-DD'),
+          startTime: dayjs(value.startTime).format('HH:mm'),
+          endTime: dayjs(value.endTime).format('HH:mm'),
           title: value.title,
           subjectName: value.subject.name,
           subjectColor: value.subject.color
