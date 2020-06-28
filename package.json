@@ -84,10 +84,8 @@
     "stylelint-config-standard": "^20.0.0",
     "stylelint-scss": "^3.18.0",
     "ts-jest": "^26.1.1",
-    "typescript": "^3.9.5",
     "vue": "^2.6.11",
     "vue-jest": "^3.0.5",
-    "vue-template-compiler": "^2.6.11",
-    "webpack": "^4.43.0"
+    "vue-template-compiler": "^2.6.11"
   }
 }
