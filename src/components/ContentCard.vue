@@ -115,6 +115,7 @@ export default Vue.extend({
     font-size: 12px;
     color: $color-gray;
     margin: 0;
+    word-break: break-all;
   }
 }
 </style>
