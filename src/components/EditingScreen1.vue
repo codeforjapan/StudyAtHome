@@ -110,7 +110,7 @@
       v-model="tempFormData.date"
       title="日付設定 *"
       label="date"
-      placeholder="2020/05/30"
+      placeholder="2020-05-30"
       :transparent="true"
       icon-name="mdi-calendar"
       :readonly="true"
