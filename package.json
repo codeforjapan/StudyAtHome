@@ -5,19 +5,13 @@
   "author": "Nekoya3",
   "private": true,
   "scripts": {
-    "dev": "cross-env HOST=0.0.0.0 PORT=3000 NODE_ENV=development nuxt-ts",
+    "dev": "cross-env NODE_ENV=development nuxt-ts",
     "build": "yarn prebuild && nuxt-ts build",
-    "prebuild": "cross-env NODE_ENV=development node pre_build_script/swEnvBuild.js",
+    "prebuild": "node pre_build_script/swEnvBuild.js",
     "test:unit": "jest --config jest.config.js",
-    "start": "cross-env NODE_ENV=production HOST=0.0.0.0 PORT=3000 nuxt-ts",
+    "start": "nuxt-ts start",
     "generate": "nuxt-ts generate",
-    "lint": "eslint --ext .js,.vue,.ts --ignore-path .eslintignore .",
-    "clean": "rimraf .nuxt dist",
-    "copy": "yarn copy:client && yarn copy:server",
-    "copy:client": "cpx -C \"src/static/**\" dist/client/ && cpx -C \".nuxt/dist/**\" dist/client/assets/",
-    "copy:server": "cpx -C \"functions/**\" dist/server && cpx \".nuxt/**\" dist/server/",
-    "install:functions": "yarn install --cwd dist/server",
-    "firebase-emulator": "yarn clean && yarn lint && yarn build && yarn copy && yarn install:functions && firebase emulators:start"
+    "lint": "eslint --ext .js,.vue,.ts --ignore-path .eslintignore ."
   },
   "lint-staged": {
     "*.{js,ts,css,vue}": [
@@ -31,6 +25,7 @@
     }
   },
   "dependencies": {
+    "@babel/core": "^7.10.3",
     "@babel/runtime-corejs3": "^7.10.3",
     "@nuxt/typescript-runtime": "^0.4.10",
     "@nuxtjs/axios": "^5.11.0",
@@ -45,8 +40,9 @@
     "date-fns": "^2.14.0",
     "dayjs": "^1.8.26",
     "express": "^4.17.1",
-    "firebase": "7.15.4",
+    "firebase": "7.15.5",
     "firebase-admin": "^8.12.0",
+    "google-auth-library": "^6.0.2",
     "js-cookie": "^2.2.1",
     "jwt-decode": "^2.2.0",
     "lodash.clonedeep": "^4.5.0",
@@ -56,6 +52,7 @@
     "nuxt-webfontloader": "^1.1.0",
     "uuid": "^8.2.0",
     "vue-property-decorator": "^8.4.2",
+    "vuex": "^3.4.0",
     "vuex-class-component": "^2.3.3",
     "vuex-persistedstate": "^3.0.1"
   },
@@ -87,6 +84,8 @@
     "stylelint-config-standard": "^20.0.0",
     "stylelint-scss": "^3.18.0",
     "ts-jest": "^26.1.1",
-    "vue-jest": "^3.0.5"
+    "vue": "^2.6.11",
+    "vue-jest": "^3.0.5",
+    "vue-template-compiler": "^2.6.11"
   }
 }
