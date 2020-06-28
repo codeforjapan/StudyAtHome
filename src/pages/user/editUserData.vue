@@ -27,6 +27,9 @@
             />
           </dd>
           <dt class="SignUp-ItemTitle">変更先パスワード</dt>
+          <dt class="SignUp-PasswordRules">
+            パスワードは8文字以上で、アルファベットと数字を含めてください
+          </dt>
           <dd>
             <input-field
               v-model="password"
@@ -107,6 +110,16 @@ export default Vue.extend({
   },
   computed: {
     passwordConfirm() {
+      if (this.password) {
+        // 8文字以上であること
+        // 英数字が混在していること
+        // 大文字と小文字のアルファベットが含まれること
+        const reg = new RegExp(/^(?=.*?[a-z])(?=.*?\d)[a-z\d]{8,}$/i)
+        const response = reg.test(this.password)
+        if (!response) {
+          return 'パスワードが条件を満たしていません'
+        }
+      }
       if (this.password && this.confirmation) {
         if (this.password !== this.confirmation) {
           return 'パスワードが一致していません'
@@ -118,6 +131,11 @@ export default Vue.extend({
     disableRegisterButton() {
       if (this.email && this.name) {
         if (this.password !== this.confirmation) {
+          return true
+        }
+        const reg = new RegExp(/^(?=.*?[a-z])(?=.*?\d)[a-z\d]{8,}$/i)
+        const response = reg.test(this.password)
+        if (!response) {
           return true
         }
         return false
@@ -196,6 +214,11 @@ export default Vue.extend({
   color: $color-white;
   text-align: center;
   margin: 4px 0;
+}
+.SignUp-PasswordRules {
+  text-align: center;
+  font-weight: bold;
+  color: $color-yellow;
 }
 .SignUp-ButtonOuter {
   display: flex;
