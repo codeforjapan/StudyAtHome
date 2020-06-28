@@ -13,10 +13,10 @@ phases:
     commands:
       - echo Build start `date`
       - echo Build Docker
-      - echo $REPOSITORY_URL
+      - echo ${REPOSITORY_URI}
       - echo ${IMAGE_NAME}
       - echo ${DATABASEURL}
-      - docker build --build-arg APIKEY=${APIKEY} --build-arg AUTHDOMAIN=${AUTHDOMAIN} --build-arg DATABASEURL=${DATABASEURL} --build-arg PROJECTID=${PROJECTID} --build-arg STORAGEBUCKET=${STORAGEBUCKET} --build-arg MESSAGINGSENDERID=${MESSAGINGSENDERID} --build-arg APPID=${APPID} --build-arg MEASUREMENTID=G-N9EMMWHQJV  -t $REPOSITORY_URI:latest .
+      - docker build --build-arg APIKEY=${APIKEY} --build-arg AUTHDOMAIN=${AUTHDOMAIN} --build-arg DATABASEURL=${DATABASEURL} --build-arg PROJECTID=${PROJECTID} --build-arg STORAGEBUCKET=${STORAGEBUCKET} --build-arg MESSAGINGSENDERID=${MESSAGINGSENDERID} --build-arg APPID=${APPID} --build-arg MEASUREMENTID=G-N9EMMWHQJV  -t $REPOSITORY_URL:latest .
       - docker tag $REPOSITORY_URI:latest $REPOSITORY_URI:$IMAGE_TAG
   post_build:
     commands:
