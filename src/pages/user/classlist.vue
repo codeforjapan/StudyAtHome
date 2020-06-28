@@ -24,6 +24,7 @@
     </template>
     <template v-slot:LayerFooter>
       <action-button
+        :is-disabled="!items || items.length < 1"
         theme="primary"
         text="選択クラスでログインする"
         class="ClassList-Button"
