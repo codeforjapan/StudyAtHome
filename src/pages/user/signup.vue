@@ -24,7 +24,7 @@
           </dd>
           <dt class="SignUp-ItemTitle">パスワード</dt>
           <dt class="SignUp-Rules">
-            パスワードは8文字以上で、アルファベットと数字を含めてください
+            パスワードは6文字以上で設定してください
           </dt>
           <dd>
             <input-field
@@ -111,9 +111,8 @@ export default Vue.extend({
   computed: {
     passwordConfirm() {
       if (this.password) {
-        // 8文字以上であること
-        // 英数字が混在していること
-        const reg = new RegExp(/^(?=.*?[a-z])(?=.*?\d)[a-z\d]{8,}$/i)
+        // 6文字以上であること
+        const reg = new RegExp(/[ -~]{6,}$/)
         const response = reg.test(this.password)
         if (!response) {
           return 'パスワードが条件を満たしていません'
@@ -132,7 +131,7 @@ export default Vue.extend({
         if (this.password !== this.confirmation) {
           return true
         }
-        const reg = new RegExp(/^(?=.*?[a-z])(?=.*?\d)[a-z\d]{8,}$/i)
+        const reg = new RegExp(/[ -~]{6,}$/)
         const response = reg.test(this.password)
         if (!response) {
           return true
