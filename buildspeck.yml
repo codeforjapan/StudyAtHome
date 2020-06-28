@@ -1,0 +1,27 @@
+version: 0.2
+
+phases:
+  pre_build:
+    commands:
+      - echo Logging in to Amazon ECR...
+      - aws --version
+      - REPOSITORY_URI=${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${IMAGE_NAME}
+      - REGISTORY_URI=${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com
+      - aws ecr get-login-password | docker login --username AWS --password-stdin $REGISTORY_URI
+      - IMAGE_TAG=$(echo $CODEBUILD_RESOLVED_SOURCE_VERSION | cut -c 1-7)
+  build:
+    commands:
+      - echo Build start `date`
+      - echo Build Docker
+      - docker build  --build-arg APIKEY=${APIKEY} --build-arg AUTHDOMAIN=${AUTHDOMAIN} --build-arg DATABASEURL=${DATABASEURL} --build-arg PROJECTID=${PROJECTID} --build-arg STORAGEBUCKET=${STORAGEBUCKET} --build-arg MESSAGINGSENDERID=${MESSAGINGSENDERID} --build-arg APPID=${APPID} --build-arg MEASUREMENTID=G-N9EMMWHQJV  -t $REPOSITORY_URI:latest .
+      - docker tag $REPOSITORY_URI:latest $REPOSITORY_URI:$IMAGE_TAG
+  post_build:
+    commands:
+      - echo Build complete `date`
+      - echo Push Docker
+      - docker push $REPOSITORY_URI:latest
+      - docker push $REPOSITORY_URI:$IMAGE_TAG
+      - echo Writing image definitions file...
+      - echo "[{\"name\":\"${IMAGE_NAME}\",\"imageUri\":\"${REPOSITORY_URI}:${IMAGE_TAG}\"}]" > imagedefinitions.json
+artifacts:
+  files: imagedefinitions.json
