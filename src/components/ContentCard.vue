@@ -1,6 +1,13 @@
 <template>
   <div class="ContentCard-Outer">
-    <v-card class="ContentCard elevation-4" @click="toLessonDetail">
+    <v-card
+      :class="{
+        ContentCard: true,
+        'elevation-4': true,
+        isHidden: lesson.isHidden
+      }"
+      @click="toLessonDetail"
+    >
       <v-card-actions class="ContentCard-Actions">
         <subject-tag
           class="ContentCard-SubjectTag"
@@ -27,7 +34,7 @@
     <div v-if="editable" class="ContentCard-Button-Outer">
       <content-card-editor-button
         class="ContentCard-Button"
-        icon-name="mdi-eye-off"
+        :icon-name="lesson.isHidden ? 'mdi-eye' : 'mdi-eye-off'"
         @click="$emit('toggleHidden')"
       />
       <content-card-editor-button
@@ -96,6 +103,10 @@ export default Vue.extend({
   flex: 1 1 auto;
   color: $color-gray;
   border-radius: 14px !important;
+
+  &.isHidden {
+    opacity: 0.6;
+  }
 
   .ContentCard-Actions {
     padding: 16px 16px 0;
