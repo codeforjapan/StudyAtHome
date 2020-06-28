@@ -2,9 +2,9 @@ const colors = require('vuetify/es5/util/colors').default
 const environment = process.env.NODE_ENV || 'development'
 
 export default {
+  telemetry: false,
   mode: 'universal',
   srcDir: 'src',
-  buildDir: '.nuxt',
   /*
    ** Headers of the page
    */
@@ -182,7 +182,7 @@ export default {
       'swenv.js',
       'sw-firebase-auth.js'
     ],
-    dev: process.env.MODE !== 'production'
+    dev: process.env.NODE_ENV !== 'production'
   },
   /*
    ** Build configuration
