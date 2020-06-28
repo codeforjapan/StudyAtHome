@@ -2,7 +2,7 @@
   <div>
     <base-dialog
       v-model="openEditingVisibilityDialog"
-      icon-name="mdi-eye-off"
+      :icon-name="value.isHidden ? 'mdi-eye' : 'mdi-eye-off'"
       hide-default-cancel-button
       :actions="[
         {
@@ -27,14 +27,15 @@
       @click-outside="closeModal"
     >
       <template v-slot:title>
-        {{ title }}
+        {{ modalTitle }}
       </template>
       <template v-slot:default>
         <div class="EditingVisibilityModal-Contents">
           <p class="EditingVisibilityModal-Text">
             {{ date }} <br />
             {{ time }} <br />
-            {{ value.subjectName }}
+            {{ subjectName }} <br />
+            {{ value.title }}
           </p>
         </div>
       </template>
@@ -87,7 +88,7 @@ export default Vue.extend({
     }
   },
   computed: {
-    title(): string {
+    modalTitle(): string {
       return this.value.isHidden
         ? '時間割を公開にします'
         : '時間割を非公開にします'
@@ -105,6 +106,9 @@ export default Vue.extend({
         ' - ' +
         (this.value.endTime ? dayjs(this.value.endTime).format('HH:mm') : '')
       )
+    },
+    subjectName(): string {
+      return this.value.subject ? this.value.subject.name : ''
     },
     actionButtonLabel(): string {
       return this.value.isHidden ? '公開する' : '非公開にする'
