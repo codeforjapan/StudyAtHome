@@ -115,8 +115,9 @@
       @collapse="onCollapseEditingScreen"
     />
     <editing-visibility-dialog
-      :value="editPageValue"
-      :open-editing-visibility-dialog="editingVisibilityMode"
+      :value="editVisibilityDialogValue"
+      :editing-visibility-mode="editingVisibilityMode"
+      @close="closeModal"
     />
   </div>
 </template>
@@ -142,6 +143,7 @@ type DataType = {
   editingMode: boolean
   editingVisibilityMode: boolean
   editPageValue: object
+  editVisibilityDialogValue: object
 }
 
 type Computed = {
@@ -190,7 +192,8 @@ export default Vue.extend({
       classData: vxm.classData,
       editingMode: false,
       editingVisibilityMode: false,
-      editPageValue: Object.assign({}, editPageValueDefault)
+      editPageValue: Object.assign({}, editPageValueDefault),
+      editVisibilityDialogValue: {}
     }
   },
   computed: {
@@ -219,26 +222,19 @@ export default Vue.extend({
     toggleScreen(): void {
       this.editingMode = !this.editingMode
     },
-    toggleVisibilityModal(): void {
-      this.editingVisibilityMode = !this.editingVisibilityMode
+    closeModal(): void {
+      this.editVisibilityDialogValue = {}
+      this.editingVisibilityMode = false
+    },
+    openVisibilityModal(): void {
+      this.editingVisibilityMode = true
     },
     resetEditingScreen(): void {
       this.editPageValue = Object.assign({}, editPageValueDefault)
     },
     doToggleHidden(value: classData.LessonWithId): void {
-      this.toggleVisibilityModal()
-      this.editPageValue = Object.assign({}, editPageValueDefault, {
-        isHidden: value.isHidden,
-        lessonId: value.docId,
-        firstPageData: {
-          date: dayjs(value.startTime).format('YYYY-MM-DD'),
-          startTime: dayjs(value.startTime).format('HH:mm'),
-          endTime: dayjs(value.endTime).format('HH:mm'),
-          title: value.title,
-          subjectName: value.subject.name,
-          subjectColor: value.subject.color
-        }
-      })
+      this.openVisibilityModal()
+      this.editVisibilityDialogValue = value
     },
     // @todo doEdit の中身を整理する
     doEdit(value: classData.LessonWithId): void {

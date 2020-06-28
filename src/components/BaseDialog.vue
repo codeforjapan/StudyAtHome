@@ -4,6 +4,7 @@
     :value="value"
     :persistent="modal"
     @input="$emit('input', $event)"
+    @click:outside="$emit('click-outside')"
   >
     <v-card class="DialogCard">
       <v-card-title class="DialogCardTitle">
