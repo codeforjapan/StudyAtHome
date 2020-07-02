@@ -25,8 +25,8 @@
     }
   },
   "dependencies": {
-    "@babel/core": "^7.10.3",
-    "@babel/runtime-corejs3": "^7.10.3",
+    "@babel/core": "^7.10.4",
+    "@babel/runtime-corejs3": "^7.10.4",
     "@nuxt/typescript-runtime": "^0.4.10",
     "@nuxtjs/axios": "^5.11.0",
     "@nuxtjs/dotenv": "^1.4.1",
@@ -41,7 +41,7 @@
     "dayjs": "^1.8.26",
     "express": "^4.17.1",
     "firebase": "7.15.5",
-    "firebase-admin": "^8.12.0",
+    "firebase-admin": "^8.13.0",
     "google-auth-library": "^6.0.2",
     "js-cookie": "^2.2.1",
     "jwt-decode": "^2.2.0",
@@ -51,8 +51,8 @@
     "nuxt-svg-loader": "^1.2.0",
     "nuxt-webfontloader": "^1.1.0",
     "uuid": "^8.2.0",
-    "vue-property-decorator": "^8.4.2",
-    "vuex": "^3.4.0",
+    "vue-property-decorator": "^8.5.1",
+    "vuex": "^3.5.1",
     "vuex-class-component": "^2.3.3",
     "vuex-persistedstate": "^3.0.1"
   },
