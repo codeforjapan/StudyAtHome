@@ -37,8 +37,8 @@
 
 ## 開発に関する情報
 
-* 開発サイト https://studyathome-dev.web.app/
-* 本番サイト https://studyathome.web.app/
+* 開発サイト https://dev.studyathome.jp/
+* 本番サイト https://studyathome.jp/
 * デザイン
   * [covid-edu – Figma](https://www.figma.com/file/JBcf0nDLMqOyS5vffbZtvw/covid-edu)
 
