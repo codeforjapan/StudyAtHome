@@ -8759,6 +8759,11 @@ kleur@^4.0.1:
   resolved "https://registry.yarnpkg.com/kleur/-/kleur-4.0.1.tgz#3d4948534b666e2578f93b6fafb62108e64f05ef"
   integrity sha512-Qs6SqCLm63rd0kNVh+wO4XsWLU6kgfwwaPYsLiClWf0Tewkzsa6MvB21bespb8cz+ANS+2t3So1ge3gintzhlw==
 
+klona@^1.1.1:
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/klona/-/klona-1.1.1.tgz#8b1e93808ef602a0cc4fb438ba72eb00594e9802"
+  integrity sha512-o/QDZouW8bt6cejtMQhw3qyqi4aTlrB7sbqzQ8+PdI/qJ3WMbmSOA//4ClIevCQp0DPUU9l1pxGRcGMkkxb8TA==
+
 known-css-properties@^0.19.0:
   version "0.19.0"
   resolved "https://registry.yarnpkg.com/known-css-properties/-/known-css-properties-0.19.0.tgz#5d92b7fa16c72d971bda9b7fe295bdf61836ee5b"
@@ -12100,6 +12105,17 @@ sass-loader@^8.0.2:
     neo-async "^2.6.1"
     schema-utils "^2.6.1"
     semver "^6.3.0"
+
+sass-loader@^9.0.1:
+  version "9.0.1"
+  resolved "https://registry.yarnpkg.com/sass-loader/-/sass-loader-9.0.1.tgz#8ae96ebb0e9debc3748064d32e43596719814c40"
+  integrity sha512-wXFo2VAAzAUsUApOXr5PkGXDa1ad20RYhdJTubopY04i+Suk8b8g3Vtobu3kfMk48S0n5rQyAQeGBdg8WzL8gA==
+  dependencies:
+    klona "^1.1.1"
+    loader-utils "^2.0.0"
+    neo-async "^2.6.1"
+    schema-utils "^2.7.0"
+    semver "^7.3.2"
 
 sass@^1.26.5:
   version "1.26.7"
