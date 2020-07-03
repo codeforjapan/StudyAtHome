@@ -16,7 +16,7 @@
         {
           buttonLabel: 'クラスの切替・登録',
           action: () => {
-            vxm.classData.unloadClassData()
+            unloadClassData()
             this.$router.push('/user/classlist')
             return false
           }
@@ -138,6 +138,10 @@ export default Vue.extend({
     signout() {
       vxm.user.logout()
       this.$router.push('/')
+    },
+
+    unloadClassData() {
+      vxm.classData.unloadClassData()
     }
   }
 })
