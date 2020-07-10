@@ -40,7 +40,7 @@
     "date-fns": "^2.14.0",
     "dayjs": "^1.8.29",
     "express": "^4.17.1",
-    "firebase": "7.15.5",
+    "firebase": "7.16.0",
     "firebase-admin": "^8.13.0",
     "google-auth-library": "^6.0.2",
     "js-cookie": "^2.2.1",
