@@ -57,6 +57,7 @@
     "vuex-persistedstate": "^3.0.1"
   },
   "devDependencies": {
+    "@nuxt/types": "^2.13.3",
     "@nuxt/typescript-build": "^2.0.0",
     "@nuxtjs/eslint-config-typescript": "^2.0.0",
     "@nuxtjs/stylelint-module": "^4.0.0",
@@ -78,7 +79,6 @@
     "nodemon": "^2.0.4",
     "prettier": "^1.19.1",
     "rimraf": "^3.0.2",
-    "sass-loader": "^9.0.2",
     "stylelint": "^13.6.1",
     "stylelint-config-prettier": "^8.0.2",
     "stylelint-config-standard": "^20.0.0",
