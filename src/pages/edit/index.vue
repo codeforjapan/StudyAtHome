@@ -8,6 +8,7 @@
         :time="time"
         :class-data="lessons"
         :editable="true"
+        @toggleHidden="doToggleHidden"
         @clickEditButton="doEdit"
       />
       <ul class="Classes-List">
@@ -113,6 +114,11 @@
       :expanded="editingMode"
       @collapse="onCollapseEditingScreen"
     />
+    <editing-visibility-dialog
+      :value="editVisibilityDialogValue"
+      :editing-visibility-mode="editingVisibilityMode"
+      @close="closeModal"
+    />
   </div>
 </template>
 
@@ -124,6 +130,7 @@ import { vxm } from '@/store'
 import PeriodCard from '@/components/PeriodCard.vue'
 import SimpleBottomSheet from '@/components/SimpleBottomSheet.vue'
 import EditingScreen from '@/components/EditingScreen.vue'
+import EditingVisibilityDialog from '@/components/EditingVisibilityDialog.vue'
 import { classData } from '@/types/store/classData'
 import LessonWithId = classData.LessonWithId
 
@@ -134,7 +141,9 @@ type LessonsGroupedBy = {
 type DataType = {
   classData: typeof vxm.classData
   editingMode: boolean
+  editingVisibilityMode: boolean
   editPageValue: object
+  editVisibilityDialogValue: object
 }
 
 type Computed = {
@@ -143,43 +152,48 @@ type Computed = {
   lessonsGroupByPeriod: LessonsGroupedBy
 }
 
+const editPageValueDefault = {
+  isHidden: false,
+  lessonId: '',
+  firstPageData: {
+    date: '',
+    startTime: '',
+    endTime: '',
+    title: '',
+    subjectName: '',
+    subjectColor: '#BAC8FF'
+  },
+  secondPageData: {
+    goal: '',
+    description: ''
+  },
+  thirdPageData: {
+    videoUrl: '',
+    videoTitle: '',
+    videoThumbnailUrl: ''
+  },
+  fourthPageData: {
+    pages: '',
+    materialsTitle: '',
+    materialsUrl: ''
+  }
+}
+
 export default Vue.extend({
   components: {
     PeriodCard,
     SimpleBottomSheet,
-    EditingScreen
+    EditingScreen,
+    EditingVisibilityDialog
   },
   layout: 'protected',
   data(): DataType {
     return {
       classData: vxm.classData,
       editingMode: false,
-      editPageValue: {
-        isHidden: false,
-        lessonId: '',
-        firstPageData: {
-          date: '',
-          startTime: '',
-          endTime: '',
-          title: '',
-          subjectName: '',
-          subjectColor: '#BAC8FF'
-        },
-        secondPageData: {
-          goal: '',
-          description: ''
-        },
-        thirdPageData: {
-          videoUrl: '',
-          videoTitle: '',
-          videoThumbnailUrl: ''
-        },
-        fourthPageData: {
-          pages: '',
-          materialsTitle: '',
-          materialsUrl: ''
-        }
-      }
+      editingVisibilityMode: false,
+      editPageValue: Object.assign({}, editPageValueDefault),
+      editVisibilityDialogValue: {}
     }
   },
   computed: {
@@ -208,33 +222,19 @@ export default Vue.extend({
     toggleScreen(): void {
       this.editingMode = !this.editingMode
     },
+    closeModal(): void {
+      this.editVisibilityDialogValue = {}
+      this.editingVisibilityMode = false
+    },
+    openVisibilityModal(): void {
+      this.editingVisibilityMode = true
+    },
     resetEditingScreen(): void {
-      this.editPageValue = {
-        isHidden: false,
-        lessonId: '',
-        firstPageData: {
-          date: '',
-          startTime: '',
-          endTime: '',
-          title: '',
-          subjectName: '',
-          subjectColor: '#BAC8FF'
-        },
-        secondPageData: {
-          goal: '',
-          description: ''
-        },
-        thirdPageData: {
-          videoUrl: '',
-          videoTitle: '',
-          videoThumbnailUrl: ''
-        },
-        fourthPageData: {
-          pages: '',
-          materialsTitle: '',
-          materialsUrl: ''
-        }
-      }
+      this.editPageValue = Object.assign({}, editPageValueDefault)
+    },
+    doToggleHidden(value: classData.LessonWithId): void {
+      this.openVisibilityModal()
+      this.editVisibilityDialogValue = value
     },
     // @todo doEdit の中身を整理する
     doEdit(value: classData.LessonWithId): void {

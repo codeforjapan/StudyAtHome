@@ -23,6 +23,9 @@
             />
           </dd>
           <dt class="SignUp-ItemTitle">パスワード</dt>
+          <dt class="SignUp-Rules">
+            パスワードは6文字以上で設定してください
+          </dt>
           <dd>
             <input-field
               v-model="password"
@@ -107,6 +110,14 @@ export default Vue.extend({
   },
   computed: {
     passwordConfirm() {
+      if (this.password) {
+        // 6文字以上であること
+        const reg = new RegExp(/[ -~]{6,}$/)
+        const response = reg.test(this.password)
+        if (!response) {
+          return 'パスワードが条件を満たしていません'
+        }
+      }
       if (this.password && this.confirmation) {
         if (this.password !== this.confirmation) {
           return 'パスワードが一致していません'
@@ -118,6 +129,11 @@ export default Vue.extend({
     disableRegisterButton() {
       if (this.password && this.confirmation && this.email && this.name) {
         if (this.password !== this.confirmation) {
+          return true
+        }
+        const reg = new RegExp(/[ -~]{6,}$/)
+        const response = reg.test(this.password)
+        if (!response) {
           return true
         }
         return false
@@ -179,6 +195,11 @@ export default Vue.extend({
   color: $color-white;
   text-align: center;
   margin: 4px 0;
+}
+.SignUp-Rules {
+  text-align: center;
+  font-weight: bold;
+  color: $color-yellow;
 }
 .SignUp-ButtonOuter {
   display: flex;
