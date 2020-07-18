@@ -1,10 +1,14 @@
 version: "3.7"
 services:
   studyathome:
-    build: .
-    command: yarn install & yarn dev
+    image: node:12.18.1-alpine
+    command: /bin/sh -c "yarn install && yarn run dev"
+    working_dir: /app
     ports:
-        - 3000:3000
+      - 3000:3000
     volumes:
-        - .:/app
+      - .:/app
+    environment:
+      - HOST=0.0.0.0
+      - NODE_ENV=development
 
