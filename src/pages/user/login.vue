@@ -56,7 +56,7 @@
       </template>
     </bottom-sheet-layer>
     <v-snackbar v-model="error" :timeout="5000" absolute top color="#C01B61">
-      {{ $t('common.user_data.error.invalid') }}
+      {{ $t('pages.user_login.error.invalid') }}
     </v-snackbar>
   </div>
 </template>
