@@ -16,6 +16,7 @@
         <content-card
           :lesson="item"
           :editable="editable"
+          @toggleHidden="$emit('toggleHidden', item)"
           @clickEditButton="$emit('clickEditButton', item)"
         />
       </v-col>
