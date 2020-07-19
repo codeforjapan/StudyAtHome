@@ -79,7 +79,9 @@ export default Vue.extend<unknown, Methods, unknown, Props>({
     defaultCancelButtonLabel: {
       type: String,
       required: false,
-      default: 'キャンセル'
+      default() {
+        return this.$t('common.general.buttons.cancel').toString()
+      }
     },
     actions: {
       type: Array as () => DialogAction[],

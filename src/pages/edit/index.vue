@@ -19,7 +19,7 @@
             target="_blank"
             rel="noopener"
           >
-            おうちで時間割について
+            {{ $t('common.footer.about') }}
           </a>
         </li>
         <li>
@@ -29,51 +29,20 @@
             target="_blank"
             rel="noopener"
           >
-            お問い合わせ
+            {{ $t('common.footer.contact') }}
           </a>
         </li>
 
         <li>
           <nuxt-link class="white--text" to="policy">
-            利用規約
+            {{ $t('common.footer.terms') }}
           </nuxt-link>
         </li>
       </ul>
     </div>
     <div v-else-if="today" class="Classes-Outer">
-      <h1 class="Classes-Title">まだ今日の時間割はありません</h1>
-      <ul class="Classes-List">
-        <li>
-          <a
-            class="white--text"
-            href="http://www.studyathome.jp/"
-            target="_blank"
-            rel="noopener"
-          >
-            おうちで時間割について
-          </a>
-        </li>
-        <li>
-          <a
-            class="white--text"
-            href="https://forms.gle/G91PJ7T8ipTtYeGA6"
-            target="_blank"
-            rel="noopener"
-          >
-            お問い合わせ
-          </a>
-        </li>
-
-        <li>
-          <nuxt-link class="white--text" to="policy">
-            利用規約
-          </nuxt-link>
-        </li>
-      </ul>
-    </div>
-    <div v-else class="Classes-Outer">
       <h1 class="Classes-Title">
-        まだ{{ dateTitle }}の時間割は<br />ありません
+        {{ $t('pages.edit_index.no_lessons_today') }}
       </h1>
       <ul class="Classes-List">
         <li>
@@ -83,7 +52,7 @@
             target="_blank"
             rel="noopener"
           >
-            おうちで時間割について
+            {{ $t('common.footer.about') }}
           </a>
         </li>
         <li>
@@ -93,19 +62,54 @@
             target="_blank"
             rel="noopener"
           >
-            お問い合わせ
+            {{ $t('common.footer.contact') }}
           </a>
         </li>
 
         <li>
           <nuxt-link class="white--text" to="policy">
-            利用規約
+            {{ $t('common.footer.terms') }}
+          </nuxt-link>
+        </li>
+      </ul>
+    </div>
+    <div v-else class="Classes-Outer">
+      <h1 class="Classes-Title">
+        {{ $t('pages.edit_index.no_lessons', { date: dateTitle }) }}
+      </h1>
+      <ul class="Classes-List">
+        <li>
+          <a
+            class="white--text"
+            href="http://www.studyathome.jp/"
+            target="_blank"
+            rel="noopener"
+          >
+            {{ $t('common.footer.about') }}
+          </a>
+        </li>
+        <li>
+          <a
+            class="white--text"
+            href="https://forms.gle/G91PJ7T8ipTtYeGA6"
+            target="_blank"
+            rel="noopener"
+          >
+            {{ $t('common.footer.contact') }}
+          </a>
+        </li>
+
+        <li>
+          <nuxt-link class="white--text" to="policy">
+            {{ $t('common.footer.terms') }}
           </nuxt-link>
         </li>
       </ul>
     </div>
     <simple-bottom-sheet
-      message="2年B組の授業を追加・編集する"
+      :message="
+        $t('pages.edit_index.add_or_edit_lesson', { className: '2年B組' })
+      "
       :expanded="!editingMode"
       @clickAddButton="toggleScreen"
     />
