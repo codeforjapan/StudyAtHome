@@ -94,7 +94,27 @@ import InputField from '@/components/InputField.vue'
 import firebase from '@/plugins/firebase'
 import { vxm } from '~/store'
 
-export default Vue.extend({
+type Data = {
+  name: typeof vxm.user.displayName
+  email: typeof vxm.user.email
+  password: string
+  confirmation: string
+  error: boolean
+  completion: boolean
+  loading: boolean
+}
+
+type Methods = {
+  doSave(): void
+  doLogout(): void
+}
+
+type Computed = {
+  passwordConfirm: string
+  disableRegisterButton: boolean
+}
+
+export default Vue.extend<Data, Methods, Computed, unknown>({
   components: { BottomSheetLayer, ActionButton, InputField },
   layout: 'background',
   data() {
