@@ -187,7 +187,7 @@ export default Vue.extend({
             })
         }
       }
-      this.$router.push('edit')
+      this.$router.push('/edit')
     },
     doLogout(): void {
       firebase
