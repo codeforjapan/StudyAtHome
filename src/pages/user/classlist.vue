@@ -1,9 +1,11 @@
 <template>
   <bottom-sheet-layer title="クラス一覧" title-en="CLASS LIST" fullscreen>
     <template v-slot:LayerContents>
-      <h1 v-if="!items || items.length < 1">
-        編集可能なクラスがありません。クラスの登録を行ってください
-      </h1>
+      <div v-if="!items || items.length < 1" class="noClass">
+        <h1>
+          編集可能なクラスがありません。クラスの登録を行ってください
+        </h1>
+      </div>
       <v-list v-else>
         <v-radio-group v-model="selectedClassId">
           <v-list-item
@@ -78,6 +80,17 @@ export default Vue.extend({
 </script>
 
 <style lang="scss" scoped>
+.noClass {
+  height: 100%;
+  color: $color-white;
+  display: flex;
+  align-items: center;
+  text-align: center;
+  h1 {
+    width: 100%;
+    font-size: 21px;
+  }
+}
 .ClassList-Item {
   &:nth-child(2n) {
     background-color: $color-back-gray;
