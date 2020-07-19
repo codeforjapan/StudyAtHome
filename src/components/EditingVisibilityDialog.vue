@@ -15,7 +15,7 @@
           }
         },
         {
-          buttonLabel: 'キャンセル',
+          buttonLabel: $t('common.general.buttons.cancel'),
           iconName: '',
           theme: 'border',
           action: () => {
@@ -41,10 +41,14 @@
       </template>
     </base-dialog>
     <v-snackbar v-model="error" :timeout="5000" absolute top color="#C01B61">
-      エラーにより公開ステータスの変更に失敗しました。時間をおいて再度お試しください。
+      {{
+        $t(
+          'components.editing_visibility_dialog.error.could_not_change_visibility'
+        )
+      }}
     </v-snackbar>
     <v-snackbar v-model="success" :timeout="5000" absolute top color="success">
-      授業の公開ステータスを変更しました。
+      {{ $t('components.editing_visibility_dialog.success.message') }}
     </v-snackbar>
   </div>
 </template>
@@ -90,8 +94,8 @@ export default Vue.extend({
   computed: {
     modalTitle(): string {
       return this.value.isHidden
-        ? '時間割を公開にします'
-        : '時間割を非公開にします'
+        ? this.$t('components.editing_visibility_dialog.title.show').toString()
+        : this.$t('components.editing_visibility_dialog.title.hide').toString()
     },
     date(): string {
       return this.value.startTime
@@ -111,7 +115,13 @@ export default Vue.extend({
       return this.value.subject ? this.value.subject.name : ''
     },
     actionButtonLabel(): string {
-      return this.value.isHidden ? '公開する' : '非公開にする'
+      return this.value.isHidden
+        ? this.$t(
+            'components.editing_visibility_dialog.buttons.show'
+          ).toString()
+        : this.$t(
+            'components.editing_visibility_dialog.buttons.show'
+          ).toString()
     }
   },
   watch: {
