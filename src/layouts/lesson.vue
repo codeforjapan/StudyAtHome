@@ -10,7 +10,7 @@
       <v-spacer />
       <v-btn outlined rounded color="#0071C2" @click="back">
         <v-icon>mdi-arrow-left</v-icon>
-        もどる
+        {{ $t('common.general.buttons.go_back') }}
       </v-btn>
     </v-app-bar>
     <v-content class="content">

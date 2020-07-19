@@ -11,14 +11,16 @@
       <v-card-actions class="ContentCard-Actions">
         <subject-tag
           class="ContentCard-SubjectTag"
-          :name="lesson.subject.name || '教科名'"
+          :name="
+            lesson.subject.name || $t('common.lesson_data.labels.subject_name')
+          "
           icon-color="white"
           :background-color="lesson.subject.color || '#A5D8FF'"
         />
         <subject-tag
           v-if="lesson.videos.length > 0"
           class="ContentCard-SubjectTag"
-          :name="'動画'"
+          :name="$t('common.lesson_data.tags.video')"
           :icon="'mdi-video'"
           :icon-color="'#424242'"
           :background-color="'#E0E0E0'"

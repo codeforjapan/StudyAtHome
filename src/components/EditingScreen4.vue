@@ -2,19 +2,19 @@
   <div>
     <editor-field
       v-model="tempFormData.pages"
-      title="教科書ページ"
+      :title="$t('components.editing_screen.labels.textbook_page')"
       label="textbook_page"
       placeholder="例）10〜14ページ"
     />
     <editor-field
       v-model="tempFormData.materialsTitle"
-      title="副教材タイトル"
+      :title="$t('components.editing_screen.labels.material_title')"
       label="sub_text"
       placeholder="例）やさしい理科教材"
     />
     <editor-field
       v-model="tempFormData.materialsUrl"
-      title="副教材URL"
+      :title="$t('components.editing_screen.labels.material_url')"
       label="sub_text_url"
       placeholder="https://"
     />

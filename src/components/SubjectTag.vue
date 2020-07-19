@@ -7,7 +7,9 @@
       />
       <v-icon v-else :color="iconColor">{{ icon }}</v-icon>
     </v-avatar>
-    <span v-if="!name" class="SubjectTagText">教科名</span>
+    <span v-if="!name" class="SubjectTagText">
+      {{ $t('common.lesson_data.labels.subject_name') }}
+    </span>
     <span v-else class="SubjectTagText">{{ name }}</span>
   </v-chip>
 </template>
@@ -21,7 +23,9 @@ export default Vue.extend({
   props: {
     name: {
       type: String,
-      default: '教科名'
+      default() {
+        return this.$t('common.lesson_data.labels.subject_name').toString()
+      }
     },
     icon: {
       type: String,
