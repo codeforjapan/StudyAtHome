@@ -8,15 +8,16 @@
     >
       <v-date-picker v-model="tempFormData.date">
         <v-spacer />
-        <v-btn text color="primary" @click="datePickerOpen = false"
-          >Cancel</v-btn
-        >
+        <v-btn text color="primary" @click="datePickerOpen = false">
+          {{ $t('common.general.buttons.cancel') }}
+        </v-btn>
         <v-btn
           text
           color="primary"
           @click="$refs.dialog.save(tempFormData.date)"
-          >OK</v-btn
         >
+          {{ $t('common.general.buttons.ok') }}
+        </v-btn>
       </v-date-picker>
     </v-dialog>
     <v-dialog
@@ -35,14 +36,14 @@
       >
         <v-spacer />
         <v-btn text color="primary" @click="startTimePickerOpen = false">
-          Cancel
+          {{ $t('common.general.buttons.cancel') }}
         </v-btn>
         <v-btn
           text
           color="primary"
           @click="$refs.startTimeDialog.save(tempFormData.startTime)"
         >
-          OK
+          {{ $t('common.general.buttons.ok') }}
         </v-btn>
       </v-time-picker>
     </v-dialog>
@@ -62,14 +63,14 @@
       >
         <v-spacer />
         <v-btn text color="primary" @click="endTimePickerOpen = false">
-          Cancel
+          {{ $t('common.general.buttons.cancel') }}
         </v-btn>
         <v-btn
           text
           color="primary"
           @click="$refs.endTimeDialog.save(tempFormData.endTime)"
         >
-          OK
+          {{ $t('common.general.buttons.ok') }}
         </v-btn>
       </v-time-picker>
     </v-dialog>
@@ -95,20 +96,20 @@
         <v-card-actions>
           <v-spacer />
           <v-btn text @click="colorPickerOpen = false">
-            Cancel
+            {{ $t('common.general.buttons.cancel') }}
           </v-btn>
           <v-btn
             text
             @click="$refs.colorDialog.save(tempFormData.subjectColor)"
           >
-            OK
+            {{ $t('common.general.buttons.ok') }}
           </v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
     <editor-field
       v-model="tempFormData.date"
-      title="日付設定 *"
+      :title="`${$t('components.editing_screen.labels.date')} *`"
       label="date"
       placeholder="2020-05-30"
       :transparent="true"
@@ -119,7 +120,7 @@
     <div class="EditingScreen-Flex EditingScreen-Time">
       <editor-field
         v-model="tempFormData.startTime"
-        title="時間設定 *"
+        :title="`${$t('components.editing_screen.labels.time')} *`"
         label="start_time"
         placeholder="00:00"
         :transparent="true"
@@ -142,20 +143,20 @@
     </div>
     <editor-field
       v-model="tempFormData.title"
-      title="タイトル *"
-      label="タイトル"
+      :title="`${$t('common.lesson_data.labels.title')} *`"
+      :label="$t('common.lesson_data.labels.title')"
       placeholder="例）理科"
     />
     <div class="EditingScreen-Flex">
       <editor-field
         v-model="tempFormData.subjectName"
-        title="教科名 *"
+        :title="`${$t('common.lesson_data.labels.subject_name')} *`"
         label="lesson"
         placeholder="例）理科"
         class="LessonField"
       />
       <editor-color-picker-field
-        title="ラベル色"
+        :title="$t('components.editing_screen.labels.subject_label_color')"
         icon-name="mdi-palette"
         :subject-color="tempFormData.subjectColor"
         :subject-name="tempFormData.subjectName"

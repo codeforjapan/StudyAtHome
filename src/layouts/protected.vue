@@ -11,10 +11,12 @@
     <base-dialog
       v-model="openClassIdDialog"
       icon-name="mdi-clipboard-account"
-      default-cancel-button-label="閉じる"
+      :default-cancel-button-label="$t('common.general.buttons.close')"
       :actions="[
         {
-          buttonLabel: 'クラスの切替・登録',
+          buttonLabel: $t(
+            'layouts.protected.class_id_dialog.buttons.switch_to_or_create_class'
+          ),
           action: () => {
             unloadClassData()
             this.$router.push('/user/classlist')
@@ -24,12 +26,14 @@
       ]"
     >
       <template v-slot:title>
-        今、ログインしているクラスです
+        {{ $t('common.class_id_dialog.title') }}
       </template>
       <template v-slot:default>
         <div class="ClassIdModal-Contents">
           <p class="ClassIdModal-ClassText">{{ classData.className }}</p>
-          <p class="ClassIdModal-Text">クラスID</p>
+          <p class="ClassIdModal-Text">
+            {{ $t('common.class_id_dialog.label.class_id') }}
+          </p>
           <div class="ClassIdModal-Id">{{ classData.classId }}</div>
         </div>
       </template>

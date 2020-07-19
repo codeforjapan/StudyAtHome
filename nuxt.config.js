@@ -1,3 +1,4 @@
+import i18nConfig from './nuxt-i18n.config.js'
 const colors = require('vuetify/es5/util/colors').default
 const environment = process.env.NODE_ENV || 'development'
 
@@ -122,7 +123,8 @@ export default {
     'nuxt-webfontloader',
     // Doc: https://github.com/nuxt-community/dotenv-module
     ['@nuxtjs/dotenv', { filename: `.env.${environment}` }],
-    'nuxt-svg-loader'
+    'nuxt-svg-loader',
+    ['nuxt-i18n', i18nConfig]
   ],
   /*
    ** Axios module configuration

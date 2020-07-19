@@ -29,7 +29,8 @@
       "@nuxt/types",
       "@types/js-cookie",
       "@types/jest",
-      "vuetify"
+      "vuetify",
+      "nuxt-i18n"
     ]
   },
   "exclude": [
