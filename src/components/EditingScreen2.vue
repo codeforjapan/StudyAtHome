@@ -1,7 +1,13 @@
 <template>
   <div>
-    <editor-textarea v-model="tempFormData.goal" title="学習の目的" />
-    <editor-textarea v-model="tempFormData.description" title="詳細説明" />
+    <editor-textarea
+      v-model="tempFormData.goal"
+      :title="$t('common.lesson_data.labels.goal')"
+    />
+    <editor-textarea
+      v-model="tempFormData.description"
+      :title="$t('components.editing_screen.labels.description')"
+    />
   </div>
 </template>
 

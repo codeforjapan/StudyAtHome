@@ -2,7 +2,7 @@
   <bottom-sheet-layer title="クラス一覧" title-en="CLASS LIST" fullscreen>
     <template v-slot:LayerContents>
       <h1 v-if="!items || items.length < 1">
-        編集可能なクラスがありません。クラスの登録を行ってください
+        {{ $t('pages.user_classlist.no_classes') }}
       </h1>
       <v-list v-else>
         <v-radio-group v-model="selectedClassId">
@@ -26,13 +26,13 @@
       <action-button
         :is-disabled="!items || items.length < 1"
         theme="primary"
-        text="選択クラスでログインする"
+        :text="$t('pages.user_classlist.login_to_class')"
         class="ClassList-Button"
         :is-loading="loading"
         @click="doSelectClassLogin"
       />
       <action-button
-        text="クラスを登録する"
+        :text="$t('pages.user_classlist.add_class')"
         theme="secondary"
         @click="$router.push('/user/registerClass')"
       />
