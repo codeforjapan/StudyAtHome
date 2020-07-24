@@ -7,6 +7,7 @@
     </v-overlay>
     <v-app-bar fixed app class="bar" elevation="0">
       <HeaderLogo />
+      <AppLanguageSelector />
       <v-spacer />
       <v-btn outlined rounded color="#0071C2" @click="$router.back()">
         <v-icon left>mdi-arrow-left</v-icon>
@@ -23,6 +24,7 @@
 
 <script lang="ts">
 import Vue from 'vue'
+import AppLanguageSelector from '@/components/AppLanguageSelector.vue'
 import HeaderLogo from '@/assets/svgs/header_logo.svg'
 
 type LocalData = {
@@ -30,7 +32,7 @@ type LocalData = {
 }
 
 export default Vue.extend({
-  components: { HeaderLogo },
+  components: { AppLanguageSelector, HeaderLogo },
   data(): LocalData {
     return {
       loading: true

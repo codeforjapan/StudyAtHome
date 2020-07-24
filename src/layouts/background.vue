@@ -7,6 +7,7 @@
     </v-overlay>
     <v-app-bar fixed app class="bar" elevation="0">
       <header-logo />
+      <AppLanguageSelector />
     </v-app-bar>
     <v-content class="LayerContent">
       <nuxt />
@@ -16,6 +17,7 @@
 
 <script lang="ts">
 import Vue from 'vue'
+import AppLanguageSelector from '@/components/AppLanguageSelector.vue'
 import HeaderLogo from '@/assets/svgs/header_logo.svg'
 
 type DataType = {
@@ -24,6 +26,7 @@ type DataType = {
 
 export default Vue.extend({
   components: {
+    AppLanguageSelector,
     HeaderLogo
   },
   data(): DataType {
