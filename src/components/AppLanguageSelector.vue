@@ -22,7 +22,6 @@ type LocalData = {
 
 export default Vue.extend({
   data(): LocalData {
-    // const locales: LocaleListItem[] = []
     if (!this.$root.$i18n.locales)
       return { locales: [{ text: 'N/A', value: '' }] }
 
