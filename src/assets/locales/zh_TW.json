@@ -1,0 +1,188 @@
+{
+  "common": {
+    "general": {
+      "buttons": {
+        "cancel": "取消",
+        "close": "關閉",
+        "go_back": "返回",
+        "login": "登入",
+        "logout": "登出",
+        "ok": "OK",
+        "save": "儲存"
+      },
+      "error": {
+        "default": "發生錯誤，請稍後再試。"
+      }
+    },
+    "footer": {
+      "about": "關於在家學習時間表",
+      "contact": "聯絡我們",
+      "terms": "使用條款"
+    },
+    "lesson_data": {
+      "labels": {
+        "title": "標題",
+        "subject_name": "科目名",
+        "textbook": "教科書",
+        "goal": "學習目標",
+        "description": "詳細",
+        "videos": "參考影片",
+        "materials": "輔助教材"
+      },
+      "tags": {
+        "video": "影片"
+      }
+    },
+    "user_data": {
+      "labels": {
+        "nickname": "姓名（顯示名稱）",
+        "email": "電子信箱",
+        "password": "密碼",
+        "password_rules": "密碼必須至少 6 個字元",
+        "password_not_acceptable": "密碼不符合密碼規則需求",
+        "password_not_same": "密碼不符合"
+      }
+    },
+    "agree_terms": {
+      "checkbox": {
+        "agree": "我同意使用條款"
+      },
+      "buttons": {
+        "agree": "前往註冊",
+        "disagree": "不同意"
+      }
+    },
+    "class_id_dialog": {
+      "title": "目前登入的課程",
+      "label": {
+        "class_id": "課程 ID"
+      }
+    }
+  },
+  "components": {
+    "editing_screen": {
+      "title": "製作時間表",
+      "error": {
+        "could_not_add_lesson": "出現錯誤，加入課程失敗。請經過一段時間再試一次。"
+      },
+      "labels": {
+        "date": "設定日期",
+        "time": "設定時間",
+        "subject_label_color": "標籤顏色",
+        "description": "詳細說明",
+        "video_url": "參考影片 URL",
+        "video_thumbnail": "顯示影片縮圖",
+        "textbook_page": "教科書頁",
+        "material_title": "副教材標題",
+        "material_url": "輔助教材 URL"
+      },
+      "required": "*符號者為必填項目"
+    },
+    "editing_visibility_dialog": {
+      "title": {
+        "show": "公開時間表",
+        "hide": "隱藏時間表"
+      },
+      "buttons": {
+        "show": "設為公開",
+        "hide": "設為非公開"
+      },
+      "error": {
+        "could_not_change_visibility": "發生錯誤，變更公開狀態失敗。請經過一段時間再試一次。"
+      },
+      "success": {
+        "message": "已變更課程公開狀態。"
+      }
+    }
+  },
+  "layouts": {
+    "protected": {
+      "class_id_dialog": {
+        "buttons": {
+          "switch_to_or_create_class": "課程的切換、登錄"
+        }
+      }
+    }
+  },
+  "pages": {
+    "classes_index": {
+      "no_lessons": "{date} 的時間表尚未開始。",
+      "no_lessons_today": "今天的時間表尚未開始。"
+    },
+    "edit_index": {
+      "add_or_edit_lesson": "追加或編輯{className}的課程",
+      "no_lessons": "尚無{date}的時間表",
+      "no_lessons_today": "本日尚未安排時間表"
+    },
+    "index": {
+      "error": {
+        "invalid_class_id": "您的課程 ID 有誤"
+      },
+      "students": {
+        "label": "給上課的學生",
+        "class_id": "課程 ID"
+      },
+      "teachers": {
+        "label": "給製作時間表的教師",
+        "buttons": {
+          "signup": "使用者註冊",
+          "login": "登入"
+        }
+      }
+    },
+    "user_classlist": {
+      "add_class": "登錄課程",
+      "login_to_class": "選擇課程進行登入",
+      "no_classes": "無可以編輯的課程。請先進行課程登錄。"
+    },
+    "user_edit_user_data": {
+      "title": "使用者資料變更",
+      "labels":{
+        "new_password": "請輸入新密碼",
+        "new_password_confirm": "請輸入新密碼（確認用）"
+      }
+    },
+    "user_login": {
+      "title": "請先登入",
+      "error": {
+        "invalid": "您輸入的 Email 或密碼有誤"
+      }
+    },
+    "user_register_class": {
+      "title": "課程登錄",
+      "buttons": {
+        "register": "登錄結束"
+      },
+      "error": {
+        "default": "課程追加失敗，請您再次登錄。"
+      },
+      "labels": {
+        "school_name": "學校名稱",
+        "class_name": "課程名稱",
+        "class_name_visible": "請注意，課程名稱將會被顯示"
+      }
+    },
+    "user_registered": {
+      "title": "登錄成功！",
+      "buttons": {
+        "add_or_edit_lessons": "新增或編輯課程"
+      },
+      "labels": {
+        "new_class_id": "您的課程 ID"
+      }
+    },
+    "user_signup": {
+      "title": "使用者註冊",
+      "buttons": {
+        "signup": "登錄"
+      },
+      "labels": {
+        "password_confirm": "密碼（確認用）"
+      },
+      "success": {
+        "go_back_to_top": "回到首頁",
+        "message": "已寄送確認信至您的電子郵件信箱，請點擊確認信內的網址進行驗證。"
+      }
+    }
+  }
+}
