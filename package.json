@@ -54,7 +54,7 @@
     "uuid": "^8.3.0",
     "vue-property-decorator": "^9.0.0",
     "vuex": "^3.5.1",
-    "vuex-class-component": "2.3.3",
+    "vuex-class-component": "2.3.5",
     "vuex-persistedstate": "^3.0.1"
   },
   "devDependencies": {
