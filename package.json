@@ -60,7 +60,7 @@
   "devDependencies": {
     "@nuxt/types": "^2.14.0",
     "@nuxt/typescript-build": "^2.0.2",
-    "@nuxtjs/eslint-config-typescript": "^2.0.0",
+    "@nuxtjs/eslint-config-typescript": "^3.0.0",
     "@nuxtjs/stylelint-module": "^4.0.0",
     "@nuxtjs/vuetify": "^1.11.2",
     "@types/jest": "^26.0.4",
