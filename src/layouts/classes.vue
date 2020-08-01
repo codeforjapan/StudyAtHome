@@ -52,6 +52,7 @@
     </v-overlay>
     <v-app-bar fixed app class="bar" elevation="0">
       <HeaderLogo />
+      <AppLanguageSelector />
       <v-spacer />
       <div class="classes-buttons">
         <v-btn
@@ -92,6 +93,7 @@
 <script lang="ts">
 import Vue from 'vue'
 import dayjs from 'dayjs'
+import AppLanguageSelector from '@/components/AppLanguageSelector.vue'
 import HeaderLogo from '@/assets/svgs/header_logo.svg'
 import CalendarBar from '@/components/CalendarBar.vue'
 import BaseDialog from '@/components/BaseDialog.vue'
@@ -109,6 +111,7 @@ type LocalData = {
 export default Vue.extend({
   middleware: 'checkClassData',
   components: {
+    AppLanguageSelector,
     CalendarBar,
     BaseDialog,
     HeaderLogo
