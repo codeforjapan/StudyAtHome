@@ -14030,10 +14030,10 @@ vuetify@^2:
   resolved "https://registry.yarnpkg.com/vuetify/-/vuetify-2.2.30.tgz#976329c52b57d5cf360bd983636541b55ae80044"
   integrity sha512-hCVzhXXBT91wqM+K8gBVmrHtiLMhk2EvkwpHNq5eHDJVbJYsUGPaUbMZHnmnvFnhegm6GyAnd9mu7pst2Mn1zQ==
 
-vuex-class-component@2.3.3:
-  version "2.3.3"
-  resolved "https://registry.yarnpkg.com/vuex-class-component/-/vuex-class-component-2.3.3.tgz#e8827d7875d8a6b3ab3931bb783809fbed179fc7"
-  integrity sha512-v3rqf4dZo+tw0YOSt4vDuBu7K5FwD/NX7CiXNovAqZ4l4xRxmCbzN60DnLiHiD3Ngh1CqQB8aQ/KyXQrwI0//Q==
+vuex-class-component@2.3.5:
+  version "2.3.5"
+  resolved "https://registry.yarnpkg.com/vuex-class-component/-/vuex-class-component-2.3.5.tgz#90d3fd777815fd1beaefe47b46402cb41545cc97"
+  integrity sha512-e7BhLrh5jZNHoeUajfQ5NFwA9gnVj69HKxBGRiw6FRZVpXTGewPo23S1//lb5Ed1RucIfQlqfwVpC/2mtej6bw==
   dependencies:
     object.getownpropertydescriptors "^2.0.3"
     rimraf "^2.6.3"
