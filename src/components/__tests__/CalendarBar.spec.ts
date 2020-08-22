@@ -7,7 +7,7 @@ import {
   mount,
   // RouterLinkStub,
   // shallowMount,
-  Wrapper
+  Wrapper,
 } from '@vue/test-utils'
 // Components
 import formatISO from 'date-fns/formatISO'
@@ -31,14 +31,14 @@ let vuetify: any
 //   })
 // }
 
-const mountFunction: (options: any) => Wrapper<CalendarBar> = function(
+const mountFunction: (options: any) => Wrapper<CalendarBar> = function (
   options
 ) {
   return mount(CalendarBar, {
     localVue,
     vuetify,
     // stubs: { RouterLink: RouterLinkStub },
-    ...options
+    ...options,
   })
 }
 
@@ -62,7 +62,7 @@ describe('CalendarBar.vue', () => {
     // 2020-05-08T10:00:00.000+0900
     const dt = new Date(2020, 4, 8, 10, 0, 0, 0)
     const wrapper = mountFunction({
-      propsData: { value: dt, config: { view: 'V', startWeekOn: 'DOW' } }
+      propsData: { value: dt, config: { view: 'V', startWeekOn: 'DOW' } },
     })
     expect(wrapper.props().value).toBe(dt)
     expect(wrapper.props().config.view).toBe('V')
@@ -88,8 +88,8 @@ describe('CalendarBar.vue', () => {
     wrapper = mountFunction({
       propsData: {
         value: dt,
-        config: { view: 'Day', startWeekOn: 'Sunday' }
-      }
+        config: { view: 'Day', startWeekOn: 'Sunday' },
+      },
     })
     dateListWindow = wrapper.vm.$data.dateListWindow
     expect(dateListWindow.currentDate).toStrictEqual(dt)
@@ -98,8 +98,8 @@ describe('CalendarBar.vue', () => {
     wrapper = mountFunction({
       propsData: {
         value: dt,
-        config: { view: 'Day', startWeekOn: 'Monday' }
-      }
+        config: { view: 'Day', startWeekOn: 'Monday' },
+      },
     })
     dateListWindow = wrapper.vm.$data.dateListWindow
     expect(dateListWindow.currentDate).toStrictEqual(dt)
@@ -119,7 +119,7 @@ describe('CalendarBar.vue', () => {
     )
     const props = (pDate: Date, pDow: string) => ({
       value: pDate,
-      config: { view: 'Week', startWeekOn: pDow }
+      config: { view: 'Week', startWeekOn: pDow },
     })
     let dateListWindow
 
@@ -235,13 +235,13 @@ describe('CalendarBar.vue', () => {
     )
     const props = (pDate: Date, pDow: string) => ({
       value: pDate,
-      config: { view: 'Weekday', startWeekOn: pDow }
+      config: { view: 'Weekday', startWeekOn: pDow },
     })
     let dateListWindow
 
     // 2020-05-03(Sun)
     wrapper = mountFunction({
-      propsData: props(new Date(2020, 4, 3, 10, 0, 0, 0), 'Sunday')
+      propsData: props(new Date(2020, 4, 3, 10, 0, 0, 0), 'Sunday'),
     })
     dateListWindow = wrapper.vm.$data.dateListWindow
     expect(dateListWindow.currentDate).toStrictEqual(
@@ -301,8 +301,8 @@ describe('CalendarBar.vue', () => {
     wrapper = mountFunction({
       propsData: {
         value: dt,
-        config: { view: 'Day', startWeekOn: 'Sunday' }
-      }
+        config: { view: 'Day', startWeekOn: 'Sunday' },
+      },
     })
     const dateListWindow = wrapper.vm.$data.dateListWindow
 
@@ -369,8 +369,8 @@ describe('CalendarBar.vue', () => {
     wrapper = mountFunction({
       propsData: {
         value: dt,
-        config: { view: 'Week', startWeekOn: 'Sunday' }
-      }
+        config: { view: 'Week', startWeekOn: 'Sunday' },
+      },
     })
     const dateListWindow = wrapper.vm.$data.dateListWindow
 
@@ -439,8 +439,8 @@ describe('CalendarBar.vue', () => {
     wrapper = mountFunction({
       propsData: {
         value: dt,
-        config: { view: 'Weekday', startWeekOn: 'Sunday' }
-      }
+        config: { view: 'Weekday', startWeekOn: 'Sunday' },
+      },
     })
     const dateListWindow = wrapper.vm.$data.dateListWindow
 

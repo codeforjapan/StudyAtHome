@@ -17,19 +17,19 @@ export default Vue.extend({
   props: {
     iconName: {
       type: String,
-      required: true
+      required: true,
     },
     iconColor: {
       type: String,
       required: false,
-      default: '#0071c2'
+      default: '#0071c2',
     },
     iconSize: {
       type: [String, Number],
       required: false,
-      default: '24px'
-    }
-  }
+      default: '24px',
+    },
+  },
 })
 </script>
 

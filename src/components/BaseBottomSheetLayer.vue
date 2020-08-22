@@ -38,22 +38,22 @@ export default Vue.extend({
     value: {
       type: Boolean,
       required: false,
-      default: true
+      default: true,
     },
     title: {
       type: String,
-      required: true
+      required: true,
     },
     titleEn: {
       type: String,
-      required: true
+      required: true,
     },
     fullscreen: {
       type: Boolean,
       required: false,
-      default: false
-    }
-  }
+      default: false,
+    },
+  },
 })
 </script>
 

@@ -31,39 +31,39 @@ export default Vue.extend({
     title: {
       type: String,
       required: false,
-      default: ''
+      default: '',
     },
     label: {
       type: String,
       required: false,
-      default: ''
+      default: '',
     },
     placeholder: {
       type: String,
       required: false,
-      default: ''
+      default: '',
     },
     transparent: {
       type: Boolean,
       required: false,
-      default: false
+      default: false,
     },
     iconName: {
       type: String,
       required: false,
-      default: ''
+      default: '',
     },
     readonly: {
       type: Boolean,
       required: false,
-      default: false
+      default: false,
     },
     value: {
       type: String,
       required: false,
-      default: ''
-    }
-  }
+      default: '',
+    },
+  },
 })
 </script>
 

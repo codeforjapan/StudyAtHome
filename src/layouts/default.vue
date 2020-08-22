@@ -29,16 +29,16 @@ type LocalData = {
 export default Vue.extend({
   components: {
     AppLanguageSelector,
-    HeaderLogo
+    HeaderLogo,
   },
   data(): LocalData {
     return {
-      loading: true
+      loading: true,
     }
   },
   mounted(): void {
     this.loading = false
-  }
+  },
 })
 </script>
 

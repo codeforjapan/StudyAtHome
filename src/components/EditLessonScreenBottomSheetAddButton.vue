@@ -19,29 +19,29 @@ export default Vue.extend({
     buttonColor: {
       type: [String, Number],
       required: false,
-      default: '#FFDB6C'
+      default: '#FFDB6C',
     },
     buttonSize: {
       type: [String, Number],
       required: false,
-      default: '48px'
+      default: '48px',
     },
     iconName: {
       type: String,
       required: false,
-      default: 'mdi-plus'
+      default: 'mdi-plus',
     },
     iconColor: {
       type: [String, Number],
       required: false,
-      default: '#004170'
+      default: '#004170',
     },
     iconSize: {
       type: [String, Number],
       required: false,
-      default: '40'
-    }
-  }
+      default: '40',
+    },
+  },
 })
 </script>
 

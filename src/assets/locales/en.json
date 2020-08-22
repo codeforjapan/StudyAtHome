@@ -137,7 +137,7 @@
     },
     "user_edit_user_data": {
       "title": "Change User Information",
-      "labels":{
+      "labels": {
         "new_password": "Change Password",
         "new_password_confirm": "Change Password (for confirmation)"
       }

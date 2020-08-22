@@ -26,12 +26,12 @@ export default Vue.extend({
       return { locales: [{ text: 'N/A', value: '' }] }
 
     return {
-      locales: this.$root.$i18n.locales.map(l => {
+      locales: this.$root.$i18n.locales.map((l) => {
         if (typeof l === 'string') return { text: l, value: l }
         else return { text: l.displayName, value: l.code }
-      })
+      }),
     }
-  }
+  },
 })
 </script>
 

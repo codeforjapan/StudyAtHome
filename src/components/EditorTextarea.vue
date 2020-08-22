@@ -23,29 +23,29 @@ export default Vue.extend({
     title: {
       type: String,
       required: false,
-      default: ''
+      default: '',
     },
     label: {
       type: String,
       required: false,
-      default: ''
+      default: '',
     },
     placeholder: {
       type: String,
       required: false,
-      default: ''
+      default: '',
     },
     hint: {
       type: String,
       required: false,
-      default: ''
+      default: '',
     },
     value: {
       type: String,
       required: false,
-      default: ''
-    }
-  }
+      default: '',
+    },
+  },
 })
 </script>
 
