@@ -49,7 +49,7 @@ export default Vue.extend<Data, unknown, Computed, unknown>({
   layout: 'classes',
   data() {
     return {
-      classData: vxm.classData
+      classData: vxm.classData,
     }
   },
   computed: {
@@ -68,8 +68,8 @@ export default Vue.extend<Data, unknown, Computed, unknown>({
           return acc
         }, {})
       return groupBy(this.classData.lessonsOnCurrentDate, 'startTime')
-    }
-  }
+    },
+  },
 })
 </script>
 

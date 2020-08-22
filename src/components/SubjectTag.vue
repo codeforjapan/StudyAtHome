@@ -25,21 +25,21 @@ export default Vue.extend({
       type: String,
       default() {
         return this.$t('common.lesson_data.labels.subject_name').toString()
-      }
+      },
     },
     icon: {
       type: String,
-      default: ''
+      default: '',
     },
     iconColor: {
       type: String,
-      default: '#FFF'
+      default: '#FFF',
     },
     backgroundColor: {
       type: String,
-      default: '#A5D8FF'
-    }
-  }
+      default: '#A5D8FF',
+    },
+  },
 })
 </script>
 

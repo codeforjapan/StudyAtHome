@@ -27,16 +27,16 @@ type DataType = {
 export default Vue.extend({
   components: {
     AppLanguageSelector,
-    HeaderLogo
+    HeaderLogo,
   },
   data(): DataType {
     return {
-      loading: true
+      loading: true,
     }
   },
   mounted(): void {
     this.loading = false
-  }
+  },
 })
 </script>
 

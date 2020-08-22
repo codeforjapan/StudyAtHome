@@ -4,7 +4,7 @@ import dayjs from 'dayjs'
 const VuexModule = createModule({
   namespaced: 'app',
   strict: false,
-  target: 'nuxt'
+  target: 'nuxt',
 })
 
 type CurrentDate = Date
@@ -18,16 +18,12 @@ export class AppStore extends VuexModule implements App {
 
   @mutation
   public goNextDate() {
-    this.currentDate = dayjs(this.currentDate)
-      .add(1, 'd')
-      .toDate()
+    this.currentDate = dayjs(this.currentDate).add(1, 'd').toDate()
   }
 
   @mutation
   public goPreviousDate() {
-    this.currentDate = dayjs(this.currentDate)
-      .subtract(1, 'd')
-      .toDate()
+    this.currentDate = dayjs(this.currentDate).subtract(1, 'd').toDate()
   }
 
   @mutation

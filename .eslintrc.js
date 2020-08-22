@@ -5,7 +5,7 @@ module.exports = {
     '@nuxtjs/eslint-config-typescript',
     'plugin:prettier/recommended',
     'prettier',
-    'prettier/vue'
+    'prettier/vue',
   ],
   rules: {
     'require-await': 'off',
@@ -15,17 +15,17 @@ module.exports = {
       'error',
       {
         html: {
-          void: 'always'
-        }
-      }
+          void: 'always',
+        },
+      },
     ],
     'prettier/prettier': [
       'error',
       {
         semi: false,
-        singleQuote: true
-      }
+        singleQuote: true,
+      },
     ],
-    'tsdoc/syntax': 'error'
-  }
+    'tsdoc/syntax': 'error',
+  },
 }

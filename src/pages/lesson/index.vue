@@ -106,7 +106,7 @@
         </div>
 
         <div class="divider">
-          <v-divider style="border-color:transparent" />
+          <v-divider style="border-color: transparent;" />
         </div>
       </v-sheet>
     </div>
@@ -143,7 +143,7 @@ export default Vue.extend({
       required: false,
       default() {
         return { title: '1', unit: '時間目' }
-      }
+      },
     },
     dummyLesson: {
       type: Object,
@@ -156,7 +156,7 @@ export default Vue.extend({
           title: '授業のタイトル',
           subject: {
             name: '教科名',
-            color: '#7FFFD4'
+            color: '#7FFFD4',
           },
           // objectives: '学習の目的',
           // description: '詳細説明',
@@ -169,29 +169,29 @@ export default Vue.extend({
             {
               title: '動画タイトル',
               url: 'http://example.com/',
-              thumbnailUrl: 'https://picsum.photos/1280/720'
+              thumbnailUrl: 'https://picsum.photos/1280/720',
             },
             {
               title: '動画2タイトル',
               url: 'http://example.com/',
-              thumbnailUrl: 'https://picsum.photos/1280/720'
-            }
+              thumbnailUrl: 'https://picsum.photos/1280/720',
+            },
           ],
           pages: '12~19',
           materials: [
             {
               title: '副教材のタイトル',
-              url: 'http://example.com/'
+              url: 'http://example.com/',
             },
             {
               title: '副教材Xのタイトル',
-              url: 'http://example.com/'
-            }
+              url: 'http://example.com/',
+            },
           ],
-          isHidden: false
+          isHidden: false,
         }
-      }
-    }
+      },
+    },
   },
   data(): DataType {
     return {
@@ -204,7 +204,7 @@ export default Vue.extend({
         // subjectColor: '#7FFFD4',
         subject: {
           name: '',
-          color: ''
+          color: '',
         },
         goal: '',
         // objectives: '',
@@ -216,15 +216,13 @@ export default Vue.extend({
         videos: [],
         pages: '12~19',
         materials: [],
-        isHidden: false
-      }
+        isHidden: false,
+      },
     }
   },
   computed: {
     dateString(): string {
-      return dayjs(this.lesson.startTime)
-        .locale('ja')
-        .format('M月D日（ddd）')
+      return dayjs(this.lesson.startTime).locale('ja').format('M月D日（ddd）')
     },
     dateTitle(): string {
       return dayjs(this.lesson.startTime).format('M/D')
@@ -237,14 +235,14 @@ export default Vue.extend({
         dayjs(this.lesson.endTime).format('YYYY-MM-DD')
         ? dayjs(this.lesson.endTime).format('H:mm')
         : dayjs(this.lesson.endTime).format('H:mm（M/D）')
-    }
+    },
   },
   mounted() {
-    this.$nextTick(function() {
+    this.$nextTick(function () {
       const data:
         | LessonWithId
         | undefined = vxm.classData.lessonsOnCurrentDate.find(
-        e => this.$route.query.lessonId === e.docId
+        (e) => this.$route.query.lessonId === e.docId
       ) as LessonWithId | undefined
       this.lesson = data ?? this.dummyLesson
     })
@@ -252,8 +250,8 @@ export default Vue.extend({
   methods: {
     openExternalLink(url: string): void {
       window.open(url, '_blank', 'noopener')
-    }
-  }
+    },
+  },
 })
 </script>
 

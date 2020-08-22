@@ -172,7 +172,7 @@ const editPageValueDefault = {
   videoThumbnailUrl: '',
   pages: '',
   materialsTitle: '',
-  materialsUrl: ''
+  materialsUrl: '',
 }
 
 export default Vue.extend({
@@ -180,7 +180,7 @@ export default Vue.extend({
     PeriodSection,
     EditLessonScreenBottomSheet,
     EditLessonScreen,
-    EditingVisibilityDialog
+    EditingVisibilityDialog,
   },
   layout: 'protected',
   data(): DataType {
@@ -189,7 +189,7 @@ export default Vue.extend({
       editingMode: false,
       editingVisibilityMode: false,
       editPageValue: Object.assign({}, editPageValueDefault),
-      editVisibilityDialogValue: {}
+      editVisibilityDialogValue: {},
     }
   },
   computed: {
@@ -208,7 +208,7 @@ export default Vue.extend({
           return acc
         }, {})
       return groupBy(vxm.classData.lessonsOnCurrentDate, 'startTime')
-    }
+    },
   },
   methods: {
     onCollapseEditLessonScreen(): void {
@@ -258,11 +258,11 @@ export default Vue.extend({
         videoThumbnailUrl,
         pages: value.pages,
         materialsTitle: materialTitle,
-        materialsUrl: materialUrl
+        materialsUrl: materialUrl,
       }
       this.toggleScreen()
-    }
-  }
+    },
+  },
 })
 </script>
 

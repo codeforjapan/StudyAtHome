@@ -32,14 +32,14 @@ export type formData = {
 }
 @Component({
   components: {
-    EditorInputFieldPickable
-  }
+    EditorInputFieldPickable,
+  },
 })
 export default class EditLessonScreenInner1 extends Vue {
   tempFormData = {
     pages: this.form.pages,
     materialsTitle: this.form.materialsTitle,
-    materialsUrl: this.form.materialsUrl
+    materialsUrl: this.form.materialsUrl,
   }
 
   @Prop({
@@ -48,8 +48,8 @@ export default class EditLessonScreenInner1 extends Vue {
     default: () => ({
       pages: '',
       materialsTitle: '',
-      materialsUrl: ''
-    })
+      materialsUrl: '',
+    }),
   })
   public value!: formData
 

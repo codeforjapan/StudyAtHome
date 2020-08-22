@@ -133,7 +133,7 @@ export default Vue.extend<Data, Methods, Computed, unknown>({
       confirmation: '',
       error: false,
       completion: false,
-      loading: false
+      loading: false,
     }
   },
   computed: {
@@ -169,7 +169,7 @@ export default Vue.extend<Data, Methods, Computed, unknown>({
         return false
       }
       return true
-    }
+    },
   },
   methods: {
     doSave(): void {
@@ -195,7 +195,7 @@ export default Vue.extend<Data, Methods, Computed, unknown>({
             .collection('users')
             .doc(user.uid)
             .update({
-              username: this.name
+              username: this.name,
             })
             .then(() => {
               vxm.user.login()
@@ -230,8 +230,8 @@ export default Vue.extend<Data, Methods, Computed, unknown>({
         .catch(() => {
           this.error = true
         })
-    }
-  }
+    },
+  },
 })
 </script>
 

@@ -29,26 +29,26 @@ export default Vue.extend({
   props: {
     title: {
       type: String,
-      default: '1'
+      default: '1',
     },
     unit: {
       type: String,
-      default: '時間目'
+      default: '時間目',
     },
     startTime: {
       type: Date,
-      required: true
+      required: true,
     },
     endTime: {
       type: Date,
-      required: true
-    }
+      required: true,
+    },
   },
   methods: {
     format(date: Date): String {
       return dayjs(date).format('h:mm')
-    }
-  }
+    },
+  },
 })
 </script>
 

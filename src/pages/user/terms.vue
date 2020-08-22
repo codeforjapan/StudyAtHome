@@ -420,16 +420,16 @@ export default Vue.extend({
   layout: 'simple',
   data() {
     return {
-      toggle: []
+      toggle: [],
     }
   },
   computed: {
     isCheck(): boolean {
-      return this.toggle.some(value => {
+      return this.toggle.some((value) => {
         return value === 'check'
       })
-    }
-  }
+    },
+  },
 })
 </script>
 
