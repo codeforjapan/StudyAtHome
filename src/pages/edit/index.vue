@@ -165,22 +165,22 @@ const editPageValueDefault = {
     endTime: '',
     title: '',
     subjectName: '',
-    subjectColor: '#BAC8FF'
+    subjectColor: '#BAC8FF',
   },
   secondPageData: {
     goal: '',
-    description: ''
+    description: '',
   },
   thirdPageData: {
     videoUrl: '',
     videoTitle: '',
-    videoThumbnailUrl: ''
+    videoThumbnailUrl: '',
   },
   fourthPageData: {
     pages: '',
     materialsTitle: '',
-    materialsUrl: ''
-  }
+    materialsUrl: '',
+  },
 }
 
 export default Vue.extend({
@@ -188,7 +188,7 @@ export default Vue.extend({
     PeriodSection,
     EditLessonScreenBottomSheet,
     EditLessonScreen,
-    EditingVisibilityDialog
+    EditingVisibilityDialog,
   },
   layout: 'protected',
   data(): DataType {
@@ -197,7 +197,7 @@ export default Vue.extend({
       editingMode: false,
       editingVisibilityMode: false,
       editPageValue: Object.assign({}, editPageValueDefault),
-      editVisibilityDialogValue: {}
+      editVisibilityDialogValue: {},
     }
   },
   computed: {
@@ -216,7 +216,7 @@ export default Vue.extend({
           return acc
         }, {})
       return groupBy(vxm.classData.lessonsOnCurrentDate, 'startTime')
-    }
+    },
   },
   methods: {
     onCollapseEditLessonScreen(): void {
@@ -259,26 +259,26 @@ export default Vue.extend({
           endTime: dayjs(value.endTime).format('HH:mm'),
           title: value.title,
           subjectName: value.subject.name,
-          subjectColor: value.subject.color
+          subjectColor: value.subject.color,
         },
         secondPageData: {
           goal: value.goal,
-          description: value.description
+          description: value.description,
         },
         thirdPageData: {
           videoUrl,
           videoTitle,
-          videoThumbnailUrl
+          videoThumbnailUrl,
         },
         fourthPageData: {
           pages: value.pages,
           materialsTitle: materialTitle,
-          materialsUrl: materialUrl
-        }
+          materialsUrl: materialUrl,
+        },
       }
       this.toggleScreen()
-    }
-  }
+    },
+  },
 })
 </script>
 

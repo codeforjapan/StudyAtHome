@@ -62,7 +62,7 @@ export default Vue.extend({
     return {
       items: vxm.user.allowAccess,
       selectedClassId: '',
-      loading: false
+      loading: false,
     }
   },
   methods: {
@@ -74,8 +74,8 @@ export default Vue.extend({
       } catch {
         this.loading = false
       }
-    }
-  }
+    },
+  },
 })
 </script>
 

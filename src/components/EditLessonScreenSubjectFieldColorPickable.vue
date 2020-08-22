@@ -24,24 +24,24 @@ export default Vue.extend({
     title: {
       type: String,
       required: false,
-      default: ''
+      default: '',
     },
     iconName: {
       type: String,
       required: false,
-      default: ''
+      default: '',
     },
     subjectName: {
       type: String,
       required: false,
-      default: ''
+      default: '',
     },
     subjectColor: {
       type: String,
       required: false,
-      default: ''
-    }
-  }
+      default: '',
+    },
+  },
 })
 </script>
 

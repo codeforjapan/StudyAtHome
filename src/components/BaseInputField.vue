@@ -94,42 +94,42 @@ export default Vue.extend({
   props: {
     value: {
       type: String,
-      default: ''
+      default: '',
     },
     type: {
       type: String,
       required: false,
-      default: 'text'
+      default: 'text',
     },
     label: {
       type: String,
       required: true,
-      default: ''
+      default: '',
     },
     hint: {
       type: String,
       required: false,
-      default: ''
+      default: '',
     },
     appendIcon: {
       type: String,
       required: false,
-      default: ''
+      default: '',
     },
     require: {
       type: Boolean,
       required: false,
-      default: false
+      default: false,
     },
     placeholder: {
       type: String,
       required: false,
-      default: ''
-    }
+      default: '',
+    },
   },
   data(): DataType {
     return {
-      show: false
+      show: false,
     }
   },
   computed: {
@@ -187,8 +187,8 @@ export default Vue.extend({
         if (!this.value) return 'mdi-alert-circle'
       }
       return 'mdi-check-circle'
-    }
-  }
+    },
+  },
 })
 </script>
 

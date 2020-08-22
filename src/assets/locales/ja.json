@@ -137,7 +137,7 @@
     },
     "user_edit_user_data": {
       "title": "ユーザー情報の変更",
-      "labels":{
+      "labels": {
         "new_password": "変更先パスワード",
         "new_password_confirm": "変更先パスワード（確認用）"
       }

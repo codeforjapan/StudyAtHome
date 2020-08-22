@@ -19,7 +19,7 @@
           theme: 'primary',
           action: () => {
             return false
-          }
+          },
         },
         {
           buttonLabel: $t('common.general.buttons.logout'),
@@ -28,8 +28,8 @@
           action: () => {
             clickLogout()
             return false
-          }
-        }
+          },
+        },
       ]"
     >
       <template v-slot:title>
@@ -114,7 +114,7 @@ export default Vue.extend({
     AppLanguageSelector,
     CalendarBar,
     BaseDialog,
-    HeaderLogo
+    HeaderLogo,
   },
   data(): LocalData {
     return {
@@ -123,7 +123,7 @@ export default Vue.extend({
       openClassIdDialog: false,
       classId: vxm.classData.classId,
       className: vxm.classData.className,
-      app: vxm.app
+      app: vxm.app,
     }
   },
   computed: {
@@ -133,8 +133,8 @@ export default Vue.extend({
       },
       set(newValue: string) {
         vxm.app.setDate(dayjs(newValue).toDate())
-      }
-    }
+      },
+    },
   },
   mounted(): void {
     this.loading = false
@@ -144,8 +144,8 @@ export default Vue.extend({
       vxm.classData.unloadClassData().then(() => {
         this.$router.push('/')
       })
-    }
-  }
+    },
+  },
 })
 </script>
 

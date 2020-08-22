@@ -28,14 +28,14 @@ export type formData = {
 @Component({
   components: {
     EditorInputFieldPickable,
-    VideoThumbnail
-  }
+    VideoThumbnail,
+  },
 })
 export default class EditLessonScreenInner3 extends Vue {
   tempFormData = {
     videoUrl: this.form.videoUrl,
     videoTitle: this.form.videoTitle,
-    videoThumbnailUrl: this.form.videoThumbnailUrl
+    videoThumbnailUrl: this.form.videoThumbnailUrl,
   }
 
   @Prop({
@@ -44,8 +44,8 @@ export default class EditLessonScreenInner3 extends Vue {
     default: () => ({
       videoUrl: '',
       videoTitle: '',
-      videoThumbnailUrl: ''
-    })
+      videoThumbnailUrl: '',
+    }),
   })
   public value!: formData
 

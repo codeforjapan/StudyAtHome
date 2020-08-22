@@ -65,13 +65,13 @@ export default Vue.extend({
       schoolName: '',
       className: '',
       loading: false,
-      error: false
+      error: false,
     }
   },
   computed: {
     disableButton(): boolean {
       return !(this.schoolName && this.className)
-    }
+    },
   },
   methods: {
     doRegister() {
@@ -79,7 +79,7 @@ export default Vue.extend({
       vxm.classData
         .registerClass({
           schoolName: this.schoolName,
-          className: this.className
+          className: this.className,
         })
         .then(() => {
           this.loading = false
@@ -89,8 +89,8 @@ export default Vue.extend({
           this.error = true
           this.loading = false
         })
-    }
-  }
+    },
+  },
 })
 </script>
 

@@ -38,9 +38,9 @@ export default Vue.extend({
   middleware: 'authenticated',
   data() {
     return {
-      classId: vxm.classData.classId
+      classId: vxm.classData.classId,
     }
-  }
+  },
 })
 </script>
 

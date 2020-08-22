@@ -2,7 +2,7 @@ import {
   action,
   createModule,
   createProxy,
-  mutation
+  mutation,
 } from 'vuex-class-component'
 import firebase from '@/plugins/firebase'
 import { AppStore } from '@/store/modules/app'
@@ -12,7 +12,7 @@ import { vxm } from '~/store'
 const VuexModule = createModule({
   namespaced: 'classData',
   strict: false,
-  target: 'nuxt'
+  target: 'nuxt',
 })
 
 const generateUniqueId = (): string => {
@@ -48,7 +48,7 @@ export class ClassDataStore extends VuexModule implements classData.ClassData {
     const start = d(appStore.currentDate, 0, 0, 0).getTime()
     const end = d(appStore.currentDate, 23, 59, 59).getTime()
 
-    return this.lessons.filter(lesson => {
+    return this.lessons.filter((lesson) => {
       const startOfLesson = lesson.startTime.getTime()
       return start <= startOfLesson && end >= startOfLesson
     })
@@ -79,7 +79,7 @@ export class ClassDataStore extends VuexModule implements classData.ClassData {
       .get()
 
     try {
-      classDataLessonsSnapshot.forEach(doc => {
+      classDataLessonsSnapshot.forEach((doc) => {
         const retrieved = doc.data() as classData.database.Lesson
         const converted: classData.LessonWithId = {
           docId: doc.id,
@@ -92,7 +92,7 @@ export class ClassDataStore extends VuexModule implements classData.ClassData {
           videos: retrieved.videos,
           pages: retrieved.pages,
           materials: retrieved.materials,
-          isHidden: retrieved.isHidden
+          isHidden: retrieved.isHidden,
         }
 
         lessons.push(converted)
@@ -103,14 +103,14 @@ export class ClassDataStore extends VuexModule implements classData.ClassData {
     this.setClassData({
       classId,
       className,
-      lessons
+      lessons,
     })
   }
 
   @action
   public async registerClass({
     className,
-    schoolName
+    schoolName,
   }: {
     className: string
     schoolName: string
@@ -137,30 +137,26 @@ export class ClassDataStore extends VuexModule implements classData.ClassData {
         .collection('users')
         .doc(vxm.user.uid)
         .update({
-          allow_access: firebase.firestore.FieldValue.arrayUnion(classId)
+          allow_access: firebase.firestore.FieldValue.arrayUnion(classId),
         })
       await firebase
         .firestore()
         .collection('editorClassData')
         .doc(classId)
         .set({
-          schoolName
+          schoolName,
         })
-      await firebase
-        .firestore()
-        .collection('classData')
-        .doc(classId)
-        .set({
-          lesson: [],
-          className
-        })
+      await firebase.firestore().collection('classData').doc(classId).set({
+        lesson: [],
+        className,
+      })
     } catch {
       throw new Error('エラーによって処理に失敗しました')
     }
     this.setClassData({
       classId,
       className,
-      lessons: []
+      lessons: [],
     })
   }
 
@@ -181,7 +177,7 @@ export class ClassDataStore extends VuexModule implements classData.ClassData {
   @action
   public async changeLesson({
     editData,
-    id
+    id,
   }: {
     editData: classData.Lesson
     id: classData.LessonId
@@ -211,7 +207,7 @@ export class ClassDataStore extends VuexModule implements classData.ClassData {
     this.setClassData({
       classId: '',
       className: '',
-      lessons: []
+      lessons: [],
     })
   }
 }

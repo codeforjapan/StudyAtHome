@@ -14,8 +14,8 @@ export const store = new Vuex.Store({
   modules: {
     ...extractVuexModule(AppStore),
     ...extractVuexModule(ClassDataStore),
-    ...extractVuexModule(UserStore)
-  }
+    ...extractVuexModule(UserStore),
+  },
 })
 /*
 export const actions = {
@@ -35,5 +35,5 @@ export const actions = {
 export const vxm = {
   app: createProxy(store, AppStore),
   classData: createProxy(store, ClassDataStore),
-  user: createProxy(store, UserStore)
+  user: createProxy(store, UserStore),
 }

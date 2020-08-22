@@ -130,13 +130,13 @@ export default Vue.extend({
     EditLessonScreenInner1,
     EditLessonScreenInner2,
     EditLessonScreenInner3,
-    EditLessonScreenInner4
+    EditLessonScreenInner4,
   },
   props: {
     expanded: {
       type: Boolean,
       required: false,
-      default: false
+      default: false,
     },
     value: {
       type: Object,
@@ -150,24 +150,24 @@ export default Vue.extend({
           endTime: '',
           title: '',
           subjectName: '',
-          subjectColor: '#BAC8FF'
+          subjectColor: '#BAC8FF',
         },
         secondPageData: {
           goal: '',
-          description: ''
+          description: '',
         },
         thirdPageData: {
           videoUrl: '',
           videoTitle: '',
-          videoThumbnailUrl: ''
+          videoThumbnailUrl: '',
         },
         fourthPageData: {
           pages: '',
           materialsTitle: '',
-          materialsUrl: ''
-        }
-      })
-    }
+          materialsUrl: '',
+        },
+      }),
+    },
   },
   data(): DataType {
     return {
@@ -181,22 +181,22 @@ export default Vue.extend({
         endTime: this.value.firstPageData.endTime,
         title: this.value.firstPageData.title,
         subjectName: this.value.firstPageData.subjectName,
-        subjectColor: this.value.firstPageData.subjectColor
+        subjectColor: this.value.firstPageData.subjectColor,
       },
       secondPageData: {
         goal: this.value.secondPageData.goal,
-        description: this.value.secondPageData.description
+        description: this.value.secondPageData.description,
       },
       thirdPageData: {
         videoUrl: this.value.thirdPageData.videoUrl,
         videoTitle: this.value.thirdPageData.videoTitle,
-        videoThumbnailUrl: this.value.thirdPageData.videoThumbnailUrl
+        videoThumbnailUrl: this.value.thirdPageData.videoThumbnailUrl,
       },
       fourthPageData: {
         pages: this.value.fourthPageData.pages,
         materialsTitle: this.value.fourthPageData.materialsTitle,
-        materialsUrl: this.value.fourthPageData.materialsUrl
-      }
+        materialsUrl: this.value.fourthPageData.materialsUrl,
+      },
     }
   },
   computed: {
@@ -208,7 +208,7 @@ export default Vue.extend({
         !this.firstPageData.title ||
         !this.firstPageData.subjectName
       )
-    }
+    },
   },
   watch: {
     value(value) {
@@ -218,7 +218,7 @@ export default Vue.extend({
       this.secondPageData = value.secondPageData
       this.thirdPageData = value.thirdPageData
       this.fourthPageData = value.fourthPageData
-    }
+    },
   },
   methods: {
     goForward(): Number {
@@ -268,7 +268,7 @@ export default Vue.extend({
         videoData.push({
           url: this.thirdPageData.videoUrl,
           title: this.thirdPageData.videoTitle,
-          thumbnailUrl: this.thirdPageData.videoThumbnailUrl
+          thumbnailUrl: this.thirdPageData.videoThumbnailUrl,
         })
       const materialData = []
       if (
@@ -277,7 +277,7 @@ export default Vue.extend({
       )
         materialData.push({
           title: this.fourthPageData.materialsTitle,
-          url: this.fourthPageData.materialsUrl
+          url: this.fourthPageData.materialsUrl,
         })
       return {
         startTime: startTimeDate,
@@ -285,17 +285,17 @@ export default Vue.extend({
         title: this.firstPageData.title,
         subject: {
           name: this.firstPageData.subjectName,
-          color: this.firstPageData.subjectColor
+          color: this.firstPageData.subjectColor,
         },
         goal: this.secondPageData.goal,
         description: this.secondPageData.description,
         videos: videoData,
         pages: this.fourthPageData.pages,
         materials: materialData,
-        isHidden: this.isHidden
+        isHidden: this.isHidden,
       }
-    }
-  }
+    },
+  },
 })
 </script>
 
