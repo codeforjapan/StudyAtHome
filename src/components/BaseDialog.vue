@@ -15,7 +15,7 @@
         <slot />
       </v-container>
       <v-card-actions class="DialogCardButtons px-4">
-        <action-button
+        <base-action-button
           v-for="(action, i) in actions"
           :key="i"
           class="my-3"
@@ -24,7 +24,7 @@
           :text="action.buttonLabel"
           @click="doDialogAction(i)"
         />
-        <action-button
+        <base-action-button
           v-if="!hideDefaultCancelButton"
           :text="defaultCancelButtonLabel"
           theme="border"
@@ -38,7 +38,7 @@
 
 <script lang="ts">
 import Vue from 'vue'
-import ActionButton from '@/components/ActionButton.vue'
+import BaseActionButton from '@/components/BaseActionButton.vue'
 
 export type DialogAction = {
   buttonLabel: string
@@ -65,7 +65,7 @@ type Methods = {
 
 export default Vue.extend<unknown, Methods, unknown, Props>({
   name: 'BaseDialog',
-  components: { ActionButton },
+  components: { BaseActionButton },
   props: {
     iconName: {
       type: String,

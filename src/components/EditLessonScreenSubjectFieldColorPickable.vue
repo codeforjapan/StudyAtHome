@@ -3,7 +3,7 @@
     <span v-if="title" class="EditorField-Title">{{ title }}</span>
     <div class="EditorField-Form">
       <subject-tag :background-color="subjectColor" :name="subjectName" />
-      <content-card-editor-button
+      <base-editor-button
         v-if="iconName"
         class="Button"
         :icon-name="iconName"
@@ -15,11 +15,11 @@
 
 <script lang="ts">
 import Vue from 'vue'
-import ContentCardEditorButton from '@/components/ContentCardEditorButton.vue'
+import BaseEditorButton from '@/components/BaseEditorButton.vue'
 import SubjectTag from '@/components/SubjectTag.vue'
 
 export default Vue.extend({
-  components: { SubjectTag, ContentCardEditorButton },
+  components: { SubjectTag, BaseEditorButton },
   props: {
     title: {
       type: String,

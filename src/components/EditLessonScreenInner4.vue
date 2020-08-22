@@ -1,18 +1,18 @@
 <template>
   <div>
-    <editor-field
+    <editor-input-field-pickable
       v-model="tempFormData.pages"
       :title="$t('components.editing_screen.labels.textbook_page')"
       label="textbook_page"
       placeholder="例）10〜14ページ"
     />
-    <editor-field
+    <editor-input-field-pickable
       v-model="tempFormData.materialsTitle"
       :title="$t('components.editing_screen.labels.material_title')"
       label="sub_text"
       placeholder="例）やさしい理科教材"
     />
-    <editor-field
+    <editor-input-field-pickable
       v-model="tempFormData.materialsUrl"
       :title="$t('components.editing_screen.labels.material_url')"
       label="sub_text_url"
@@ -23,7 +23,7 @@
 
 <script lang="ts">
 import { Vue, Component, Prop, Emit, Watch } from 'vue-property-decorator'
-import EditorField from '~/components/EditorField.vue'
+import EditorInputFieldPickable from '~/components/EditorInputFieldPickable.vue'
 
 export type formData = {
   pages: string
@@ -32,10 +32,10 @@ export type formData = {
 }
 @Component({
   components: {
-    EditorField
+    EditorInputFieldPickable
   }
 })
-export default class EditingScreen1 extends Vue {
+export default class EditLessonScreenInner1 extends Vue {
   tempFormData = {
     pages: this.form.pages,
     materialsTitle: this.form.materialsTitle,

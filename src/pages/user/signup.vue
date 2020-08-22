@@ -1,6 +1,6 @@
 <template>
   <div>
-    <bottom-sheet-layer
+    <base-bottom-sheet-layer
       :title="$t('pages.user_signup.title')"
       title-en="STEP 1"
       fullscreen
@@ -11,7 +11,7 @@
             {{ $t('common.user_data.labels.nickname') }}
           </dt>
           <dd>
-            <input-field
+            <base-input-field
               v-model="name"
               label="name"
               placeholder="山田花子"
@@ -22,7 +22,7 @@
             {{ $t('common.user_data.labels.email') }}
           </dt>
           <dd>
-            <input-field
+            <base-input-field
               v-model="email"
               label="email"
               placeholder="hogehoge@hogehoge.com"
@@ -37,7 +37,7 @@
             {{ $t('common.user_data.labels.password_rules') }}
           </dt>
           <dd>
-            <input-field
+            <base-input-field
               v-model="password"
               label="password"
               type="password"
@@ -48,7 +48,7 @@
             {{ $t('pages.user_signup.labels.password_confirm') }}
           </dt>
           <dd>
-            <input-field
+            <base-input-field
               v-model="confirmation"
               label="confirmation"
               type="password"
@@ -60,13 +60,13 @@
       </template>
       <template v-slot:LayerFooter>
         <div class="SignUp-ButtonOuter">
-          <action-button
+          <base-action-button
             theme="transparent"
             :text="$t('common.general.buttons.cancel')"
             class="SignUp-Button"
             @click="$router.push('/')"
           />
-          <action-button
+          <base-action-button
             theme="primary"
             :text="$t('pages.user_signup.buttons.signup')"
             class="SignUp-Button"
@@ -76,7 +76,7 @@
           />
         </div>
       </template>
-    </bottom-sheet-layer>
+    </base-bottom-sheet-layer>
     <v-snackbar v-model="error" :timeout="5000" absolute top color="#C01B61">
       {{ $t('common.general.error.default') }}
     </v-snackbar>
@@ -86,7 +86,7 @@
           {{ $t('pages.user_signup.success.message') }}
         </v-container>
         <v-card-actions class="DialogCardButtons px-4">
-          <action-button
+          <base-action-button
             :text="$t('pages.user_signup.success.go_back_to_top')"
             theme="border"
             class="my-3"
@@ -100,13 +100,13 @@
 
 <script lang="ts">
 import Vue from 'vue'
-import BottomSheetLayer from '@/components/BottomSheetLayer.vue'
-import ActionButton from '@/components/ActionButton.vue'
-import InputField from '@/components/InputField.vue'
+import BaseBottomSheetLayer from '@/components/BaseBottomSheetLayer.vue'
+import BaseActionButton from '@/components/BaseActionButton.vue'
+import BaseInputField from '@/components/BaseInputField.vue'
 import firebase from '@/plugins/firebase'
 
 export default Vue.extend({
-  components: { BottomSheetLayer, ActionButton, InputField },
+  components: { BaseBottomSheetLayer, BaseActionButton, BaseInputField },
   layout: 'background',
   data() {
     return {

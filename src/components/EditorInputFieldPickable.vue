@@ -10,7 +10,7 @@
         :readonly="readonly"
         @input="$emit('input', $event)"
       />
-      <content-card-editor-button
+      <base-editor-button
         v-if="iconName"
         class="Button"
         :icon-name="iconName"
@@ -23,10 +23,10 @@
 <script lang="ts">
 import Vue from 'vue'
 import EditorInputField from '@/components/EditorInputField.vue'
-import ContentCardEditorButton from '@/components/ContentCardEditorButton.vue'
+import BaseEditorButton from '@/components/BaseEditorButton.vue'
 
 export default Vue.extend({
-  components: { EditorInputField, ContentCardEditorButton },
+  components: { EditorInputField, BaseEditorButton },
   props: {
     title: {
       type: String,

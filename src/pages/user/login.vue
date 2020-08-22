@@ -1,6 +1,6 @@
 <template>
   <div>
-    <bottom-sheet-layer
+    <base-bottom-sheet-layer
       fullscreen
       :title="$t('pages.user_login.title')"
       title-en="LOGIN"
@@ -11,7 +11,7 @@
             {{ $t('common.user_data.labels.email') }}
           </dt>
           <dd class="SignIn-Item">
-            <input-field
+            <base-input-field
               v-model="email"
               label="studyathome@example.com"
               require
@@ -22,7 +22,7 @@
             {{ $t('common.user_data.labels.password') }}
           </dt>
           <dd class="SignIn-Item">
-            <input-field
+            <base-input-field
               v-model="password"
               :label="$t('common.user_data.labels.password')"
               require
@@ -33,7 +33,7 @@
       </template>
       <template v-slot:LayerFooter>
         <div class="SignIn-ButtonOuter">
-          <action-button
+          <base-action-button
             :is-disabled="disableLogin"
             :is-loading="loading"
             class="SignIn-Button"
@@ -54,7 +54,7 @@
           </v-btn>
         </div>
       </template>
-    </bottom-sheet-layer>
+    </base-bottom-sheet-layer>
     <v-snackbar v-model="error" :timeout="5000" absolute top color="#C01B61">
       {{ $t('pages.user_login.error.invalid') }}
     </v-snackbar>
@@ -63,14 +63,14 @@
 
 <script lang="ts">
 import Vue from 'vue'
-import BottomSheetLayer from '@/components/BottomSheetLayer.vue'
-import ActionButton from '@/components/ActionButton.vue'
-import InputField from '@/components/InputField.vue'
+import BaseBottomSheetLayer from '@/components/BaseBottomSheetLayer.vue'
+import BaseActionButton from '@/components/BaseActionButton.vue'
+import BaseInputField from '@/components/BaseInputField.vue'
 import firebase from '@/plugins/firebase'
 import { vxm } from '@/store'
 
 export default Vue.extend({
-  components: { BottomSheetLayer, ActionButton, InputField },
+  components: { BaseBottomSheetLayer, BaseActionButton, BaseInputField },
   layout: 'background',
   data() {
     return {
