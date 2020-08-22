@@ -58,6 +58,11 @@ export default class EditLessonScreenInner3 extends Vue {
     this.input(this.tempFormData)
   }
 
+  @Watch('value', { deep: true })
+  onChangeValueFormData() {
+    this.tempFormData = this.value
+  }
+
   /* CORS 回避必須
   @Watch('form.videoUrl')
   onChangeVideoUrl() {
