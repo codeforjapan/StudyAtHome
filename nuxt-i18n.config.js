@@ -6,7 +6,7 @@ const options = {
   defaultLocale,
   vueI18n: {
     fallbackLocale: defaultLocale,
-    formatFallbackMessages: true
+    formatFallbackMessages: true,
   },
   lazy: true,
   langDir: 'assets/locales/',
@@ -14,19 +14,19 @@ const options = {
     {
       code: 'ja',
       displayName: '日本語',
-      file: 'ja.json'
+      file: 'ja.json',
     },
     {
       code: 'en',
       displayName: 'English',
-      file: 'en.json'
+      file: 'en.json',
     },
     {
       code: 'zh-goyu',
       displayName: '台灣華語',
-      file: 'zh_TW.json'
-    }
-  ]
+      file: 'zh_TW.json',
+    },
+  ],
 }
 
 export default options

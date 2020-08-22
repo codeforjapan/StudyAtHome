@@ -1,38 +1,38 @@
 # 開発者向け情報
 
-Nuxt.jsに関する内容、Firebaseに関する内容は各ドキュメントを参照してください。
-詳しい内容は下記のURLを参照ください
+Nuxt.js に関する内容、Firebase に関する内容は各ドキュメントを参照してください。
+詳しい内容は下記の URL を参照ください
 
-[おうちで時間割 Nuxt版　仕様書 \- HackMD](https://hackmd.io/hltUcnt2S0eQEv1Heif7zw?both)
+[おうちで時間割 Nuxt 版　仕様書 \- HackMD](https://hackmd.io/hltUcnt2S0eQEv1Heif7zw?both)
 
 ## 1. 環境構築
 
 以下のアプリケーションを開発をおこなう環境へインストールします。
 
-| アプリケーション名 | バージョン<br>(指定がある場合のみ記載) | インストール条件 |
-| ------- | ------- | ------- |
-|[Node.js](https://nodejs.org/ja/)|10.19.0以上|必須|
-|[Visual Studio Code](https://code.visualstudio.com/)| |Visual Studio Codeを利用する場合|
-|[Yarn](https://classic.yarnpkg.com/ja/)| |本プログラムをyarnで実行する場合|
-|[Docker Engine](https://docs.docker.com/engine/install/),[Docker Compose](https://docs.docker.com/compose/install/)| |本プログラムをdocker composeで実行する場合|
+| アプリケーション名                                                                                                  | バージョン<br>(指定がある場合のみ記載) | インストール条件                             |
+| ------------------------------------------------------------------------------------------------------------------- | -------------------------------------- | -------------------------------------------- |
+| [Node.js](https://nodejs.org/ja/)                                                                                   | 10.19.0 以上                           | 必須                                         |
+| [Visual Studio Code](https://code.visualstudio.com/)                                                                |                                        | Visual Studio Code を利用する場合            |
+| [Yarn](https://classic.yarnpkg.com/ja/)                                                                             |                                        | 本プログラムを yarn で実行する場合           |
+| [Docker Engine](https://docs.docker.com/engine/install/),[Docker Compose](https://docs.docker.com/compose/install/) |                                        | 本プログラムを docker compose で実行する場合 |
 
-### 1-1. Visual Studio Codeの拡張機能
+### 1-1. Visual Studio Code の拡張機能
 
-Visual Studio Codeを利用する場合は、以下の拡張機能をインストールします。
+Visual Studio Code を利用する場合は、以下の拡張機能をインストールします。
 
-| 拡張機能 | インストール条件 |
-| ------- | ------- |
-|[ESLint](https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint)|任意|
-|[Vetur](https://marketplace.visualstudio.com/items?itemName=octref.vetur)|任意|
-|[TSLint](https://marketplace.visualstudio.com/items?itemName=ms-vscode.vscode-typescript-tslint-plugin)|任意|
-|[Debugger for Chrome](https://marketplace.visualstudio.com/items?itemName=msjsdiag.debugger-for-chrome)|任意|
-|[Remote Development](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.vscode-remote-extensionpack)|Visual Studio CodeでRemote Developmentを利用する場合|
+| 拡張機能                                                                                                               | インストール条件                                        |
+| ---------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------- |
+| [ESLint](https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint)                                   | 任意                                                    |
+| [Vetur](https://marketplace.visualstudio.com/items?itemName=octref.vetur)                                              | 任意                                                    |
+| [TSLint](https://marketplace.visualstudio.com/items?itemName=ms-vscode.vscode-typescript-tslint-plugin)                | 任意                                                    |
+| [Debugger for Chrome](https://marketplace.visualstudio.com/items?itemName=msjsdiag.debugger-for-chrome)                | 任意                                                    |
+| [Remote Development](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.vscode-remote-extensionpack) | Visual Studio Code で Remote Development を利用する場合 |
 
 ---
 
 ## 2. 実行
 
-コマンドの実行は、WorkingCopyのルートディレクトリでおこないます。
+コマンドの実行は、WorkingCopy のルートディレクトリでおこないます。
 
 ### 2-1. `yarn` を使う場合
 
@@ -89,12 +89,12 @@ $ docker-compose run --rm app yarn install
 
 ## 4. ステージング・本番環境への反映
 
-下表の左列に記載されたブランチが更新されると、ブランチとWebサイトの更新が自動的におこなわれます。
+下表の左列に記載されたブランチが更新されると、ブランチと Web サイトの更新が自動的におこなわれます。
 
-| 更新対象 | 自動的に更新されるブランチ | 更新されるWebサイト |
-| ---- | ---- | ---- |
-|`master`| 無し |本番サイト https://studyathome.web.app/|
-|`development`| 無し |開発用サイト https://studyathome-dev.web.app/|
+| 更新対象      | 自動的に更新されるブランチ | 更新される Web サイト                         |
+| ------------- | -------------------------- | --------------------------------------------- |
+| `master`      | 無し                       | 本番サイト https://studyathome.web.app/       |
+| `development` | 無し                       | 開発用サイト https://studyathome-dev.web.app/ |
 
 ---
 
@@ -103,15 +103,15 @@ $ docker-compose run --rm app yarn install
 development 以外は、Pull Request は禁止です。
 Pull Request を送る際のブランチは、以下のネーミングルールに従ったブランチにしてください。
 
-| 種類 | ブランチのネーミングルール |
-| ---- | ---- |
-|機能追加系|`feature/#{ISSUE_ID}-#{branch_title_name}`|
-|フィックス系|`fix/#{ISSUE_ID}-#{branch_title_name}`|
-|ホットフィックス系|`hotfix/#{ISSUE_ID}-#{branch_title_name}`|
+| 種類               | ブランチのネーミングルール                 |
+| ------------------ | ------------------------------------------ |
+| 機能追加系         | `feature/#{ISSUE_ID}-#{branch_title_name}` |
+| フィックス系       | `fix/#{ISSUE_ID}-#{branch_title_name}`     |
+| ホットフィックス系 | `hotfix/#{ISSUE_ID}-#{branch_title_name}`  |
 
 ### 5-1. 基本的なブランチ
 
-| 目的 | ブランチ | 確認URL | Pull requestsを出せる人 | 備考 |
-| ---- | ---- | ---- | ---- | ---- |
-| 開発 | development | https://studyathome-dev.web.app/ | 全開発者 | base branch。基本は、この`development`ブランチに Pull Requestを送ってください。 |
-| 本番 | master | https://studyathome.web.app/ | 管理者のみ | 管理者以外の Pull Request は禁止です。 |
+| 目的 | ブランチ    | 確認 URL                         | Pull requests を出せる人 | 備考                                                                             |
+| ---- | ----------- | -------------------------------- | ------------------------ | -------------------------------------------------------------------------------- |
+| 開発 | development | https://studyathome-dev.web.app/ | 全開発者                 | base branch。基本は、この`development`ブランチに Pull Request を送ってください。 |
+| 本番 | master      | https://studyathome.web.app/     | 管理者のみ               | 管理者以外の Pull Request は禁止です。                                           |

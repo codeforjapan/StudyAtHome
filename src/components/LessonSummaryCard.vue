@@ -4,7 +4,7 @@
       :class="{
         ContentCard: true,
         'elevation-4': true,
-        isHidden: lesson.isHidden
+        isHidden: lesson.isHidden,
       }"
       @click="toLessonDetail"
     >
@@ -64,24 +64,24 @@ import LessonWithId = classData.LessonWithId
 export default Vue.extend({
   components: {
     SubjectTag,
-    BaseEditorButton
+    BaseEditorButton,
   },
   props: {
     lesson: {
       type: Object as () => classData.Lesson,
-      required: true
+      required: true,
     },
     editable: {
       type: Boolean,
-      default: false
-    }
+      default: false,
+    },
   },
   methods: {
     toLessonDetail() {
       const lesson = this.lesson as LessonWithId
       this.$router.push('/lesson/?lessonId=' + lesson.docId)
-    }
-  }
+    },
+  },
 })
 </script>
 
