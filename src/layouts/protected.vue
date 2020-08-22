@@ -11,12 +11,14 @@
     <base-dialog
       v-model="openClassIdDialog"
       icon-name="mdi-clipboard-account"
-      default-cancel-button-label="閉じる"
+      :default-cancel-button-label="$t('common.general.buttons.close')"
       :actions="[
         {
-          buttonLabel: 'クラスの切替・登録',
+          buttonLabel: $t(
+            'layouts.protected.class_id_dialog.buttons.switch_to_or_create_class'
+          ),
           action: () => {
-            vxm.classData.unloadClassData()
+            unloadClassData()
             this.$router.push('/user/classlist')
             return false
           }
@@ -24,12 +26,14 @@
       ]"
     >
       <template v-slot:title>
-        今、ログインしているクラスです
+        {{ $t('common.class_id_dialog.title') }}
       </template>
       <template v-slot:default>
         <div class="ClassIdModal-Contents">
           <p class="ClassIdModal-ClassText">{{ classData.className }}</p>
-          <p class="ClassIdModal-Text">クラスID</p>
+          <p class="ClassIdModal-Text">
+            {{ $t('common.class_id_dialog.label.class_id') }}
+          </p>
           <div class="ClassIdModal-Id">{{ classData.classId }}</div>
         </div>
       </template>
@@ -41,6 +45,7 @@
     </v-overlay>
     <v-app-bar fixed app class="bar" elevation="0">
       <HeaderLogo />
+      <AppLanguageSelector />
       <v-spacer />
       <div class="admin-buttons">
         <v-btn
@@ -92,6 +97,7 @@
 import Vue from 'vue'
 import dayjs from 'dayjs'
 import { vxm } from '@/store'
+import AppLanguageSelector from '@/components/AppLanguageSelector.vue'
 import HeaderLogo from '@/assets/svgs/header_logo.svg'
 import CalendarBar from '@/components/CalendarBar.vue'
 import BaseDialog from '@/components/BaseDialog.vue'
@@ -106,6 +112,7 @@ type LocalData = {
 export default Vue.extend({
   middleware: ['authenticated', 'checkClassData'],
   components: {
+    AppLanguageSelector,
     CalendarBar,
     BaseDialog,
     HeaderLogo
@@ -138,6 +145,10 @@ export default Vue.extend({
     signout() {
       vxm.user.logout()
       this.$router.push('/')
+    },
+
+    unloadClassData() {
+      vxm.classData.unloadClassData()
     }
   }
 })

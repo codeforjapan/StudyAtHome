@@ -1,17 +1,26 @@
 <template>
   <div class="ContentCard-Outer">
-    <v-card class="ContentCard elevation-4" @click="toLessonDetail">
+    <v-card
+      :class="{
+        ContentCard: true,
+        'elevation-4': true,
+        isHidden: lesson.isHidden
+      }"
+      @click="toLessonDetail"
+    >
       <v-card-actions class="ContentCard-Actions">
         <subject-tag
           class="ContentCard-SubjectTag"
-          :name="lesson.subject.name || '教科名'"
+          :name="
+            lesson.subject.name || $t('common.lesson_data.labels.subject_name')
+          "
           icon-color="white"
           :background-color="lesson.subject.color || '#A5D8FF'"
         />
         <subject-tag
           v-if="lesson.videos.length > 0"
           class="ContentCard-SubjectTag"
-          :name="'動画'"
+          :name="$t('common.lesson_data.tags.video')"
           :icon="'mdi-video'"
           :icon-color="'#424242'"
           :background-color="'#E0E0E0'"
@@ -27,7 +36,7 @@
     <div v-if="editable" class="ContentCard-Button-Outer">
       <base-editor-button
         class="ContentCard-Button"
-        icon-name="mdi-eye-off"
+        :icon-name="lesson.isHidden ? 'mdi-eye' : 'mdi-eye-off'"
         @click="$emit('toggleHidden')"
       />
       <base-editor-button
@@ -97,6 +106,10 @@ export default Vue.extend({
   color: $color-gray;
   border-radius: 14px !important;
 
+  &.isHidden {
+    opacity: 0.6;
+  }
+
   .ContentCard-Actions {
     padding: 16px 16px 0;
   }
@@ -115,6 +128,7 @@ export default Vue.extend({
     font-size: 12px;
     color: $color-gray;
     margin: 0;
+    word-break: break-all;
   }
 }
 </style>

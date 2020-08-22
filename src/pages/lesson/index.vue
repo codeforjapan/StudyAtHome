@@ -22,7 +22,7 @@
           <SubjectTag
             v-if="lesson.videos.length"
             class="subject-tag"
-            :name="'動画'"
+            :name="$t('common.lesson_data.tags.video')"
             :icon="'mdi-video'"
             :icon-color="'#FFFFFF'"
             :background-color="'#D0BFFF'"
@@ -36,7 +36,9 @@
           {{ lesson.title }}
         </div>
 
-        <div class="item-label">教科書</div>
+        <div class="item-label">
+          {{ $t('common.lesson_data.labels.textbook') }}
+        </div>
         <div class="item-value">
           <span v-if="lesson.text && lesson.text.title && lesson.text.page">
             {{ lesson.text.title }} {{ lesson.text.page }}
@@ -50,20 +52,25 @@
           <v-divider />
         </div>
 
-        <div class="item-label">学習の目的</div>
-        <div v-if="lesson.objectives" class="item-value">
-          {{ lesson.objectives }}
+        <div class="item-label">
+          {{ $t('common.lesson_data.labels.goal') }}
+        </div>
+        <div v-if="lesson.goal" class="item-value">
+          {{ lesson.goal }}
         </div>
 
-        <div class="item-label">詳細</div>
+        <div class="item-label">
+          {{ $t('common.lesson_data.labels.description') }}
+        </div>
         <div v-if="lesson.description" class="item-value">
           {{ lesson.description }}
         </div>
 
-        <div class="item-label">参考動画</div>
+        <div class="item-label">
+          {{ $t('common.lesson_data.labels.videos') }}
+        </div>
         <div v-if="lesson.videos.length > 0">
           <div v-for="(item, index) in lesson.videos" :key="index">
-            <v-img :src="item.thumbnailUrl" class="video-thumbnail-image" />
             <div class="item-label">
               <a
                 :href="item.url"
@@ -71,13 +78,16 @@
                 rel="noopener"
                 class="external-link"
               >
-                {{ item.title }}
+                {{ item.url }}
               </a>
             </div>
+            <v-img :src="item.thumbnailUrl" class="video-thumbnail-image" />
           </div>
         </div>
 
-        <div class="item-label">副教材</div>
+        <div class="item-label">
+          {{ $t('common.lesson_data.labels.materials') }}
+        </div>
         <div v-if="lesson.materials.length">
           <div
             v-for="(item, index) in lesson.materials"
@@ -314,6 +324,7 @@ export default Vue.extend({
   font-family: 'Noto Sans JP', sans-serif;
   font-size: 16px;
   color: $color-gray;
+  word-break: break-all;
 }
 
 .lesson-material {

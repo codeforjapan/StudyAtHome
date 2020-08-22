@@ -1,9 +1,15 @@
 <template>
   <div>
-    <base-bottom-sheet-layer title="ユーザー登録" title-en="STEP 1" fullscreen>
+    <base-bottom-sheet-layer
+      :title="$t('pages.user_signup.title')"
+      title-en="STEP 1"
+      fullscreen
+    >
       <template v-slot:LayerContents>
         <dl>
-          <dt class="SignUp-ItemTitle">お名前（表示名）</dt>
+          <dt class="SignUp-ItemTitle">
+            {{ $t('common.user_data.labels.nickname') }}
+          </dt>
           <dd>
             <base-input-field
               v-model="name"
@@ -12,7 +18,9 @@
               require
             />
           </dd>
-          <dt class="SignUp-ItemTitle">メールアドレス</dt>
+          <dt class="SignUp-ItemTitle">
+            {{ $t('common.user_data.labels.email') }}
+          </dt>
           <dd>
             <base-input-field
               v-model="email"
@@ -22,7 +30,12 @@
               require
             />
           </dd>
-          <dt class="SignUp-ItemTitle">パスワード</dt>
+          <dt class="SignUp-ItemTitle">
+            {{ $t('common.user_data.labels.password') }}
+          </dt>
+          <dt class="SignUp-Rules">
+            {{ $t('common.user_data.labels.password_rules') }}
+          </dt>
           <dd>
             <base-input-field
               v-model="password"
@@ -31,7 +44,9 @@
               require
             />
           </dd>
-          <dt class="SignUp-ItemTitle">パスワード（確認用）</dt>
+          <dt class="SignUp-ItemTitle">
+            {{ $t('pages.user_signup.labels.password_confirm') }}
+          </dt>
           <dd>
             <base-input-field
               v-model="confirmation"
@@ -47,13 +62,13 @@
         <div class="SignUp-ButtonOuter">
           <base-action-button
             theme="transparent"
-            text="キャンセル"
+            :text="$t('common.general.buttons.cancel')"
             class="SignUp-Button"
             @click="$router.push('/')"
           />
           <base-action-button
             theme="primary"
-            text="登録"
+            :text="$t('pages.user_signup.buttons.signup')"
             class="SignUp-Button"
             :is-disabled="disableRegisterButton"
             :is-loading="loading"
@@ -63,17 +78,16 @@
       </template>
     </base-bottom-sheet-layer>
     <v-snackbar v-model="error" :timeout="5000" absolute top color="#C01B61">
-      何らかのエラーが発生しました。時間をおいて再度お試しください。
+      {{ $t('common.general.error.default') }}
     </v-snackbar>
     <v-dialog v-model="completion" max-width="460px">
       <v-card class="DialogCard">
         <v-container class="DialogCardContentContainer">
-          入力いただいたメールアドレス宛に確認メールを送信しました。<br />
-          メールに記載されているURLから認証を行ってください。
+          {{ $t('pages.user_signup.success.message') }}
         </v-container>
         <v-card-actions class="DialogCardButtons px-4">
           <base-action-button
-            text="トップに戻る"
+            :text="$t('pages.user_signup.success.go_back_to_top')"
             theme="border"
             class="my-3"
             @click="$router.push('/')"
@@ -107,6 +121,14 @@ export default Vue.extend({
   },
   computed: {
     passwordConfirm() {
+      if (this.password) {
+        // 6文字以上であること
+        const reg = new RegExp(/[ -~]{6,}$/)
+        const response = reg.test(this.password)
+        if (!response) {
+          return 'パスワードが条件を満たしていません'
+        }
+      }
       if (this.password && this.confirmation) {
         if (this.password !== this.confirmation) {
           return 'パスワードが一致していません'
@@ -118,6 +140,11 @@ export default Vue.extend({
     disableRegisterButton() {
       if (this.password && this.confirmation && this.email && this.name) {
         if (this.password !== this.confirmation) {
+          return true
+        }
+        const reg = new RegExp(/[ -~]{6,}$/)
+        const response = reg.test(this.password)
+        if (!response) {
           return true
         }
         return false
@@ -179,6 +206,11 @@ export default Vue.extend({
   color: $color-white;
   text-align: center;
   margin: 4px 0;
+}
+.SignUp-Rules {
+  text-align: center;
+  font-weight: bold;
+  color: $color-yellow;
 }
 .SignUp-ButtonOuter {
   display: flex;

@@ -1,9 +1,14 @@
 <template>
   <div>
-    <base-bottom-sheet-layer title="クラス登録" title-en="STEP 2">
+    <base-bottom-sheet-layer
+      :title="$t('pages.user_register_class.title')"
+      title-en="STEP 2"
+    >
       <template v-slot:LayerContents>
         <dl class="RegisterClass-List">
-          <dt class="RegisterClass-ItemTitle">学校名</dt>
+          <dt class="RegisterClass-ItemTitle">
+            {{ $t('pages.user_register_class.labels.school_name') }}
+          </dt>
           <dd>
             <base-input-field
               v-model="schoolName"
@@ -12,7 +17,9 @@
               require
             />
           </dd>
-          <dt class="RegisterClass-ItemTitle">クラス名</dt>
+          <dt class="RegisterClass-ItemTitle">
+            {{ $t('pages.user_register_class.labels.class_name') }}
+          </dt>
           <dd>
             <base-input-field
               v-model="className"
@@ -21,7 +28,7 @@
               require
             />
             <span class="RegisterClass-ItemNote">
-              クラス名は表示されますのでご注意ください
+              {{ $t('pages.user_register_class.labels.class_name_visible') }}
             </span>
           </dd>
         </dl>
@@ -30,14 +37,14 @@
         <base-action-button
           :is-disabled="disableButton"
           :is-loading="loading"
-          text="登録を完了する"
+          :text="$t('pages.user_register_class.buttons.register')"
           theme="primary"
           @click="doRegister"
         />
       </template>
     </base-bottom-sheet-layer>
     <v-snackbar v-model="error" :timeout="5000" absolute color="#C01B61" top>
-      クラスの追加に失敗しました。再度登録をお願いします。
+      {{ $t('pages.user_register_class.error.default') }}
     </v-snackbar>
   </div>
 </template>

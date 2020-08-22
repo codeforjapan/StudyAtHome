@@ -2,12 +2,14 @@
   <div>
     <base-bottom-sheet-layer
       fullscreen
-      title="ログインしてください"
+      :title="$t('pages.user_login.title')"
       title-en="LOGIN"
     >
       <template v-slot:LayerContents>
         <dl>
-          <dt class="SignIn-ItemTitle">メールアドレス</dt>
+          <dt class="SignIn-ItemTitle">
+            {{ $t('common.user_data.labels.email') }}
+          </dt>
           <dd class="SignIn-Item">
             <base-input-field
               v-model="email"
@@ -16,11 +18,13 @@
               type="email"
             />
           </dd>
-          <dt class="SignIn-ItemTitle">パスワード</dt>
+          <dt class="SignIn-ItemTitle">
+            {{ $t('common.user_data.labels.password') }}
+          </dt>
           <dd class="SignIn-Item">
             <base-input-field
               v-model="password"
-              label="パスワード"
+              :label="$t('common.user_data.labels.password')"
               require
               type="password"
             />
@@ -33,7 +37,7 @@
             :is-disabled="disableLogin"
             :is-loading="loading"
             class="SignIn-Button"
-            text="ログイン"
+            :text="$t('common.general.buttons.login')"
             theme="primary"
             @click="doLogin"
           />
@@ -46,13 +50,13 @@
             text
             to="/"
           >
-            <span>戻る</span>
+            <span>{{ $t('common.general.buttons.go_back') }}</span>
           </v-btn>
         </div>
       </template>
     </base-bottom-sheet-layer>
     <v-snackbar v-model="error" :timeout="5000" absolute top color="#C01B61">
-      メールアドレスまたはパスワードが正しくありません
+      {{ $t('pages.user_login.error.invalid') }}
     </v-snackbar>
   </div>
 </template>

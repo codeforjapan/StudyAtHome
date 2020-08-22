@@ -5,14 +5,16 @@
         <v-container class="EditingScreen-Container">
           <div class="EditingScreen-Header">
             <span class="En">CREATE TIMETABLE</span>
-            <h2 class="Title">時間割作成</h2>
+            <h2 class="Title">
+              {{ $t('components.editing_screen.title') }}
+            </h2>
           </div>
         </v-container>
       </v-card-title>
       <v-card-text class="EditingScreen-CardText">
         <v-container class="EditingScreen-FormContainer">
           <span class="EditingScreen-Note">
-            *マークのあるものは必須項目です
+            {{ $t('components.editing_screen.required') }}
           </span>
           <edit-lesson-screen-inner1
             v-show="page === 1"
@@ -53,13 +55,13 @@
               <base-action-button
                 class="Button"
                 theme="transparent"
-                text="キャンセル"
+                :text="$t('common.general.buttons.cancel')"
                 @click="$emit('collapse')"
               />
               <base-action-button
                 class="Button"
                 theme="primary"
-                text="保存する"
+                :text="$t('common.general.buttons.save')"
                 :is-disabled="isDisabled"
                 @click="saveLessonData"
               />
@@ -69,7 +71,7 @@
       </v-card-actions>
     </v-card>
     <v-snackbar v-model="error" :timeout="5000" absolute top color="#C01B61">
-      エラーにより授業の追加に失敗しました。時間をおいて再度お試しください。
+      {{ $t('components.editing_screen.error.could_not_add_lesson') }}
     </v-snackbar>
   </v-bottom-sheet>
 </template>

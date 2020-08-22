@@ -4,6 +4,7 @@
     :value="value"
     :persistent="modal"
     @input="$emit('input', $event)"
+    @click:outside="$emit('click-outside')"
   >
     <v-card class="DialogCard">
       <v-card-title class="DialogCardTitle">
@@ -78,7 +79,9 @@ export default Vue.extend<unknown, Methods, unknown, Props>({
     defaultCancelButtonLabel: {
       type: String,
       required: false,
-      default: 'キャンセル'
+      default() {
+        return this.$t('common.general.buttons.cancel').toString()
+      }
     },
     actions: {
       type: Array as () => DialogAction[],

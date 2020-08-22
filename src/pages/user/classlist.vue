@@ -1,9 +1,11 @@
 <template>
   <base-bottom-sheet-layer title="クラス一覧" title-en="CLASS LIST" fullscreen>
     <template v-slot:LayerContents>
-      <h1 v-if="!items || items.length < 1">
-        編集可能なクラスがありません。クラスの登録を行ってください
-      </h1>
+      <div v-if="!items || items.length < 1" class="noClass">
+        <h1>
+          {{ $t('pages.user_classlist.no_classes') }}
+        </h1>
+      </div>
       <v-list v-else>
         <v-radio-group v-model="selectedClassId">
           <v-list-item
@@ -24,14 +26,15 @@
     </template>
     <template v-slot:LayerFooter>
       <base-action-button
+        :is-disabled="!items || items.length < 1"
         theme="primary"
-        text="選択クラスでログインする"
+        :text="$t('pages.user_classlist.login_to_class')"
         class="ClassList-Button"
         :is-loading="loading"
         @click="doSelectClassLogin"
       />
       <base-action-button
-        text="クラスを登録する"
+        :text="$t('pages.user_classlist.add_class')"
         theme="secondary"
         @click="$router.push('/user/registerClass')"
       />
@@ -77,6 +80,17 @@ export default Vue.extend({
 </script>
 
 <style lang="scss" scoped>
+.noClass {
+  height: 100%;
+  color: $color-white;
+  display: flex;
+  align-items: center;
+  text-align: center;
+  h1 {
+    width: 100%;
+    font-size: 21px;
+  }
+}
 .ClassList-Item {
   &:nth-child(2n) {
     background-color: $color-back-gray;

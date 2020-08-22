@@ -14,7 +14,7 @@
       hide-default-cancel-button
       :actions="[
         {
-          buttonLabel: '閉じる',
+          buttonLabel: $t('common.general.buttons.close'),
           iconName: '',
           theme: 'primary',
           action: () => {
@@ -22,7 +22,7 @@
           }
         },
         {
-          buttonLabel: 'ログアウト',
+          buttonLabel: $t('common.general.buttons.logout'),
           iconName: 'mdi-login-variant',
           theme: 'border',
           action: () => {
@@ -33,12 +33,14 @@
       ]"
     >
       <template v-slot:title>
-        今、ログインしているクラスです
+        {{ $t('common.class_id_dialog.title') }}
       </template>
       <template v-slot:default>
         <div class="ClassIdModal-Contents">
           <p class="ClassIdModal-ClassText">{{ className }}</p>
-          <p class="ClassIdModal-Text">クラスID</p>
+          <p class="ClassIdModal-Text">
+            {{ $t('common.class_id_dialog.label.class_id') }}
+          </p>
           <div class="ClassIdModal-Id">{{ classId }}</div>
         </div>
       </template>
@@ -50,6 +52,7 @@
     </v-overlay>
     <v-app-bar fixed app class="bar" elevation="0">
       <HeaderLogo />
+      <AppLanguageSelector />
       <v-spacer />
       <div class="classes-buttons">
         <v-btn
@@ -90,6 +93,7 @@
 <script lang="ts">
 import Vue from 'vue'
 import dayjs from 'dayjs'
+import AppLanguageSelector from '@/components/AppLanguageSelector.vue'
 import HeaderLogo from '@/assets/svgs/header_logo.svg'
 import CalendarBar from '@/components/CalendarBar.vue'
 import BaseDialog from '@/components/BaseDialog.vue'
@@ -107,6 +111,7 @@ type LocalData = {
 export default Vue.extend({
   middleware: 'checkClassData',
   components: {
+    AppLanguageSelector,
     CalendarBar,
     BaseDialog,
     HeaderLogo

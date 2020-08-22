@@ -12,7 +12,7 @@
       </p>
     </div>
     <label class="Checkbox-label">
-      利用規約に同意します
+      {{ $t('common.agree_terms.checkbox.agree') }}
       <input
         v-model="toggle"
         type="checkbox"
@@ -26,13 +26,13 @@
       :is-disabled="!isCheck"
       class="Button"
       theme="primary"
-      text="利用を開始する"
+      :text="$t('common.agree_terms.buttons.agree')"
       @click="doClassLogin"
     />
     <base-action-button
       class="Button"
       theme="border"
-      text="同意しない"
+      :text="$t('common.agree_terms.buttons.disagree')"
       @click="$router.push('/')"
     />
   </div>

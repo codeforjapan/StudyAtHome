@@ -2,14 +2,14 @@
   <div>
     <editor-input-field-pickable
       v-model="tempFormData.videoUrl"
-      title="参考動画URL"
+      :title="$t('components.editing_screen.labels.video_url')"
       label="video"
       placeholder="https://"
     />
     <video-thumbnail
       v-if="tempFormData.videoTitle && tempFormData.videoThumbnailUrl"
       :caption="tempFormData.videoTitle"
-      title="動画サムネイル・キャプション表示"
+      :title="$t('components.editing_screen.labels.video_thumbnail')"
       :thumbnail-url="tempFormData.videoThumbnailUrl"
     />
   </div>
@@ -17,9 +17,8 @@
 
 <script lang="ts">
 import { Vue, Component, Prop, Emit, Watch } from 'vue-property-decorator'
-import EditorInputFieldPickable from '~/components/EditorInputFieldPickable.vue'
-
 import VideoThumbnail from '@/components/VideoThumbnail.vue'
+import EditorInputFieldPickable from '~/components/EditorInputFieldPickable.vue'
 
 export type formData = {
   videoUrl: string

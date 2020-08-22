@@ -1,0 +1,188 @@
+{
+  "common": {
+    "general": {
+      "buttons": {
+        "cancel": "Cancel",
+        "close": "Close",
+        "go_back": "Back",
+        "login": "Sign In",
+        "logout": "Sign Out",
+        "ok": "OK",
+        "save": "Save"
+      },
+      "error": {
+        "default": "An error occurred, please try again later."
+      }
+    },
+    "footer": {
+      "about": "About StayAtHome",
+      "contact": "Contact Us",
+      "terms": "Terms of Use"
+    },
+    "lesson_data": {
+      "labels": {
+        "title": "Tittle",
+        "subject_name": "Course Tittle",
+        "textbook": "Course Book",
+        "goal": "Objective of Learning",
+        "description": "Detail",
+        "videos": "Reference Video",
+        "materials": "Learning Materials"
+      },
+      "tags": {
+        "video": "Video"
+      }
+    },
+    "user_data": {
+      "labels": {
+        "nickname": "Name (Display Name)",
+        "email": "E-mail",
+        "password": "Password",
+        "password_rules": "Password Must be At Least 6 Characters",
+        "password_not_acceptable": "The Password Does Not Meet the Password Requirements",
+        "password_not_same": "Inconsistent Passwords"
+      }
+    },
+    "agree_terms": {
+      "checkbox": {
+        "agree": "I agree Terms of Use"
+      },
+      "buttons": {
+        "agree": "Go to Register",
+        "disagree": "Disagree"
+      }
+    },
+    "class_id_dialog": {
+      "title": "Course Currently Logged in",
+      "label": {
+        "class_id": "Course ID"
+      }
+    }
+  },
+  "components": {
+    "editing_screen": {
+      "title": "Create Timetable",
+      "error": {
+        "could_not_add_lesson": "Failed to Add Course Due to Error. Please Try Again Later."
+      },
+      "labels": {
+        "date": "Date Setting",
+        "time": "Time Setting",
+        "subject_label_color": "Label Color",
+        "description": "Detailed Description",
+        "video_url": "Reference Video URL",
+        "video_thumbnail": "Video Thumbnail/Caption Display",
+        "textbook_page": "Textbook Page",
+        "material_title": "Learning Material Title",
+        "material_url": "Learning Material URL"
+      },
+      "required": "*Items Marked with Are Required"
+    },
+    "editing_visibility_dialog": {
+      "title": {
+        "show": "Make Timetable Public",
+        "hide": "Make Timetable Private"
+      },
+      "buttons": {
+        "show": "Publish",
+        "hide": "Keep Private"
+      },
+      "error": {
+        "could_not_change_visibility": "Failed to Change the Publishing Status Due to An Error. Please Try Again Later."
+      },
+      "success": {
+        "message": "Changed the Open Status of the Course."
+      }
+    }
+  },
+  "layouts": {
+    "protected": {
+      "class_id_dialog": {
+        "buttons": {
+          "switch_to_or_create_class": "Course Switching/Registration"
+        }
+      }
+    }
+  },
+  "pages": {
+    "classes_index": {
+      "no_lessons": "{date}'s Timetable Has Not Started Yet",
+      "no_lessons_today": "Today's Timetable Has Not Started Yet"
+    },
+    "edit_index": {
+      "add_or_edit_lesson": "Add/Edit Course of {className}",
+      "no_lessons": "There Is No {date} Timetable Yet",
+      "no_lessons_today": "There Is No Timetable for Today"
+    },
+    "index": {
+      "error": {
+        "invalid_class_id": "Course ID Is Incorrect"
+      },
+      "students": {
+        "label": "For Students In Course",
+        "class_id": "Course ID"
+      },
+      "teachers": {
+        "label": "To the Teacher Who Made the Timetable",
+        "buttons": {
+          "signup": "Register As A User",
+          "login": "Log In"
+        }
+      }
+    },
+    "user_classlist": {
+      "add_class": "Register Course",
+      "login_to_class": "Login With Selected Course",
+      "no_classes": "There Are No Editable Courses. Please Register Your Course."
+    },
+    "user_edit_user_data": {
+      "title": "Change User Information",
+      "labels":{
+        "new_password": "Change Password",
+        "new_password_confirm": "Change Password (for confirmation)"
+      }
+    },
+    "user_login": {
+      "title": "Please Login",
+      "error": {
+        "invalid": "Incorrect Email Address or Password"
+      }
+    },
+    "user_register_class": {
+      "title": "Course Registration",
+      "buttons": {
+        "register": "Complete Registration"
+      },
+      "error": {
+        "default": "Failed to Add the Course. Please Register Again."
+      },
+      "labels": {
+        "school_name": "School Name",
+        "class_name": "Course Name",
+        "class_name_visible": "Please Note that the Class Name Is Displayed"
+      }
+    },
+    "user_registered": {
+      "title": "Registered!",
+      "buttons": {
+        "add_or_edit_lessons": "Add/Edit Course"
+      },
+      "labels": {
+        "new_class_id": "Your Course ID"
+      }
+    },
+    "user_signup": {
+      "title": "User Registration",
+      "buttons": {
+        "signup": "Registration"
+      },
+      "labels": {
+        "password_confirm": "Password (for confirmation)"
+      },
+      "success": {
+        "go_back_to_top": "Back to Top",
+        "message": "A Confirmation Email Has Been Sent to the Email Address You Entered. Please Authenticate from the URL Described in the Email."
+      }
+    }
+  }
+}

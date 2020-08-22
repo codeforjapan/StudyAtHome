@@ -1,13 +1,15 @@
 <template>
   <div>
     <base-bottom-sheet-layer
-      title="ユーザー情報の変更"
+      :title="$t('pages.user_edit_user_data.title')"
       title-en="USER SETTING"
       fullscreen
     >
       <template v-slot:LayerContents>
         <dl>
-          <dt class="SignUp-ItemTitle">お名前（表示名）</dt>
+          <dt class="SignUp-ItemTitle">
+            {{ $t('common.user_data.labels.nickname') }}
+          </dt>
           <dd>
             <base-input-field
               v-model="name"
@@ -16,7 +18,9 @@
               require
             />
           </dd>
-          <dt class="SignUp-ItemTitle">メールアドレス</dt>
+          <dt class="SignUp-ItemTitle">
+            {{ $t('common.user_data.labels.email') }}
+          </dt>
           <dd>
             <base-input-field
               v-model="email"
@@ -26,7 +30,12 @@
               require
             />
           </dd>
-          <dt class="SignUp-ItemTitle">変更先パスワード</dt>
+          <dt class="SignUp-ItemTitle">
+            {{ $t('pages.user_edit_user_data.labels.new_password') }}
+          </dt>
+          <dt class="SignUp-PasswordRules">
+            {{ $t('common.user_data.labels.password_rules') }}
+          </dt>
           <dd>
             <base-input-field
               v-model="password"
@@ -35,7 +44,9 @@
               require
             />
           </dd>
-          <dt class="SignUp-ItemTitle">変更先パスワード（確認用）</dt>
+          <dt class="SignUp-ItemTitle">
+            {{ $t('pages.user_edit_user_data.labels.new_password_confirm') }}
+          </dt>
           <dd>
             <base-input-field
               v-model="confirmation"
@@ -51,13 +62,13 @@
         <div class="SignUp-ButtonOuter">
           <base-action-button
             theme="transparent"
-            text="キャンセル"
+            :text="$t('common.general.buttons.cancel')"
             class="SignUp-Button"
             @click="$router.push('/edit')"
           />
           <base-action-button
             theme="primary"
-            text="保存"
+            :text="$t('common.general.buttons.save')"
             class="SignUp-Button"
             :is-disabled="disableRegisterButton"
             :is-loading="loading"
@@ -73,12 +84,12 @@
           text
           @click="doLogout"
         >
-          <span>ログアウト</span>
+          <span>{{ $t('common.general.buttons.logout') }}</span>
         </v-btn>
       </template>
     </base-bottom-sheet-layer>
     <v-snackbar v-model="error" :timeout="5000" absolute top color="#C01B61">
-      何らかのエラーが発生しました。時間をおいて再度お試しください。
+      {{ $t('common.general.error.default') }}
     </v-snackbar>
   </div>
 </template>
@@ -91,7 +102,27 @@ import BaseInputField from '@/components/BaseInputField.vue'
 import firebase from '@/plugins/firebase'
 import { vxm } from '~/store'
 
-export default Vue.extend({
+type Data = {
+  name: typeof vxm.user.displayName
+  email: typeof vxm.user.email
+  password: string
+  confirmation: string
+  error: boolean
+  completion: boolean
+  loading: boolean
+}
+
+type Methods = {
+  doSave(): void
+  doLogout(): void
+}
+
+type Computed = {
+  passwordConfirm: string
+  disableRegisterButton: boolean
+}
+
+export default Vue.extend<Data, Methods, Computed, unknown>({
   components: { BaseBottomSheetLayer, BaseActionButton, BaseInputField },
   layout: 'background',
   data() {
@@ -107,9 +138,19 @@ export default Vue.extend({
   },
   computed: {
     passwordConfirm() {
+      if (this.password) {
+        // 6文字以上であること
+        const reg = new RegExp(/[ -~]{6,}$/)
+        const response = reg.test(this.password)
+        if (!response) {
+          return this.$t(
+            'common.user_data.labels.password_not_acceptable'
+          ).toString()
+        }
+      }
       if (this.password && this.confirmation) {
         if (this.password !== this.confirmation) {
-          return 'パスワードが一致していません'
+          return this.$t('common.user_data.labels.password_not_same').toString()
         }
         return ''
       }
@@ -118,6 +159,11 @@ export default Vue.extend({
     disableRegisterButton() {
       if (this.email && this.name) {
         if (this.password !== this.confirmation) {
+          return true
+        }
+        const reg = new RegExp(/[ -~]{6,}$/)
+        const response = reg.test(this.password)
+        if (!response) {
           return true
         }
         return false
@@ -171,7 +217,7 @@ export default Vue.extend({
             })
         }
       }
-      this.$router.push('edit')
+      this.$router.push('/edit')
     },
     doLogout(): void {
       firebase
@@ -196,6 +242,11 @@ export default Vue.extend({
   color: $color-white;
   text-align: center;
   margin: 4px 0;
+}
+.SignUp-PasswordRules {
+  text-align: center;
+  font-weight: bold;
+  color: $color-yellow;
 }
 .SignUp-ButtonOuter {
   display: flex;
