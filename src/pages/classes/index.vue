@@ -11,12 +11,12 @@
     </div>
     <div v-else-if="today" class="Classes-Outer">
       <h1 class="Classes-Title">
-        今日の時間割はまだ届いていないみたいです
+        {{ $t('pages.classes_index.no_lessons_today') }}
       </h1>
     </div>
     <div v-else class="Classes-Outer">
       <h1 class="Classes-Title">
-        {{ dateTitle }} の時間割はまだ届いていないみたいです
+        {{ $t('pages.classes_index.no_lessons', { date: dateTitle }) }}
       </h1>
     </div>
   </div>

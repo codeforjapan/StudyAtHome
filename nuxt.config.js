@@ -1,10 +1,11 @@
+import i18nConfig from './nuxt-i18n.config.js'
 const colors = require('vuetify/es5/util/colors').default
 const environment = process.env.NODE_ENV || 'development'
 
 export default {
+  telemetry: false,
   mode: 'universal',
   srcDir: 'src',
-  buildDir: '.nuxt',
   /*
    ** Headers of the page
    */
@@ -122,7 +123,8 @@ export default {
     'nuxt-webfontloader',
     // Doc: https://github.com/nuxt-community/dotenv-module
     ['@nuxtjs/dotenv', { filename: `.env.${environment}` }],
-    'nuxt-svg-loader'
+    'nuxt-svg-loader',
+    ['nuxt-i18n', i18nConfig]
   ],
   /*
    ** Axios module configuration
@@ -182,7 +184,7 @@ export default {
       'swenv.js',
       'sw-firebase-auth.js'
     ],
-    dev: process.env.MODE !== 'production'
+    dev: process.env.NODE_ENV !== 'production'
   },
   /*
    ** Build configuration

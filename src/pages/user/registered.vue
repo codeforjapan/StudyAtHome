@@ -1,18 +1,23 @@
 <template>
-  <base-bottom-sheet-layer title="登録されました！" title-en="THANK YOU!">
+  <base-bottom-sheet-layer
+    :title="$t('pages.user_registered.title')"
+    title-en="THANK YOU!"
+  >
     <template v-slot:LayerContents>
       <div class="Registered-Contents">
         <v-icon color="white" class="Registered-Icon">
           mdi-clipboard-account
         </v-icon>
-        <p class="Registered-Text">あなたのクラスIDです</p>
+        <p class="Registered-Text">
+          {{ $t('pages.user_registered.labels.new_class_id') }}
+        </p>
         <div class="Registered-Id">{{ classId }}</div>
       </div>
     </template>
     <template v-slot:LayerFooter>
       <base-action-button
         theme="primary"
-        text="授業を追加・編集する"
+        :text="$t('pages.user_registered.buttons.add_or_edit_lessons')"
         class="Registered-Button"
         @click="$router.push('/edit')"
       />
