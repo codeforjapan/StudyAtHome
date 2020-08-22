@@ -185,8 +185,8 @@ export type formData = {
   components: {
     EditorInputFieldPickable,
     SubjectTag,
-    EditLessonScreenSubjectFieldColorPickable
-  }
+    EditLessonScreenSubjectFieldColorPickable,
+  },
 })
 export default class EditLessonScreenInner1 extends Vue {
   tempFormData = {
@@ -195,7 +195,7 @@ export default class EditLessonScreenInner1 extends Vue {
     endTime: this.form.endTime,
     title: this.form.title,
     subjectName: this.form.subjectName,
-    subjectColor: this.form.subjectColor
+    subjectColor: this.form.subjectColor,
   }
 
   datePickerOpen = false
@@ -207,7 +207,7 @@ export default class EditLessonScreenInner1 extends Vue {
     ['#D0BFFF', '#9775FA'],
     ['#FCC2D7', '#F783AC'],
     ['#FFD8A8', '#FFA94D'],
-    ['#D8F5A2', '#A9E34B']
+    ['#D8F5A2', '#A9E34B'],
   ]
 
   @Prop({
@@ -219,8 +219,8 @@ export default class EditLessonScreenInner1 extends Vue {
       endTime: '',
       title: '',
       subjectName: '',
-      subjectColor: '#BAC8FF'
-    })
+      subjectColor: '#BAC8FF',
+    }),
   })
   public value!: formData
 

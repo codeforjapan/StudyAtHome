@@ -4,7 +4,7 @@ import firebase from '@/plugins/firebase.js'
 const VuexModule = createModule({
   namespaced: 'user',
   strict: false,
-  target: 'nuxt'
+  target: 'nuxt',
 })
 type Email = string
 type EmailVerified = boolean
@@ -48,7 +48,7 @@ export class UserStore extends VuexModule implements User {
     emailVerified,
     displayName,
     allowAccess,
-    uid
+    uid,
   }: User) {
     this.email = email
     this.emailVerified = emailVerified
@@ -84,7 +84,7 @@ export class UserStore extends VuexModule implements User {
       allowAccessData.push({
         classId: value,
         schoolName: editorClassData.get('schoolName'),
-        className: classData.get('className')
+        className: classData.get('className'),
       })
     }
 
@@ -93,7 +93,7 @@ export class UserStore extends VuexModule implements User {
       emailVerified: user.emailVerified,
       displayName: data.get('username'),
       allowAccess: allowAccessData,
-      uid: user.uid
+      uid: user.uid,
     })
   }
 
@@ -121,7 +121,7 @@ export class UserStore extends VuexModule implements User {
       allowAccessData.push({
         classId: value,
         schoolName: editorClassData.get('schoolName'),
-        className: classData.get('className')
+        className: classData.get('className'),
       })
     }
 
@@ -130,7 +130,7 @@ export class UserStore extends VuexModule implements User {
       emailVerified: user.emailVerified,
       displayName: data.get('username'),
       allowAccess: allowAccessData,
-      uid: user.user_id
+      uid: user.user_id,
     })
   }
 
@@ -142,7 +142,7 @@ export class UserStore extends VuexModule implements User {
       email: '',
       emailVerified: false,
       displayName: '',
-      allowAccess: []
+      allowAccess: [],
     })
   }
 }

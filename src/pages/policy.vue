@@ -389,7 +389,7 @@ import PrjLogo from '@/assets/svgs/prj_logo.svg'
 
 export default Vue.extend({
   components: { PrjLogo },
-  layout: 'simple'
+  layout: 'simple',
 })
 </script>
 

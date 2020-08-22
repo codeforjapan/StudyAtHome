@@ -116,7 +116,7 @@ export default Vue.extend({
       confirmation: '',
       error: false,
       completion: false,
-      loading: false
+      loading: false,
     }
   },
   computed: {
@@ -150,7 +150,7 @@ export default Vue.extend({
         return false
       }
       return true
-    }
+    },
   },
   methods: {
     doSignUp(): void {
@@ -170,20 +170,16 @@ export default Vue.extend({
                 allow_access: [],
                 created_at: new Date(),
                 last_login: new Date(),
-                updated_at: new Date()
+                updated_at: new Date(),
               })
               .catch(() => {
-                firebase
-                  .firestore()
-                  .collection('users')
-                  .doc(user.uid)
-                  .set({
-                    username: this.name,
-                    allow_access: [],
-                    created_at: new Date(),
-                    last_login: new Date(),
-                    updated_at: new Date()
-                  })
+                firebase.firestore().collection('users').doc(user.uid).set({
+                  username: this.name,
+                  allow_access: [],
+                  created_at: new Date(),
+                  last_login: new Date(),
+                  updated_at: new Date(),
+                })
               })
             user.sendEmailVerification()
             this.completion = true
@@ -194,8 +190,8 @@ export default Vue.extend({
           this.error = true
           this.loading = false
         })
-    }
-  }
+    },
+  },
 })
 </script>
 

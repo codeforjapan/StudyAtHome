@@ -37,32 +37,32 @@ export default Vue.extend({
   props: {
     period: {
       type: Number,
-      default: 0
+      default: 0,
     },
     time: {
       type: String,
-      default: ''
+      default: '',
     },
     classData: {
       type: Array as () => classData.LessonWithId[],
-      default: () => []
+      default: () => [],
     },
     editable: {
       type: Boolean,
-      default: false
-    }
+      default: false,
+    },
   },
   computed: {
     maxEndTime() {
-      const endTimeArray = this.classData.map(value => dayjs(value.endTime))
+      const endTimeArray = this.classData.map((value) => dayjs(value.endTime))
       return dayjs.max(...endTimeArray)
-    }
+    },
   },
   methods: {
     formatDate(date: Date): string {
       return dayjs(date).format('HH:mm')
-    }
-  }
+    },
+  },
 })
 </script>
 

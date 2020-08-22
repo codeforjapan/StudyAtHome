@@ -38,14 +38,14 @@ export default Vue.extend({
     message: {
       type: String,
       default: 'メッセージ',
-      required: true
+      required: true,
     },
     expanded: {
       type: Boolean,
       required: false,
-      default: true
-    }
-  }
+      default: true,
+    },
+  },
 })
 </script>
 

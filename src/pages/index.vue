@@ -105,14 +105,14 @@ type DataType = {
 export default Vue.extend({
   components: {
     BaseActionButton,
-    BaseInputField
+    BaseInputField,
   },
   data(): DataType {
     return {
       classId: '',
       loading: false,
       error: false,
-      valid: true
+      valid: true,
     }
   },
   methods: {
@@ -127,8 +127,8 @@ export default Vue.extend({
           this.loading = false
           this.error = true
         })
-    }
-  }
+    },
+  },
 })
 </script>
 

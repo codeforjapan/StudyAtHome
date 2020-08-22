@@ -7,8 +7,8 @@ describe('LessonCaption.vue', () => {
     const wrapper = shallowMount(LessonCaption, {
       propsData: {
         startTime: dt,
-        endTime: dt
-      }
+        endTime: dt,
+      },
     })
     expect(wrapper.vm.$props.title).toBe('1')
     expect(wrapper.vm.$props.unit).toBe('時間目')
@@ -21,8 +21,8 @@ describe('LessonCaption.vue', () => {
         title: 'はじめの',
         unit: 'じかん',
         startTime: dt,
-        endTime: dt
-      }
+        endTime: dt,
+      },
     })
     expect(wrapper.vm.$props.title).toBe('はじめの')
     expect(wrapper.vm.$props.unit).toBe('じかん')
@@ -36,8 +36,8 @@ describe('LessonCaption.vue', () => {
     const wrapper = shallowMount(LessonCaption, {
       propsData: {
         startTime: dt1,
-        endTime: dt2
-      }
+        endTime: dt2,
+      },
     })
     expect(wrapper.vm.$props.startTime.toISOString()).toBe(dt1.toISOString())
     expect(wrapper.vm.$props.endTime.toISOString()).toBe(dt2.toISOString())
@@ -50,8 +50,8 @@ describe('LessonCaption.vue', () => {
     const wrapper = shallowMount(LessonCaption, {
       propsData: {
         startTime: dt1,
-        endTime: dt2
-      }
+        endTime: dt2,
+      },
     })
     expect(wrapper.vm.$props.startTime.toISOString()).toBe(dt1.toISOString())
     expect(wrapper.vm.$props.endTime.toISOString()).toBe(dt2.toISOString())

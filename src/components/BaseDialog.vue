@@ -69,41 +69,41 @@ export default Vue.extend<unknown, Methods, unknown, Props>({
   props: {
     iconName: {
       type: String,
-      required: true
+      required: true,
     },
     hideDefaultCancelButton: {
       type: Boolean,
       required: false,
-      default: false
+      default: false,
     },
     defaultCancelButtonLabel: {
       type: String,
       required: false,
       default() {
         return this.$t('common.general.buttons.cancel').toString()
-      }
+      },
     },
     actions: {
       type: Array as () => DialogAction[],
-      required: true
+      required: true,
     },
     modal: {
       type: Boolean,
       required: false,
-      default: false
+      default: false,
     },
     value: {
       type: Boolean,
-      default: false
-    }
+      default: false,
+    },
   },
   methods: {
     doDialogAction(index) {
       if (!this.actions[index].action()) {
         this.$emit('input', false)
       }
-    }
-  }
+    },
+  },
 })
 </script>
 
