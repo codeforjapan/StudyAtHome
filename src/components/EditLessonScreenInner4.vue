@@ -62,6 +62,11 @@ export default class EditLessonScreenInner1 extends Vue {
     this.input(this.tempFormData)
   }
 
+  @Watch('value', { deep: true })
+  onChangeValueFormData() {
+    this.tempFormData = this.value
+  }
+
   @Emit()
   public input(value: formData) {
     return value
