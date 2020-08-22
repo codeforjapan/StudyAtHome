@@ -21,8 +21,8 @@
             unloadClassData()
             this.$router.push('/user/classlist')
             return false
-          }
-        }
+          },
+        },
       ]"
     >
       <template v-slot:title>
@@ -115,14 +115,14 @@ export default Vue.extend({
     AppLanguageSelector,
     CalendarBar,
     BaseDialog,
-    HeaderLogo
+    HeaderLogo,
   },
   data(): LocalData {
     return {
       loading: true,
       openCalenderDialog: false,
       openClassIdDialog: false,
-      app: vxm.app
+      app: vxm.app,
     }
   },
   computed: {
@@ -132,11 +132,11 @@ export default Vue.extend({
       },
       set(newValue: string) {
         vxm.app.setDate(dayjs(newValue).toDate())
-      }
+      },
     },
     classData() {
       return vxm.classData
-    }
+    },
   },
   mounted(): void {
     this.loading = false
@@ -149,8 +149,8 @@ export default Vue.extend({
 
     unloadClassData() {
       vxm.classData.unloadClassData()
-    }
-  }
+    },
+  },
 })
 </script>
 

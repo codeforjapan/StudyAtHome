@@ -137,7 +137,7 @@
     },
     "user_edit_user_data": {
       "title": "使用者資料變更",
-      "labels":{
+      "labels": {
         "new_password": "請輸入新密碼",
         "new_password_confirm": "請輸入新密碼（確認用）"
       }

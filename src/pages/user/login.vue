@@ -77,7 +77,7 @@ export default Vue.extend({
       email: '',
       password: '',
       loading: false,
-      error: false
+      error: false,
     }
   },
   computed: {
@@ -87,7 +87,7 @@ export default Vue.extend({
         this.password &&
         this.email.match(/^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/)
       )
-    }
+    },
   },
   methods: {
     doLogin(): void {
@@ -104,8 +104,8 @@ export default Vue.extend({
           this.loading = false
           this.error = true
         })
-    }
-  }
+    },
+  },
 })
 </script>
 
