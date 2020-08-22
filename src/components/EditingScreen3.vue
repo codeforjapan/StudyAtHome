@@ -17,9 +17,9 @@
 
 <script lang="ts">
 import { Vue, Component, Prop, Emit, Watch } from 'vue-property-decorator'
-import EditorField from '~/components/EditorField.vue'
-
 import VideoThumbnail from '@/components/VideoThumbnail.vue'
+
+import EditorField from '~/components/EditorField.vue'
 
 export type formData = {
   videoUrl: string
