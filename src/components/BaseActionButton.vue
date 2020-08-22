@@ -17,7 +17,7 @@ import { Vue, Component, Prop } from 'vue-property-decorator'
 type Theme = 'primary' | 'secondary' | 'border' | 'transparent'
 
 @Component
-export default class ActionButton extends Vue {
+export default class BaseActionButton extends Vue {
   @Prop({ default: 'primary' })
   theme!: Theme
 

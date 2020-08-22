@@ -394,14 +394,14 @@
       <v-icon v-if="isCheck" color="#0071C2">mdi-check-box-outline</v-icon>
       <v-icon v-else color="#0071C2">mdi-checkbox-blank-outline</v-icon>
     </label>
-    <action-button
+    <base-action-button
       :is-disabled="!isCheck"
       class="Button"
       theme="primary"
       text="登録へ進む"
       @click="$router.push('/user/signup')"
     />
-    <action-button
+    <base-action-button
       class="Button"
       theme="border"
       text="同意しない"
@@ -413,10 +413,10 @@
 <script lang="ts">
 import Vue from 'vue'
 import PrjLogo from '@/assets/svgs/prj_logo.svg'
-import ActionButton from '@/components/ActionButton.vue'
+import BaseActionButton from '@/components/BaseActionButton.vue'
 
 export default Vue.extend({
-  components: { PrjLogo, ActionButton },
+  components: { PrjLogo, BaseActionButton },
   layout: 'simple',
   data() {
     return {

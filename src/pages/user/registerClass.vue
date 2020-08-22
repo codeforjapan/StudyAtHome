@@ -1,6 +1,6 @@
 <template>
   <div>
-    <bottom-sheet-layer
+    <base-bottom-sheet-layer
       :title="$t('pages.user_register_class.title')"
       title-en="STEP 2"
     >
@@ -10,7 +10,7 @@
             {{ $t('pages.user_register_class.labels.school_name') }}
           </dt>
           <dd>
-            <input-field
+            <base-input-field
               v-model="schoolName"
               label="school"
               placeholder="おひさま小学校"
@@ -21,7 +21,7 @@
             {{ $t('pages.user_register_class.labels.class_name') }}
           </dt>
           <dd>
-            <input-field
+            <base-input-field
               v-model="className"
               label="class"
               placeholder="2年B組"
@@ -34,7 +34,7 @@
         </dl>
       </template>
       <template v-slot:LayerFooter>
-        <action-button
+        <base-action-button
           :is-disabled="disableButton"
           :is-loading="loading"
           :text="$t('pages.user_register_class.buttons.register')"
@@ -42,7 +42,7 @@
           @click="doRegister"
         />
       </template>
-    </bottom-sheet-layer>
+    </base-bottom-sheet-layer>
     <v-snackbar v-model="error" :timeout="5000" absolute color="#C01B61" top>
       {{ $t('pages.user_register_class.error.default') }}
     </v-snackbar>
@@ -51,13 +51,13 @@
 
 <script lang="ts">
 import Vue from 'vue'
-import BottomSheetLayer from '@/components/BottomSheetLayer.vue'
-import ActionButton from '@/components/ActionButton.vue'
-import InputField from '@/components/InputField.vue'
+import BaseBottomSheetLayer from '@/components/BaseBottomSheetLayer.vue'
+import BaseActionButton from '@/components/BaseActionButton.vue'
+import BaseInputField from '@/components/BaseInputField.vue'
 import { vxm } from '@/store'
 
 export default Vue.extend({
-  components: { BottomSheetLayer, ActionButton, InputField },
+  components: { BaseBottomSheetLayer, BaseActionButton, BaseInputField },
   layout: 'background',
   middleware: 'authenticated',
   data() {

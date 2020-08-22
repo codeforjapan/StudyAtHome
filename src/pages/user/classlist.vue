@@ -1,5 +1,5 @@
 <template>
-  <bottom-sheet-layer title="クラス一覧" title-en="CLASS LIST" fullscreen>
+  <base-bottom-sheet-layer title="クラス一覧" title-en="CLASS LIST" fullscreen>
     <template v-slot:LayerContents>
       <div v-if="!items || items.length < 1" class="noClass">
         <h1>
@@ -25,7 +25,7 @@
       </v-list>
     </template>
     <template v-slot:LayerFooter>
-      <action-button
+      <base-action-button
         :is-disabled="!items || items.length < 1"
         theme="primary"
         :text="$t('pages.user_classlist.login_to_class')"
@@ -33,19 +33,19 @@
         :is-loading="loading"
         @click="doSelectClassLogin"
       />
-      <action-button
+      <base-action-button
         :text="$t('pages.user_classlist.add_class')"
         theme="secondary"
         @click="$router.push('/user/registerClass')"
       />
     </template>
-  </bottom-sheet-layer>
+  </base-bottom-sheet-layer>
 </template>
 
 <script lang="ts">
 import Vue from 'vue'
-import BottomSheetLayer from '@/components/BottomSheetLayer.vue'
-import ActionButton from '@/components/ActionButton.vue'
+import BaseBottomSheetLayer from '@/components/BaseBottomSheetLayer.vue'
+import BaseActionButton from '@/components/BaseActionButton.vue'
 import { vxm } from '@/store'
 
 type DataType = {
@@ -55,7 +55,7 @@ type DataType = {
 }
 
 export default Vue.extend({
-  components: { BottomSheetLayer, ActionButton },
+  components: { BaseBottomSheetLayer, BaseActionButton },
   layout: 'background',
   middleware: 'authenticated',
   data(): DataType {

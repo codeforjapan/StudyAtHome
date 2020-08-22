@@ -1,5 +1,5 @@
 <template>
-  <bottom-sheet-layer
+  <base-bottom-sheet-layer
     :title="$t('pages.user_registered.title')"
     title-en="THANK YOU!"
   >
@@ -15,25 +15,25 @@
       </div>
     </template>
     <template v-slot:LayerFooter>
-      <action-button
+      <base-action-button
         theme="primary"
         :text="$t('pages.user_registered.buttons.add_or_edit_lessons')"
         class="Registered-Button"
         @click="$router.push('/edit')"
       />
-      <!-- <action-button theme="secondary" text="クラスIDを共有する" /> -->
+      <!-- <base-action-button theme="secondary" text="クラスIDを共有する" /> -->
     </template>
-  </bottom-sheet-layer>
+  </base-bottom-sheet-layer>
 </template>
 
 <script lang="ts">
 import Vue from 'vue'
-import BottomSheetLayer from '@/components/BottomSheetLayer.vue'
-import ActionButton from '@/components/ActionButton.vue'
+import BaseBottomSheetLayer from '@/components/BaseBottomSheetLayer.vue'
+import BaseActionButton from '@/components/BaseActionButton.vue'
 import { vxm } from '@/store'
 
 export default Vue.extend({
-  components: { BottomSheetLayer, ActionButton },
+  components: { BaseBottomSheetLayer, BaseActionButton },
   layout: 'background',
   middleware: 'authenticated',
   data() {

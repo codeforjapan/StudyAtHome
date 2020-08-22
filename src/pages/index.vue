@@ -10,7 +10,7 @@
         </span>
       </v-row>
       <v-row class="loginFieldRow" justify="center">
-        <input-field
+        <base-input-field
           v-model="classId"
           class="classIdField"
           type="classId"
@@ -38,13 +38,13 @@
           </span>
         </v-row>
         <div style="margin: 0 10px;">
-          <action-button
+          <base-action-button
             :text="$t('pages.index.teachers.buttons.signup')"
             class="registerButton"
             @click="$router.push('/user/terms')"
           />
 
-          <action-button
+          <base-action-button
             :text="$t('pages.index.teachers.buttons.login')"
             class="loginButton"
             theme="secondary"
@@ -92,8 +92,8 @@
 <script lang="ts">
 import Vue from 'vue'
 import { vxm } from '@/store'
-import InputField from '@/components/InputField.vue'
-import ActionButton from '@/components/ActionButton.vue'
+import BaseInputField from '@/components/BaseInputField.vue'
+import BaseActionButton from '@/components/BaseActionButton.vue'
 
 type DataType = {
   classId: string
@@ -104,8 +104,8 @@ type DataType = {
 
 export default Vue.extend({
   components: {
-    ActionButton,
-    InputField
+    BaseActionButton,
+    BaseInputField
   },
   data(): DataType {
     return {
