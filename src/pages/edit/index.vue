@@ -159,28 +159,20 @@ type Computed = {
 const editPageValueDefault = {
   isHidden: false,
   lessonId: '',
-  firstPageData: {
-    date: '',
-    startTime: '',
-    endTime: '',
-    title: '',
-    subjectName: '',
-    subjectColor: '#BAC8FF',
-  },
-  secondPageData: {
-    goal: '',
-    description: '',
-  },
-  thirdPageData: {
-    videoUrl: '',
-    videoTitle: '',
-    videoThumbnailUrl: '',
-  },
-  fourthPageData: {
-    pages: '',
-    materialsTitle: '',
-    materialsUrl: '',
-  },
+  date: '',
+  startTime: '',
+  endTime: '',
+  title: '',
+  subjectName: '',
+  subjectColor: '#BAC8FF',
+  goal: '',
+  description: '',
+  videoUrl: '',
+  videoTitle: '',
+  videoThumbnailUrl: '',
+  pages: '',
+  materialsTitle: '',
+  materialsUrl: '',
 }
 
 export default Vue.extend({
@@ -253,28 +245,20 @@ export default Vue.extend({
       this.editPageValue = {
         isHidden: value.isHidden,
         lessonId: value.docId,
-        firstPageData: {
-          date: dayjs(value.startTime).format('YYYY-MM-DD'),
-          startTime: dayjs(value.startTime).format('HH:mm'),
-          endTime: dayjs(value.endTime).format('HH:mm'),
-          title: value.title,
-          subjectName: value.subject.name,
-          subjectColor: value.subject.color,
-        },
-        secondPageData: {
-          goal: value.goal,
-          description: value.description,
-        },
-        thirdPageData: {
-          videoUrl,
-          videoTitle,
-          videoThumbnailUrl,
-        },
-        fourthPageData: {
-          pages: value.pages,
-          materialsTitle: materialTitle,
-          materialsUrl: materialUrl,
-        },
+        date: dayjs(value.startTime).format('YYYY-MM-DD'),
+        startTime: dayjs(value.startTime).format('HH:mm'),
+        endTime: dayjs(value.endTime).format('HH:mm'),
+        title: value.title,
+        subjectName: value.subject.name,
+        subjectColor: value.subject.color,
+        goal: value.goal,
+        description: value.description,
+        videoUrl,
+        videoTitle,
+        videoThumbnailUrl,
+        pages: value.pages,
+        materialsTitle: materialTitle,
+        materialsUrl: materialUrl,
       }
       this.toggleScreen()
     },
