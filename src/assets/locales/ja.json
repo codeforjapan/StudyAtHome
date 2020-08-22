@@ -131,6 +131,7 @@
       }
     },
     "user_classlist": {
+      "title": "クラス一覧",
       "add_class": "クラスを登録する",
       "login_to_class": "選択クラスでログインする",
       "no_classes": "編集可能なクラスがありません。クラスの登録を行ってください"

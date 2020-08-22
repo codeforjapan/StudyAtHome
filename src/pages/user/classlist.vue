@@ -1,5 +1,9 @@
 <template>
-  <base-bottom-sheet-layer title="クラス一覧" title-en="CLASS LIST" fullscreen>
+  <base-bottom-sheet-layer
+    :title="$t('pages.user_classlist.title')"
+    title-en="CLASS LIST"
+    fullscreen
+  >
     <template v-slot:LayerContents>
       <div v-if="!items || items.length < 1" class="noClass">
         <h1>
