@@ -1,9 +1,7 @@
 <template>
   <v-app>
     <v-overlay :value="loading" color="#0071C2" opacity="1" z-index="9999">
-      <div class="loader">
-        Loading
-      </div>
+      <div class="loader">Loading</div>
     </v-overlay>
     <v-app-bar fixed app class="bar" elevation="0">
       <HeaderLogo />
