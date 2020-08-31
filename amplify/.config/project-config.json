@@ -7,7 +7,7 @@
         "config": {
             "SourceDir": "src",
             "DistributionDir": "dist",
-            "BuildCommand": "yarn build",
+            "BuildCommand": "yarn generate",
             "StartCommand": "yarn start"
         }
     },

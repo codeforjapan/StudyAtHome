@@ -89,6 +89,10 @@ export default {
    */
   plugins: [
     {
+      src: '@/plugins/amplify',
+      ssr: false,
+    },
+    {
       src: '@/plugins/firebase',
     },
     {

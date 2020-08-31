@@ -2,7 +2,7 @@
   <div>
     <base-bottom-sheet-layer
       fullscreen
-      :title="$t('pages.user_login.title')"
+      :title="$t('pages.user_verify.title')"
       title-en="LOGIN"
     >
       <template v-slot:LayerContents>
@@ -19,14 +19,14 @@
             />
           </dd>
           <dt class="SignIn-ItemTitle">
-            {{ $t('common.user_data.labels.password') }}
+            {{ $t('common.user_data.labels.verification_code') }}
           </dt>
           <dd class="SignIn-Item">
             <base-input-field
-              v-model="password"
-              :label="$t('common.user_data.labels.password')"
+              v-model="verification_code"
+              :label="$t('common.user_data.labels.verification_code')"
               require
-              type="password"
+              type="number"
             />
           </dd>
         </dl>
@@ -37,9 +37,9 @@
             :is-disabled="disableLogin"
             :is-loading="loading"
             class="SignIn-Button"
-            :text="$t('common.general.buttons.login')"
+            :text="$t('common.general.buttons.verify')"
             theme="primary"
-            @click="doLogin"
+            @click="doVerify"
           />
           <v-btn
             :disabled="loading"
@@ -56,7 +56,7 @@
       </template>
     </base-bottom-sheet-layer>
     <v-snackbar v-model="error" :timeout="5000" absolute top color="#C01B61">
-      {{ $t('pages.user_login.error.invalid') }}
+      {{ $t('pages.user_verify.error.invalid') }}
     </v-snackbar>
   </div>
 </template>
@@ -74,24 +74,24 @@ export default Vue.extend({
   data() {
     return {
       email: '',
-      password: '',
+      verification_code: '',
       loading: false,
       error: false,
     }
   },
   computed: {
-    disableLogin(): boolean {
+    disableVerify(): boolean {
       return !(
         this.email &&
-        this.password &&
+        this.verification_code &&
         this.email.match(/^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/)
       )
     },
   },
   methods: {
-    async doLogin(): Promise<void> {
+    async doVerify(): Promise<void> {
       this.loading = true
-      await Auth.signIn(this.email, this.password)
+      await Auth.confirmSignUp(this.email, this.verification_code)
         .then(() => {
           this.$router.push('/user/classlist')
         })

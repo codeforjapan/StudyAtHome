@@ -10,6 +10,17 @@
             "StackName": "amplify-studyathome-dev-191756",
             "StackId": "arn:aws:cloudformation:ap-northeast-1:952378688420:stack/amplify-studyathome-dev-191756/f60c4300-e529-11ea-bf58-0eacaab34bb8",
             "AmplifyAppId": "d1dqymg5m0yj3m"
+        },
+        "categories": {
+            "auth": {
+                "studyathome6e74485c": {}
+            },
+            "hosting": {
+                "amplifyhosting": {
+                    "appId": "d1dqymg5m0yj3m",
+                    "type": "cicd"
+                }
+            }
         }
     }
 }
