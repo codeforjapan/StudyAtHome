@@ -1,9 +1,11 @@
 import { Middleware } from '@nuxt/types'
-import { vxm } from '@/store'
+import { Auth } from 'aws-amplify'
 
 const authenticated: Middleware = async ({ redirect }) => {
-  if (!vxm.user.isAuthenticated) {
-    redirect('/user/login')
+  const userInfo = await Auth.currentUserInfo()
+
+  if (!userInfo) {
+    redirect('/user/auth')
   }
 }
 
