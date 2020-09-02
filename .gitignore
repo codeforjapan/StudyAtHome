@@ -93,3 +93,5 @@ sw.*
 
 .runtimeconfig.json
 key.json
+
+*/static/data/*
