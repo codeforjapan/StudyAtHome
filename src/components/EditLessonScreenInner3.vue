@@ -15,32 +15,29 @@
 
     <div v-if="videoSearchResult.length > 0" class="SearchResult">
       <h3>NHK For Schoolの動画検索結果</h3>
-      <ul class="SearchResultList">
-        <li
-          v-for="(v, i) in videoSearchResult"
-          :key="i"
-          class="SearchResultItem"
-        >
+      <ul>
+        <li v-for="(v, i) in displayLists" :key="i" class="SearchResultItem">
           <a :href="v.videoUrl" target="_blank" class="SearchResultLink">
             {{ v.videoTitle }}&emsp;{{ v.videoSubTitle }}
           </a>
           <p class="SearchResultDescription">{{ v.videoDescription }}</p>
           <span>{{ v.videoPlayTime }}</span>
+          <br />
+          <img :src="v.videoThumbnailUrl" :alt="v.videoTitle" width="240" />
         </li>
       </ul>
+      <v-pagination
+        v-model="page"
+        :length="length"
+        :total-visible="5"
+        @input="pageChange"
+      />
     </div>
-    <video-thumbnail
-      v-if="tempFormData.videoTitle && tempFormData.videoThumbnailUrl"
-      :caption="tempFormData.videoTitle"
-      :title="$t('components.editing_screen.labels.video_thumbnail')"
-      :thumbnail-url="tempFormData.videoThumbnailUrl"
-    />
   </div>
 </template>
 
 <script lang="ts">
 import { Vue, Component, Prop, Emit, Watch } from 'vue-property-decorator'
-import VideoThumbnail from '@/components/VideoThumbnail.vue'
 import EditorInputFieldPickable from '~/components/EditorInputFieldPickable.vue'
 
 let movies: any[] = []
@@ -54,7 +51,6 @@ export type formData = {
 @Component({
   components: {
     EditorInputFieldPickable,
-    VideoThumbnail,
   },
 })
 export default class EditLessonScreenInner3 extends Vue {
@@ -77,6 +73,10 @@ export default class EditLessonScreenInner3 extends Vue {
 
   videoSearchWord: string = ''
   videoSearchResult: formData[] = []
+  page: number = 1
+  pageSize: number = 5
+  length: number = 0
+  displayLists: formData[] = []
 
   mounted() {
     fetch('/data/movies.json')
@@ -115,15 +115,23 @@ export default class EditLessonScreenInner3 extends Vue {
             : clip.includes(videoType)
             ? 'clip.cgi'
             : ''
+          const videoDirectory = videoId.slice(0, 8)
           return {
             videoUrl: `https://www2.nhk.or.jp/school/movie/${videoPass}?das_id=${videoId}&p=box`,
             videoTitle: v['教材_タイトル'],
             videoSubTitle: v['教材_サブタイトル'],
             videoDescription: v['教材_説明'],
             videoPlayTime: v['教材_再生時間'],
-            videoThumbnailUrl: '',
+            videoThumbnailUrl: `https://www.nhk.or.jp/das/image/${videoDirectory}/${videoId}_S_005.jpg`,
           }
         })
+
+      this.length = Math.ceil(this.videoSearchResult.length / this.pageSize)
+
+      this.displayLists = this.videoSearchResult.slice(
+        this.pageSize * (this.page - 1),
+        this.pageSize * this.page
+      )
     }
   }
 
@@ -153,6 +161,13 @@ export default class EditLessonScreenInner3 extends Vue {
   public input(value: formData) {
     return value
   }
+
+  private pageChange(pageNumber: number) {
+    this.displayLists = this.videoSearchResult.slice(
+      this.pageSize * (pageNumber - 1),
+      this.pageSize * pageNumber
+    )
+  }
 }
 </script>
 
@@ -160,10 +175,6 @@ export default class EditLessonScreenInner3 extends Vue {
 .SearchResult {
   color: $color-white;
   margin-bottom: 20px;
-}
-.SearchResultList {
-  height: 240px;
-  overflow-y: auto;
 }
 .SearchResultItem {
   margin-bottom: 12px;
