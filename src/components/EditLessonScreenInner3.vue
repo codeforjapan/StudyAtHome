@@ -13,17 +13,31 @@
       :placeholders="$t('components.editing_screen.placeholder.video_keyword')"
     />
 
+    <button class="SearchButton" @click="handleVideoSearchWord">
+      検索する
+    </button>
+
     <div v-if="videoSearchResult.length > 0" class="SearchResult">
       <h3>NHK For Schoolの動画検索結果</h3>
       <ul>
         <li v-for="(v, i) in displayLists" :key="i" class="SearchResultItem">
-          <a :href="v.videoUrl" target="_blank" class="SearchResultLink">
+          <component
+            :is="v.videoUrl ? 'a' : 'span'"
+            :href="v.videoUrl"
+            :target="v.videoUrl ? '_blank' : null"
+            class="SearchResultLink"
+          >
             {{ v.videoTitle }}&emsp;{{ v.videoSubTitle }}
-          </a>
+          </component>
           <p class="SearchResultDescription">{{ v.videoDescription }}</p>
           <span>{{ v.videoPlayTime }}</span>
           <br />
-          <img :src="v.videoThumbnailUrl" :alt="v.videoTitle" width="240" />
+          <img
+            v-if="v.videoThumbnailUrl"
+            :src="v.videoThumbnailUrl"
+            :alt="v.videoTitle"
+            width="240"
+          />
         </li>
       </ul>
       <v-pagination
@@ -43,7 +57,7 @@ import EditorInputFieldPickable from '~/components/EditorInputFieldPickable.vue'
 let movies: any[] = []
 
 export type formData = {
-  videoUrl: string
+  videoUrl: string | null
   videoTitle: string
   videoThumbnailUrl: string
 }
@@ -64,7 +78,7 @@ export default class EditLessonScreenInner3 extends Vue {
     type: Object as () => formData,
     required: true,
     default: () => ({
-      videoUrl: '',
+      videoUrl: null,
       videoTitle: '',
       videoThumbnailUrl: '',
     }),
@@ -95,9 +109,9 @@ export default class EditLessonScreenInner3 extends Vue {
     this.input(this.tempFormData)
   }
 
-  @Watch('videoSearchWord')
-  onChangeVideoSearchWord() {
+  private handleVideoSearchWord() {
     if (this.videoSearchWord) {
+      this.page = 1
       this.videoSearchResult = movies
         .filter((v) => {
           const fullText = Object.keys(v)
@@ -107,32 +121,45 @@ export default class EditLessonScreenInner3 extends Vue {
         })
         .map((v) => {
           const videoId = v['教材_ID']
-          const bangumi = [1, 2]
-          const clip = [3, 4]
           const videoType = parseInt(videoId.slice(5, 6))
-          const videoPass = bangumi.includes(videoType)
-            ? 'bangumi.cgi'
-            : clip.includes(videoType)
-            ? 'clip.cgi'
-            : ''
+          const nfsMovieUrl = 'https://www2.nhk.or.jp/school/movie/'
           const videoDirectory = videoId.slice(0, 8)
+          let videoThumbnailUrl = `https://www.nhk.or.jp/das/image/${videoDirectory}/${videoId}_S_005.jpg`
+          let videoUrl
+          switch (videoType) {
+            case 1:
+            case 2:
+              videoUrl = `${nfsMovieUrl}bangumi.cgi?das_id=${videoId}&p=box`
+              break
+            case 3:
+            case 4:
+              videoUrl = `${nfsMovieUrl}clip.cgi?das_id=${videoId}&p=box`
+              break
+            default:
+              videoUrl = null
+              videoThumbnailUrl = ''
+          }
           return {
-            videoUrl: `https://www2.nhk.or.jp/school/movie/${videoPass}?das_id=${videoId}&p=box`,
+            videoUrl,
             videoTitle: v['教材_タイトル'],
             videoSubTitle: v['教材_サブタイトル'],
             videoDescription: v['教材_説明'],
             videoPlayTime: v['教材_再生時間'],
-            videoThumbnailUrl: `https://www.nhk.or.jp/das/image/${videoDirectory}/${videoId}_S_005.jpg`,
+            videoThumbnailUrl,
           }
         })
 
       this.length = Math.ceil(this.videoSearchResult.length / this.pageSize)
 
-      this.displayLists = this.videoSearchResult.slice(
-        this.pageSize * (this.page - 1),
-        this.pageSize * this.page
-      )
+      this.displayLists = this.videoSearchResult.slice(0, this.pageSize)
     }
+  }
+
+  private pageChange(pageNumber: number) {
+    this.displayLists = this.videoSearchResult.slice(
+      this.pageSize * (pageNumber - 1),
+      this.pageSize * pageNumber
+    )
   }
 
   /* CORS 回避必須
@@ -161,17 +188,14 @@ export default class EditLessonScreenInner3 extends Vue {
   public input(value: formData) {
     return value
   }
-
-  private pageChange(pageNumber: number) {
-    this.displayLists = this.videoSearchResult.slice(
-      this.pageSize * (pageNumber - 1),
-      this.pageSize * pageNumber
-    )
-  }
 }
 </script>
 
 <style lang="scss" scoped>
+.SearchButton {
+  color: $color-white;
+  margin-bottom: 20px;
+}
 .SearchResult {
   color: $color-white;
   margin-bottom: 20px;
