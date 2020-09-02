@@ -13,13 +13,19 @@
       :placeholders="$t('components.editing_screen.placeholder.video_keyword')"
     />
 
-    <div v-if="videoSearchResult.length > 0">
+    <div v-if="videoSearchResult.length > 0" class="SearchResult">
       <h3>NHK For Schoolの動画検索結果</h3>
-      <ul>
-        <li v-for="(v, i) in videoSearchResult" :key="i">
-          <a :href="v.videoUrl" target="_blank">
-            {{ v.videoTitle }}
+      <ul class="SearchResultList">
+        <li
+          v-for="(v, i) in videoSearchResult"
+          :key="i"
+          class="SearchResultItem"
+        >
+          <a :href="v.videoUrl" target="_blank" class="SearchResultLink">
+            {{ v.videoTitle }}&emsp;{{ v.videoSubTitle }}
           </a>
+          <p class="SearchResultDescription">{{ v.videoDescription }}</p>
+          <span>{{ v.videoPlayTime }}</span>
         </li>
       </ul>
     </div>
@@ -100,9 +106,21 @@ export default class EditLessonScreenInner3 extends Vue {
           return fullText.includes(this.videoSearchWord)
         })
         .map((v) => {
+          const videoId = v['教材_ID']
+          const bangumi = [1, 2]
+          const clip = [3, 4]
+          const videoType = parseInt(videoId.slice(5, 6))
+          const videoPass = bangumi.includes(videoType)
+            ? 'bangumi.cgi'
+            : clip.includes(videoType)
+            ? 'clip.cgi'
+            : ''
           return {
-            videoUrl: v['教材_ID'],
+            videoUrl: `https://www2.nhk.or.jp/school/movie/${videoPass}?das_id=${videoId}&p=box`,
             videoTitle: v['教材_タイトル'],
+            videoSubTitle: v['教材_サブタイトル'],
+            videoDescription: v['教材_説明'],
+            videoPlayTime: v['教材_再生時間'],
             videoThumbnailUrl: '',
           }
         })
@@ -137,3 +155,23 @@ export default class EditLessonScreenInner3 extends Vue {
   }
 }
 </script>
+
+<style lang="scss" scoped>
+.SearchResult {
+  color: $color-white;
+  margin-bottom: 20px;
+}
+.SearchResultList {
+  height: 240px;
+  overflow-y: auto;
+}
+.SearchResultItem {
+  margin-bottom: 12px;
+}
+.SearchResultLink {
+  color: $color-white;
+}
+.SearchResultDescription {
+  margin: 0;
+}
+</style>
