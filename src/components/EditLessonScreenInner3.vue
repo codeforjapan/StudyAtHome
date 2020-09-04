@@ -13,7 +13,7 @@
       :placeholders="$t('components.editing_screen.placeholder.video_keyword')"
     />
 
-    <button class="SearchButton" @click="handleVideoSearchWord">
+    <button class="Button" @click="handleVideoSearchWord">
       検索する
     </button>
 
@@ -31,13 +31,21 @@
           </component>
           <p class="SearchResultDescription">{{ v.videoDescription }}</p>
           <span>{{ v.videoPlayTime }}</span>
-          <br />
+          <br v-if="v.videoThumbnailUrl" />
           <img
             v-if="v.videoThumbnailUrl"
             :src="v.videoThumbnailUrl"
             :alt="v.videoTitle"
             width="240"
           />
+          <br v-if="v.videoUrl" />
+          <button
+            v-if="v.videoUrl"
+            class="Button"
+            @click="registerVideoUrl(v.videoUrl)"
+          >
+            参考動画URLに登録する
+          </button>
         </li>
       </ul>
       <v-pagination
@@ -155,6 +163,10 @@ export default class EditLessonScreenInner3 extends Vue {
     }
   }
 
+  private registerVideoUrl(url: string) {
+    this.tempFormData.videoUrl = url
+  }
+
   private pageChange(pageNumber: number) {
     this.displayLists = this.videoSearchResult.slice(
       this.pageSize * (pageNumber - 1),
@@ -192,7 +204,7 @@ export default class EditLessonScreenInner3 extends Vue {
 </script>
 
 <style lang="scss" scoped>
-.SearchButton {
+.Button {
   color: $color-white;
   margin-bottom: 20px;
 }
