@@ -99,7 +99,7 @@ import Vue from 'vue'
 import BaseBottomSheetLayer from '@/components/BaseBottomSheetLayer.vue'
 import BaseActionButton from '@/components/BaseActionButton.vue'
 import BaseInputField from '@/components/BaseInputField.vue'
-import firebase from '@/plugins/firebase'
+import { Auth } from 'aws-amplify'
 import { vxm } from '~/store'
 
 type Data = {
@@ -172,9 +172,9 @@ export default Vue.extend<Data, Methods, Computed, unknown>({
     },
   },
   methods: {
-    doSave(): void {
+    async doSave(): Promise<void> {
       this.loading = true
-      const user = firebase.auth().currentUser
+      const user = await Auth.currentAuthenticatedUser()
       if (user) {
         if (this.email !== vxm.user.email) {
           if (this.email) {
@@ -190,39 +190,37 @@ export default Vue.extend<Data, Methods, Computed, unknown>({
           }
         }
         if (this.name !== vxm.user.displayName) {
-          firebase
-            .firestore()
-            .collection('users')
-            .doc(user.uid)
-            .update({
-              username: this.name,
-            })
-            .then(() => {
-              vxm.user.login()
-            })
-            .catch(() => {
-              this.error = true
-              this.loading = false
-            })
+          // firebase
+          //   .firestore()
+          //   .collection('users')
+          //   .doc(user.uid)
+          //   .update({
+          //     username: this.name,
+          //   })
+          //   .then(() => {
+          //     vxm.user.login()
+          //   })
+          //   .catch(() => {
+          //     this.error = true
+          //     this.loading = false
+          //   })
         }
         if (this.password) {
-          user
-            .updatePassword(this.password)
-            .then(() => {
-              vxm.user.login()
-            })
-            .catch(() => {
-              this.error = true
-              this.loading = false
-            })
+          // user
+          //   .updatePassword(this.password)
+          //   .then(() => {
+          //     vxm.user.login()
+          //   })
+          //   .catch(() => {
+          //     this.error = true
+          //     this.loading = false
+          //   })
         }
       }
       this.$router.push('/edit')
     },
-    doLogout(): void {
-      firebase
-        .auth()
-        .signOut()
+    async doLogout(): Promise<void> {
+      await Auth.signOut()
         .then(() => {
           vxm.user.logout()
           this.$router.push('/')

@@ -5,7 +5,7 @@ const authenticated: Middleware = async ({ redirect }) => {
   const userInfo = await Auth.currentUserInfo()
 
   if (!userInfo) {
-    redirect('/user/auth')
+    redirect('/user/login')
   }
 }
 

@@ -106,7 +106,7 @@
         </div>
 
         <div class="divider">
-          <v-divider style="border-color: transparent;" />
+          <v-divider style="border-color: transparent" />
         </div>
       </v-sheet>
     </div>

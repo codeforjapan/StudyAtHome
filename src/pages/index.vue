@@ -37,7 +37,7 @@
             {{ $t('pages.index.teachers.label') }}
           </span>
         </v-row>
-        <div style="margin: 0 10px;">
+        <div style="margin: 0 10px">
           <base-action-button
             :text="$t('pages.index.teachers.buttons.signup')"
             class="registerButton"
