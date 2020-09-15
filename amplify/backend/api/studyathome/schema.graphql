@@ -1,0 +1,33 @@
+type Class
+  @model
+  @auth(
+    rules: [
+      { allow: public, operations: [read], provider: apiKey }
+      { allow: private, operations: [read, create], provider: userPools }
+      { allow: owner, operations: [update, delete], provider: userPools, ownerField: "owner" }
+    ]
+  )
+{
+  id: ID!
+  className: String!
+  schoolName: String!
+  lessons: [Lesson] @connection(fields: ["id"])
+  owner: String!
+}
+
+type Lesson
+  @model
+  @auth(
+    rules: [
+      { allow: public, operations: [read], provider: apiKey }
+      { allow: private, operations: [read, create], provider: userPools }
+      { allow: owner, operations: [update, delete], provider: userPools, ownerField: "owner" }
+    ]
+  )
+{
+  id: ID!
+  class: Class! @connection
+  startTime: AWSDateTime!
+  endTime: AWSDateTime!
+  owner: String!
+}

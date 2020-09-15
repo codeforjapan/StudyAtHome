@@ -43,7 +43,10 @@ Parameters:
               
   emailVerificationMessage:
     Type: String
-                
+
+  defaultEmailOption:
+    Type: String
+
   defaultPasswordPolicy:
     Type: String
                 
@@ -170,7 +173,9 @@ Resources:
       SmsConfiguration: 
         SnsCallerArn: !GetAtt SNSRole.Arn
         ExternalId: studya6e74485c_role_external_id
-    
+
+      VerificationMessageTemplate:
+        DefaultEmailOption: !Ref defaultEmailOption
   
   UserPoolClientWeb:
   # Created provide application access to user pool
