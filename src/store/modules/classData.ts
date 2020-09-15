@@ -4,9 +4,13 @@ import {
   createProxy,
   mutation,
 } from 'vuex-class-component'
-import firebase from '@/plugins/firebase'
 import { AppStore } from '@/store/modules/app'
 import { classData } from '@/types/store/classData'
+import { Auth, API, graphqlOperation } from 'aws-amplify'
+import { GraphQLResult } from '@aws-amplify/api'
+import { getClass } from '../../graphql/queries'
+import { createClass } from '../../graphql/mutations'
+import { GetClassQuery } from '../../API'
 import { vxm } from '~/store'
 
 const VuexModule = createModule({
@@ -60,50 +64,39 @@ export class ClassDataStore extends VuexModule implements classData.ClassData {
 
   @action
   public async loadClassData(classId: classData.ClassId) {
-    const lessons: classData.LessonWithId[] = []
-    const classDataDocument = firebase
-      .firestore()
-      .collection('classData')
-      .doc(classId)
+    const result = (await API.graphql(
+      graphqlOperation(getClass, { id: classId })
+    )) as GraphQLResult<GetClassQuery>
 
-    // classData ドキュメントのフィールドを取得
-    const classDataSnapshot = await classDataDocument.get()
-    if (!classDataSnapshot.exists) throw new Error('クラスIDが間違っています')
-    const classData = classDataSnapshot.data() as classData.ClassData
-    const className = classData.className
-
-    // classData ドキュメント下の lessons コレクションを取得
-    const classDataLessonsSnapshot = await classDataDocument
-      .collection('Lessons')
-      .orderBy('startTime')
-      .get()
-
-    try {
-      classDataLessonsSnapshot.forEach((doc) => {
-        const retrieved = doc.data() as classData.database.Lesson
-        const converted: classData.LessonWithId = {
-          docId: doc.id,
-          startTime: retrieved.startTime.toDate(),
-          endTime: retrieved.endTime.toDate(),
-          title: retrieved.title,
-          subject: retrieved.subject,
-          goal: retrieved.goal,
-          description: retrieved.description,
-          videos: retrieved.videos,
-          pages: retrieved.pages,
-          materials: retrieved.materials,
-          isHidden: retrieved.isHidden,
-        }
-
-        lessons.push(converted)
-      })
-    } catch {
+    const classObject = result?.data?.getClass
+    if (!classObject) {
       throw new Error('クラスIDが間違っています')
     }
+    const classDataLessons = classObject?.lessons?.items as any[]
+    const className = classObject.className
+
+    // classDataLessonsSnapshot.forEach((doc) => {
+    //   const retrieved = doc.data() as classData.database.Lesson
+    //   const converted: classData.LessonWithId = {
+    //     docId: doc.id,
+    //     startTime: retrieved.startTime.toDate(),
+    //     endTime: retrieved.endTime.toDate(),
+    //     title: retrieved.title,
+    //     subject: retrieved.subject,
+    //     goal: retrieved.goal,
+    //     description: retrieved.description,
+    //     videos: retrieved.videos,
+    //     pages: retrieved.pages,
+    //     materials: retrieved.materials,
+    //     isHidden: retrieved.isHidden,
+    //   }
+    //   lessons.push(converted)
+    // })
+
     this.setClassData({
       classId,
       className,
-      lessons,
+      lessons: classDataLessons,
     })
   }
 
@@ -115,41 +108,37 @@ export class ClassDataStore extends VuexModule implements classData.ClassData {
     className: string
     schoolName: string
   }) {
-    let classId = generateUniqueId()
     if (!vxm.user.isAuthenticated) {
       throw new Error('ユーザーが正しくログインされていません')
     }
-    try {
-      const doc = await firebase
-        .firestore()
-        .collection('classData')
-        .doc(classId)
-        .get()
-      if (doc.exists) {
-        classId = generateUniqueId()
+
+    let classId, classObject
+    do {
+      classId = generateUniqueId()
+      try {
+        const result = (await API.graphql(
+          graphqlOperation(getClass, {
+            id: classId,
+          })
+        )) as GraphQLResult<GetClassQuery>
+        classObject = result?.data?.getClass
+      } catch {
+        throw new Error('エラーによって処理に失敗しました')
       }
-    } catch {
-      throw new Error('エラーによって処理に失敗しました')
-    }
+    } while (classObject)
+
     try {
-      await firebase
-        .firestore()
-        .collection('users')
-        .doc(vxm.user.uid)
-        .update({
-          allow_access: firebase.firestore.FieldValue.arrayUnion(classId),
+      const user = await Auth.currentAuthenticatedUser()
+      await API.graphql(
+        graphqlOperation(createClass, {
+          input: {
+            id: classId,
+            className,
+            schoolName,
+            owner: user.username,
+          },
         })
-      await firebase
-        .firestore()
-        .collection('editorClassData')
-        .doc(classId)
-        .set({
-          schoolName,
-        })
-      await firebase.firestore().collection('classData').doc(classId).set({
-        lesson: [],
-        className,
-      })
+      )
     } catch {
       throw new Error('エラーによって処理に失敗しました')
     }
@@ -161,38 +150,38 @@ export class ClassDataStore extends VuexModule implements classData.ClassData {
   }
 
   @action
-  public async registerLesson(lessonData: classData.Lesson) {
-    await firebase
-      .firestore()
-      .collection('classData')
-      .doc(this.classId)
-      .collection('Lessons')
-      .add(lessonData)
-      .catch(() => {
-        return Promise.reject(new Error('エラーによって処理に失敗しました'))
-      })
-    this.loadClassData(this.classId)
+  public async registerLesson(lessonData: classData.Lesson) { // eslint-disable-line
+    // await firebase
+    //   .firestore()
+    //   .collection('classData')
+    //   .doc(this.classId)
+    //   .collection('Lessons')
+    //   .add(lessonData)
+    //   .catch(() => {
+    //     return Promise.reject(new Error('エラーによって処理に失敗しました'))
+    //   })
+    // this.loadClassData(this.classId)
   }
 
   @action
   public async changeLesson({
-    editData,
-    id,
+    editData,  // eslint-disable-line
+    id, // eslint-disable-line
   }: {
     editData: classData.Lesson
     id: classData.LessonId
   }) {
-    await firebase
-      .firestore()
-      .collection('classData')
-      .doc(this.classId)
-      .collection('Lessons')
-      .doc(id)
-      .set(editData)
-      .catch(() => {
-        return Promise.reject(new Error('エラーによって処理に失敗しました'))
-      })
-    this.loadClassData(this.classId)
+    // await firebase
+    //   .firestore()
+    //   .collection('classData')
+    //   .doc(this.classId)
+    //   .collection('Lessons')
+    //   .doc(id)
+    //   .set(editData)
+    //   .catch(() => {
+    //     return Promise.reject(new Error('エラーによって処理に失敗しました'))
+    //   })
+    // this.loadClassData(this.classId)
   }
 
   @mutation
