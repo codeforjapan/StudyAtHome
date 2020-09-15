@@ -67,6 +67,7 @@ import BaseBottomSheetLayer from '@/components/BaseBottomSheetLayer.vue'
 import BaseActionButton from '@/components/BaseActionButton.vue'
 import BaseInputField from '@/components/BaseInputField.vue'
 import { Auth } from 'aws-amplify'
+// import { vxm } from '@/store'
 
 export default Vue.extend({
   components: { BaseBottomSheetLayer, BaseActionButton, BaseInputField },
@@ -91,14 +92,14 @@ export default Vue.extend({
   methods: {
     async doLogin(): Promise<void> {
       this.loading = true
-      await Auth.signIn(this.email, this.password)
-        .then(() => {
-          this.$router.push('/user/classlist')
-        })
-        .catch(() => {
-          this.loading = false
-          this.error = true
-        })
+      try {
+        await Auth.signIn(this.email, this.password)
+        // await vxm.user.login()
+        this.$router.push('/user/classlist')
+      } catch (err) {
+        this.loading = false
+        this.error = true
+      }
     },
   },
 })
