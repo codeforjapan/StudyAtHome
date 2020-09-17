@@ -19,6 +19,11 @@ export const createClass = /* GraphQL */ `
           id
           startTime
           endTime
+          title
+          goal
+          description
+          pages
+          isHidden
           owner
           createdAt
           updatedAt
@@ -45,6 +50,11 @@ export const updateClass = /* GraphQL */ `
           id
           startTime
           endTime
+          title
+          goal
+          description
+          pages
+          isHidden
           owner
           createdAt
           updatedAt
@@ -71,6 +81,11 @@ export const deleteClass = /* GraphQL */ `
           id
           startTime
           endTime
+          title
+          goal
+          description
+          pages
+          isHidden
           owner
           createdAt
           updatedAt
@@ -89,6 +104,24 @@ export const createLesson = /* GraphQL */ `
       id
       startTime
       endTime
+      title
+      subject {
+        color
+        name
+      }
+      goal
+      description
+      videos {
+        title
+        thumbnailUrl
+        url
+      }
+      pages
+      materials {
+        title
+        url
+      }
+      isHidden
       owner
       createdAt
       updatedAt
@@ -115,6 +148,24 @@ export const updateLesson = /* GraphQL */ `
       id
       startTime
       endTime
+      title
+      subject {
+        color
+        name
+      }
+      goal
+      description
+      videos {
+        title
+        thumbnailUrl
+        url
+      }
+      pages
+      materials {
+        title
+        url
+      }
+      isHidden
       owner
       createdAt
       updatedAt
@@ -141,6 +192,24 @@ export const deleteLesson = /* GraphQL */ `
       id
       startTime
       endTime
+      title
+      subject {
+        color
+        name
+      }
+      goal
+      description
+      videos {
+        title
+        thumbnailUrl
+        url
+      }
+      pages
+      materials {
+        title
+        url
+      }
+      isHidden
       owner
       createdAt
       updatedAt

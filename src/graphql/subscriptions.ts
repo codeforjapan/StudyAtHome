@@ -16,6 +16,11 @@ export const onCreateClass = /* GraphQL */ `
           id
           startTime
           endTime
+          title
+          goal
+          description
+          pages
+          isHidden
           owner
           createdAt
           updatedAt
@@ -39,6 +44,11 @@ export const onUpdateClass = /* GraphQL */ `
           id
           startTime
           endTime
+          title
+          goal
+          description
+          pages
+          isHidden
           owner
           createdAt
           updatedAt
@@ -62,6 +72,11 @@ export const onDeleteClass = /* GraphQL */ `
           id
           startTime
           endTime
+          title
+          goal
+          description
+          pages
+          isHidden
           owner
           createdAt
           updatedAt
@@ -77,6 +92,24 @@ export const onCreateLesson = /* GraphQL */ `
       id
       startTime
       endTime
+      title
+      subject {
+        color
+        name
+      }
+      goal
+      description
+      videos {
+        title
+        thumbnailUrl
+        url
+      }
+      pages
+      materials {
+        title
+        url
+      }
+      isHidden
       owner
       createdAt
       updatedAt
@@ -100,6 +133,24 @@ export const onUpdateLesson = /* GraphQL */ `
       id
       startTime
       endTime
+      title
+      subject {
+        color
+        name
+      }
+      goal
+      description
+      videos {
+        title
+        thumbnailUrl
+        url
+      }
+      pages
+      materials {
+        title
+        url
+      }
+      isHidden
       owner
       createdAt
       updatedAt
@@ -123,6 +174,24 @@ export const onDeleteLesson = /* GraphQL */ `
       id
       startTime
       endTime
+      title
+      subject {
+        color
+        name
+      }
+      goal
+      description
+      videos {
+        title
+        thumbnailUrl
+        url
+      }
+      pages
+      materials {
+        title
+        url
+      }
+      isHidden
       owner
       createdAt
       updatedAt
