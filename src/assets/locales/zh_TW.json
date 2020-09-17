@@ -131,6 +131,7 @@
       }
     },
     "user_classlist": {
+      "title": "課程一覽",
       "add_class": "登錄課程",
       "login_to_class": "選擇課程進行登入",
       "no_classes": "無可以編輯的課程。請先進行課程登錄。"
