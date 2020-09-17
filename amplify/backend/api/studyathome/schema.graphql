@@ -11,8 +11,27 @@ type Class
   id: ID!
   className: String!
   schoolName: String!
-  lessons: [Lesson] @connection(fields: ["id"])
+  lessons: [Lesson!] @connection(fields: ["id"])
   owner: String!
+}
+
+type Subject
+{
+  name: String!
+  color: String!
+}
+
+type Video
+{
+  title: String
+  url: AWSURL!
+  thumbnailUrl: AWSURL
+}
+
+type Material
+{
+  title: String
+  url: AWSURL!
 }
 
 type Lesson
@@ -29,5 +48,13 @@ type Lesson
   class: Class! @connection
   startTime: AWSDateTime!
   endTime: AWSDateTime!
+  title: String!
+  subject: Subject!
+  goal: String
+  description: String
+  videos: [Video!]
+  pages: String
+  materials: [Material!]
+  isHidden: Boolean!
   owner: String!
 }
