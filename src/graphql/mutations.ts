@@ -21,13 +21,34 @@ export const createClass = /* GraphQL */ `
           startTime
           endTime
           title
+          subject {
+            name
+            color
+          }
           goal
           description
+          videos {
+            title
+            url
+            thumbnailUrl
+          }
           pages
+          materials {
+            title
+            url
+          }
           isHidden
           owner
           createdAt
           updatedAt
+          class {
+            id
+            className
+            schoolName
+            owner
+            createdAt
+            updatedAt
+          }
         }
         nextToken
       }
@@ -53,13 +74,34 @@ export const updateClass = /* GraphQL */ `
           startTime
           endTime
           title
+          subject {
+            name
+            color
+          }
           goal
           description
+          videos {
+            title
+            url
+            thumbnailUrl
+          }
           pages
+          materials {
+            title
+            url
+          }
           isHidden
           owner
           createdAt
           updatedAt
+          class {
+            id
+            className
+            schoolName
+            owner
+            createdAt
+            updatedAt
+          }
         }
         nextToken
       }
@@ -85,13 +127,34 @@ export const deleteClass = /* GraphQL */ `
           startTime
           endTime
           title
+          subject {
+            name
+            color
+          }
           goal
           description
+          videos {
+            title
+            url
+            thumbnailUrl
+          }
           pages
+          materials {
+            title
+            url
+          }
           isHidden
           owner
           createdAt
           updatedAt
+          class {
+            id
+            className
+            schoolName
+            owner
+            createdAt
+            updatedAt
+          }
         }
         nextToken
       }
@@ -137,6 +200,20 @@ export const createLesson = /* GraphQL */ `
         createdAt
         updatedAt
         lessons {
+          items {
+            id
+            classId
+            startTime
+            endTime
+            title
+            goal
+            description
+            pages
+            isHidden
+            owner
+            createdAt
+            updatedAt
+          }
           nextToken
         }
       }
@@ -182,6 +259,20 @@ export const updateLesson = /* GraphQL */ `
         createdAt
         updatedAt
         lessons {
+          items {
+            id
+            classId
+            startTime
+            endTime
+            title
+            goal
+            description
+            pages
+            isHidden
+            owner
+            createdAt
+            updatedAt
+          }
           nextToken
         }
       }
@@ -227,6 +318,20 @@ export const deleteLesson = /* GraphQL */ `
         createdAt
         updatedAt
         lessons {
+          items {
+            id
+            classId
+            startTime
+            endTime
+            title
+            goal
+            description
+            pages
+            isHidden
+            owner
+            createdAt
+            updatedAt
+          }
           nextToken
         }
       }

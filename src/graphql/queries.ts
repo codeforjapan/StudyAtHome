@@ -17,6 +17,20 @@ export const listClasss = /* GraphQL */ `
         createdAt
         updatedAt
         lessons {
+          items {
+            id
+            classId
+            startTime
+            endTime
+            title
+            goal
+            description
+            pages
+            isHidden
+            owner
+            createdAt
+            updatedAt
+          }
           nextToken
         }
       }
@@ -40,13 +54,34 @@ export const getClass = /* GraphQL */ `
           startTime
           endTime
           title
+          subject {
+            name
+            color
+          }
           goal
           description
+          videos {
+            title
+            url
+            thumbnailUrl
+          }
           pages
+          materials {
+            title
+            url
+          }
           isHidden
           owner
           createdAt
           updatedAt
+          class {
+            id
+            className
+            schoolName
+            owner
+            createdAt
+            updatedAt
+          }
         }
         nextToken
       }
@@ -89,6 +124,20 @@ export const getLesson = /* GraphQL */ `
         createdAt
         updatedAt
         lessons {
+          items {
+            id
+            classId
+            startTime
+            endTime
+            title
+            goal
+            description
+            pages
+            isHidden
+            owner
+            createdAt
+            updatedAt
+          }
           nextToken
         }
       }
@@ -135,6 +184,9 @@ export const listLessons = /* GraphQL */ `
           owner
           createdAt
           updatedAt
+          lessons {
+            nextToken
+          }
         }
       }
       nextToken
