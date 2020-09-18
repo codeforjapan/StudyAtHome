@@ -14,6 +14,7 @@ export const onCreateClass = /* GraphQL */ `
       lessons {
         items {
           id
+          classId
           startTime
           endTime
           title
@@ -42,6 +43,7 @@ export const onUpdateClass = /* GraphQL */ `
       lessons {
         items {
           id
+          classId
           startTime
           endTime
           title
@@ -70,6 +72,7 @@ export const onDeleteClass = /* GraphQL */ `
       lessons {
         items {
           id
+          classId
           startTime
           endTime
           title
@@ -90,19 +93,20 @@ export const onCreateLesson = /* GraphQL */ `
   subscription OnCreateLesson {
     onCreateLesson {
       id
+      classId
       startTime
       endTime
       title
       subject {
-        color
         name
+        color
       }
       goal
       description
       videos {
         title
-        thumbnailUrl
         url
+        thumbnailUrl
       }
       pages
       materials {
@@ -131,19 +135,20 @@ export const onUpdateLesson = /* GraphQL */ `
   subscription OnUpdateLesson {
     onUpdateLesson {
       id
+      classId
       startTime
       endTime
       title
       subject {
-        color
         name
+        color
       }
       goal
       description
       videos {
         title
-        thumbnailUrl
         url
+        thumbnailUrl
       }
       pages
       materials {
@@ -172,19 +177,20 @@ export const onDeleteLesson = /* GraphQL */ `
   subscription OnDeleteLesson {
     onDeleteLesson {
       id
+      classId
       startTime
       endTime
       title
       subject {
-        color
         name
+        color
       }
       goal
       description
       videos {
         title
-        thumbnailUrl
         url
+        thumbnailUrl
       }
       pages
       materials {

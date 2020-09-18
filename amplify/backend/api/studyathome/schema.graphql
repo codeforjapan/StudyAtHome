@@ -11,7 +11,7 @@ type Class
   id: ID!
   className: String!
   schoolName: String!
-  lessons: [Lesson!] @connection(fields: ["id"])
+  lessons: [Lesson!] @connection(keyName: "byClass", fields: ["id"])
   owner: String!
 }
 
@@ -36,6 +36,7 @@ type Material
 
 type Lesson
   @model
+  @key(name: "byClass", fields: ["classId", "startTime"])
   @auth(
     rules: [
       { allow: public, operations: [read], provider: apiKey }
@@ -45,7 +46,8 @@ type Lesson
   )
 {
   id: ID!
-  class: Class! @connection
+  classId: ID!
+  class: Class! @connection(fields: ["classId"])
   startTime: AWSDateTime!
   endTime: AWSDateTime!
   title: String!

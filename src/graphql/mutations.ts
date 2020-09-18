@@ -17,6 +17,7 @@ export const createClass = /* GraphQL */ `
       lessons {
         items {
           id
+          classId
           startTime
           endTime
           title
@@ -48,6 +49,7 @@ export const updateClass = /* GraphQL */ `
       lessons {
         items {
           id
+          classId
           startTime
           endTime
           title
@@ -79,6 +81,7 @@ export const deleteClass = /* GraphQL */ `
       lessons {
         items {
           id
+          classId
           startTime
           endTime
           title
@@ -102,19 +105,20 @@ export const createLesson = /* GraphQL */ `
   ) {
     createLesson(input: $input, condition: $condition) {
       id
+      classId
       startTime
       endTime
       title
       subject {
-        color
         name
+        color
       }
       goal
       description
       videos {
         title
-        thumbnailUrl
         url
+        thumbnailUrl
       }
       pages
       materials {
@@ -146,19 +150,20 @@ export const updateLesson = /* GraphQL */ `
   ) {
     updateLesson(input: $input, condition: $condition) {
       id
+      classId
       startTime
       endTime
       title
       subject {
-        color
         name
+        color
       }
       goal
       description
       videos {
         title
-        thumbnailUrl
         url
+        thumbnailUrl
       }
       pages
       materials {
@@ -190,19 +195,20 @@ export const deleteLesson = /* GraphQL */ `
   ) {
     deleteLesson(input: $input, condition: $condition) {
       id
+      classId
       startTime
       endTime
       title
       subject {
-        color
         name
+        color
       }
       goal
       description
       videos {
         title
-        thumbnailUrl
         url
+        thumbnailUrl
       }
       pages
       materials {

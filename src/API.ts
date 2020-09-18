@@ -70,6 +70,7 @@ export type DeleteClassInput = {
 
 export type CreateLessonInput = {
   id?: string | null,
+  classId: string,
   startTime: string,
   endTime: string,
   title: string,
@@ -81,26 +82,26 @@ export type CreateLessonInput = {
   materials?: Array< MaterialInput > | null,
   isHidden: boolean,
   owner: string,
-  lessonClassId: string,
 };
 
 export type SubjectInput = {
-  color: string,
   name: string,
+  color: string,
 };
 
 export type VideoInput = {
   title?: string | null,
+  url: string,
   thumbnailUrl?: string | null,
-  url?: string | null,
 };
 
 export type MaterialInput = {
   title?: string | null,
-  url?: string | null,
+  url: string,
 };
 
 export type ModelLessonConditionInput = {
+  classId?: ModelIDInput | null,
   startTime?: ModelStringInput | null,
   endTime?: ModelStringInput | null,
   title?: ModelStringInput | null,
@@ -111,43 +112,6 @@ export type ModelLessonConditionInput = {
   and?: Array< ModelLessonConditionInput | null > | null,
   or?: Array< ModelLessonConditionInput | null > | null,
   not?: ModelLessonConditionInput | null,
-};
-
-export type ModelBooleanInput = {
-  ne?: boolean | null,
-  eq?: boolean | null,
-  attributeExists?: boolean | null,
-  attributeType?: ModelAttributeTypes | null,
-};
-
-export type UpdateLessonInput = {
-  id: string,
-  startTime?: string | null,
-  endTime?: string | null,
-  title?: string | null,
-  subject?: SubjectInput | null,
-  goal?: string | null,
-  description?: string | null,
-  videos?: Array< VideoInput > | null,
-  pages?: string | null,
-  materials?: Array< MaterialInput > | null,
-  isHidden?: boolean | null,
-  owner?: string | null,
-  lessonClassId?: string | null,
-};
-
-export type DeleteLessonInput = {
-  id?: string | null,
-};
-
-export type ModelClassFilterInput = {
-  id?: ModelIDInput | null,
-  className?: ModelStringInput | null,
-  schoolName?: ModelStringInput | null,
-  owner?: ModelStringInput | null,
-  and?: Array< ModelClassFilterInput | null > | null,
-  or?: Array< ModelClassFilterInput | null > | null,
-  not?: ModelClassFilterInput | null,
 };
 
 export type ModelIDInput = {
@@ -166,8 +130,46 @@ export type ModelIDInput = {
   size?: ModelSizeInput | null,
 };
 
+export type ModelBooleanInput = {
+  ne?: boolean | null,
+  eq?: boolean | null,
+  attributeExists?: boolean | null,
+  attributeType?: ModelAttributeTypes | null,
+};
+
+export type UpdateLessonInput = {
+  id: string,
+  classId?: string | null,
+  startTime?: string | null,
+  endTime?: string | null,
+  title?: string | null,
+  subject?: SubjectInput | null,
+  goal?: string | null,
+  description?: string | null,
+  videos?: Array< VideoInput > | null,
+  pages?: string | null,
+  materials?: Array< MaterialInput > | null,
+  isHidden?: boolean | null,
+  owner?: string | null,
+};
+
+export type DeleteLessonInput = {
+  id?: string | null,
+};
+
+export type ModelClassFilterInput = {
+  id?: ModelIDInput | null,
+  className?: ModelStringInput | null,
+  schoolName?: ModelStringInput | null,
+  owner?: ModelStringInput | null,
+  and?: Array< ModelClassFilterInput | null > | null,
+  or?: Array< ModelClassFilterInput | null > | null,
+  not?: ModelClassFilterInput | null,
+};
+
 export type ModelLessonFilterInput = {
   id?: ModelIDInput | null,
+  classId?: ModelIDInput | null,
   startTime?: ModelStringInput | null,
   endTime?: ModelStringInput | null,
   title?: ModelStringInput | null,
@@ -200,6 +202,7 @@ export type CreateClassMutation = {
       items:  Array< {
         __typename: "Lesson",
         id: string,
+        classId: string,
         startTime: string,
         endTime: string,
         title: string,
@@ -235,6 +238,7 @@ export type UpdateClassMutation = {
       items:  Array< {
         __typename: "Lesson",
         id: string,
+        classId: string,
         startTime: string,
         endTime: string,
         title: string,
@@ -270,6 +274,7 @@ export type DeleteClassMutation = {
       items:  Array< {
         __typename: "Lesson",
         id: string,
+        classId: string,
         startTime: string,
         endTime: string,
         title: string,
@@ -295,27 +300,28 @@ export type CreateLessonMutation = {
   createLesson:  {
     __typename: "Lesson",
     id: string,
+    classId: string,
     startTime: string,
     endTime: string,
     title: string,
     subject:  {
       __typename: "Subject",
-      color: string,
       name: string,
+      color: string,
     },
     goal: string | null,
     description: string | null,
     videos:  Array< {
       __typename: "Video",
       title: string | null,
+      url: string,
       thumbnailUrl: string | null,
-      url: string | null,
     } > | null,
     pages: string | null,
     materials:  Array< {
       __typename: "Material",
       title: string | null,
-      url: string | null,
+      url: string,
     } > | null,
     isHidden: boolean,
     owner: string,
@@ -346,27 +352,28 @@ export type UpdateLessonMutation = {
   updateLesson:  {
     __typename: "Lesson",
     id: string,
+    classId: string,
     startTime: string,
     endTime: string,
     title: string,
     subject:  {
       __typename: "Subject",
-      color: string,
       name: string,
+      color: string,
     },
     goal: string | null,
     description: string | null,
     videos:  Array< {
       __typename: "Video",
       title: string | null,
+      url: string,
       thumbnailUrl: string | null,
-      url: string | null,
     } > | null,
     pages: string | null,
     materials:  Array< {
       __typename: "Material",
       title: string | null,
-      url: string | null,
+      url: string,
     } > | null,
     isHidden: boolean,
     owner: string,
@@ -397,27 +404,28 @@ export type DeleteLessonMutation = {
   deleteLesson:  {
     __typename: "Lesson",
     id: string,
+    classId: string,
     startTime: string,
     endTime: string,
     title: string,
     subject:  {
       __typename: "Subject",
-      color: string,
       name: string,
+      color: string,
     },
     goal: string | null,
     description: string | null,
     videos:  Array< {
       __typename: "Video",
       title: string | null,
+      url: string,
       thumbnailUrl: string | null,
-      url: string | null,
     } > | null,
     pages: string | null,
     materials:  Array< {
       __typename: "Material",
       title: string | null,
-      url: string | null,
+      url: string,
     } > | null,
     isHidden: boolean,
     owner: string,
@@ -483,6 +491,7 @@ export type GetClassQuery = {
       items:  Array< {
         __typename: "Lesson",
         id: string,
+        classId: string,
         startTime: string,
         endTime: string,
         title: string,
@@ -507,27 +516,28 @@ export type GetLessonQuery = {
   getLesson:  {
     __typename: "Lesson",
     id: string,
+    classId: string,
     startTime: string,
     endTime: string,
     title: string,
     subject:  {
       __typename: "Subject",
-      color: string,
       name: string,
+      color: string,
     },
     goal: string | null,
     description: string | null,
     videos:  Array< {
       __typename: "Video",
       title: string | null,
+      url: string,
       thumbnailUrl: string | null,
-      url: string | null,
     } > | null,
     pages: string | null,
     materials:  Array< {
       __typename: "Material",
       title: string | null,
-      url: string | null,
+      url: string,
     } > | null,
     isHidden: boolean,
     owner: string,
@@ -561,27 +571,28 @@ export type ListLessonsQuery = {
     items:  Array< {
       __typename: "Lesson",
       id: string,
+      classId: string,
       startTime: string,
       endTime: string,
       title: string,
       subject:  {
         __typename: "Subject",
-        color: string,
         name: string,
+        color: string,
       },
       goal: string | null,
       description: string | null,
       videos:  Array< {
         __typename: "Video",
         title: string | null,
+        url: string,
         thumbnailUrl: string | null,
-        url: string | null,
       } > | null,
       pages: string | null,
       materials:  Array< {
         __typename: "Material",
         title: string | null,
-        url: string | null,
+        url: string,
       } > | null,
       isHidden: boolean,
       owner: string,
@@ -615,6 +626,7 @@ export type OnCreateClassSubscription = {
       items:  Array< {
         __typename: "Lesson",
         id: string,
+        classId: string,
         startTime: string,
         endTime: string,
         title: string,
@@ -645,6 +657,7 @@ export type OnUpdateClassSubscription = {
       items:  Array< {
         __typename: "Lesson",
         id: string,
+        classId: string,
         startTime: string,
         endTime: string,
         title: string,
@@ -675,6 +688,7 @@ export type OnDeleteClassSubscription = {
       items:  Array< {
         __typename: "Lesson",
         id: string,
+        classId: string,
         startTime: string,
         endTime: string,
         title: string,
@@ -695,27 +709,28 @@ export type OnCreateLessonSubscription = {
   onCreateLesson:  {
     __typename: "Lesson",
     id: string,
+    classId: string,
     startTime: string,
     endTime: string,
     title: string,
     subject:  {
       __typename: "Subject",
-      color: string,
       name: string,
+      color: string,
     },
     goal: string | null,
     description: string | null,
     videos:  Array< {
       __typename: "Video",
       title: string | null,
+      url: string,
       thumbnailUrl: string | null,
-      url: string | null,
     } > | null,
     pages: string | null,
     materials:  Array< {
       __typename: "Material",
       title: string | null,
-      url: string | null,
+      url: string,
     } > | null,
     isHidden: boolean,
     owner: string,
@@ -741,27 +756,28 @@ export type OnUpdateLessonSubscription = {
   onUpdateLesson:  {
     __typename: "Lesson",
     id: string,
+    classId: string,
     startTime: string,
     endTime: string,
     title: string,
     subject:  {
       __typename: "Subject",
-      color: string,
       name: string,
+      color: string,
     },
     goal: string | null,
     description: string | null,
     videos:  Array< {
       __typename: "Video",
       title: string | null,
+      url: string,
       thumbnailUrl: string | null,
-      url: string | null,
     } > | null,
     pages: string | null,
     materials:  Array< {
       __typename: "Material",
       title: string | null,
-      url: string | null,
+      url: string,
     } > | null,
     isHidden: boolean,
     owner: string,
@@ -787,27 +803,28 @@ export type OnDeleteLessonSubscription = {
   onDeleteLesson:  {
     __typename: "Lesson",
     id: string,
+    classId: string,
     startTime: string,
     endTime: string,
     title: string,
     subject:  {
       __typename: "Subject",
-      color: string,
       name: string,
+      color: string,
     },
     goal: string | null,
     description: string | null,
     videos:  Array< {
       __typename: "Video",
       title: string | null,
+      url: string,
       thumbnailUrl: string | null,
-      url: string | null,
     } > | null,
     pages: string | null,
     materials:  Array< {
       __typename: "Material",
       title: string | null,
-      url: string | null,
+      url: string,
     } > | null,
     isHidden: boolean,
     owner: string,

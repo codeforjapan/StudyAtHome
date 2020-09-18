@@ -36,6 +36,7 @@ export const getClass = /* GraphQL */ `
       lessons {
         items {
           id
+          classId
           startTime
           endTime
           title
@@ -56,19 +57,20 @@ export const getLesson = /* GraphQL */ `
   query GetLesson($id: ID!) {
     getLesson(id: $id) {
       id
+      classId
       startTime
       endTime
       title
       subject {
-        color
         name
+        color
       }
       goal
       description
       videos {
         title
-        thumbnailUrl
         url
+        thumbnailUrl
       }
       pages
       materials {
@@ -102,19 +104,20 @@ export const listLessons = /* GraphQL */ `
     listLessons(filter: $filter, limit: $limit, nextToken: $nextToken) {
       items {
         id
+        classId
         startTime
         endTime
         title
         subject {
-          color
           name
+          color
         }
         goal
         description
         videos {
           title
-          thumbnailUrl
           url
+          thumbnailUrl
         }
         pages
         materials {
