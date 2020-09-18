@@ -276,6 +276,15 @@
           "name" : "lessons",
           "description" : null,
           "args" : [ {
+            "name" : "startTime",
+            "description" : null,
+            "type" : {
+              "kind" : "INPUT_OBJECT",
+              "name" : "ModelStringKeyConditionInput",
+              "ofType" : null
+            },
+            "defaultValue" : null
+          }, {
             "name" : "filter",
             "description" : null,
             "type" : {
@@ -392,6 +401,21 @@
         "description" : null,
         "fields" : [ {
           "name" : "id",
+          "description" : null,
+          "args" : [ ],
+          "type" : {
+            "kind" : "NON_NULL",
+            "name" : null,
+            "ofType" : {
+              "kind" : "SCALAR",
+              "name" : "ID",
+              "ofType" : null
+            }
+          },
+          "isDeprecated" : false,
+          "deprecationReason" : null
+        }, {
+          "name" : "classId",
           "description" : null,
           "args" : [ ],
           "type" : {
@@ -621,7 +645,7 @@
         "name" : "Subject",
         "description" : null,
         "fields" : [ {
-          "name" : "color",
+          "name" : "name",
           "description" : null,
           "args" : [ ],
           "type" : {
@@ -636,7 +660,7 @@
           "isDeprecated" : false,
           "deprecationReason" : null
         }, {
-          "name" : "name",
+          "name" : "color",
           "description" : null,
           "args" : [ ],
           "type" : {
@@ -671,18 +695,22 @@
           "isDeprecated" : false,
           "deprecationReason" : null
         }, {
-          "name" : "thumbnailUrl",
+          "name" : "url",
           "description" : null,
           "args" : [ ],
           "type" : {
-            "kind" : "SCALAR",
-            "name" : "AWSURL",
-            "ofType" : null
+            "kind" : "NON_NULL",
+            "name" : null,
+            "ofType" : {
+              "kind" : "SCALAR",
+              "name" : "AWSURL",
+              "ofType" : null
+            }
           },
           "isDeprecated" : false,
           "deprecationReason" : null
         }, {
-          "name" : "url",
+          "name" : "thumbnailUrl",
           "description" : null,
           "args" : [ ],
           "type" : {
@@ -726,9 +754,13 @@
           "description" : null,
           "args" : [ ],
           "type" : {
-            "kind" : "SCALAR",
-            "name" : "AWSURL",
-            "ofType" : null
+            "kind" : "NON_NULL",
+            "name" : null,
+            "ofType" : {
+              "kind" : "SCALAR",
+              "name" : "AWSURL",
+              "ofType" : null
+            }
           },
           "isDeprecated" : false,
           "deprecationReason" : null
@@ -748,11 +780,96 @@
         "possibleTypes" : null
       }, {
         "kind" : "INPUT_OBJECT",
+        "name" : "ModelStringKeyConditionInput",
+        "description" : null,
+        "fields" : null,
+        "inputFields" : [ {
+          "name" : "eq",
+          "description" : null,
+          "type" : {
+            "kind" : "SCALAR",
+            "name" : "String",
+            "ofType" : null
+          },
+          "defaultValue" : null
+        }, {
+          "name" : "le",
+          "description" : null,
+          "type" : {
+            "kind" : "SCALAR",
+            "name" : "String",
+            "ofType" : null
+          },
+          "defaultValue" : null
+        }, {
+          "name" : "lt",
+          "description" : null,
+          "type" : {
+            "kind" : "SCALAR",
+            "name" : "String",
+            "ofType" : null
+          },
+          "defaultValue" : null
+        }, {
+          "name" : "ge",
+          "description" : null,
+          "type" : {
+            "kind" : "SCALAR",
+            "name" : "String",
+            "ofType" : null
+          },
+          "defaultValue" : null
+        }, {
+          "name" : "gt",
+          "description" : null,
+          "type" : {
+            "kind" : "SCALAR",
+            "name" : "String",
+            "ofType" : null
+          },
+          "defaultValue" : null
+        }, {
+          "name" : "between",
+          "description" : null,
+          "type" : {
+            "kind" : "LIST",
+            "name" : null,
+            "ofType" : {
+              "kind" : "SCALAR",
+              "name" : "String",
+              "ofType" : null
+            }
+          },
+          "defaultValue" : null
+        }, {
+          "name" : "beginsWith",
+          "description" : null,
+          "type" : {
+            "kind" : "SCALAR",
+            "name" : "String",
+            "ofType" : null
+          },
+          "defaultValue" : null
+        } ],
+        "interfaces" : null,
+        "enumValues" : null,
+        "possibleTypes" : null
+      }, {
+        "kind" : "INPUT_OBJECT",
         "name" : "ModelLessonFilterInput",
         "description" : null,
         "fields" : null,
         "inputFields" : [ {
           "name" : "id",
+          "description" : null,
+          "type" : {
+            "kind" : "INPUT_OBJECT",
+            "name" : "ModelIDInput",
+            "ofType" : null
+          },
+          "defaultValue" : null
+        }, {
+          "name" : "classId",
           "description" : null,
           "type" : {
             "kind" : "INPUT_OBJECT",
@@ -1827,6 +1944,19 @@
           },
           "defaultValue" : null
         }, {
+          "name" : "classId",
+          "description" : null,
+          "type" : {
+            "kind" : "NON_NULL",
+            "name" : null,
+            "ofType" : {
+              "kind" : "SCALAR",
+              "name" : "ID",
+              "ofType" : null
+            }
+          },
+          "defaultValue" : null
+        }, {
           "name" : "startTime",
           "description" : null,
           "type" : {
@@ -1965,19 +2095,6 @@
             }
           },
           "defaultValue" : null
-        }, {
-          "name" : "lessonClassId",
-          "description" : null,
-          "type" : {
-            "kind" : "NON_NULL",
-            "name" : null,
-            "ofType" : {
-              "kind" : "SCALAR",
-              "name" : "ID",
-              "ofType" : null
-            }
-          },
-          "defaultValue" : null
         } ],
         "interfaces" : null,
         "enumValues" : null,
@@ -1988,7 +2105,7 @@
         "description" : null,
         "fields" : null,
         "inputFields" : [ {
-          "name" : "color",
+          "name" : "name",
           "description" : null,
           "type" : {
             "kind" : "NON_NULL",
@@ -2001,7 +2118,7 @@
           },
           "defaultValue" : null
         }, {
-          "name" : "name",
+          "name" : "color",
           "description" : null,
           "type" : {
             "kind" : "NON_NULL",
@@ -2032,16 +2149,20 @@
           },
           "defaultValue" : null
         }, {
-          "name" : "thumbnailUrl",
+          "name" : "url",
           "description" : null,
           "type" : {
-            "kind" : "SCALAR",
-            "name" : "AWSURL",
-            "ofType" : null
+            "kind" : "NON_NULL",
+            "name" : null,
+            "ofType" : {
+              "kind" : "SCALAR",
+              "name" : "AWSURL",
+              "ofType" : null
+            }
           },
           "defaultValue" : null
         }, {
-          "name" : "url",
+          "name" : "thumbnailUrl",
           "description" : null,
           "type" : {
             "kind" : "SCALAR",
@@ -2071,9 +2192,13 @@
           "name" : "url",
           "description" : null,
           "type" : {
-            "kind" : "SCALAR",
-            "name" : "AWSURL",
-            "ofType" : null
+            "kind" : "NON_NULL",
+            "name" : null,
+            "ofType" : {
+              "kind" : "SCALAR",
+              "name" : "AWSURL",
+              "ofType" : null
+            }
           },
           "defaultValue" : null
         } ],
@@ -2086,6 +2211,15 @@
         "description" : null,
         "fields" : null,
         "inputFields" : [ {
+          "name" : "classId",
+          "description" : null,
+          "type" : {
+            "kind" : "INPUT_OBJECT",
+            "name" : "ModelIDInput",
+            "ofType" : null
+          },
+          "defaultValue" : null
+        }, {
           "name" : "startTime",
           "description" : null,
           "type" : {
@@ -2206,6 +2340,15 @@
           },
           "defaultValue" : null
         }, {
+          "name" : "classId",
+          "description" : null,
+          "type" : {
+            "kind" : "SCALAR",
+            "name" : "ID",
+            "ofType" : null
+          },
+          "defaultValue" : null
+        }, {
           "name" : "startTime",
           "description" : null,
           "type" : {
@@ -2317,15 +2460,6 @@
           "type" : {
             "kind" : "SCALAR",
             "name" : "String",
-            "ofType" : null
-          },
-          "defaultValue" : null
-        }, {
-          "name" : "lessonClassId",
-          "description" : null,
-          "type" : {
-            "kind" : "SCALAR",
-            "name" : "ID",
             "ofType" : null
           },
           "defaultValue" : null
@@ -3415,6 +3549,23 @@
         "onFragment" : false,
         "onField" : false
       }, {
+        "name" : "deprecated",
+        "description" : null,
+        "locations" : [ "FIELD_DEFINITION", "ENUM_VALUE" ],
+        "args" : [ {
+          "name" : "reason",
+          "description" : null,
+          "type" : {
+            "kind" : "SCALAR",
+            "name" : "String",
+            "ofType" : null
+          },
+          "defaultValue" : "\"No longer supported\""
+        } ],
+        "onOperation" : false,
+        "onFragment" : false,
+        "onField" : false
+      }, {
         "name" : "aws_publish",
         "description" : "Tells the service which subscriptions will be published to when this mutation is called. This directive is deprecated use @aws_susbscribe directive instead.",
         "locations" : [ "FIELD_DEFINITION" ],
@@ -3510,23 +3661,6 @@
             }
           },
           "defaultValue" : null
-        } ],
-        "onOperation" : false,
-        "onFragment" : false,
-        "onField" : false
-      }, {
-        "name" : "deprecated",
-        "description" : null,
-        "locations" : [ "FIELD_DEFINITION", "ENUM_VALUE" ],
-        "args" : [ {
-          "name" : "reason",
-          "description" : null,
-          "type" : {
-            "kind" : "SCALAR",
-            "name" : "String",
-            "ofType" : null
-          },
-          "defaultValue" : "\"No longer supported\""
         } ],
         "onOperation" : false,
         "onFragment" : false,
