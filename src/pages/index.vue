@@ -91,9 +91,13 @@
 
 <script lang="ts">
 import Vue from 'vue'
-import { vxm } from '@/store'
 import BaseInputField from '@/components/BaseInputField.vue'
 import BaseActionButton from '@/components/BaseActionButton.vue'
+import { API } from 'aws-amplify'
+import { GRAPHQL_AUTH_MODE, GraphQLResult } from '@aws-amplify/api'
+import { getClass } from '@/graphql/queries'
+import { GetClassQuery } from '@/API'
+import { vxm } from '@/store'
 
 type DataType = {
   classId: string
@@ -116,17 +120,29 @@ export default Vue.extend({
     }
   },
   methods: {
-    loginToClass(): void {
+    async loginToClass() {
       this.loading = true
-      vxm.classData
-        .loadClassData(this.classId)
-        .then(() => {
-          this.$router.push('/classes')
+
+      try {
+        const result = (await API.graphql({
+          query: getClass,
+          variables: { id: this.classId },
+          authMode: GRAPHQL_AUTH_MODE.API_KEY,
+        })) as GraphQLResult<GetClassQuery>
+
+        const className = result?.data?.getClass?.className as string
+        const lessons = result.data?.getClass?.lessons?.items as any[]
+
+        await vxm.classData.setClassData({
+          classId: this.classId,
+          className,
+          lessons,
         })
-        .catch(() => {
-          this.loading = false
-          this.error = true
-        })
+        await this.$router.push('/classes')
+      } catch {
+        this.loading = false
+        this.error = true
+      }
     },
   },
 })
