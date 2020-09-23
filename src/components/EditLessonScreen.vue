@@ -59,7 +59,7 @@ import EditLessonScreenInner1 from '@/components/EditLessonScreenInner1.vue'
 import EditLessonScreenInner2 from '@/components/EditLessonScreenInner2.vue'
 import EditLessonScreenInner3 from '@/components/EditLessonScreenInner3.vue'
 import EditLessonScreenInner4 from '@/components/EditLessonScreenInner4.vue'
-import { classData } from '@/types/store/classData'
+import classData from '@/types/store/classData'
 
 type stateType = {
   error: boolean

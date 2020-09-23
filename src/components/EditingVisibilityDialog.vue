@@ -58,7 +58,7 @@ import Vue from 'vue'
 import dayjs from 'dayjs'
 import BaseDialog from '@/components/BaseDialog.vue'
 import { vxm } from '@/store'
-import { classData } from '@/types/store/classData'
+import classData from '@/types/store/classData'
 
 type LocalData = {
   openEditingVisibilityDialog: boolean
