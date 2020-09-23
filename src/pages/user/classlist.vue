@@ -53,8 +53,8 @@ import BaseActionButton from '@/components/BaseActionButton.vue'
 import { Auth, API, graphqlOperation } from 'aws-amplify'
 import { GraphQLResult } from '@aws-amplify/api'
 import { vxm } from '@/store'
-import { ListClasssQuery } from '../../API'
-import { listClasss } from '../../graphql/queries'
+import { listClasss } from '@/graphql/queries'
+import { ListClasssQuery } from '@/API'
 
 type DataType = {
   items: Object[]
