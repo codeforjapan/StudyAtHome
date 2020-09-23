@@ -30,7 +30,7 @@ declare namespace classData {
   }
 
   export interface LessonWithId extends Lesson {
-    docId: LessonId
+    id: LessonId
   }
 
   export interface Subject {

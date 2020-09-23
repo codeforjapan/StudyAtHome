@@ -80,7 +80,7 @@ export default Vue.extend({
       type: Object as () => classData.LessonWithId,
       required: true,
       default: {
-        docId: '',
+        id: '',
       },
     },
   },
@@ -131,13 +131,13 @@ export default Vue.extend({
   },
   methods: {
     toggleIsHidden() {
-      const lesson = Object.assign({}, this.value, {
+      const lesson = {
         isHidden: !this.value.isHidden,
-      }) as classData.Lesson
+      }
       vxm.classData
         .changeLesson({
           editData: lesson,
-          id: this.value.docId,
+          id: this.value.id,
         })
         .then(() => {
           this.success = true
