@@ -23,7 +23,7 @@ import EditorInputFieldPickable from '~/components/EditorInputFieldPickable.vue'
 export type formData = {
   videoUrl: string
   videoTitle: string
-  videoThumbnailUrl: string
+  videoThumbnailUrl: string | null
 }
 @Component({
   components: {
@@ -35,7 +35,8 @@ export default class EditLessonScreenInner3 extends Vue {
   tempFormData = {
     videoUrl: this.form.videoUrl,
     videoTitle: this.form.videoTitle,
-    videoThumbnailUrl: this.form.videoThumbnailUrl,
+    videoThumbnailUrl:
+      this.form.videoThumbnailUrl !== '' ? this.form.videoThumbnailUrl : null,
   }
 
   @Prop({
