@@ -206,9 +206,9 @@ export default Vue.extend({
     fourthPageData: {
       get(): Object {
         return {
-          videoUrl: this.lessonData.videoUrl,
-          videoTitle: this.lessonData.videoTitle,
-          videoThumbnailUrl: this.lessonData.videoThumbnailUrl,
+          pages: this.lessonData.pages,
+          materialsTitle: this.lessonData.materialsTitle,
+          materialsUrl: this.lessonData.materialsUrl,
         }
       },
       set(val: any): void {
@@ -268,9 +268,12 @@ export default Vue.extend({
           thumbnailUrl: this.lessonData.videoThumbnailUrl,
         })
       const materialData = []
-      if (this.lessonData.materialsTitle && this.lessonData.materialsUrl)
+      if (this.lessonData.materialsUrl)
         materialData.push({
-          title: this.lessonData.materialsTitle,
+          title:
+            this.lessonData.materialsTitle !== ''
+              ? this.lessonData.materialsTitle
+              : this.lessonData.materialsUrl,
           url: this.lessonData.materialsUrl,
         })
       return {
