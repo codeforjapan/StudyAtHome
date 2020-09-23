@@ -5,7 +5,7 @@ import {
   mutation,
 } from 'vuex-class-component'
 import { AppStore } from '@/store/modules/app'
-import { classData } from '@/types/store/classData'
+import classData from '@/types/store/classData'
 import { Auth, API, graphqlOperation } from 'aws-amplify'
 import { GraphQLResult } from '@aws-amplify/api'
 import { getClass } from '@/graphql/queries'

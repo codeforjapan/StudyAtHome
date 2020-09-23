@@ -1,6 +1,3 @@
-import firebase from '@/plugins/firebase'
-import FireStoreTimestamp = firebase.firestore.Timestamp
-
 declare namespace classData {
   // 汎用的な型の定義
   export type UrlString = string
@@ -48,19 +45,6 @@ declare namespace classData {
     title: string
     url: UrlString
   }
-
-  namespace database {
-    export interface Lesson {
-      startTime: FireStoreTimestamp
-      endTime: FireStoreTimestamp
-      title: string
-      subject: Subject
-      goal: string
-      description: string
-      videos: Video[]
-      pages: string
-      materials: Material[]
-      isHidden: boolean
-    }
-  }
 }
+
+export default classData

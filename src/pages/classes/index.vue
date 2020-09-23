@@ -28,7 +28,7 @@ import dayjs from 'dayjs'
 import isToday from 'date-fns/isToday'
 import { vxm } from '@/store'
 import PeriodSection from '@/components/PeriodSection.vue'
-import { classData } from '@/types/store/classData'
+import classData from '@/types/store/classData'
 import LessonWithId = classData.LessonWithId
 
 type LessonsGroupedBy = {
