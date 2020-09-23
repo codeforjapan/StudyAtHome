@@ -6,8 +6,8 @@ import {
 } from 'vuex-class-component'
 import { AppStore } from '@/store/modules/app'
 import { classData } from '@/types/store/classData'
-import { Auth, API, graphqlOperation } from 'aws-amplify'
-import { GraphQLResult } from '@aws-amplify/api'
+import { API, Auth, graphqlOperation } from 'aws-amplify'
+import { GRAPHQL_AUTH_MODE, GraphQLResult } from '@aws-amplify/api'
 import { getClass } from '@/graphql/queries'
 import { createClass, createLesson, updateLesson } from '@/graphql/mutations'
 import { GetClassQuery } from '@/API'
@@ -64,9 +64,11 @@ export class ClassDataStore extends VuexModule implements classData.ClassData {
 
   @action
   public async loadClassData(classId: classData.ClassId) {
-    const result = (await API.graphql(
-      graphqlOperation(getClass, { id: classId })
-    )) as GraphQLResult<GetClassQuery>
+    const result = (await API.graphql({
+      query: getClass,
+      variables: { id: classId },
+      authMode: GRAPHQL_AUTH_MODE.API_KEY,
+    })) as GraphQLResult<GetClassQuery>
 
     const classObject = result?.data?.getClass
     if (!classObject) {
