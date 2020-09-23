@@ -79,7 +79,7 @@ export default Vue.extend({
   methods: {
     toLessonDetail() {
       const lesson = this.lesson as LessonWithId
-      this.$router.push('/lesson/?lessonId=' + lesson.docId)
+      this.$router.push('/lesson/?lessonId=' + lesson.id)
     },
   },
 })

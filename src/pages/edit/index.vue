@@ -244,7 +244,7 @@ export default Vue.extend({
         value.materials.length === 0 ? '' : value.materials[0].url
       this.editPageValue = {
         isHidden: value.isHidden,
-        lessonId: value.docId,
+        lessonId: value.id,
         date: dayjs(value.startTime).format('YYYY-MM-DD'),
         startTime: dayjs(value.startTime).format('HH:mm'),
         endTime: dayjs(value.endTime).format('HH:mm'),
