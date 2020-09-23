@@ -120,7 +120,7 @@ import 'dayjs/locale/ja'
 import add from 'date-fns/add'
 import { vxm } from '@/store'
 import SubjectTag from '@/components/SubjectTag.vue'
-import { classData } from '~/types/store/classData'
+import classData from '~/types/store/classData'
 import LessonWithId = classData.LessonWithId
 
 type DataType = {

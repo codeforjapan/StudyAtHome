@@ -135,7 +135,7 @@ import PeriodSection from '@/components/PeriodSection.vue'
 import EditLessonScreenBottomSheet from '@/components/EditLessonScreenBottomSheet.vue'
 import EditLessonScreen from '@/components/EditLessonScreen.vue'
 import EditingVisibilityDialog from '@/components/EditingVisibilityDialog.vue'
-import { classData } from '@/types/store/classData'
+import classData from '@/types/store/classData'
 import LessonWithId = classData.LessonWithId
 
 type LessonsGroupedBy = {

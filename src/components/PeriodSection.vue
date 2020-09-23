@@ -29,7 +29,7 @@ import Vue from 'vue'
 import dayjs from 'dayjs'
 import minMax from 'dayjs/plugin/minMax'
 import LessonSummaryCard from '@/components/LessonSummaryCard.vue'
-import { classData } from '@/types/store/classData'
+import classData from '@/types/store/classData'
 dayjs.extend(minMax)
 
 export default Vue.extend({

@@ -58,7 +58,7 @@
 import Vue from 'vue'
 import SubjectTag from '@/components/SubjectTag.vue'
 import BaseEditorButton from '@/components/BaseEditorButton.vue'
-import { classData } from '~/types/store/classData'
+import classData from '~/types/store/classData'
 import LessonWithId = classData.LessonWithId
 
 export default Vue.extend({
