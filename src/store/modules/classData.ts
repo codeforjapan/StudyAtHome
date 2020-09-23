@@ -8,10 +8,10 @@ import { AppStore } from '@/store/modules/app'
 import { classData } from '@/types/store/classData'
 import { Auth, API, graphqlOperation } from 'aws-amplify'
 import { GraphQLResult } from '@aws-amplify/api'
-import { getClass } from '../../graphql/queries'
-import { createClass } from '../../graphql/mutations'
-import { GetClassQuery } from '../../API'
-import { vxm } from '~/store'
+import { getClass } from '@/graphql/queries'
+import { createClass, createLesson, updateLesson } from '@/graphql/mutations'
+import { GetClassQuery } from '@/API'
+import { vxm } from '@/store'
 
 const VuexModule = createModule({
   namespaced: 'classData',
@@ -53,7 +53,7 @@ export class ClassDataStore extends VuexModule implements classData.ClassData {
     const end = d(appStore.currentDate, 23, 59, 59).getTime()
 
     return this.lessons.filter((lesson) => {
-      const startOfLesson = lesson.startTime.getTime()
+      const startOfLesson = new Date(lesson.startTime).getTime()
       return start <= startOfLesson && end >= startOfLesson
     })
   }
@@ -72,31 +72,15 @@ export class ClassDataStore extends VuexModule implements classData.ClassData {
     if (!classObject) {
       throw new Error('クラスIDが間違っています')
     }
-    const classDataLessons = classObject?.lessons?.items as any[]
+
     const className = classObject.className
 
-    // classDataLessonsSnapshot.forEach((doc) => {
-    //   const retrieved = doc.data() as classData.database.Lesson
-    //   const converted: classData.LessonWithId = {
-    //     docId: doc.id,
-    //     startTime: retrieved.startTime.toDate(),
-    //     endTime: retrieved.endTime.toDate(),
-    //     title: retrieved.title,
-    //     subject: retrieved.subject,
-    //     goal: retrieved.goal,
-    //     description: retrieved.description,
-    //     videos: retrieved.videos,
-    //     pages: retrieved.pages,
-    //     materials: retrieved.materials,
-    //     isHidden: retrieved.isHidden,
-    //   }
-    //   lessons.push(converted)
-    // })
+    const classLessonsItems = result.data?.getClass?.lessons?.items as any[]
 
     this.setClassData({
       classId,
       className,
-      lessons: classDataLessons,
+      lessons: classLessonsItems,
     })
   }
 
@@ -150,38 +134,45 @@ export class ClassDataStore extends VuexModule implements classData.ClassData {
   }
 
   @action
-  public async registerLesson(lessonData: classData.Lesson) { // eslint-disable-line
-    // await firebase
-    //   .firestore()
-    //   .collection('classData')
-    //   .doc(this.classId)
-    //   .collection('Lessons')
-    //   .add(lessonData)
-    //   .catch(() => {
-    //     return Promise.reject(new Error('エラーによって処理に失敗しました'))
-    //   })
-    // this.loadClassData(this.classId)
+  public async registerLesson(lessonData: classData.Lesson) {
+    try {
+      const user = await Auth.currentAuthenticatedUser()
+      await API.graphql(
+        graphqlOperation(createLesson, {
+          input: {
+            classId: this.classId,
+            owner: user.username,
+            ...lessonData,
+          },
+        })
+      )
+    } catch {
+      throw new Error('エラーによって処理に失敗しました')
+    }
+    await this.loadClassData(this.classId)
   }
 
   @action
   public async changeLesson({
-    editData,  // eslint-disable-line
-    id, // eslint-disable-line
+    editData,
+    id,
   }: {
-    editData: classData.Lesson
+    editData: any
     id: classData.LessonId
   }) {
-    // await firebase
-    //   .firestore()
-    //   .collection('classData')
-    //   .doc(this.classId)
-    //   .collection('Lessons')
-    //   .doc(id)
-    //   .set(editData)
-    //   .catch(() => {
-    //     return Promise.reject(new Error('エラーによって処理に失敗しました'))
-    //   })
-    // this.loadClassData(this.classId)
+    try {
+      await API.graphql(
+        graphqlOperation(updateLesson, {
+          input: {
+            id,
+            ...editData,
+          },
+        })
+      )
+    } catch {
+      throw new Error('エラーによって処理に失敗しました')
+    }
+    await this.loadClassData(this.classId)
   }
 
   @mutation
