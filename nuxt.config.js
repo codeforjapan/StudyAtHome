@@ -92,10 +92,6 @@ export default {
       src: '@/plugins/amplify',
       ssr: false,
     },
-    {
-      src: '@/plugins/persistedstate.js',
-      ssr: false,
-    },
   ],
   /*
    ** Nuxt.js dev-modules
