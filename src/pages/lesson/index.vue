@@ -150,7 +150,7 @@ export default Vue.extend({
       required: false,
       default() {
         return {
-          docId: '',
+          id: '',
           startTime: new Date(),
           endTime: add(new Date(), { minutes: 40 }),
           title: '授業のタイトル',
@@ -196,7 +196,7 @@ export default Vue.extend({
   data(): DataType {
     return {
       lesson: {
-        docId: '',
+        id: '',
         startTime: new Date(),
         endTime: new Date(),
         title: '',
@@ -242,7 +242,7 @@ export default Vue.extend({
       const data:
         | LessonWithId
         | undefined = vxm.classData.lessonsOnCurrentDate.find(
-        (e) => this.$route.query.lessonId === e.docId
+        (e) => this.$route.query.lessonId === e.id
       ) as LessonWithId | undefined
       this.lesson = data ?? this.dummyLesson
     })
