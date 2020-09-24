@@ -77,7 +77,7 @@
         </div>
       </template>
     </base-bottom-sheet-layer>
-    <v-snackbar v-model="error" :timeout="5000" absolute top color="#C01B61">
+    <v-snackbar v-model="error" :timeout="5000" top color="#C01B61">
       {{ $t('common.general.error.default') }}
     </v-snackbar>
     <v-dialog v-model="completion" max-width="460px">

@@ -55,7 +55,7 @@
         </div>
       </template>
     </base-bottom-sheet-layer>
-    <v-snackbar v-model="error" :timeout="5000" absolute top color="#C01B61">
+    <v-snackbar v-model="error" :timeout="5000" top color="#C01B61">
       {{ $t('pages.user_login.error.invalid') }}
     </v-snackbar>
   </div>
@@ -95,7 +95,7 @@ export default Vue.extend({
       try {
         await Auth.signIn(this.email, this.password)
         // await vxm.user.login()
-        this.$router.push('/user/classlist')
+        await this.$router.push('/user/classlist')
       } catch (err) {
         this.loading = false
         this.error = true

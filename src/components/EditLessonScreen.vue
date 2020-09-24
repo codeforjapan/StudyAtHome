@@ -44,7 +44,7 @@
         </v-container>
       </v-card-actions>
     </v-card>
-    <v-snackbar v-model="error" :timeout="5000" absolute top color="#C01B61">
+    <v-snackbar v-model="error" :timeout="5000" top color="#C01B61">
       {{ $t('components.editing_screen.error.could_not_add_lesson') }}
     </v-snackbar>
   </v-bottom-sheet>

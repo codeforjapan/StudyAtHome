@@ -43,7 +43,7 @@
         />
       </template>
     </base-bottom-sheet-layer>
-    <v-snackbar v-model="error" :timeout="5000" absolute color="#C01B61" top>
+    <v-snackbar v-model="error" :timeout="5000" top color="#C01B61">
       {{ $t('pages.user_register_class.error.default') }}
     </v-snackbar>
   </div>

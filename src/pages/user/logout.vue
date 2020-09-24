@@ -5,7 +5,7 @@
       :title="$t('pages.user_logout.title')"
       title-en="LOGOUT"
     />
-    <v-snackbar v-model="error" :timeout="5000" absolute top color="#C01B61">
+    <v-snackbar v-model="error" :timeout="5000" top color="#C01B61">
       {{ $t('pages.user_logout.error.invalid') }}
     </v-snackbar>
   </div>
