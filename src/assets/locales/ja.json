@@ -126,7 +126,9 @@
         "label": "時間割をつくる先生方",
         "buttons": {
           "signup": "ユーザー登録する",
-          "login": "ログインする"
+          "login": "ログインする",
+          "registerLessons": "時間割をつくる",
+          "logout": "ログアウトする"
         }
       }
     },
