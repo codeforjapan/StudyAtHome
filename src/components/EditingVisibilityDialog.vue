@@ -120,7 +120,7 @@ export default Vue.extend({
             'components.editing_visibility_dialog.buttons.show'
           ).toString()
         : this.$t(
-            'components.editing_visibility_dialog.buttons.show'
+            'components.editing_visibility_dialog.buttons.hide'
           ).toString()
     },
   },
