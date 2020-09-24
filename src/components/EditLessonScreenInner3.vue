@@ -13,9 +13,7 @@
       :placeholders="$t('components.editing_screen.placeholder.video_keyword')"
     />
 
-    <button class="Button" @click="handleVideoSearchWord">
-      検索する
-    </button>
+    <button class="Button" @click="handleVideoSearchWord">検索する</button>
 
     <div v-if="videoSearchResult.length > 0" class="SearchResult">
       <h3>NHK For Schoolの動画検索結果</h3>
