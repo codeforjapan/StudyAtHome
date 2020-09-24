@@ -55,7 +55,7 @@
         </div>
       </template>
     </base-bottom-sheet-layer>
-    <v-snackbar v-model="error" :timeout="5000" absolute top color="#C01B61">
+    <v-snackbar v-model="error" :timeout="5000" top color="#C01B61">
       {{ $t('pages.user_verify.error.invalid') }}
     </v-snackbar>
   </div>

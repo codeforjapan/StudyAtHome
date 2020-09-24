@@ -40,14 +40,14 @@
         </div>
       </template>
     </base-dialog>
-    <v-snackbar v-model="error" :timeout="5000" absolute top color="#C01B61">
+    <v-snackbar v-model="error" :timeout="5000" top color="#C01B61">
       {{
         $t(
           'components.editing_visibility_dialog.error.could_not_change_visibility'
         )
       }}
     </v-snackbar>
-    <v-snackbar v-model="success" :timeout="5000" absolute top color="success">
+    <v-snackbar v-model="success" :timeout="5000" top color="success">
       {{ $t('components.editing_visibility_dialog.success.message') }}
     </v-snackbar>
   </div>
