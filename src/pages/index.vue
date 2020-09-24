@@ -83,7 +83,7 @@
         </div>
       </v-flex>
     </v-flex>
-    <v-snackbar v-model="error" :timeout="5000" absolute top color="#C01B61">
+    <v-snackbar v-model="error" :timeout="5000" top color="#C01B61">
       {{ $t('pages.index.error.invalid_class_id') }}
     </v-snackbar>
   </v-layout>
