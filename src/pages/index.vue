@@ -39,17 +39,33 @@
         </v-row>
         <div style="margin: 0 10px">
           <base-action-button
+            v-if="isLoggedIn"
+            :text="$t('pages.index.teachers.buttons.registerLessons')"
+            class="registerButton"
+            @click="$router.push('/user/classlist')"
+          />
+          <base-action-button
+            v-else
             :text="$t('pages.index.teachers.buttons.signup')"
             class="registerButton"
             @click="$router.push('/user/terms')"
           />
 
           <base-action-button
+            v-if="isLoggedIn"
+            :text="$t('pages.index.teachers.buttons.logout')"
+            class="loginButton"
+            theme="secondary"
+            @click="$router.push('/user/logout')"
+          />
+          <base-action-button
+            v-else
             :text="$t('pages.index.teachers.buttons.login')"
             class="loginButton"
             theme="secondary"
             @click="$router.push('/user/login')"
           />
+
           <v-footer color="#004170" padless>
             <ul class="Index-Footer-List">
               <li>
@@ -93,7 +109,7 @@
 import Vue from 'vue'
 import BaseInputField from '@/components/BaseInputField.vue'
 import BaseActionButton from '@/components/BaseActionButton.vue'
-import { API } from 'aws-amplify'
+import { API, Auth } from 'aws-amplify'
 import { GRAPHQL_AUTH_MODE, GraphQLResult } from '@aws-amplify/api'
 import { getClass } from '@/graphql/queries'
 import { GetClassQuery } from '@/API'
@@ -104,6 +120,7 @@ type DataType = {
   loading: boolean
   error: boolean
   valid: boolean
+  isLoggedIn: boolean
 }
 
 export default Vue.extend({
@@ -117,7 +134,12 @@ export default Vue.extend({
       loading: false,
       error: false,
       valid: true,
+      isLoggedIn: false,
     }
+  },
+  async mounted() {
+    const userInfo = await Auth.currentUserInfo()
+    this.isLoggedIn = !!userInfo
   },
   methods: {
     async loginToClass() {
