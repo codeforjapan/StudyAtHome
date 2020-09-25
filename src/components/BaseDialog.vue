@@ -15,7 +15,7 @@
         <slot />
       </v-container>
       <v-card-actions class="DialogCardButtons px-4">
-        <action-button
+        <base-action-button
           v-for="(action, i) in actions"
           :key="i"
           class="my-3"
@@ -24,7 +24,7 @@
           :text="action.buttonLabel"
           @click="doDialogAction(i)"
         />
-        <action-button
+        <base-action-button
           v-if="!hideDefaultCancelButton"
           :text="defaultCancelButtonLabel"
           theme="border"
@@ -38,7 +38,7 @@
 
 <script lang="ts">
 import Vue from 'vue'
-import ActionButton from '@/components/ActionButton.vue'
+import BaseActionButton from '@/components/BaseActionButton.vue'
 
 export type DialogAction = {
   buttonLabel: string
@@ -65,45 +65,45 @@ type Methods = {
 
 export default Vue.extend<unknown, Methods, unknown, Props>({
   name: 'BaseDialog',
-  components: { ActionButton },
+  components: { BaseActionButton },
   props: {
     iconName: {
       type: String,
-      required: true
+      required: true,
     },
     hideDefaultCancelButton: {
       type: Boolean,
       required: false,
-      default: false
+      default: false,
     },
     defaultCancelButtonLabel: {
       type: String,
       required: false,
       default() {
         return this.$t('common.general.buttons.cancel').toString()
-      }
+      },
     },
     actions: {
       type: Array as () => DialogAction[],
-      required: true
+      required: true,
     },
     modal: {
       type: Boolean,
       required: false,
-      default: false
+      default: false,
     },
     value: {
       type: Boolean,
-      default: false
-    }
+      default: false,
+    },
   },
   methods: {
     doDialogAction(index) {
       if (!this.actions[index].action()) {
         this.$emit('input', false)
       }
-    }
-  }
+    },
+  },
 })
 </script>
 

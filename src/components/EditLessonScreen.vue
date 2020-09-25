@@ -16,37 +16,23 @@
           <span class="EditingScreen-Note">
             {{ $t('components.editing_screen.required') }}
           </span>
-          <editing-screen1 v-show="page === 1" v-model="firstPageData" />
-          <editing-screen2 v-show="page === 2" v-model="secondPageData" />
-          <editing-screen3 v-show="page === 3" v-model="thirdPageData" />
-          <editing-screen4 v-show="page === 4" v-model="fourthPageData" />
+          <edit-lesson-screen-inner1 v-model="firstPageData" />
+          <edit-lesson-screen-inner2 v-model="secondPageData" />
+          <edit-lesson-screen-inner3 v-model="thirdPageData" />
+          <edit-lesson-screen-inner4 v-model="fourthPageData" />
         </v-container>
       </v-card-text>
       <v-card-actions class="EditingScreen-CardElements">
         <v-container class="EditingScreen-Container">
           <div class="EditingScreen-Footer">
-            <div class="EditingScreen-Paging">
-              <v-btn color="white" fab :disabled="page === 1" @click="goBack">
-                <v-icon color="#0071c2" large>mdi-chevron-left</v-icon>
-              </v-btn>
-              <span class="PagingNumber">{{ page }}/4</span>
-              <v-btn
-                color="white"
-                fab
-                :disabled="page === 4"
-                @click="goForward"
-              >
-                <v-icon color="#0071c2" large>mdi-chevron-right</v-icon>
-              </v-btn>
-            </div>
             <div class="EditingScreen-ActionButtons">
-              <action-button
+              <base-action-button
                 class="Button"
                 theme="transparent"
                 :text="$t('common.general.buttons.cancel')"
                 @click="$emit('collapse')"
               />
-              <action-button
+              <base-action-button
                 class="Button"
                 theme="primary"
                 :text="$t('common.general.buttons.save')"
@@ -68,155 +54,178 @@
 import Vue from 'vue'
 import dayjs from 'dayjs'
 import { vxm } from '@/store'
-import ActionButton from '@/components/ActionButton.vue'
-import EditingScreen1 from '@/components/EditingScreen1.vue'
-import EditingScreen2 from '@/components/EditingScreen2.vue'
-import EditingScreen3 from '@/components/EditingScreen3.vue'
-import EditingScreen4 from '@/components/EditingScreen4.vue'
+import BaseActionButton from '@/components/BaseActionButton.vue'
+import EditLessonScreenInner1 from '@/components/EditLessonScreenInner1.vue'
+import EditLessonScreenInner2 from '@/components/EditLessonScreenInner2.vue'
+import EditLessonScreenInner3 from '@/components/EditLessonScreenInner3.vue'
+import EditLessonScreenInner4 from '@/components/EditLessonScreenInner4.vue'
 import { classData } from '@/types/store/classData'
 
-type FirstPageDataType = {
+type stateType = {
+  error: boolean
+  lessonData: LessonDataType
+}
+
+type LessonDataType = {
+  lessonId: string
+  isHidden: boolean
   date: string
   startTime: string
   endTime: string
   title: string
   subjectName: string
   subjectColor: string
-}
-
-type SecondPageDataType = {
   goal: string
   description: string
-}
-
-type ThirdPageDataType = {
   videoUrl: string
   videoTitle: string
   videoThumbnailUrl: string
-}
-
-type FourthPageDataType = {
   pages: string
   materialsTitle: string
   materialsUrl: string
 }
 
-type DataType = {
-  page: number
-  error: boolean
-  lessonId: string
-  isHidden: boolean
-  firstPageData: FirstPageDataType
-  secondPageData: SecondPageDataType
-  thirdPageData: ThirdPageDataType
-  fourthPageData: FourthPageDataType
-}
-
 export default Vue.extend({
   components: {
-    ActionButton,
-    EditingScreen1,
-    EditingScreen2,
-    EditingScreen3,
-    EditingScreen4
+    BaseActionButton,
+    EditLessonScreenInner1,
+    EditLessonScreenInner2,
+    EditLessonScreenInner3,
+    EditLessonScreenInner4,
   },
   props: {
     expanded: {
       type: Boolean,
       required: false,
-      default: false
+      default: false,
     },
     value: {
-      type: Object,
+      type: Object as () => LessonDataType,
       required: false,
-      default: () => ({
-        isHidden: false,
-        lessonId: '',
-        firstPageData: {
+      default(): LessonDataType {
+        return {
+          isHidden: false,
+          lessonId: '',
           date: '',
           startTime: '',
           endTime: '',
           title: '',
           subjectName: '',
-          subjectColor: '#BAC8FF'
-        },
-        secondPageData: {
+          subjectColor: '#BAC8FF',
           goal: '',
-          description: ''
-        },
-        thirdPageData: {
+          description: '',
           videoUrl: '',
           videoTitle: '',
-          videoThumbnailUrl: ''
-        },
-        fourthPageData: {
+          videoThumbnailUrl: '',
           pages: '',
           materialsTitle: '',
-          materialsUrl: ''
+          materialsUrl: '',
         }
-      })
-    }
+      },
+    },
   },
-  data(): DataType {
+  data(): stateType {
     return {
-      page: 1,
       error: false,
-      isHidden: this.value.isHidden,
-      lessonId: this.value.lessonId,
-      firstPageData: {
-        date: this.value.firstPageData.date,
-        startTime: this.value.firstPageData.startTime,
-        endTime: this.value.firstPageData.endTime,
-        title: this.value.firstPageData.title,
-        subjectName: this.value.firstPageData.subjectName,
-        subjectColor: this.value.firstPageData.subjectColor
+      lessonData: {
+        isHidden: this.value.isHidden,
+        lessonId: this.value.lessonId,
+        date: this.value.date,
+        startTime: this.value.startTime,
+        endTime: this.value.endTime,
+        title: this.value.title,
+        subjectName: this.value.subjectName,
+        subjectColor: this.value.subjectColor,
+        goal: this.value.goal,
+        description: this.value.description,
+        videoUrl: this.value.videoUrl,
+        videoTitle: this.value.videoTitle,
+        videoThumbnailUrl: this.value.videoThumbnailUrl,
+        pages: this.value.pages,
+        materialsTitle: this.value.materialsTitle,
+        materialsUrl: this.value.materialsUrl,
       },
-      secondPageData: {
-        goal: this.value.secondPageData.goal,
-        description: this.value.secondPageData.description
-      },
-      thirdPageData: {
-        videoUrl: this.value.thirdPageData.videoUrl,
-        videoTitle: this.value.thirdPageData.videoTitle,
-        videoThumbnailUrl: this.value.thirdPageData.videoThumbnailUrl
-      },
-      fourthPageData: {
-        pages: this.value.fourthPageData.pages,
-        materialsTitle: this.value.fourthPageData.materialsTitle,
-        materialsUrl: this.value.fourthPageData.materialsUrl
-      }
     }
   },
   computed: {
     isDisabled(): boolean {
       return (
-        !this.firstPageData.date ||
-        !this.firstPageData.startTime ||
-        !this.firstPageData.endTime ||
-        !this.firstPageData.title ||
-        !this.firstPageData.subjectName
+        !this.lessonData.date ||
+        !this.lessonData.startTime ||
+        !this.lessonData.endTime ||
+        !this.lessonData.title ||
+        !this.lessonData.subjectName
       )
-    }
+    },
+    firstPageData: {
+      get(): Object {
+        return {
+          date: this.lessonData.date,
+          startTime: this.lessonData.startTime,
+          endTime: this.lessonData.endTime,
+          title: this.lessonData.title,
+          subjectName: this.lessonData.subjectName,
+          subjectColor: this.lessonData.subjectColor,
+        }
+      },
+      set(val: any): void {
+        this.lessonData.date = val.date
+        this.lessonData.startTime = val.startTime
+        this.lessonData.endTime = val.endTime
+        this.lessonData.title = val.title
+        this.lessonData.subjectName = val.subjectName
+        this.lessonData.subjectColor = val.subjectColor
+      },
+    },
+    secondPageData: {
+      get(): Object {
+        return {
+          goal: this.lessonData.goal,
+          description: this.lessonData.description,
+        }
+      },
+      set(val: any): void {
+        this.lessonData.goal = val.goal
+        this.lessonData.description = val.description
+      },
+    },
+    thirdPageData: {
+      get(): Object {
+        return {
+          videoUrl: this.lessonData.videoUrl,
+          videoTitle: this.lessonData.videoTitle,
+          videoThumbnailUrl: this.lessonData.videoThumbnailUrl,
+        }
+      },
+      set(val: any): void {
+        this.lessonData.videoUrl = val.videoUrl
+        this.lessonData.videoTitle = val.videoTitle
+        this.lessonData.videoThumbnailUrl = val.videoThumbnailUrl
+      },
+    },
+    fourthPageData: {
+      get(): Object {
+        return {
+          videoUrl: this.lessonData.videoUrl,
+          videoTitle: this.lessonData.videoTitle,
+          videoThumbnailUrl: this.lessonData.videoThumbnailUrl,
+        }
+      },
+      set(val: any): void {
+        this.lessonData.pages = val.pages
+        this.lessonData.materialsTitle = val.materialsTitle
+        this.lessonData.materialsUrl = val.materialsUrl
+      },
+    },
   },
   watch: {
     value(value) {
-      this.isHidden = value.isHidden
-      this.lessonId = value.lessonId
-      this.firstPageData = value.firstPageData
-      this.secondPageData = value.secondPageData
-      this.thirdPageData = value.thirdPageData
-      this.fourthPageData = value.fourthPageData
-    }
+      this.lessonData = value
+    },
   },
   methods: {
-    goForward(): Number {
-      return this.page < 4 ? (this.page += 1) : 4
-    },
-    goBack(): Number {
-      return this.page > 1 ? (this.page -= 1) : 1
-    },
     saveLessonData() {
-      if (this.lessonId === '') {
+      if (this.lessonData.lessonId === '') {
         this.registerLesson()
       } else {
         this.changeLesson()
@@ -225,7 +234,7 @@ export default Vue.extend({
     changeLesson() {
       const lessonData: classData.Lesson = this.buildLessonData()
       vxm.classData
-        .changeLesson({ editData: lessonData, id: this.lessonId })
+        .changeLesson({ editData: lessonData, id: this.lessonData.lessonId })
         .then(() => {
           this.$emit('collapse')
         })
@@ -246,44 +255,41 @@ export default Vue.extend({
     },
     buildLessonData(): classData.Lesson {
       const startTimeStr: string =
-        this.firstPageData.date + ' ' + this.firstPageData.startTime
+        this.lessonData.date + ' ' + this.lessonData.startTime
       const startTimeDate: Date = dayjs(startTimeStr).toDate()
       const endTimeStr: string =
-        this.firstPageData.date + ' ' + this.firstPageData.endTime
+        this.lessonData.date + ' ' + this.lessonData.endTime
       const endTimeDate: Date = dayjs(endTimeStr).toDate()
       const videoData = []
-      if (this.thirdPageData.videoUrl)
+      if (this.lessonData.videoUrl)
         videoData.push({
-          url: this.thirdPageData.videoUrl,
-          title: this.thirdPageData.videoTitle,
-          thumbnailUrl: this.thirdPageData.videoThumbnailUrl
+          url: this.lessonData.videoUrl,
+          title: this.lessonData.videoTitle,
+          thumbnailUrl: this.lessonData.videoThumbnailUrl,
         })
       const materialData = []
-      if (
-        this.fourthPageData.materialsTitle &&
-        this.fourthPageData.materialsUrl
-      )
+      if (this.lessonData.materialsTitle && this.lessonData.materialsUrl)
         materialData.push({
-          title: this.fourthPageData.materialsTitle,
-          url: this.fourthPageData.materialsUrl
+          title: this.lessonData.materialsTitle,
+          url: this.lessonData.materialsUrl,
         })
       return {
         startTime: startTimeDate,
         endTime: endTimeDate,
-        title: this.firstPageData.title,
+        title: this.lessonData.title,
         subject: {
-          name: this.firstPageData.subjectName,
-          color: this.firstPageData.subjectColor
+          name: this.lessonData.subjectName,
+          color: this.lessonData.subjectColor,
         },
-        goal: this.secondPageData.goal,
-        description: this.secondPageData.description,
+        goal: this.lessonData.goal,
+        description: this.lessonData.description,
         videos: videoData,
-        pages: this.fourthPageData.pages,
+        pages: this.lessonData.pages,
         materials: materialData,
-        isHidden: this.isHidden
+        isHidden: this.lessonData.isHidden,
       }
-    }
-  }
+    },
+  },
 })
 </script>
 

@@ -37,12 +37,12 @@ type LocalData = {
 export default Vue.extend({
   components: {
     AppLanguageSelector,
-    HeaderLogo
+    HeaderLogo,
   },
   data(): LocalData {
     return {
       loading: true,
-      date: new Date()
+      date: new Date(),
     }
   },
   // watch: {
@@ -56,8 +56,8 @@ export default Vue.extend({
   methods: {
     back() {
       this.$router.back()
-    }
-  }
+    },
+  },
 })
 </script>
 

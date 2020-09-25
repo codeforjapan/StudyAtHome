@@ -15,7 +15,9 @@
             <v-col class="col message">{{ message }}</v-col>
             <v-col cols="2">
               <span class="add-button">
-                <add-button @clickAddButton="$emit('clickAddButton')" />
+                <edit-lesson-screen-bottom-sheet-add-button
+                  @clickAddButton="$emit('clickAddButton')"
+                />
               </span>
             </v-col>
           </v-row>
@@ -27,23 +29,23 @@
 
 <script lang="ts">
 import Vue from 'vue'
-import AddButton from '@/components/AddButton.vue'
+import EditLessonScreenBottomSheetAddButton from '@/components/EditLessonScreenBottomSheetAddButton.vue'
 
 export default Vue.extend({
-  name: 'SimpleBottomSheet',
-  components: { AddButton },
+  name: 'EditLessonScreenBottomSheet',
+  components: { EditLessonScreenBottomSheetAddButton },
   props: {
     message: {
       type: String,
       default: 'メッセージ',
-      required: true
+      required: true,
     },
     expanded: {
       type: Boolean,
       required: false,
-      default: true
-    }
-  }
+      default: true,
+    },
+  },
 })
 </script>
 

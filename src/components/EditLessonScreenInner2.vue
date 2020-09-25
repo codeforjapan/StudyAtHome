@@ -21,13 +21,13 @@ export type formData = {
 }
 @Component({
   components: {
-    EditorTextarea
-  }
+    EditorTextarea,
+  },
 })
-export default class EditingScreen2 extends Vue {
+export default class EditLessonScreenInner2 extends Vue {
   tempFormData = {
     goal: this.form.goal,
-    description: this.form.description
+    description: this.form.description,
   }
 
   @Prop({
@@ -35,8 +35,8 @@ export default class EditingScreen2 extends Vue {
     required: true,
     default: () => ({
       goal: '',
-      description: ''
-    })
+      description: '',
+    }),
   })
   public value!: formData
 

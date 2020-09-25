@@ -12,7 +12,7 @@
           action: () => {
             toggleIsHidden()
             return false
-          }
+          },
         },
         {
           buttonLabel: $t('common.general.buttons.cancel'),
@@ -21,8 +21,8 @@
           action: () => {
             closeModal()
             return false
-          }
-        }
+          },
+        },
       ]"
       @click-outside="closeModal"
     >
@@ -68,27 +68,27 @@ type LocalData = {
 
 export default Vue.extend({
   components: {
-    BaseDialog
+    BaseDialog,
   },
   props: {
     editingVisibilityMode: {
       type: Boolean,
       required: true,
-      default: false
+      default: false,
     },
     value: {
       type: Object as () => classData.LessonWithId,
       required: true,
       default: {
-        docId: ''
-      }
-    }
+        docId: '',
+      },
+    },
   },
   data(): LocalData {
     return {
       openEditingVisibilityDialog: false,
       error: false,
-      success: false
+      success: false,
     }
   },
   computed: {
@@ -120,24 +120,24 @@ export default Vue.extend({
             'components.editing_visibility_dialog.buttons.show'
           ).toString()
         : this.$t(
-            'components.editing_visibility_dialog.buttons.show'
+            'components.editing_visibility_dialog.buttons.hide'
           ).toString()
-    }
+    },
   },
   watch: {
     editingVisibilityMode(value) {
       this.openEditingVisibilityDialog = value
-    }
+    },
   },
   methods: {
     toggleIsHidden() {
       const lesson = Object.assign({}, this.value, {
-        isHidden: !this.value.isHidden
+        isHidden: !this.value.isHidden,
       }) as classData.Lesson
       vxm.classData
         .changeLesson({
           editData: lesson,
-          id: this.value.docId
+          id: this.value.docId,
         })
         .then(() => {
           this.success = true
@@ -155,8 +155,8 @@ export default Vue.extend({
     },
     closeModal() {
       this.$emit('close')
-    }
-  }
+    },
+  },
 })
 </script>
 

@@ -13,7 +13,7 @@
     </div>
     <v-row>
       <v-col v-for="(item, i) in classData" :key="i" cols="12" md="6">
-        <content-card
+        <lesson-summary-card
           :lesson="item"
           :editable="editable"
           @toggleHidden="$emit('toggleHidden', item)"
@@ -28,41 +28,41 @@
 import Vue from 'vue'
 import dayjs from 'dayjs'
 import minMax from 'dayjs/plugin/minMax'
-import ContentCard from '@/components/ContentCard.vue'
+import LessonSummaryCard from '@/components/LessonSummaryCard.vue'
 import { classData } from '@/types/store/classData'
 dayjs.extend(minMax)
 
 export default Vue.extend({
-  components: { ContentCard },
+  components: { LessonSummaryCard },
   props: {
     period: {
       type: Number,
-      default: 0
+      default: 0,
     },
     time: {
       type: String,
-      default: ''
+      default: '',
     },
     classData: {
       type: Array as () => classData.LessonWithId[],
-      default: () => []
+      default: () => [],
     },
     editable: {
       type: Boolean,
-      default: false
-    }
+      default: false,
+    },
   },
   computed: {
     maxEndTime() {
-      const endTimeArray = this.classData.map(value => dayjs(value.endTime))
+      const endTimeArray = this.classData.map((value) => dayjs(value.endTime))
       return dayjs.max(...endTimeArray)
-    }
+    },
   },
   methods: {
     formatDate(date: Date): string {
       return dayjs(date).format('HH:mm')
-    }
-  }
+    },
+  },
 })
 </script>
 

@@ -107,7 +107,7 @@
         </v-card-actions>
       </v-card>
     </v-dialog>
-    <editor-field
+    <editor-input-field-pickable
       v-model="tempFormData.date"
       :title="`${$t('components.editing_screen.labels.date')} *`"
       label="date"
@@ -118,7 +118,7 @@
       @clickButton="datePickerOpen = true"
     />
     <div class="EditingScreen-Flex EditingScreen-Time">
-      <editor-field
+      <editor-input-field-pickable
         v-model="tempFormData.startTime"
         :title="`${$t('components.editing_screen.labels.time')} *`"
         label="start_time"
@@ -130,7 +130,7 @@
         @clickButton="startTimePickerOpen = true"
       />
       <span class="Hyphen">-</span>
-      <editor-field
+      <editor-input-field-pickable
         v-model="tempFormData.endTime"
         label="end_time"
         placeholder="00:00"
@@ -141,21 +141,21 @@
         @clickButton="endTimePickerOpen = true"
       />
     </div>
-    <editor-field
+    <editor-input-field-pickable
       v-model="tempFormData.title"
       :title="`${$t('common.lesson_data.labels.title')} *`"
       :label="$t('common.lesson_data.labels.title')"
       placeholder="例）理科"
     />
     <div class="EditingScreen-Flex">
-      <editor-field
+      <editor-input-field-pickable
         v-model="tempFormData.subjectName"
         :title="`${$t('common.lesson_data.labels.subject_name')} *`"
         label="lesson"
         placeholder="例）理科"
         class="LessonField"
       />
-      <editor-color-picker-field
+      <edit-lesson-screen-subject-field-color-pickable
         :title="$t('components.editing_screen.labels.subject_label_color')"
         icon-name="mdi-palette"
         :subject-color="tempFormData.subjectColor"
@@ -169,9 +169,9 @@
 
 <script lang="ts">
 import { Vue, Component, Prop, Emit, Watch } from 'vue-property-decorator'
-import EditorField from '@/components/EditorField.vue'
+import EditorInputFieldPickable from '@/components/EditorInputFieldPickable.vue'
 import SubjectTag from '@/components/SubjectTag.vue'
-import EditorColorPickerField from '@/components/EditorColorPickerField.vue'
+import EditLessonScreenSubjectFieldColorPickable from '@/components/EditLessonScreenSubjectFieldColorPickable.vue'
 
 export type formData = {
   date: string
@@ -183,19 +183,19 @@ export type formData = {
 }
 @Component({
   components: {
-    EditorField,
+    EditorInputFieldPickable,
     SubjectTag,
-    EditorColorPickerField
-  }
+    EditLessonScreenSubjectFieldColorPickable,
+  },
 })
-export default class EditingScreen1 extends Vue {
+export default class EditLessonScreenInner1 extends Vue {
   tempFormData = {
     date: this.form.date,
     startTime: this.form.startTime,
     endTime: this.form.endTime,
     title: this.form.title,
     subjectName: this.form.subjectName,
-    subjectColor: this.form.subjectColor
+    subjectColor: this.form.subjectColor,
   }
 
   datePickerOpen = false
@@ -207,7 +207,7 @@ export default class EditingScreen1 extends Vue {
     ['#D0BFFF', '#9775FA'],
     ['#FCC2D7', '#F783AC'],
     ['#FFD8A8', '#FFA94D'],
-    ['#D8F5A2', '#A9E34B']
+    ['#D8F5A2', '#A9E34B'],
   ]
 
   @Prop({
@@ -219,8 +219,8 @@ export default class EditingScreen1 extends Vue {
       endTime: '',
       title: '',
       subjectName: '',
-      subjectColor: '#BAC8FF'
-    })
+      subjectColor: '#BAC8FF',
+    }),
   })
   public value!: formData
 
