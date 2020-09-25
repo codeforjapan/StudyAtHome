@@ -9,9 +9,9 @@ import { UserStore } from '@/store/modules/user'
 import classData from '@/types/store/classData'
 import { API, Auth, graphqlOperation } from 'aws-amplify'
 import { GRAPHQL_AUTH_MODE, GraphQLResult } from '@aws-amplify/api'
-import { getClass, listLessons } from '@/graphql/queries'
+import { getClass, listLessonsByClass } from '@/graphql/queries'
 import { createClass, createLesson, updateLesson } from '@/graphql/mutations'
-import { GetClassQuery, ListLessonsQuery } from '@/API'
+import { GetClassQuery, ListLessonsByClassQuery } from '@/API'
 import { vxm } from '@/store'
 
 type LessonsGroupedBy = {
@@ -37,6 +37,20 @@ const generateUniqueId = (): string => {
     c[Math.floor(Math.random() * cl)]
   return result + ''
 }
+// Generate a new Date object with a specified date & time
+const d = (date: Date, hours: number, minutes: number, seconds: number) => {
+  const newDate = new Date(date)
+  newDate.setHours(hours)
+  newDate.setMinutes(minutes)
+  newDate.setSeconds(seconds)
+  return newDate
+}
+
+const getFullDayArray = (date: Date) => {
+  const start = d(date, 0, 0, 0)
+  const end = d(date, 24, 0, 0)
+  return [start, end]
+}
 
 export class ClassDataStore extends VuexModule implements classData.ClassData {
   classId: classData.ClassId = ''
@@ -45,47 +59,33 @@ export class ClassDataStore extends VuexModule implements classData.ClassData {
 
   @action
   public async lessonsOnCurrentDate(date: Date) {
-    const userStore = createProxy(this.$store, UserStore)
-    // Generate a new Date object with a specified date & time
-    const d = (date: Date, hours: number, minutes: number, seconds: number) => {
-      const newDate = new Date(date)
-      newDate.setHours(hours)
-      newDate.setMinutes(minutes)
-      newDate.setSeconds(seconds)
-      return newDate
-    }
-    const start = d(date, 0, 0, 0)
-    const end = d(date, 23, 59, 59)
-
     const lessons = (await API.graphql({
-      query: listLessons,
+      query: listLessonsByClass,
       variables: {
-        filter: {
-          and: [
-            {
-              classId: {
-                eq: this.classId,
-              },
-            },
-            {
-              startTime: {
-                ge: start,
-              },
-            },
-            {
-              startTime: {
-                le: end,
-              },
-            },
-          ],
+        classId: this.classId,
+        startTime: {
+          between: getFullDayArray(date),
         },
       },
-      authMode: userStore.isLoginWithAPIKEY
-        ? GRAPHQL_AUTH_MODE.API_KEY
-        : GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
-    })) as GraphQLResult<ListLessonsQuery>
+    })) as GraphQLResult<ListLessonsByClassQuery>
 
-    return lessons.data?.listLessons?.items as any[]
+    return lessons.data?.listLessonsByClass?.items as any[]
+  }
+
+  @action
+  public async lessonsOnCurrentDateAuthModeAPIKEY(date: Date) {
+    const lessons = (await API.graphql({
+      query: listLessonsByClass,
+      variables: {
+        classId: this.classId,
+        startTime: {
+          between: getFullDayArray(date),
+        },
+      },
+      authMode: GRAPHQL_AUTH_MODE.API_KEY,
+    })) as GraphQLResult<ListLessonsByClassQuery>
+
+    return lessons.data?.listLessonsByClass?.items as any[]
   }
 
   public get isLoaded(): boolean {
@@ -227,7 +227,10 @@ export class ClassDataStore extends VuexModule implements classData.ClassData {
   @action
   public async getLessonsByCurrentDate() {
     const appStore = createProxy(this.$store, AppStore)
-    const lessons = await this.lessonsOnCurrentDate(appStore.currentDate)
+    const userStore = createProxy(this.$store, UserStore)
+    const lessons = userStore.isLoginWithAPIKEY
+      ? await this.lessonsOnCurrentDateAuthModeAPIKEY(appStore.currentDate)
+      : await this.lessonsOnCurrentDate(appStore.currentDate)
     await this.setLessonsGroupByPeriod(lessons)
   }
 
