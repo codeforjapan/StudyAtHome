@@ -237,11 +237,12 @@ export default Vue.extend({
         : dayjs(this.lesson.endTime).format('H:mm（M/D）')
     },
   },
-  mounted() {
-    this.$nextTick(function () {
-      const data:
-        | LessonWithId
-        | undefined = vxm.classData.lessonsOnCurrentDate.find(
+  async mounted() {
+    const lessonList = await vxm.classData.lessonsOnCurrentDate(
+      vxm.app.currentDate
+    )
+    await this.$nextTick(function () {
+      const data: LessonWithId | undefined = lessonList.find(
         (e) => this.$route.query.lessonId === e.id
       ) as LessonWithId | undefined
       this.lesson = data ?? this.dummyLesson
