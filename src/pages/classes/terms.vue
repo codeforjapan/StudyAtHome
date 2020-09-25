@@ -22,14 +22,14 @@
       <v-icon v-if="isCheck" color="#0071C2">mdi-check-box-outline</v-icon>
       <v-icon v-else color="#0071C2">mdi-checkbox-blank-outline</v-icon>
     </label>
-    <action-button
+    <base-action-button
       :is-disabled="!isCheck"
       class="Button"
       theme="primary"
       :text="$t('common.agree_terms.buttons.agree')"
       @click="doClassLogin"
     />
-    <action-button
+    <base-action-button
       class="Button"
       theme="border"
       :text="$t('common.agree_terms.buttons.disagree')"
@@ -41,26 +41,26 @@
 <script lang="ts">
 import Vue from 'vue'
 import PrjLogo from '~/assets/svgs/prj_logo.svg'
-import ActionButton from '~/components/ActionButton.vue'
+import BaseActionButton from '~/components/BaseActionButton.vue'
 
 export default Vue.extend({
-  components: { PrjLogo, ActionButton },
+  components: { PrjLogo, BaseActionButton },
   layout: 'simple',
   data() {
     return {
-      toggle: []
+      toggle: [],
     }
   },
   computed: {
     isCheck(): boolean {
-      return this.toggle.some(value => {
+      return this.toggle.some((value) => {
         return value === 'check'
       })
-    }
+    },
   },
   methods: {
-    doClassLogin(): void {}
-  }
+    doClassLogin(): void {},
+  },
 })
 </script>
 

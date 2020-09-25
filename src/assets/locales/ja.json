@@ -131,13 +131,14 @@
       }
     },
     "user_classlist": {
+      "title": "クラス一覧",
       "add_class": "クラスを登録する",
       "login_to_class": "選択クラスでログインする",
       "no_classes": "編集可能なクラスがありません。クラスの登録を行ってください"
     },
     "user_edit_user_data": {
       "title": "ユーザー情報の変更",
-      "labels":{
+      "labels": {
         "new_password": "変更先パスワード",
         "new_password_confirm": "変更先パスワード（確認用）"
       }

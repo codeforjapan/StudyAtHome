@@ -1,7 +1,7 @@
 <template>
   <div class="MainPage">
     <div v-if="classData.lessonsOnCurrentDate.length">
-      <period-card
+      <period-section
         v-for="(lessons, time, index) in lessonsGroupByPeriod"
         :key="index"
         :period="index"
@@ -106,17 +106,17 @@
         </li>
       </ul>
     </div>
-    <simple-bottom-sheet
+    <edit-lesson-screen-bottom-sheet
       :message="
         $t('pages.edit_index.add_or_edit_lesson', { className: '2年B組' })
       "
       :expanded="!editingMode"
       @clickAddButton="toggleScreen"
     />
-    <editing-screen
+    <edit-lesson-screen
       :value="editPageValue"
       :expanded="editingMode"
-      @collapse="onCollapseEditingScreen"
+      @collapse="onCollapseEditLessonScreen"
     />
     <editing-visibility-dialog
       :value="editVisibilityDialogValue"
@@ -131,9 +131,9 @@ import Vue from 'vue'
 import dayjs from 'dayjs'
 import isToday from 'date-fns/isToday'
 import { vxm } from '@/store'
-import PeriodCard from '@/components/PeriodCard.vue'
-import SimpleBottomSheet from '@/components/SimpleBottomSheet.vue'
-import EditingScreen from '@/components/EditingScreen.vue'
+import PeriodSection from '@/components/PeriodSection.vue'
+import EditLessonScreenBottomSheet from '@/components/EditLessonScreenBottomSheet.vue'
+import EditLessonScreen from '@/components/EditLessonScreen.vue'
 import EditingVisibilityDialog from '@/components/EditingVisibilityDialog.vue'
 import { classData } from '@/types/store/classData'
 import LessonWithId = classData.LessonWithId
@@ -159,36 +159,28 @@ type Computed = {
 const editPageValueDefault = {
   isHidden: false,
   lessonId: '',
-  firstPageData: {
-    date: '',
-    startTime: '',
-    endTime: '',
-    title: '',
-    subjectName: '',
-    subjectColor: '#BAC8FF'
-  },
-  secondPageData: {
-    goal: '',
-    description: ''
-  },
-  thirdPageData: {
-    videoUrl: '',
-    videoTitle: '',
-    videoThumbnailUrl: ''
-  },
-  fourthPageData: {
-    pages: '',
-    materialsTitle: '',
-    materialsUrl: ''
-  }
+  date: '',
+  startTime: '',
+  endTime: '',
+  title: '',
+  subjectName: '',
+  subjectColor: '#BAC8FF',
+  goal: '',
+  description: '',
+  videoUrl: '',
+  videoTitle: '',
+  videoThumbnailUrl: '',
+  pages: '',
+  materialsTitle: '',
+  materialsUrl: '',
 }
 
 export default Vue.extend({
   components: {
-    PeriodCard,
-    SimpleBottomSheet,
-    EditingScreen,
-    EditingVisibilityDialog
+    PeriodSection,
+    EditLessonScreenBottomSheet,
+    EditLessonScreen,
+    EditingVisibilityDialog,
   },
   layout: 'protected',
   data(): DataType {
@@ -197,7 +189,7 @@ export default Vue.extend({
       editingMode: false,
       editingVisibilityMode: false,
       editPageValue: Object.assign({}, editPageValueDefault),
-      editVisibilityDialogValue: {}
+      editVisibilityDialogValue: {},
     }
   },
   computed: {
@@ -216,12 +208,12 @@ export default Vue.extend({
           return acc
         }, {})
       return groupBy(vxm.classData.lessonsOnCurrentDate, 'startTime')
-    }
+    },
   },
   methods: {
-    onCollapseEditingScreen(): void {
+    onCollapseEditLessonScreen(): void {
       this.toggleScreen()
-      this.resetEditingScreen()
+      this.resetEditLessonScreen()
     },
     toggleScreen(): void {
       this.editingMode = !this.editingMode
@@ -233,7 +225,7 @@ export default Vue.extend({
     openVisibilityModal(): void {
       this.editingVisibilityMode = true
     },
-    resetEditingScreen(): void {
+    resetEditLessonScreen(): void {
       this.editPageValue = Object.assign({}, editPageValueDefault)
     },
     doToggleHidden(value: classData.LessonWithId): void {
@@ -253,32 +245,24 @@ export default Vue.extend({
       this.editPageValue = {
         isHidden: value.isHidden,
         lessonId: value.docId,
-        firstPageData: {
-          date: dayjs(value.startTime).format('YYYY-MM-DD'),
-          startTime: dayjs(value.startTime).format('HH:mm'),
-          endTime: dayjs(value.endTime).format('HH:mm'),
-          title: value.title,
-          subjectName: value.subject.name,
-          subjectColor: value.subject.color
-        },
-        secondPageData: {
-          goal: value.goal,
-          description: value.description
-        },
-        thirdPageData: {
-          videoUrl,
-          videoTitle,
-          videoThumbnailUrl
-        },
-        fourthPageData: {
-          pages: value.pages,
-          materialsTitle: materialTitle,
-          materialsUrl: materialUrl
-        }
+        date: dayjs(value.startTime).format('YYYY-MM-DD'),
+        startTime: dayjs(value.startTime).format('HH:mm'),
+        endTime: dayjs(value.endTime).format('HH:mm'),
+        title: value.title,
+        subjectName: value.subject.name,
+        subjectColor: value.subject.color,
+        goal: value.goal,
+        description: value.description,
+        videoUrl,
+        videoTitle,
+        videoThumbnailUrl,
+        pages: value.pages,
+        materialsTitle: materialTitle,
+        materialsUrl: materialUrl,
       }
       this.toggleScreen()
-    }
-  }
+    },
+  },
 })
 </script>
 

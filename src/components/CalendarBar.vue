@@ -16,7 +16,7 @@
         :key="fmtft(date)"
         v-touch="{
           left: () => dateListWindow.nextList(),
-          right: () => dateListWindow.prevList()
+          right: () => dateListWindow.prevList(),
         }"
         cols="0"
         class="pa-0 ma-0"
@@ -24,7 +24,7 @@
         <v-card
           class="calendar-bar-date elevation-4"
           :class="{
-            current: fmtft(date) === fmtft(dateListWindow.currentDate)
+            current: fmtft(date) === fmtft(dateListWindow.currentDate),
           }"
           @click="dateListWindow.selectDate(date)"
         >
@@ -154,7 +154,7 @@ class DateListWindowImpl implements DateListWindow {
     view: View,
     startWeekOn: StartWeekOn,
     date: Date
-  ) => Date = function(view: View, startWeekOn: StartWeekOn, date: Date) {
+  ) => Date = function (view: View, startWeekOn: StartWeekOn, date: Date) {
     const dowList: Array<StartWeekOn> = [
       'Sunday',
       'Monday',
@@ -162,7 +162,7 @@ class DateListWindowImpl implements DateListWindow {
       'Wednesday',
       'Thursday',
       'Friday',
-      'Saturday'
+      'Saturday',
     ]
     let firstDate: Date = date
     switch (view) {
@@ -204,14 +204,14 @@ export default class CalendarBar extends Vue {
   @Prop({
     default() {
       return { view: 'Week', startWeekOn: 'Monday' }
-    }
+    },
   })
   config: CalendarBarConfig | undefined
 
   @Prop({
     default() {
       return new Date()
-    }
+    },
   })
   public value!: Date
 

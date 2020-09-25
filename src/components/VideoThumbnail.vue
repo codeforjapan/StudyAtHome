@@ -16,19 +16,19 @@ export default Vue.extend({
     title: {
       type: String,
       required: false,
-      default: ''
+      default: '',
     },
     thumbnailUrl: {
       type: String,
       required: false,
-      default: ''
+      default: '',
     },
     caption: {
       type: String,
       required: false,
-      default: ''
-    }
-  }
+      default: '',
+    },
+  },
 })
 </script>
 
