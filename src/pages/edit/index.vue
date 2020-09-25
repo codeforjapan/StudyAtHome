@@ -1,8 +1,8 @@
 <template>
   <div class="MainPage">
-    <div v-if="classData.lessonsOnCurrentDate.length">
+    <div v-if="Object.keys(classData.lessonsGroupByPeriod).length > 0">
       <period-section
-        v-for="(lessons, time, index) in lessonsGroupByPeriod"
+        v-for="(lessons, time, index) in classData.lessonsGroupByPeriod"
         :key="index"
         :period="index"
         :time="time"
@@ -136,11 +136,6 @@ import EditLessonScreenBottomSheet from '@/components/EditLessonScreenBottomShee
 import EditLessonScreen from '@/components/EditLessonScreen.vue'
 import EditingVisibilityDialog from '@/components/EditingVisibilityDialog.vue'
 import classData from '@/types/store/classData'
-import LessonWithId = classData.LessonWithId
-
-type LessonsGroupedBy = {
-  [key: string]: LessonWithId[]
-}
 
 type DataType = {
   classData: typeof vxm.classData
@@ -153,7 +148,6 @@ type DataType = {
 type Computed = {
   today: boolean
   dateTitle: string
-  lessonsGroupByPeriod: LessonsGroupedBy
 }
 
 const editPageValueDefault = {
@@ -193,22 +187,23 @@ export default Vue.extend({
     }
   },
   computed: {
+    currentDate() {
+      return vxm.app.currentDate
+    },
     today() {
       return isToday(vxm.app.currentDate)
     },
     dateTitle() {
       return dayjs(vxm.app.currentDate).format('M/D')
     },
-    lessonsGroupByPeriod() {
-      const groupBy = (targets: LessonWithId[], key: keyof LessonWithId) =>
-        targets.reduce((acc: LessonsGroupedBy, currentLesson: LessonWithId) => {
-          const valueToGroup = currentLesson[key].toString()
-          acc[valueToGroup] = acc[valueToGroup] || []
-          acc[valueToGroup].push(currentLesson)
-          return acc
-        }, {})
-      return groupBy(vxm.classData.lessonsOnCurrentDate, 'startTime')
+  },
+  watch: {
+    currentDate() {
+      this.classData.getLessonsByCurrentDate()
     },
+  },
+  mounted() {
+    this.classData.getLessonsByCurrentDate()
   },
   methods: {
     onCollapseEditLessonScreen(): void {
