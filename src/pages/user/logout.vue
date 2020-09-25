@@ -31,14 +31,13 @@ export default Vue.extend({
   methods: {
     async doLogout(): Promise<void> {
       this.loading = true
-      await Auth.signOut()
-        .then(() => {
-          this.$router.push('/')
-        })
-        .catch(() => {
-          this.loading = false
-          this.error = true
-        })
+      try {
+        await Auth.signOut()
+        await this.$router.push('/')
+      } catch {
+        this.loading = false
+        this.error = true
+      }
     },
   },
 })
