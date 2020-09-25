@@ -201,6 +201,13 @@ class DateListWindowImpl implements DateListWindow {
 
 @Component
 export default class CalendarBar extends Vue {
+  dateListWindow: DateListWindow = new DateListWindowImpl(
+    'Week',
+    'Monday',
+    new Date(),
+    this.input
+  )
+
   @Prop({
     default() {
       return { view: 'Week', startWeekOn: 'Monday' }
@@ -215,12 +222,15 @@ export default class CalendarBar extends Vue {
   })
   public value!: Date
 
-  dateListWindow: DateListWindow = new DateListWindowImpl(
-    this.config?.view ?? 'Week',
-    this.config?.startWeekOn ?? 'Monday',
-    this.value ?? new Date(),
-    this.input
-  )
+  constructor() {
+    super()
+    this.dateListWindow = new DateListWindowImpl(
+      this.config?.view ?? 'Week',
+      this.config?.startWeekOn ?? 'Monday',
+      this.value ?? new Date(),
+      this.input
+    )
+  }
 
   @Emit()
   public input(value: Date) {
