@@ -140,11 +140,6 @@ export default Vue.extend({
     this.loading = false
   },
   methods: {
-    signout() {
-      vxm.user.logout()
-      this.$router.push('/')
-    },
-
     unloadClassData() {
       vxm.classData.unloadClassData()
     },

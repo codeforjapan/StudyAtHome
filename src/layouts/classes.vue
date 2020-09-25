@@ -138,10 +138,10 @@ export default Vue.extend({
     this.loading = false
   },
   methods: {
-    clickLogout() {
-      vxm.classData.unloadClassData().then(() => {
-        this.$router.push('/')
-      })
+    async clickLogout() {
+      await vxm.user.logout()
+      await vxm.app.resetDate()
+      await this.$router.push('/')
     },
   },
 })
