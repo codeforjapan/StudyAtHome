@@ -193,3 +193,62 @@ export const listLessons = /* GraphQL */ `
     }
   }
 `;
+export const listLessonsByClass = /* GraphQL */ `
+  query ListLessonsByClass(
+    $classId: ID
+    $startTime: ModelStringKeyConditionInput
+    $sortDirection: ModelSortDirection
+    $filter: ModelLessonFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listLessonsByClass(
+      classId: $classId
+      startTime: $startTime
+      sortDirection: $sortDirection
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        id
+        classId
+        startTime
+        endTime
+        title
+        subject {
+          name
+          color
+        }
+        goal
+        description
+        videos {
+          title
+          url
+          thumbnailUrl
+        }
+        pages
+        materials {
+          title
+          url
+        }
+        isHidden
+        owner
+        createdAt
+        updatedAt
+        class {
+          id
+          className
+          schoolName
+          owner
+          createdAt
+          updatedAt
+          lessons {
+            nextToken
+          }
+        }
+      }
+      nextToken
+    }
+  }
+`;

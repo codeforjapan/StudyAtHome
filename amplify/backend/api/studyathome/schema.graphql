@@ -36,7 +36,7 @@ type Material
 
 type Lesson
   @model
-  @key(name: "byClass", fields: ["classId", "startTime"])
+  @key(name: "byClass", fields: ["classId", "startTime"], queryField: "listLessonsByClass")
   @auth(
     rules: [
       { allow: public, operations: [read], provider: apiKey }
