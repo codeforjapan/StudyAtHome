@@ -217,7 +217,7 @@ export default Vue.extend<Data, Methods, Computed, unknown>({
           //   })
         }
       }
-      this.$router.push('/edit')
+      await this.$router.push('/edit')
     },
     async doLogout(): Promise<void> {
       try {
