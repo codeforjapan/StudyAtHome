@@ -58,12 +58,12 @@ export default Vue.extend({
     },
   },
   watch: {
-    currentDate() {
-      this.classData.getLessonsByCurrentDate()
+    async currentDate() {
+      await this.classData.getLessonsByCurrentDate()
     },
   },
-  mounted() {
-    this.classData.getLessonsByCurrentDate()
+  async mounted() {
+    await this.classData.getLessonsByCurrentDate()
   },
 })
 </script>
