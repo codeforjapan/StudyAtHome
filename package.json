@@ -28,7 +28,7 @@
     "@aws-amplify/api": "^3.2.2",
     "@babel/core": "^7.11.4",
     "@babel/runtime-corejs3": "^7.11.2",
-    "@nuxt/typescript-runtime": "^1.0.0",
+    "@nuxt/typescript-runtime": "^2.0.0",
     "@nuxtjs/axios": "^5.12.1",
     "@nuxtjs/dotenv": "^1.4.1",
     "@nuxtjs/pwa": "^3.0.1",
