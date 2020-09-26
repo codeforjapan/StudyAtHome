@@ -11,6 +11,17 @@
           </v-card-subtitle>
         </v-card>
       </v-col>
+      <v-col>
+        <v-card
+          class="calendar-bar-date elevation-4"
+          flat
+          @click="dateListWindow.prevList"
+        >
+          <v-card-subtitle>
+            &lt;&lt;
+          </v-card-subtitle>
+        </v-card>
+      </v-col>
       <v-col
         v-for="date in dateListWindow.list"
         :key="fmtft(date)"
@@ -33,6 +44,17 @@
           </v-card-title>
           <v-card-subtitle class="calendar-bar-date-subtitle">
             {{ fmtd(date) }}
+          </v-card-subtitle>
+        </v-card>
+      </v-col>
+      <v-col>
+        <v-card
+          class="calendar-bar-date elevation-4"
+          flat
+          @click="dateListWindow.nextList"
+        >
+          <v-card-subtitle>
+            &gt;&gt;
           </v-card-subtitle>
         </v-card>
       </v-col>
