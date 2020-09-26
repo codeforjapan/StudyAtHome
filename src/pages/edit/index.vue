@@ -148,7 +148,7 @@ type DataType = {
   classData: typeof vxm.classData
   editingMode: boolean
   editingVisibilityMode: boolean
-  editPageValue: object
+  editPageValue: editPageValueType
   editVisibilityDialogValue: object
 }
 
@@ -156,6 +156,25 @@ type Computed = {
   today: boolean
   dateTitle: string
   lessonsGroupByPeriod: LessonsGroupedBy
+}
+
+type editPageValueType = {
+  isHidden: boolean
+  lessonId: string
+  date: string
+  startTime: string
+  endTime: string
+  title: string
+  subjectName: string
+  subjectColor: string
+  goal: string
+  description: string
+  videoUrl: string
+  videoTitle: string
+  videoThumbnailUrl: string
+  pages: string
+  materialsTitle: string
+  materialsUrl: string
 }
 
 const editPageValueDefault = {
@@ -218,6 +237,13 @@ export default Vue.extend({
       this.resetEditLessonScreen()
     },
     toggleScreen(): void {
+      const date =
+        this.editPageValue.date !== ''
+          ? this.editPageValue.date
+          : dayjs(vxm.app.currentDate).format('YYYY-MM-DD')
+      this.editPageValue = Object.assign({}, this.editPageValue, {
+        date,
+      })
       this.editingMode = !this.editingMode
     },
     closeModal(): void {
