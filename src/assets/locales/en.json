@@ -70,11 +70,15 @@
         "time": "Time Setting",
         "subject_label_color": "Label Color",
         "description": "Detailed Description",
+        "video_keyword": "(Optional function) Video Search",
         "video_url": "Reference Video URL",
         "video_thumbnail": "Video Thumbnail/Caption Display",
         "textbook_page": "Textbook Page",
         "material_title": "Learning Material Title",
         "material_url": "Learning Material URL"
+      },
+      "placeholders": {
+        "video_keyword": "EX) Science"
       },
       "required": "*Items Marked with Are Required"
     },
