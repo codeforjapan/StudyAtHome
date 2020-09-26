@@ -74,7 +74,7 @@
               </li>
 
               <li>
-                <nuxt-link class="white--text" to="policy">
+                <nuxt-link class="white--text" to="terms">
                   {{ $t('common.footer.terms') }}
                 </nuxt-link>
               </li>
