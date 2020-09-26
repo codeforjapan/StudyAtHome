@@ -41,7 +41,7 @@
           <base-action-button
             :text="$t('pages.index.teachers.buttons.signup')"
             class="registerButton"
-            @click="$router.push('/user/terms')"
+            @click="$router.push('/user/agree')"
           />
 
           <base-action-button
@@ -74,7 +74,7 @@
               </li>
 
               <li>
-                <nuxt-link class="white--text" to="policy">
+                <nuxt-link class="white--text" to="terms">
                   {{ $t('common.footer.terms') }}
                 </nuxt-link>
               </li>
