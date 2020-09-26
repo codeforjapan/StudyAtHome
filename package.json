@@ -40,7 +40,7 @@
     "core-js": "3.6.5",
     "cross-env": "^7.0.2",
     "date-fns": "^2.15.0",
-    "dayjs": "^1.8.34",
+    "dayjs": "^1.8.36",
     "express": "^4.17.1",
     "google-auth-library": "^6.0.6",
     "js-cookie": "^2.2.1",
