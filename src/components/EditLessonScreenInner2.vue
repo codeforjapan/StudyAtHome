@@ -6,7 +6,7 @@
     />
     <editor-textarea
       v-model="tempFormData.description"
-      :title="$t('components.editing_screen.labels.description')"
+      :title="$t('common.lesson_data.labels.description')"
     />
   </div>
 </template>
