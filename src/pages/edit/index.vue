@@ -216,6 +216,13 @@ export default Vue.extend({
       this.resetEditLessonScreen()
     },
     toggleScreen(): void {
+      const date =
+        this.editPageValue.date !== ''
+          ? this.editPageValue.date
+          : dayjs(vxm.app.currentDate).format('YYYY-MM-DD')
+      this.editPageValue = Object.assign({}, this.editPageValue, {
+        date,
+      })
       this.editingMode = !this.editingMode
     },
     closeModal(): void {
