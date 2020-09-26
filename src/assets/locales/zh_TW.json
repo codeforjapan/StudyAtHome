@@ -24,8 +24,8 @@
         "title": "標題",
         "subject_name": "科目名",
         "textbook": "教科書",
-        "goal": "學習目標",
-        "description": "詳細",
+        "goal": "目標",
+        "description": "內容",
         "videos": "參考影片",
         "materials": "輔助教材"
       },
@@ -69,14 +69,22 @@
         "date": "設定日期",
         "time": "設定時間",
         "subject_label_color": "標籤顏色",
-        "description": "詳細說明",
+        "video_keyword": "可選功能（影片搜尋）",
         "video_url": "參考影片 URL",
         "video_thumbnail": "顯示影片縮圖",
         "textbook_page": "教科書頁",
         "material_title": "副教材標題",
         "material_url": "輔助教材 URL"
       },
-      "required": "*符號者為必填項目"
+      "placeholders": {
+        "video_keyword": "例）理科"
+      },
+      "required": "*符號者為必填項目",
+      "search_videos": {
+        "search": "搜尋",
+        "search_result": "{source}的影片搜尋結果",
+        "add_to_video_urls": "參考影片 URL 登錄"
+      }
     },
     "editing_visibility_dialog": {
       "title": {

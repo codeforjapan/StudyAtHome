@@ -13,10 +13,18 @@
       :placeholders="$t('components.editing_screen.placeholder.video_keyword')"
     />
 
-    <button class="Button" @click="handleVideoSearchWord">検索する</button>
+    <button class="Button" @click="handleVideoSearchWord">
+      {{ $t('components.editing_screen.search_videos.search') }}
+    </button>
 
     <div v-if="videoSearchResult.length > 0" class="SearchResult">
-      <h3>NHK For Schoolの動画検索結果</h3>
+      <h3>
+        {{
+          $t('components.editing_screen.search_videos.search_result', {
+            source: 'NHK For School',
+          })
+        }}
+      </h3>
       <ul>
         <li v-for="(v, i) in displayLists" :key="i" class="SearchResultItem">
           <component
@@ -42,7 +50,9 @@
             class="Button"
             @click="registerVideoUrl(v.videoUrl)"
           >
-            参考動画URLに登録する
+            {{
+              $t('components.editing_screen.search_videos.add_to_video_urls')
+            }}
           </button>
         </li>
       </ul>
