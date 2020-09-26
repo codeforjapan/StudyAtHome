@@ -17,9 +17,7 @@
           flat
           @click="dateListWindow.prevList"
         >
-          <v-card-subtitle>
-            &lt;&lt;
-          </v-card-subtitle>
+          <v-card-subtitle>&lt;&lt;</v-card-subtitle>
         </v-card>
       </v-col>
       <v-col
@@ -53,9 +51,7 @@
           flat
           @click="dateListWindow.nextList"
         >
-          <v-card-subtitle>
-            &gt;&gt;
-          </v-card-subtitle>
+          <v-card-subtitle>&gt;&gt;</v-card-subtitle>
         </v-card>
       </v-col>
     </v-row>
