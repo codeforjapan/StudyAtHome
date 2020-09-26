@@ -24,8 +24,8 @@
         "title": "Tittle",
         "subject_name": "Course Tittle",
         "textbook": "Course Book",
-        "goal": "Objective of Learning",
-        "description": "Detail",
+        "goal": "Target",
+        "description": "Content",
         "videos": "Reference Video",
         "materials": "Learning Materials"
       },
@@ -69,7 +69,6 @@
         "date": "Date Setting",
         "time": "Time Setting",
         "subject_label_color": "Label Color",
-        "description": "Detailed Description",
         "video_keyword": "(Optional function) Video Search",
         "video_url": "Reference Video URL",
         "video_thumbnail": "Video Thumbnail/Caption Display",
@@ -80,7 +79,12 @@
       "placeholders": {
         "video_keyword": "EX) Science"
       },
-      "required": "*Items Marked with Are Required"
+      "required": "*Items Marked with Are Required",
+      "search_videos": {
+        "search": "Search",
+        "search_result": "Video Search Results of {source}",
+        "add_to_video_urls": "Reference Video URL"
+      }
     },
     "editing_visibility_dialog": {
       "title": {
