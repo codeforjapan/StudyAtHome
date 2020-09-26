@@ -141,12 +141,6 @@
         @clickButton="endTimePickerOpen = true"
       />
     </div>
-    <editor-input-field-pickable
-      v-model="tempFormData.title"
-      :title="`${$t('common.lesson_data.labels.title')} *`"
-      :label="$t('common.lesson_data.labels.title')"
-      placeholder="例）理科"
-    />
     <div class="EditingScreen-Flex">
       <editor-input-field-pickable
         v-model="tempFormData.subjectName"
@@ -164,6 +158,12 @@
         @clickPickerButton="colorPickerOpen = true"
       />
     </div>
+    <editor-input-field-pickable
+      v-model="tempFormData.title"
+      :title="`${$t('common.lesson_data.labels.title')} *`"
+      :label="$t('common.lesson_data.labels.title')"
+      placeholder="例）理科"
+    />
   </div>
 </template>
 
