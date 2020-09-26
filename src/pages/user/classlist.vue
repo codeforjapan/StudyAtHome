@@ -20,7 +20,9 @@
             <v-radio :value="item.classId">
               <template v-slot:label>
                 <span class="ClassList-Label">
-                  {{ item.schoolName }} {{ item.className }}
+                  {{ item.schoolName }} {{ item.className }} （{{
+                    item.classId
+                  }}）
                 </span>
               </template>
             </v-radio>
