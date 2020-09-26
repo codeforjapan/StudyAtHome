@@ -131,6 +131,7 @@
       }
     },
     "user_classlist": {
+      "title": "Course List",
       "add_class": "Register Course",
       "login_to_class": "Login With Selected Course",
       "no_classes": "There Are No Editable Courses. Please Register Your Course."

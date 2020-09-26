@@ -24,8 +24,8 @@
         "title": "タイトル",
         "subject_name": "教科名",
         "textbook": "教科書",
-        "goal": "学習の目的",
-        "description": "詳細",
+        "goal": "ねらい",
+        "description": "内容（ないよう）",
         "videos": "参考動画",
         "materials": "副教材"
       },
@@ -69,12 +69,16 @@
         "date": "日付設定",
         "time": "時間設定",
         "subject_label_color": "ラベル色",
-        "description": "詳細説明",
+        "description": "内容（ないよう）",
+        "video_keyword": "（オプション機能）動画検索",
         "video_url": "参考動画URL",
         "video_thumbnail": "動画サムネイル・キャプション表示",
         "textbook_page": "教科書ページ",
         "material_title": "副教材タイトル",
         "material_url": "副教材URL"
+      },
+      "placeholders": {
+        "video_keyword": "例） 理科"
       },
       "required": "*マークのあるものは必須項目です"
     },
