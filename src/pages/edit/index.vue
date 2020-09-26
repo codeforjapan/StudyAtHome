@@ -108,7 +108,9 @@
     </div>
     <edit-lesson-screen-bottom-sheet
       :message="
-        $t('pages.edit_index.add_or_edit_lesson', { className: '2年B組' })
+        $t('pages.edit_index.add_or_edit_lesson', {
+          className: classData.className,
+        })
       "
       :expanded="!editingMode"
       @clickAddButton="toggleScreen"
