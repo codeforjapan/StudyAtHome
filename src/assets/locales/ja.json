@@ -79,7 +79,12 @@
       "placeholders": {
         "video_keyword": "例） 理科"
       },
-      "required": "*マークのあるものは必須項目です"
+      "required": "*マークのあるものは必須項目です",
+      "search_videos": {
+        "search": "検索する",
+        "search_result": "{source}の動画検索結果",
+        "add_to_video_urls": "参考動画URLに登録する"
+      }
     },
     "editing_visibility_dialog": {
       "title": {
