@@ -41,7 +41,7 @@
           <base-action-button
             :text="$t('pages.index.teachers.buttons.signup')"
             class="registerButton"
-            @click="$router.push('/user/terms')"
+            @click="$router.push('/user/agree')"
           />
 
           <base-action-button
