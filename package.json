@@ -48,7 +48,7 @@
     "lodash.clonedeep": "^4.5.0",
     "nuxt": "^2.14.3",
     "nuxt-i18n": "^6.13.11",
-    "nuxt-property-decorator": "^2.7.2",
+    "nuxt-property-decorator": "^2.8.8",
     "nuxt-svg-loader": "^1.2.0",
     "nuxt-webfontloader": "^1.1.0",
     "uuid": "^8.3.0",
