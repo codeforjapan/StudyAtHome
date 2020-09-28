@@ -59,11 +59,11 @@ export default Vue.extend({
   },
   watch: {
     async currentDate() {
-      await this.classData.getLessonsByCurrentDate()
+      await this.classData.getLessonsByCurrentDateAuthModeAPIKEY()
     },
   },
   async mounted() {
-    await this.classData.getLessonsByCurrentDate()
+    await this.classData.getLessonsByCurrentDateAuthModeAPIKEY()
   },
 })
 </script>

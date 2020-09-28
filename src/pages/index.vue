@@ -145,7 +145,6 @@ export default Vue.extend({
     async loginToClass() {
       this.loading = true
       try {
-        await vxm.user.setAuthModeIsAPIKEY(true)
         const result = (await API.graphql({
           query: getClass,
           variables: { id: this.classId },
