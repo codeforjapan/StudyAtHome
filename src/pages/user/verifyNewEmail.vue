@@ -2,8 +2,8 @@
   <div>
     <base-bottom-sheet-layer
       fullscreen
-      :title="$t('pages.user_verify.title')"
-      title-en="VERIFY EMAIL"
+      :title="$t('pages.user_verify_new_email.title')"
+      title-en="VERIFY NEW EMAIL"
     >
       <template v-slot:LayerContents>
         <dl>
@@ -71,6 +71,7 @@ import { Auth } from 'aws-amplify'
 export default Vue.extend({
   components: { BaseBottomSheetLayer, BaseActionButton, BaseInputField },
   layout: 'background',
+  middleware: 'authenticated',
   data() {
     return {
       email: '',
@@ -91,7 +92,10 @@ export default Vue.extend({
   methods: {
     async doVerify(): Promise<void> {
       this.loading = true
-      await Auth.confirmSignUp(this.email, this.verification_code)
+      await Auth.verifyCurrentUserAttributeSubmit(
+        'email',
+        this.verification_code
+      )
         .then(() => {
           this.$router.push('/user/classlist')
         })
