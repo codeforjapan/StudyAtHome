@@ -31,6 +31,17 @@
             />
           </dd>
           <dt class="SignUp-ItemTitle">
+            {{ $t('pages.user_edit_user_data.labels.old_password') }}
+          </dt>
+          <dd>
+            <base-input-field
+              v-model="oldPassword"
+              label="password"
+              type="password"
+              require
+            />
+          </dd>
+          <dt class="SignUp-ItemTitle">
             {{ $t('pages.user_edit_user_data.labels.new_password') }}
           </dt>
           <dt class="SignUp-PasswordRules">
@@ -38,8 +49,8 @@
           </dt>
           <dd>
             <base-input-field
-              v-model="password"
-              label="password"
+              v-model="newPassword"
+              label="new password"
               type="password"
               require
             />
@@ -105,7 +116,8 @@ import { vxm } from '~/store'
 type Data = {
   name: typeof vxm.user.displayName
   email: typeof vxm.user.email
-  password: string
+  oldPassword: string
+  newPassword: string
   confirmation: string
   error: boolean
   completion: boolean
@@ -130,7 +142,8 @@ export default Vue.extend<Data, Methods, Computed, unknown>({
     return {
       name: vxm.user.displayName,
       email: vxm.user.email,
-      password: '',
+      oldPassword: '',
+      newPassword: '',
       confirmation: '',
       error: false,
       completion: false,
@@ -139,18 +152,18 @@ export default Vue.extend<Data, Methods, Computed, unknown>({
   },
   computed: {
     passwordConfirm() {
-      if (this.password) {
+      if (this.newPassword) {
         // 6文字以上であること
         const reg = new RegExp(/[ -~]{6,}$/)
-        const response = reg.test(this.password)
+        const response = reg.test(this.newPassword)
         if (!response) {
           return this.$t(
             'common.user_data.labels.password_not_acceptable'
           ).toString()
         }
       }
-      if (this.password && this.confirmation) {
-        if (this.password !== this.confirmation) {
+      if (this.newPassword && this.confirmation) {
+        if (this.newPassword !== this.confirmation) {
           return this.$t('common.user_data.labels.password_not_same').toString()
         }
         return ''
@@ -158,16 +171,15 @@ export default Vue.extend<Data, Methods, Computed, unknown>({
       return ''
     },
     disableRegisterButton() {
-      if (this.email && this.name) {
-        if (this.password !== this.confirmation) {
-          return true
-        }
-        const reg = new RegExp(/[ -~]{6,}$/)
-        const response = reg.test(this.password)
-        if (!response) {
-          return true
-        }
+      if (this.email || this.name) {
         return false
+      }
+      if (this.oldPassword && this.newPassword === this.confirmation) {
+        const reg = new RegExp(/[ -~]{6,}$/)
+        const response = reg.test(this.newPassword)
+        if (response) {
+          return false
+        }
       }
       return true
     },
@@ -178,47 +190,37 @@ export default Vue.extend<Data, Methods, Computed, unknown>({
       const user = await Auth.currentAuthenticatedUser()
       if (user) {
         if (this.email !== vxm.user.email) {
-          if (this.email) {
-            user
-              .updateEmail(this.email)
-              .then(() => {
-                vxm.user.login()
-              })
-              .catch(() => {
-                this.error = true
-                this.loading = false
-              })
+          try {
+            await Auth.updateUserAttributes(user, {
+              email: this.email,
+            })
+            await this.$router.push('/user/verifyNewEmail')
+          } catch {
+            this.error = true
+            this.loading = false
           }
         }
         if (this.name !== vxm.user.displayName) {
-          // firebase
-          //   .firestore()
-          //   .collection('users')
-          //   .doc(user.uid)
-          //   .update({
-          //     username: this.name,
-          //   })
-          //   .then(() => {
-          //     vxm.user.login()
-          //   })
-          //   .catch(() => {
-          //     this.error = true
-          //     this.loading = false
-          //   })
+          try {
+            await Auth.updateUserAttributes(user, {
+              name: this.name,
+            })
+            await this.$router.push('/edit')
+          } catch {
+            this.error = true
+            this.loading = false
+          }
         }
-        if (this.password) {
-          // user
-          //   .updatePassword(this.password)
-          //   .then(() => {
-          //     vxm.user.login()
-          //   })
-          //   .catch(() => {
-          //     this.error = true
-          //     this.loading = false
-          //   })
+        if (this.newPassword) {
+          try {
+            await Auth.changePassword(user, this.oldPassword, this.newPassword)
+            await this.$router.push('/edit')
+          } catch {
+            this.error = true
+            this.loading = false
+          }
         }
       }
-      await this.$router.push('/edit')
     },
     async doLogout(): Promise<void> {
       try {
