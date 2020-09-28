@@ -1,8 +1,8 @@
 <template>
   <div class="MainPage">
-    <div v-if="classData.lessonsOnCurrentDate.length">
+    <div v-if="Object.keys(classData.lessonsGroupByPeriod).length">
       <period-section
-        v-for="(lessons, time, index) in lessonsGroupByPeriod"
+        v-for="(lessons, time, index) in classData.lessonsGroupByPeriod"
         :key="index"
         :period="index"
         :time="time"
@@ -28,12 +28,7 @@ import dayjs from 'dayjs'
 import isToday from 'date-fns/isToday'
 import { vxm } from '@/store'
 import PeriodSection from '@/components/PeriodSection.vue'
-import classData from '@/types/store/classData'
-import LessonWithId = classData.LessonWithId
 
-type LessonsGroupedBy = {
-  [key: string]: LessonWithId[]
-}
 type Data = {
   classData: typeof vxm.classData
 }
@@ -41,10 +36,9 @@ type Data = {
 type Computed = {
   today: boolean
   dateTitle: string
-  lessonsGroupByPeriod: LessonsGroupedBy
 }
 
-export default Vue.extend<Data, unknown, Computed, unknown>({
+export default Vue.extend({
   components: { PeriodSection },
   layout: 'classes',
   data() {
@@ -53,22 +47,23 @@ export default Vue.extend<Data, unknown, Computed, unknown>({
     }
   },
   computed: {
+    currentDate() {
+      return vxm.app.currentDate
+    },
     today() {
       return isToday(vxm.app.currentDate)
     },
     dateTitle() {
       return dayjs(vxm.app.currentDate).format('M/D')
     },
-    lessonsGroupByPeriod() {
-      const groupBy = (targets: LessonWithId[], key: keyof LessonWithId) =>
-        targets.reduce((acc: LessonsGroupedBy, currentLesson: LessonWithId) => {
-          const valueToGroup = currentLesson[key].toString()
-          acc[valueToGroup] = acc[valueToGroup] || []
-          acc[valueToGroup].push(currentLesson)
-          return acc
-        }, {})
-      return groupBy(this.classData.lessonsOnCurrentDate, 'startTime')
+  },
+  watch: {
+    async currentDate() {
+      await this.classData.getLessonsByCurrentDate()
     },
+  },
+  async mounted() {
+    await this.classData.getLessonsByCurrentDate()
   },
 })
 </script>

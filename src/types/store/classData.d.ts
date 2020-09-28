@@ -10,7 +10,6 @@ declare namespace classData {
   export interface ClassData {
     classId: ClassId
     className: string
-    lessons: LessonWithId[]
   }
 
   export interface Lesson {

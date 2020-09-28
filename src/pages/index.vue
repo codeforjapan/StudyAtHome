@@ -144,21 +144,17 @@ export default Vue.extend({
   methods: {
     async loginToClass() {
       this.loading = true
-
       try {
+        await vxm.user.setAuthModeIsAPIKEY(true)
         const result = (await API.graphql({
           query: getClass,
           variables: { id: this.classId },
           authMode: GRAPHQL_AUTH_MODE.API_KEY,
         })) as GraphQLResult<GetClassQuery>
-
         const className = result?.data?.getClass?.className as string
-        const lessons = result.data?.getClass?.lessons?.items as any[]
-
         await vxm.classData.setClassData({
           classId: this.classId,
           className,
-          lessons,
         })
         await this.$router.push('/classes')
       } catch {

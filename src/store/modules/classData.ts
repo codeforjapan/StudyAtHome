@@ -5,13 +5,18 @@ import {
   mutation,
 } from 'vuex-class-component'
 import { AppStore } from '@/store/modules/app'
+import { UserStore } from '@/store/modules/user'
 import classData from '@/types/store/classData'
-import { Auth, API, graphqlOperation } from 'aws-amplify'
-import { GraphQLResult } from '@aws-amplify/api'
-import { getClass } from '@/graphql/queries'
+import { API, Auth, graphqlOperation } from 'aws-amplify'
+import { GRAPHQL_AUTH_MODE, GraphQLResult } from '@aws-amplify/api'
+import { getClass, listLessonsByClass } from '@/graphql/queries'
 import { createClass, createLesson, updateLesson } from '@/graphql/mutations'
-import { GetClassQuery } from '@/API'
+import { GetClassQuery, ListLessonsByClassQuery } from '@/API'
 import { vxm } from '@/store'
+
+type LessonsGroupedBy = {
+  [key: string]: classData.LessonWithId[]
+}
 
 const VuexModule = createModule({
   namespaced: 'classData',
@@ -32,30 +37,55 @@ const generateUniqueId = (): string => {
     c[Math.floor(Math.random() * cl)]
   return result + ''
 }
+// Generate a new Date object with a specified date & time
+const d = (date: Date, hours: number, minutes: number, seconds: number) => {
+  const newDate = new Date(date)
+  newDate.setHours(hours)
+  newDate.setMinutes(minutes)
+  newDate.setSeconds(seconds)
+  return newDate
+}
+
+const getFullDayArray = (date: Date) => {
+  const start = d(date, 0, 0, 0)
+  const end = d(date, 24, 0, 0)
+  return [start, end]
+}
 
 export class ClassDataStore extends VuexModule implements classData.ClassData {
   classId: classData.ClassId = ''
   className: string = ''
-  lessons: classData.LessonWithId[] = []
+  lessonsGroupByPeriod: LessonsGroupedBy = {}
 
-  public get lessonsOnCurrentDate(): classData.LessonWithId[] {
-    const appStore = createProxy(this.$store, AppStore)
+  @action
+  public async lessonsOnCurrentDate(date: Date) {
+    const lessons = (await API.graphql({
+      query: listLessonsByClass,
+      variables: {
+        classId: this.classId,
+        startTime: {
+          between: getFullDayArray(date),
+        },
+      },
+    })) as GraphQLResult<ListLessonsByClassQuery>
 
-    // Generate a new Date object with a specified date & time
-    const d = (date: Date, hours: number, minutes: number, seconds: number) => {
-      const newDate = new Date(date)
-      newDate.setHours(hours)
-      newDate.setMinutes(minutes)
-      newDate.setSeconds(seconds)
-      return newDate
-    }
-    const start = d(appStore.currentDate, 0, 0, 0).getTime()
-    const end = d(appStore.currentDate, 23, 59, 59).getTime()
+    return lessons.data?.listLessonsByClass?.items as any[]
+  }
 
-    return this.lessons.filter((lesson) => {
-      const startOfLesson = new Date(lesson.startTime).getTime()
-      return start <= startOfLesson && end >= startOfLesson
-    })
+  @action
+  public async lessonsOnCurrentDateAuthModeAPIKEY(date: Date) {
+    const lessons = (await API.graphql({
+      query: listLessonsByClass,
+      variables: {
+        classId: this.classId,
+        startTime: {
+          between: getFullDayArray(date),
+        },
+      },
+      authMode: GRAPHQL_AUTH_MODE.API_KEY,
+    })) as GraphQLResult<ListLessonsByClassQuery>
+
+    return lessons.data?.listLessonsByClass?.items as any[]
   }
 
   public get isLoaded(): boolean {
@@ -74,13 +104,9 @@ export class ClassDataStore extends VuexModule implements classData.ClassData {
     }
 
     const className = classObject.className
-
-    const classLessonsItems = result.data?.getClass?.lessons?.items as any[]
-
     this.setClassData({
       classId,
       className,
-      lessons: classLessonsItems,
     })
   }
 
@@ -129,7 +155,6 @@ export class ClassDataStore extends VuexModule implements classData.ClassData {
     this.setClassData({
       classId,
       className,
-      lessons: [],
     })
   }
 
@@ -149,7 +174,7 @@ export class ClassDataStore extends VuexModule implements classData.ClassData {
     } catch {
       throw new Error('エラーによって処理に失敗しました')
     }
-    await this.loadClassData(this.classId)
+    await this.getLessonsByCurrentDate()
   }
 
   @action
@@ -172,14 +197,41 @@ export class ClassDataStore extends VuexModule implements classData.ClassData {
     } catch {
       throw new Error('エラーによって処理に失敗しました')
     }
-    await this.loadClassData(this.classId)
+    await this.getLessonsByCurrentDate()
   }
 
   @mutation
-  public setClassData({ classId, className, lessons }: classData.ClassData) {
+  public setClassData({ classId, className }: classData.ClassData) {
     this.classId = classId
     this.className = className
-    this.lessons = lessons
+  }
+
+  @mutation
+  public setLessonsGroupByPeriod(lessons: classData.LessonWithId[]) {
+    const groupBy = (
+      targets: classData.LessonWithId[],
+      key: keyof classData.LessonWithId
+    ) =>
+      targets.reduce(
+        (acc: LessonsGroupedBy, currentLesson: classData.LessonWithId) => {
+          const valueToGroup = currentLesson[key].toString()
+          acc[valueToGroup] = acc[valueToGroup] || []
+          acc[valueToGroup].push(currentLesson)
+          return acc
+        },
+        {}
+      )
+    this.lessonsGroupByPeriod = groupBy(lessons, 'startTime')
+  }
+
+  @action
+  public async getLessonsByCurrentDate() {
+    const appStore = createProxy(this.$store, AppStore)
+    const userStore = createProxy(this.$store, UserStore)
+    const lessons = userStore.isLoginWithAPIKEY
+      ? await this.lessonsOnCurrentDateAuthModeAPIKEY(appStore.currentDate)
+      : await this.lessonsOnCurrentDate(appStore.currentDate)
+    await this.setLessonsGroupByPeriod(lessons)
   }
 
   @action
@@ -187,7 +239,7 @@ export class ClassDataStore extends VuexModule implements classData.ClassData {
     this.setClassData({
       classId: '',
       className: '',
-      lessons: [],
     })
+    this.lessonsGroupByPeriod = {}
   }
 }
