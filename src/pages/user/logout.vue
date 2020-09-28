@@ -15,6 +15,7 @@
 import Vue from 'vue'
 import BaseBottomSheetLayer from '@/components/BaseBottomSheetLayer.vue'
 import { Auth } from 'aws-amplify'
+import { vxm } from '@/store'
 
 export default Vue.extend({
   components: { BaseBottomSheetLayer },
@@ -31,14 +32,14 @@ export default Vue.extend({
   methods: {
     async doLogout(): Promise<void> {
       this.loading = true
-      await Auth.signOut()
-        .then(() => {
-          this.$router.push('/')
-        })
-        .catch(() => {
-          this.loading = false
-          this.error = true
-        })
+      try {
+        await Auth.signOut()
+        await vxm.app.resetDate()
+        await this.$router.push('/')
+      } catch {
+        this.loading = false
+        this.error = true
+      }
     },
   },
 })

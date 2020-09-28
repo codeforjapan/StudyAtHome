@@ -217,17 +217,16 @@ export default Vue.extend<Data, Methods, Computed, unknown>({
           //   })
         }
       }
-      this.$router.push('/edit')
+      await this.$router.push('/edit')
     },
     async doLogout(): Promise<void> {
-      await Auth.signOut()
-        .then(() => {
-          vxm.user.logout()
-          this.$router.push('/')
-        })
-        .catch(() => {
-          this.error = true
-        })
+      try {
+        await vxm.user.logout()
+        await vxm.app.resetDate()
+        await this.$router.push('/')
+      } catch {
+        this.error = true
+      }
     },
   },
 })

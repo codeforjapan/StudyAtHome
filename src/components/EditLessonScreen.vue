@@ -231,27 +231,26 @@ export default Vue.extend({
         this.changeLesson()
       }
     },
-    changeLesson() {
-      const lessonData: classData.Lesson = this.buildLessonData()
-      vxm.classData
-        .changeLesson({ editData: lessonData, id: this.lessonData.lessonId })
-        .then(() => {
-          this.$emit('collapse')
+    async changeLesson() {
+      try {
+        const lessonData: classData.Lesson = await this.buildLessonData()
+        await vxm.classData.changeLesson({
+          editData: lessonData,
+          id: this.lessonData.lessonId,
         })
-        .catch(() => {
-          this.error = true
-        })
+        await this.$emit('collapse')
+      } catch {
+        this.error = true
+      }
     },
-    registerLesson() {
-      const lessonData: classData.Lesson = this.buildLessonData()
-      vxm.classData
-        .registerLesson(lessonData)
-        .then(() => {
-          this.$emit('collapse')
-        })
-        .catch(() => {
-          this.error = true
-        })
+    async registerLesson() {
+      try {
+        const lessonData: classData.Lesson = await this.buildLessonData()
+        await vxm.classData.registerLesson(lessonData)
+        await this.$emit('collapse')
+      } catch {
+        this.error = true
+      }
     },
     buildLessonData(): classData.Lesson {
       const startTimeStr: string =
