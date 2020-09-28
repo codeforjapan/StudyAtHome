@@ -35,7 +35,6 @@ export class UserStore extends VuexModule implements User {
   emailVerified: EmailVerified = false
   displayName: DisplayName = ''
   uid: Uid = ''
-  isLoginWithAPIKEY: LoginWithAPIKEY = false
 
   public get isAuthenticated(): Promise<boolean> {
     return (async () => {
@@ -51,11 +50,6 @@ export class UserStore extends VuexModule implements User {
     this.emailVerified = emailVerified
     this.displayName = displayName
     this.uid = uid
-  }
-
-  @mutation
-  public setAuthModeIsAPIKEY(isLoginWithAPIKEY: LoginWithAPIKEY) {
-    this.isLoginWithAPIKEY = isLoginWithAPIKEY
   }
 
   @action
@@ -88,6 +82,5 @@ export class UserStore extends VuexModule implements User {
       emailVerified: false,
       displayName: '',
     })
-    this.isLoginWithAPIKEY = false
   }
 }

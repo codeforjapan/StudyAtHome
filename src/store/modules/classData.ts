@@ -5,7 +5,6 @@ import {
   mutation,
 } from 'vuex-class-component'
 import { AppStore } from '@/store/modules/app'
-import { UserStore } from '@/store/modules/user'
 import classData from '@/types/store/classData'
 import { API, Auth, graphqlOperation } from 'aws-amplify'
 import { GRAPHQL_AUTH_MODE, GraphQLResult } from '@aws-amplify/api'
@@ -227,10 +226,16 @@ export class ClassDataStore extends VuexModule implements classData.ClassData {
   @action
   public async getLessonsByCurrentDate() {
     const appStore = createProxy(this.$store, AppStore)
-    const userStore = createProxy(this.$store, UserStore)
-    const lessons = userStore.isLoginWithAPIKEY
-      ? await this.lessonsOnCurrentDateAuthModeAPIKEY(appStore.currentDate)
-      : await this.lessonsOnCurrentDate(appStore.currentDate)
+    const lessons = await this.lessonsOnCurrentDate(appStore.currentDate)
+    await this.setLessonsGroupByPeriod(lessons)
+  }
+
+  @action
+  public async getLessonsByCurrentDateAuthModeAPIKEY() {
+    const appStore = createProxy(this.$store, AppStore)
+    const lessons = await this.lessonsOnCurrentDateAuthModeAPIKEY(
+      appStore.currentDate
+    )
     await this.setLessonsGroupByPeriod(lessons)
   }
 

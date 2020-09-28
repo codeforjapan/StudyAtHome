@@ -238,11 +238,9 @@ export default Vue.extend({
     },
   },
   async mounted() {
-    const lessonList = vxm.user.isLoginWithAPIKEY
-      ? await vxm.classData.lessonsOnCurrentDateAuthModeAPIKEY(
-          vxm.app.currentDate
-        )
-      : await vxm.classData.lessonsOnCurrentDate(vxm.app.currentDate)
+    const lessonList = await vxm.classData.lessonsOnCurrentDateAuthModeAPIKEY(
+      vxm.app.currentDate
+    )
     await this.$nextTick(function () {
       const data: LessonWithId | undefined = lessonList.find(
         (e) => this.$route.query.lessonId === e.id
