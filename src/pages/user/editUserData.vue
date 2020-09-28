@@ -125,6 +125,7 @@ type Computed = {
 export default Vue.extend<Data, Methods, Computed, unknown>({
   components: { BaseBottomSheetLayer, BaseActionButton, BaseInputField },
   layout: 'background',
+  middleware: 'authenticated',
   data() {
     return {
       name: vxm.user.displayName,
