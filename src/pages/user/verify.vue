@@ -3,7 +3,7 @@
     <base-bottom-sheet-layer
       fullscreen
       :title="$t('pages.user_verify.title')"
-      title-en="LOGIN"
+      title-en="VERIFY EMAIL"
     >
       <template v-slot:LayerContents>
         <dl>
