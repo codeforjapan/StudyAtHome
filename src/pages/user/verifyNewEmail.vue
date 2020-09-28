@@ -71,6 +71,7 @@ import { Auth } from 'aws-amplify'
 export default Vue.extend({
   components: { BaseBottomSheetLayer, BaseActionButton, BaseInputField },
   layout: 'background',
+  middleware: 'authenticated',
   data() {
     return {
       email: '',
