@@ -52,7 +52,11 @@
 import Vue from 'vue'
 import BaseBottomSheetLayer from '@/components/BaseBottomSheetLayer.vue'
 import BaseActionButton from '@/components/BaseActionButton.vue'
+import { Auth, API, graphqlOperation } from 'aws-amplify'
+import { GraphQLResult } from '@aws-amplify/api'
 import { vxm } from '@/store'
+import { listClasss } from '@/graphql/queries'
+import { ListClasssQuery } from '@/API'
 
 type DataType = {
   items: Object[]
@@ -66,10 +70,25 @@ export default Vue.extend({
   middleware: 'authenticated',
   data(): DataType {
     return {
-      items: vxm.user.allowAccess,
+      items: [],
       selectedClassId: '',
       loading: false,
     }
+  },
+  async created() {
+    const user = await Auth.currentAuthenticatedUser()
+    const result = (await API.graphql(
+      graphqlOperation(listClasss, {
+        filter: { owner: { eq: user.username } },
+      })
+    )) as GraphQLResult<ListClasssQuery>
+    this.items = (result?.data?.listClasss?.items as any[]).map((item) => {
+      return {
+        classId: item.id,
+        schoolName: item.schoolName,
+        className: item.className,
+      }
+    })
   },
   methods: {
     async doSelectClassLogin() {

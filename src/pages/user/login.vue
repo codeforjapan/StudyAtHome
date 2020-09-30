@@ -55,7 +55,7 @@
         </div>
       </template>
     </base-bottom-sheet-layer>
-    <v-snackbar v-model="error" :timeout="5000" absolute top color="#C01B61">
+    <v-snackbar v-model="error" :timeout="5000" top color="#C01B61">
       {{ $t('pages.user_login.error.invalid') }}
     </v-snackbar>
   </div>
@@ -66,8 +66,8 @@ import Vue from 'vue'
 import BaseBottomSheetLayer from '@/components/BaseBottomSheetLayer.vue'
 import BaseActionButton from '@/components/BaseActionButton.vue'
 import BaseInputField from '@/components/BaseInputField.vue'
-import firebase from '@/plugins/firebase'
-import { vxm } from '@/store'
+import { Auth } from 'aws-amplify'
+// import { vxm } from '@/store'
 
 export default Vue.extend({
   components: { BaseBottomSheetLayer, BaseActionButton, BaseInputField },
@@ -90,20 +90,16 @@ export default Vue.extend({
     },
   },
   methods: {
-    doLogin(): void {
+    async doLogin(): Promise<void> {
       this.loading = true
-      firebase
-        .auth()
-        .signInWithEmailAndPassword(this.email, this.password)
-        .then(() => {
-          vxm.user.login().then(() => {
-            this.$router.push('/user/classlist')
-          })
-        })
-        .catch(() => {
-          this.loading = false
-          this.error = true
-        })
+      try {
+        await Auth.signIn(this.email, this.password)
+        // await vxm.user.login()
+        await this.$router.push('/user/classlist')
+      } catch (err) {
+        this.loading = false
+        this.error = true
+      }
     },
   },
 })

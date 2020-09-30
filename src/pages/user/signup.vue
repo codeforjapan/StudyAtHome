@@ -77,7 +77,7 @@
         </div>
       </template>
     </base-bottom-sheet-layer>
-    <v-snackbar v-model="error" :timeout="5000" absolute top color="#C01B61">
+    <v-snackbar v-model="error" :timeout="5000" top color="#C01B61">
       {{ $t('common.general.error.default') }}
     </v-snackbar>
     <v-dialog v-model="completion" max-width="460px">
@@ -103,7 +103,7 @@ import Vue from 'vue'
 import BaseBottomSheetLayer from '@/components/BaseBottomSheetLayer.vue'
 import BaseActionButton from '@/components/BaseActionButton.vue'
 import BaseInputField from '@/components/BaseInputField.vue'
-import firebase from '@/plugins/firebase'
+import { Auth } from 'aws-amplify'
 
 export default Vue.extend({
   components: { BaseBottomSheetLayer, BaseActionButton, BaseInputField },
@@ -153,38 +153,20 @@ export default Vue.extend({
     },
   },
   methods: {
-    doSignUp(): void {
+    async doSignUp(): Promise<void> {
       this.loading = true
-      firebase
-        .auth()
-        .createUserWithEmailAndPassword(this.email, this.password)
+      await Auth.signUp({
+        username: this.email,
+        password: this.password,
+        attributes: {
+          email: this.email,
+          name: this.name,
+        },
+      })
         .then(() => {
-          const user = firebase.auth().currentUser
-          if (user) {
-            firebase
-              .firestore()
-              .collection('users')
-              .doc(user.uid)
-              .set({
-                username: this.name,
-                allow_access: [],
-                created_at: new Date(),
-                last_login: new Date(),
-                updated_at: new Date(),
-              })
-              .catch(() => {
-                firebase.firestore().collection('users').doc(user.uid).set({
-                  username: this.name,
-                  allow_access: [],
-                  created_at: new Date(),
-                  last_login: new Date(),
-                  updated_at: new Date(),
-                })
-              })
-            user.sendEmailVerification()
-            this.completion = true
-            this.loading = false
-          }
+          this.completion = true
+          this.loading = false
+          this.$router.push('/user/verify')
         })
         .catch(() => {
           this.error = true
