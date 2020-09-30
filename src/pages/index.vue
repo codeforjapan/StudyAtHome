@@ -37,19 +37,35 @@
             {{ $t('pages.index.teachers.label') }}
           </span>
         </v-row>
-        <div style="margin: 0 10px;">
+        <div style="margin: 0 10px">
           <base-action-button
+            v-if="isLoggedIn"
+            :text="$t('pages.index.teachers.buttons.registerLessons')"
+            class="registerButton"
+            @click="$router.push('/user/classlist')"
+          />
+          <base-action-button
+            v-else
             :text="$t('pages.index.teachers.buttons.signup')"
             class="registerButton"
             @click="$router.push('/user/agree')"
           />
 
           <base-action-button
+            v-if="isLoggedIn"
+            :text="$t('pages.index.teachers.buttons.logout')"
+            class="loginButton"
+            theme="secondary"
+            @click="$router.push('/user/logout')"
+          />
+          <base-action-button
+            v-else
             :text="$t('pages.index.teachers.buttons.login')"
             class="loginButton"
             theme="secondary"
             @click="$router.push('/user/login')"
           />
+
           <v-footer color="#004170" padless>
             <ul class="Index-Footer-List">
               <li>
@@ -83,7 +99,7 @@
         </div>
       </v-flex>
     </v-flex>
-    <v-snackbar v-model="error" :timeout="5000" absolute top color="#C01B61">
+    <v-snackbar v-model="error" :timeout="5000" top color="#C01B61">
       {{ $t('pages.index.error.invalid_class_id') }}
     </v-snackbar>
   </v-layout>
@@ -91,15 +107,20 @@
 
 <script lang="ts">
 import Vue from 'vue'
-import { vxm } from '@/store'
 import BaseInputField from '@/components/BaseInputField.vue'
 import BaseActionButton from '@/components/BaseActionButton.vue'
+import { API, Auth } from 'aws-amplify'
+import { GRAPHQL_AUTH_MODE, GraphQLResult } from '@aws-amplify/api'
+import { getClass } from '@/graphql/queries'
+import { GetClassQuery } from '@/API'
+import { vxm } from '@/store'
 
 type DataType = {
   classId: string
   loading: boolean
   error: boolean
   valid: boolean
+  isLoggedIn: boolean
 }
 
 export default Vue.extend({
@@ -113,20 +134,32 @@ export default Vue.extend({
       loading: false,
       error: false,
       valid: true,
+      isLoggedIn: false,
     }
   },
+  async mounted() {
+    const userInfo = await Auth.currentUserInfo()
+    this.isLoggedIn = !!userInfo
+  },
   methods: {
-    loginToClass(): void {
+    async loginToClass() {
       this.loading = true
-      vxm.classData
-        .loadClassData(this.classId)
-        .then(() => {
-          this.$router.push('/classes')
+      try {
+        const result = (await API.graphql({
+          query: getClass,
+          variables: { id: this.classId },
+          authMode: GRAPHQL_AUTH_MODE.API_KEY,
+        })) as GraphQLResult<GetClassQuery>
+        const className = result?.data?.getClass?.className as string
+        await vxm.classData.setClassData({
+          classId: this.classId,
+          className,
         })
-        .catch(() => {
-          this.loading = false
-          this.error = true
-        })
+        await this.$router.push('/classes')
+      } catch {
+        this.loading = false
+        this.error = true
+      }
     },
   },
 })

@@ -134,7 +134,9 @@
         "label": "時間割をつくる先生方",
         "buttons": {
           "signup": "ユーザー登録する",
-          "login": "ログインする"
+          "login": "ログインする",
+          "registerLessons": "時間割をつくる",
+          "logout": "ログアウトする"
         }
       }
     },
@@ -147,6 +149,7 @@
     "user_edit_user_data": {
       "title": "ユーザー情報の変更",
       "labels": {
+        "old_password": "現在のパスワード",
         "new_password": "変更先パスワード",
         "new_password_confirm": "変更先パスワード（確認用）"
       }
@@ -192,6 +195,12 @@
         "go_back_to_top": "トップに戻る",
         "message": "入力いただいたメールアドレス宛に確認メールを送信しました。メールに記載されているURLから認証を行ってください。"
       }
+    },
+    "user_verify": {
+      "title": "メールアドレス確認"
+    },
+    "user_verify_new_email": {
+      "title": "メールアドレス変更確認"
     }
   }
 }

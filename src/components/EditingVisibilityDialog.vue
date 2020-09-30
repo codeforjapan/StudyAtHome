@@ -40,14 +40,14 @@
         </div>
       </template>
     </base-dialog>
-    <v-snackbar v-model="error" :timeout="5000" absolute top color="#C01B61">
+    <v-snackbar v-model="error" :timeout="5000" top color="#C01B61">
       {{
         $t(
           'components.editing_visibility_dialog.error.could_not_change_visibility'
         )
       }}
     </v-snackbar>
-    <v-snackbar v-model="success" :timeout="5000" absolute top color="success">
+    <v-snackbar v-model="success" :timeout="5000" top color="success">
       {{ $t('components.editing_visibility_dialog.success.message') }}
     </v-snackbar>
   </div>
@@ -58,7 +58,7 @@ import Vue from 'vue'
 import dayjs from 'dayjs'
 import BaseDialog from '@/components/BaseDialog.vue'
 import { vxm } from '@/store'
-import { classData } from '@/types/store/classData'
+import classData from '@/types/store/classData'
 
 type LocalData = {
   openEditingVisibilityDialog: boolean
@@ -80,7 +80,7 @@ export default Vue.extend({
       type: Object as () => classData.LessonWithId,
       required: true,
       default: {
-        docId: '',
+        id: '',
       },
     },
   },
@@ -131,13 +131,13 @@ export default Vue.extend({
   },
   methods: {
     toggleIsHidden() {
-      const lesson = Object.assign({}, this.value, {
+      const lesson = {
         isHidden: !this.value.isHidden,
-      }) as classData.Lesson
+      }
       vxm.classData
         .changeLesson({
           editData: lesson,
-          id: this.value.docId,
+          id: this.value.id,
         })
         .then(() => {
           this.success = true
