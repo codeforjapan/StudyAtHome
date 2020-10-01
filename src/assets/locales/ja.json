@@ -16,7 +16,8 @@
     },
     "calender": {
       "prev_week": "前の週",
-      "next_week": "次の週"
+      "next_week": "次の週",
+      "to_today": "今日へ移動"
     },
     "footer": {
       "about": "おうちで時間割について",
