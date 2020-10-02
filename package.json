@@ -35,7 +35,7 @@
     "@types/js-cookie": "^2.2.6",
     "@types/jwt-decode": "^2.2.1",
     "@types/node": "^14.11.2",
-    "aws-amplify": "^3.3.2",
+    "aws-amplify": "^3.3.3",
     "cookieparser": "^0.1.0",
     "core-js": "3.6.5",
     "cross-env": "^7.0.2",
