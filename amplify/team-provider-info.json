@@ -1,0 +1,26 @@
+{
+  "dev": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-studyathome-dev-191756-authRole",
+      "UnauthRoleArn": "arn:aws:iam::952378688420:role/amplify-studyathome-dev-191756-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::952378688420:role/amplify-studyathome-dev-191756-authRole",
+      "Region": "ap-northeast-1",
+      "DeploymentBucketName": "amplify-studyathome-dev-191756-deployment",
+      "UnauthRoleName": "amplify-studyathome-dev-191756-unauthRole",
+      "StackName": "amplify-studyathome-dev-191756",
+      "StackId": "arn:aws:cloudformation:ap-northeast-1:952378688420:stack/amplify-studyathome-dev-191756/f60c4300-e529-11ea-bf58-0eacaab34bb8",
+      "AmplifyAppId": "d1dqymg5m0yj3m"
+    },
+    "categories": {
+      "auth": {
+        "studyathome6e74485c": {}
+      },
+      "hosting": {
+        "amplifyhosting": {
+          "appId": "d1dqymg5m0yj3m",
+          "type": "cicd"
+        }
+      }
+    }
+  }
+}

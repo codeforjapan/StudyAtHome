@@ -44,7 +44,7 @@
         </v-container>
       </v-card-actions>
     </v-card>
-    <v-snackbar v-model="error" :timeout="5000" absolute top color="#C01B61">
+    <v-snackbar v-model="error" :timeout="5000" top color="#C01B61">
       {{ $t('components.editing_screen.error.could_not_add_lesson') }}
     </v-snackbar>
   </v-bottom-sheet>
@@ -59,7 +59,7 @@ import EditLessonScreenInner1 from '@/components/EditLessonScreenInner1.vue'
 import EditLessonScreenInner2 from '@/components/EditLessonScreenInner2.vue'
 import EditLessonScreenInner3 from '@/components/EditLessonScreenInner3.vue'
 import EditLessonScreenInner4 from '@/components/EditLessonScreenInner4.vue'
-import { classData } from '@/types/store/classData'
+import classData from '@/types/store/classData'
 
 type stateType = {
   error: boolean
@@ -206,9 +206,9 @@ export default Vue.extend({
     fourthPageData: {
       get(): Object {
         return {
-          videoUrl: this.lessonData.videoUrl,
-          videoTitle: this.lessonData.videoTitle,
-          videoThumbnailUrl: this.lessonData.videoThumbnailUrl,
+          pages: this.lessonData.pages,
+          materialsTitle: this.lessonData.materialsTitle,
+          materialsUrl: this.lessonData.materialsUrl,
         }
       },
       set(val: any): void {
@@ -231,27 +231,26 @@ export default Vue.extend({
         this.changeLesson()
       }
     },
-    changeLesson() {
-      const lessonData: classData.Lesson = this.buildLessonData()
-      vxm.classData
-        .changeLesson({ editData: lessonData, id: this.lessonData.lessonId })
-        .then(() => {
-          this.$emit('collapse')
+    async changeLesson() {
+      try {
+        const lessonData: classData.Lesson = await this.buildLessonData()
+        await vxm.classData.changeLesson({
+          editData: lessonData,
+          id: this.lessonData.lessonId,
         })
-        .catch(() => {
-          this.error = true
-        })
+        await this.$emit('collapse')
+      } catch {
+        this.error = true
+      }
     },
-    registerLesson() {
-      const lessonData: classData.Lesson = this.buildLessonData()
-      vxm.classData
-        .registerLesson(lessonData)
-        .then(() => {
-          this.$emit('collapse')
-        })
-        .catch(() => {
-          this.error = true
-        })
+    async registerLesson() {
+      try {
+        const lessonData: classData.Lesson = await this.buildLessonData()
+        await vxm.classData.registerLesson(lessonData)
+        await this.$emit('collapse')
+      } catch {
+        this.error = true
+      }
     },
     buildLessonData(): classData.Lesson {
       const startTimeStr: string =
@@ -268,9 +267,12 @@ export default Vue.extend({
           thumbnailUrl: this.lessonData.videoThumbnailUrl,
         })
       const materialData = []
-      if (this.lessonData.materialsTitle && this.lessonData.materialsUrl)
+      if (this.lessonData.materialsUrl)
         materialData.push({
-          title: this.lessonData.materialsTitle,
+          title:
+            this.lessonData.materialsTitle !== ''
+              ? this.lessonData.materialsTitle
+              : this.lessonData.materialsUrl,
           url: this.lessonData.materialsUrl,
         })
       return {

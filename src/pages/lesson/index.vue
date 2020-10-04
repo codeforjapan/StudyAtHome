@@ -106,7 +106,7 @@
         </div>
 
         <div class="divider">
-          <v-divider style="border-color: transparent;" />
+          <v-divider style="border-color: transparent" />
         </div>
       </v-sheet>
     </div>
@@ -120,7 +120,7 @@ import 'dayjs/locale/ja'
 import add from 'date-fns/add'
 import { vxm } from '@/store'
 import SubjectTag from '@/components/SubjectTag.vue'
-import { classData } from '~/types/store/classData'
+import classData from '~/types/store/classData'
 import LessonWithId = classData.LessonWithId
 
 type DataType = {
@@ -150,7 +150,7 @@ export default Vue.extend({
       required: false,
       default() {
         return {
-          docId: '',
+          id: '',
           startTime: new Date(),
           endTime: add(new Date(), { minutes: 40 }),
           title: '授業のタイトル',
@@ -196,7 +196,7 @@ export default Vue.extend({
   data(): DataType {
     return {
       lesson: {
-        docId: '',
+        id: '',
         startTime: new Date(),
         endTime: new Date(),
         title: '',
@@ -237,12 +237,13 @@ export default Vue.extend({
         : dayjs(this.lesson.endTime).format('H:mm（M/D）')
     },
   },
-  mounted() {
-    this.$nextTick(function () {
-      const data:
-        | LessonWithId
-        | undefined = vxm.classData.lessonsOnCurrentDate.find(
-        (e) => this.$route.query.lessonId === e.docId
+  async mounted() {
+    const lessonList = await vxm.classData.lessonsOnCurrentDateAuthModeAPIKEY(
+      vxm.app.currentDate
+    )
+    await this.$nextTick(function () {
+      const data: LessonWithId | undefined = lessonList.find(
+        (e) => this.$route.query.lessonId === e.id
       ) as LessonWithId | undefined
       this.lesson = data ?? this.dummyLesson
     })

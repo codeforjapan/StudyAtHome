@@ -5,7 +5,17 @@
         v-model="date"
         locale="ja"
         first-day-of-week="1"
+        width="100%"
+        class="mb-4"
         @input="openCalenderDialog = false"
+      />
+      <base-action-button
+        theme="secondary"
+        :text="$t('common.calender.to_today')"
+        @click="
+          date = new Date()
+          openCalenderDialog = false
+        "
       />
     </v-dialog>
     <base-dialog
@@ -46,25 +56,13 @@
       </template>
     </base-dialog>
     <v-overlay :value="loading" color="#0071C2" opacity="1" z-index="9999">
-      <div class="loader">
-        Loading
-      </div>
+      <div class="loader">Loading</div>
     </v-overlay>
-    <v-app-bar fixed app class="bar" elevation="0">
+    <v-app-bar fixed app class="bar" elevation="0" extension-height="83">
       <HeaderLogo />
       <AppLanguageSelector />
       <v-spacer />
       <div class="classes-buttons">
-        <v-btn
-          fab
-          small
-          outlined
-          rounded
-          color="#0071C2"
-          @click="openCalenderDialog = true"
-        >
-          <v-icon>mdi-calendar-today</v-icon>
-        </v-btn>
         <v-btn
           fab
           small
@@ -78,7 +76,10 @@
       </div>
       <template v-slot:extension>
         <div class="header-calender">
-          <CalendarBar v-model="app.currentDate" />
+          <CalendarBar
+            v-model="app.currentDate"
+            @showCalender="openCalenderDialog = true"
+          />
         </div>
       </template>
     </v-app-bar>
@@ -97,6 +98,7 @@ import AppLanguageSelector from '@/components/AppLanguageSelector.vue'
 import HeaderLogo from '@/assets/svgs/header_logo.svg'
 import CalendarBar from '@/components/CalendarBar.vue'
 import BaseDialog from '@/components/BaseDialog.vue'
+import BaseActionButton from '@/components/BaseActionButton.vue'
 import { vxm } from '@/store'
 
 type LocalData = {
@@ -115,6 +117,7 @@ export default Vue.extend({
     CalendarBar,
     BaseDialog,
     HeaderLogo,
+    BaseActionButton,
   },
   data(): LocalData {
     return {
@@ -140,10 +143,10 @@ export default Vue.extend({
     this.loading = false
   },
   methods: {
-    clickLogout() {
-      vxm.classData.unloadClassData().then(() => {
-        this.$router.push('/')
-      })
+    async clickLogout() {
+      await vxm.user.logout()
+      await vxm.app.resetDate()
+      await this.$router.push('/')
     },
   },
 })
@@ -176,7 +179,7 @@ export default Vue.extend({
   margin: 0 auto;
   width: 100%;
   max-width: 640px;
-  height: 40px;
+  height: 100%;
 }
 .classes-container {
   height: 100%;
