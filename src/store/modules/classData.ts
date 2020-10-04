@@ -4,10 +4,18 @@ import {
   createProxy,
   mutation,
 } from 'vuex-class-component'
-import firebase from '@/plugins/firebase'
 import { AppStore } from '@/store/modules/app'
-import { classData } from '@/types/store/classData'
-import { vxm } from '~/store'
+import classData from '@/types/store/classData'
+import { API, Auth, graphqlOperation } from 'aws-amplify'
+import { GRAPHQL_AUTH_MODE, GraphQLResult } from '@aws-amplify/api'
+import { getClass, listLessonsByClass } from '@/graphql/queries'
+import { createClass, createLesson, updateLesson } from '@/graphql/mutations'
+import { GetClassQuery, ListLessonsByClassQuery } from '@/API'
+import { vxm } from '@/store'
+
+type LessonsGroupedBy = {
+  [key: string]: classData.LessonWithId[]
+}
 
 const VuexModule = createModule({
   namespaced: 'classData',
@@ -28,30 +36,55 @@ const generateUniqueId = (): string => {
     c[Math.floor(Math.random() * cl)]
   return result + ''
 }
+// Generate a new Date object with a specified date & time
+const d = (date: Date, hours: number, minutes: number, seconds: number) => {
+  const newDate = new Date(date)
+  newDate.setHours(hours)
+  newDate.setMinutes(minutes)
+  newDate.setSeconds(seconds)
+  return newDate
+}
+
+const getFullDayArray = (date: Date) => {
+  const start = d(date, 0, 0, 0)
+  const end = d(date, 24, 0, 0)
+  return [start, end]
+}
 
 export class ClassDataStore extends VuexModule implements classData.ClassData {
   classId: classData.ClassId = ''
   className: string = ''
-  lessons: classData.LessonWithId[] = []
+  lessonsGroupByPeriod: LessonsGroupedBy = {}
 
-  public get lessonsOnCurrentDate(): classData.LessonWithId[] {
-    const appStore = createProxy(this.$store, AppStore)
+  @action
+  public async lessonsOnCurrentDate(date: Date) {
+    const lessons = (await API.graphql({
+      query: listLessonsByClass,
+      variables: {
+        classId: this.classId,
+        startTime: {
+          between: getFullDayArray(date),
+        },
+      },
+    })) as GraphQLResult<ListLessonsByClassQuery>
 
-    // Generate a new Date object with a specified date & time
-    const d = (date: Date, hours: number, minutes: number, seconds: number) => {
-      const newDate = new Date(date)
-      newDate.setHours(hours)
-      newDate.setMinutes(minutes)
-      newDate.setSeconds(seconds)
-      return newDate
-    }
-    const start = d(appStore.currentDate, 0, 0, 0).getTime()
-    const end = d(appStore.currentDate, 23, 59, 59).getTime()
+    return lessons.data?.listLessonsByClass?.items as any[]
+  }
 
-    return this.lessons.filter((lesson) => {
-      const startOfLesson = lesson.startTime.getTime()
-      return start <= startOfLesson && end >= startOfLesson
-    })
+  @action
+  public async lessonsOnCurrentDateAuthModeAPIKEY(date: Date) {
+    const lessons = (await API.graphql({
+      query: listLessonsByClass,
+      variables: {
+        classId: this.classId,
+        startTime: {
+          between: getFullDayArray(date),
+        },
+      },
+      authMode: GRAPHQL_AUTH_MODE.API_KEY,
+    })) as GraphQLResult<ListLessonsByClassQuery>
+
+    return lessons.data?.listLessonsByClass?.items as any[]
   }
 
   public get isLoaded(): boolean {
@@ -60,50 +93,19 @@ export class ClassDataStore extends VuexModule implements classData.ClassData {
 
   @action
   public async loadClassData(classId: classData.ClassId) {
-    const lessons: classData.LessonWithId[] = []
-    const classDataDocument = firebase
-      .firestore()
-      .collection('classData')
-      .doc(classId)
+    const result = (await API.graphql(
+      graphqlOperation(getClass, { id: classId })
+    )) as GraphQLResult<GetClassQuery>
 
-    // classData ドキュメントのフィールドを取得
-    const classDataSnapshot = await classDataDocument.get()
-    if (!classDataSnapshot.exists) throw new Error('クラスIDが間違っています')
-    const classData = classDataSnapshot.data() as classData.ClassData
-    const className = classData.className
-
-    // classData ドキュメント下の lessons コレクションを取得
-    const classDataLessonsSnapshot = await classDataDocument
-      .collection('Lessons')
-      .orderBy('startTime')
-      .get()
-
-    try {
-      classDataLessonsSnapshot.forEach((doc) => {
-        const retrieved = doc.data() as classData.database.Lesson
-        const converted: classData.LessonWithId = {
-          docId: doc.id,
-          startTime: retrieved.startTime.toDate(),
-          endTime: retrieved.endTime.toDate(),
-          title: retrieved.title,
-          subject: retrieved.subject,
-          goal: retrieved.goal,
-          description: retrieved.description,
-          videos: retrieved.videos,
-          pages: retrieved.pages,
-          materials: retrieved.materials,
-          isHidden: retrieved.isHidden,
-        }
-
-        lessons.push(converted)
-      })
-    } catch {
+    const classObject = result?.data?.getClass
+    if (!classObject) {
       throw new Error('クラスIDが間違っています')
     }
+
+    const className = classObject.className
     this.setClassData({
       classId,
       className,
-      lessons,
     })
   }
 
@@ -115,63 +117,63 @@ export class ClassDataStore extends VuexModule implements classData.ClassData {
     className: string
     schoolName: string
   }) {
-    let classId = generateUniqueId()
     if (!vxm.user.isAuthenticated) {
       throw new Error('ユーザーが正しくログインされていません')
     }
-    try {
-      const doc = await firebase
-        .firestore()
-        .collection('classData')
-        .doc(classId)
-        .get()
-      if (doc.exists) {
-        classId = generateUniqueId()
+
+    let classId, classObject
+    do {
+      classId = generateUniqueId()
+      try {
+        const result = (await API.graphql(
+          graphqlOperation(getClass, {
+            id: classId,
+          })
+        )) as GraphQLResult<GetClassQuery>
+        classObject = result?.data?.getClass
+      } catch {
+        throw new Error('エラーによって処理に失敗しました')
       }
-    } catch {
-      throw new Error('エラーによって処理に失敗しました')
-    }
+    } while (classObject)
+
     try {
-      await firebase
-        .firestore()
-        .collection('users')
-        .doc(vxm.user.uid)
-        .update({
-          allow_access: firebase.firestore.FieldValue.arrayUnion(classId),
+      const user = await Auth.currentAuthenticatedUser()
+      await API.graphql(
+        graphqlOperation(createClass, {
+          input: {
+            id: classId,
+            className,
+            schoolName,
+            owner: user.username,
+          },
         })
-      await firebase
-        .firestore()
-        .collection('editorClassData')
-        .doc(classId)
-        .set({
-          schoolName,
-        })
-      await firebase.firestore().collection('classData').doc(classId).set({
-        lesson: [],
-        className,
-      })
+      )
     } catch {
       throw new Error('エラーによって処理に失敗しました')
     }
     this.setClassData({
       classId,
       className,
-      lessons: [],
     })
   }
 
   @action
   public async registerLesson(lessonData: classData.Lesson) {
-    await firebase
-      .firestore()
-      .collection('classData')
-      .doc(this.classId)
-      .collection('Lessons')
-      .add(lessonData)
-      .catch(() => {
-        return Promise.reject(new Error('エラーによって処理に失敗しました'))
-      })
-    this.loadClassData(this.classId)
+    try {
+      const user = await Auth.currentAuthenticatedUser()
+      await API.graphql(
+        graphqlOperation(createLesson, {
+          input: {
+            classId: this.classId,
+            owner: user.username,
+            ...lessonData,
+          },
+        })
+      )
+    } catch {
+      throw new Error('エラーによって処理に失敗しました')
+    }
+    await this.getLessonsByCurrentDate()
   }
 
   @action
@@ -179,27 +181,62 @@ export class ClassDataStore extends VuexModule implements classData.ClassData {
     editData,
     id,
   }: {
-    editData: classData.Lesson
+    editData: any
     id: classData.LessonId
   }) {
-    await firebase
-      .firestore()
-      .collection('classData')
-      .doc(this.classId)
-      .collection('Lessons')
-      .doc(id)
-      .set(editData)
-      .catch(() => {
-        return Promise.reject(new Error('エラーによって処理に失敗しました'))
-      })
-    this.loadClassData(this.classId)
+    try {
+      await API.graphql(
+        graphqlOperation(updateLesson, {
+          input: {
+            id,
+            ...editData,
+          },
+        })
+      )
+    } catch {
+      throw new Error('エラーによって処理に失敗しました')
+    }
+    await this.getLessonsByCurrentDate()
   }
 
   @mutation
-  private setClassData({ classId, className, lessons }: classData.ClassData) {
+  public setClassData({ classId, className }: classData.ClassData) {
     this.classId = classId
     this.className = className
-    this.lessons = lessons
+  }
+
+  @mutation
+  public setLessonsGroupByPeriod(lessons: classData.LessonWithId[]) {
+    const groupBy = (
+      targets: classData.LessonWithId[],
+      key: keyof classData.LessonWithId
+    ) =>
+      targets.reduce(
+        (acc: LessonsGroupedBy, currentLesson: classData.LessonWithId) => {
+          const valueToGroup = currentLesson[key].toString()
+          acc[valueToGroup] = acc[valueToGroup] || []
+          acc[valueToGroup].push(currentLesson)
+          return acc
+        },
+        {}
+      )
+    this.lessonsGroupByPeriod = groupBy(lessons, 'startTime')
+  }
+
+  @action
+  public async getLessonsByCurrentDate() {
+    const appStore = createProxy(this.$store, AppStore)
+    const lessons = await this.lessonsOnCurrentDate(appStore.currentDate)
+    await this.setLessonsGroupByPeriod(lessons)
+  }
+
+  @action
+  public async getLessonsByCurrentDateAuthModeAPIKEY() {
+    const appStore = createProxy(this.$store, AppStore)
+    const lessons = await this.lessonsOnCurrentDateAuthModeAPIKEY(
+      appStore.currentDate
+    )
+    await this.setLessonsGroupByPeriod(lessons)
   }
 
   @action
@@ -207,7 +244,7 @@ export class ClassDataStore extends VuexModule implements classData.ClassData {
     this.setClassData({
       classId: '',
       className: '',
-      lessons: [],
     })
+    this.lessonsGroupByPeriod = {}
   }
 }

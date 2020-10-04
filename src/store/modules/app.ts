@@ -30,4 +30,9 @@ export class AppStore extends VuexModule implements App {
   public setDate(date: Date) {
     this.currentDate = date
   }
+
+  @mutation
+  public resetDate() {
+    this.currentDate = new Date()
+  }
 }

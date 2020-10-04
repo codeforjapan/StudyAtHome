@@ -75,7 +75,7 @@ let movies: any[] = []
 export type formData = {
   videoUrl: string | null
   videoTitle: string
-  videoThumbnailUrl: string
+  videoThumbnailUrl: string | null
 }
 
 @Component({
@@ -87,7 +87,8 @@ export default class EditLessonScreenInner3 extends Vue {
   tempFormData = {
     videoUrl: this.form.videoUrl,
     videoTitle: this.form.videoTitle,
-    videoThumbnailUrl: this.form.videoThumbnailUrl,
+    videoThumbnailUrl:
+      this.form.videoThumbnailUrl !== '' ? this.form.videoThumbnailUrl : null,
   }
 
   @Prop({

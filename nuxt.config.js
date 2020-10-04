@@ -4,7 +4,7 @@ const environment = process.env.NODE_ENV || 'development'
 
 export default {
   telemetry: false,
-  mode: 'universal',
+  ssr: false,
   srcDir: 'src',
   /*
    ** Headers of the page
@@ -89,15 +89,8 @@ export default {
    */
   plugins: [
     {
-      src: '@/plugins/firebase',
-    },
-    {
-      src: '@/plugins/persistedstate.js',
+      src: '@/plugins/amplify',
       ssr: false,
-    },
-    {
-      src: '@/plugins/firebase-admin.js',
-      ssr: true,
     },
   ],
   /*
@@ -177,15 +170,10 @@ export default {
     start_url: '/',
     splash_pages: null,
   },
-  workbox: {
-    importScripts: [
-      'https://www.gstatic.com/firebasejs/7.15.1/firebase-app.js',
-      'https://www.gstatic.com/firebasejs/7.15.1/firebase-auth.js',
-      'swenv.js',
-      'sw-firebase-auth.js',
-    ],
-    dev: process.env.NODE_ENV !== 'production',
-  },
+  // workbox: {
+  //   importScripts: ['swenv.js'],
+  //   dev: process.env.NODE_ENV !== 'production',
+  // },
   /*
    ** Build configuration
    */
