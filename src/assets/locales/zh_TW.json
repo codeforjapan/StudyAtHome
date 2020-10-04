@@ -134,7 +134,9 @@
         "label": "給製作時間表的教師",
         "buttons": {
           "signup": "使用者註冊",
-          "login": "登入"
+          "login": "登入",
+          "registerLessons": "製作時間表",
+          "logout": "登出"
         }
       }
     },
@@ -147,6 +149,7 @@
     "user_edit_user_data": {
       "title": "使用者資料變更",
       "labels": {
+        "old_password": "現在的密碼",
         "new_password": "請輸入新密碼",
         "new_password_confirm": "請輸入新密碼（確認用）"
       }
@@ -192,6 +195,12 @@
         "go_back_to_top": "回到首頁",
         "message": "已寄送確認信至您的電子郵件信箱，請點擊確認信內的網址進行驗證。"
       }
+    },
+    "user_verify": {
+      "title": "確認電子信箱"
+    },
+    "user_verify_new_email": {
+      "title": "確定變更電子信箱"
     }
   }
 }
