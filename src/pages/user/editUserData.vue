@@ -3,70 +3,54 @@
     <base-bottom-sheet-layer
       :title="$t('pages.user_edit_user_data.title')"
       title-en="USER SETTING"
-      fullscreen
     >
       <template v-slot:LayerContents>
         <dl>
           <dt class="SignUp-ItemTitle">
             {{ $t('common.user_data.labels.nickname') }}
           </dt>
-          <dd>
-            <base-input-field
-              v-model="name"
-              label="name"
-              placeholder="山田花子"
-              require
-            />
+          <dd class="SignUp-ItemButton">
+            <v-btn
+              block
+              color="white"
+              height="auto"
+              class="ToEditNavButton"
+              @click="$router.push('/user/editUserName')"
+            >
+              {{ name }}
+              <v-icon right color="#0071C2"> mdi-chevron-right </v-icon>
+            </v-btn>
           </dd>
           <dt class="SignUp-ItemTitle">
             {{ $t('common.user_data.labels.email') }}
           </dt>
-          <dd>
-            <base-input-field
-              v-model="email"
-              label="email"
-              placeholder="hogehoge@hogehoge.com"
-              type="email"
-              require
-            />
+          <dd class="SignUp-ItemButton">
+            <v-btn
+              block
+              color="white"
+              height="auto"
+              class="ToEditNavButton"
+              @click="$router.push('/user/editUserEmail')"
+            >
+              {{ email }}
+              <v-icon right color="#0071C2"> mdi-chevron-right </v-icon>
+            </v-btn>
           </dd>
           <dt class="SignUp-ItemTitle">
-            {{ $t('pages.user_edit_user_data.labels.old_password') }}
+            {{ $t('common.user_data.labels.password') }}
           </dt>
-          <dd>
-            <base-input-field
-              v-model="oldPassword"
-              label="password"
-              type="password"
-              require
-            />
+          <dd class="SignUp-ItemButton">
+            <v-btn
+              block
+              color="white"
+              height="auto"
+              class="ToEditNavButton"
+              @click="$router.push('/user/editUserPassword')"
+            >
+              ********
+              <v-icon right color="#0071C2"> mdi-chevron-right </v-icon>
+            </v-btn>
           </dd>
-          <dt class="SignUp-ItemTitle">
-            {{ $t('pages.user_edit_user_data.labels.new_password') }}
-          </dt>
-          <dt class="SignUp-PasswordRules">
-            {{ $t('common.user_data.labels.password_rules') }}
-          </dt>
-          <dd>
-            <base-input-field
-              v-model="newPassword"
-              label="new password"
-              type="password"
-              require
-            />
-          </dd>
-          <dt class="SignUp-ItemTitle">
-            {{ $t('pages.user_edit_user_data.labels.new_password_confirm') }}
-          </dt>
-          <dd>
-            <base-input-field
-              v-model="confirmation"
-              label="confirmation"
-              type="password"
-              require
-            />
-          </dd>
-          <dt class="SignUp-ItemTitle text--red">{{ passwordConfirm }}</dt>
         </dl>
       </template>
       <template v-slot:LayerFooter>
@@ -77,26 +61,18 @@
             class="SignUp-Button"
             @click="$router.push('/edit')"
           />
-          <base-action-button
-            theme="primary"
-            :text="$t('common.general.buttons.save')"
-            class="SignUp-Button"
-            :is-disabled="disableRegisterButton"
-            :is-loading="loading"
-            @click="doSave"
-          />
+          <v-btn
+            :disabled="loading"
+            class="LogoutButton"
+            color="#fff"
+            height="60px"
+            text
+            @click="doLogout"
+          >
+            {{ $t('common.general.buttons.logout') }}
+            <v-icon right color="#fff"> mdi-logout-variant </v-icon>
+          </v-btn>
         </div>
-        <v-btn
-          :disabled="loading"
-          block
-          class="button"
-          color="#ffffff"
-          height="60px"
-          text
-          @click="doLogout"
-        >
-          <span>{{ $t('common.general.buttons.logout') }}</span>
-        </v-btn>
       </template>
     </base-bottom-sheet-layer>
     <v-snackbar v-model="error" :timeout="5000" top color="#C01B61">
@@ -109,23 +85,16 @@
 import Vue from 'vue'
 import BaseBottomSheetLayer from '@/components/BaseBottomSheetLayer.vue'
 import BaseActionButton from '@/components/BaseActionButton.vue'
-import BaseInputField from '@/components/BaseInputField.vue'
-import { Auth } from 'aws-amplify'
 import { vxm } from '~/store'
 
 type Data = {
   name: typeof vxm.user.displayName
   email: typeof vxm.user.email
-  oldPassword: string
-  newPassword: string
-  confirmation: string
   error: boolean
-  completion: boolean
   loading: boolean
 }
 
 type Methods = {
-  doSave(): void
   doLogout(): void
 }
 
@@ -135,93 +104,23 @@ type Computed = {
 }
 
 export default Vue.extend<Data, Methods, Computed, unknown>({
-  components: { BaseBottomSheetLayer, BaseActionButton, BaseInputField },
+  components: { BaseBottomSheetLayer, BaseActionButton },
   layout: 'background',
   middleware: 'authenticated',
   data() {
     return {
       name: vxm.user.displayName,
       email: vxm.user.email,
-      oldPassword: '',
-      newPassword: '',
-      confirmation: '',
       error: false,
-      completion: false,
       loading: false,
     }
   },
-  computed: {
-    passwordConfirm() {
-      if (this.newPassword) {
-        // 6文字以上であること
-        const reg = new RegExp(/[ -~]{6,}$/)
-        const response = reg.test(this.newPassword)
-        if (!response) {
-          return this.$t(
-            'common.user_data.labels.password_not_acceptable'
-          ).toString()
-        }
-      }
-      if (this.newPassword && this.confirmation) {
-        if (this.newPassword !== this.confirmation) {
-          return this.$t('common.user_data.labels.password_not_same').toString()
-        }
-        return ''
-      }
-      return ''
-    },
-    disableRegisterButton() {
-      if (this.email || this.name) {
-        return false
-      }
-      if (this.oldPassword && this.newPassword === this.confirmation) {
-        const reg = new RegExp(/[ -~]{6,}$/)
-        const response = reg.test(this.newPassword)
-        if (response) {
-          return false
-        }
-      }
-      return true
-    },
+  async mounted() {
+    await vxm.user.login()
+    this.name = vxm.user.displayName
+    this.email = vxm.user.email
   },
   methods: {
-    async doSave(): Promise<void> {
-      this.loading = true
-      const user = await Auth.currentAuthenticatedUser()
-      if (user) {
-        if (this.email !== vxm.user.email) {
-          try {
-            await Auth.updateUserAttributes(user, {
-              email: this.email,
-            })
-            await this.$router.push('/user/verifyNewEmail')
-          } catch {
-            this.error = true
-            this.loading = false
-          }
-        }
-        if (this.name !== vxm.user.displayName) {
-          try {
-            await Auth.updateUserAttributes(user, {
-              name: this.name,
-            })
-            await this.$router.push('/edit')
-          } catch {
-            this.error = true
-            this.loading = false
-          }
-        }
-        if (this.newPassword) {
-          try {
-            await Auth.changePassword(user, this.oldPassword, this.newPassword)
-            await this.$router.push('/edit')
-          } catch {
-            this.error = true
-            this.loading = false
-          }
-        }
-      }
-    },
     async doLogout(): Promise<void> {
       try {
         await vxm.user.logout()
@@ -236,6 +135,13 @@ export default Vue.extend<Data, Methods, Computed, unknown>({
 </script>
 
 <style lang="scss" scoped>
+.ToEditNavButton {
+  justify-content: space-between;
+  font-size: 18px;
+  border-radius: 14px;
+  padding: 16px !important;
+  text-transform: none;
+}
 .SignUp-ItemTitle {
   font-size: 16px;
   font-weight: bold;
@@ -243,35 +149,20 @@ export default Vue.extend<Data, Methods, Computed, unknown>({
   text-align: center;
   margin: 4px 0;
 }
-.SignUp-PasswordRules {
-  text-align: center;
-  font-weight: bold;
-  color: $color-yellow;
+.SignUp-ItemButton {
+  margin-bottom: 24px;
 }
 .SignUp-ButtonOuter {
   display: flex;
-  justify-content: space-between;
+  flex-flow: column;
+  align-items: center;
 }
 .SignUp-Button {
-  flex: 0 1 48%;
+  width: 8em;
+  margin-bottom: 16px;
 }
-.Dialog {
-  margin: auto !important;
-}
-.v-dialog {
-  .DialogCard {
-    border-radius: 14px;
-
-    &Title,
-    &Buttons {
-      flex-direction: column;
-    }
-
-    &Title,
-    &TitleIcon {
-      color: $color-base-color-01;
-      font-size: 16px;
-    }
-  }
+.LogoutButton {
+  font-size: 18px;
+  font-weight: bold;
 }
 </style>

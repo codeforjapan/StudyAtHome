@@ -97,7 +97,7 @@ export default Vue.extend({
         this.verification_code
       )
         .then(() => {
-          this.$router.push('/user/classlist')
+          this.$router.push('/user/editUserData')
         })
         .catch(() => {
           this.loading = false

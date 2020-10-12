@@ -9,6 +9,7 @@
         "logout": "ログアウト",
         "ok": "OK",
         "save": "保存する",
+        "change": "変更する",
         "verify": "認証する"
       },
       "error": {
@@ -154,11 +155,28 @@
       "no_classes": "編集可能なクラスがありません。クラスの登録を行ってください"
     },
     "user_edit_user_data": {
-      "title": "ユーザー情報の変更",
+      "title": "ユーザー情報の変更"
+    },
+    "user_edit_user_name": {
+      "title": "お名前（表示名）の変更",
       "labels": {
-        "old_password": "現在のパスワード",
-        "new_password": "変更先パスワード",
-        "new_password_confirm": "変更先パスワード（確認用）"
+        "current_nickname": "現在のお名前（表示名）",
+        "new_nickname": "変更後のお名前（表示名）"
+      }
+    },
+    "user_edit_user_email": {
+      "title": "メールアドレスの変更",
+      "labels": {
+        "current_email": "現在のメールアドレス",
+        "new_email": "変更後のメールアドレス"
+      }
+    },
+    "user_edit_user_password": {
+      "title": "パスワードの変更",
+      "labels": {
+        "current_password": "現在のパスワードを入力してください",
+        "new_password": "変更後のパスワード",
+        "new_password_confirm": "パスワード（確認用）"
       }
     },
     "user_login": {
