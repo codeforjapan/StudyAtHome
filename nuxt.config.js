@@ -191,8 +191,6 @@ export default {
     },
   },
   styleResources: {
-    scss: [
-      '~/assets/variables.scss',
-    ]
+    scss: ['~/assets/variables.scss'],
   },
 }
