@@ -1,5 +1,4 @@
 import i18nConfig from './nuxt-i18n.config.js'
-const colors = require('vuetify/es5/util/colors').default
 const environment = process.env.NODE_ENV || 'development'
 
 export default {
@@ -83,7 +82,10 @@ export default {
   /*
    ** Global CSS
    */
-  css: [],
+  css: [
+    'vuetify/dist/vuetify.min.css',
+    '@mdi/font/css/materialdesignicons.css',
+  ],
   /*
    ** Plugins to load before mounting the App
    */
@@ -92,6 +94,7 @@ export default {
       src: '@/plugins/amplify',
       ssr: false,
     },
+    '@/plugins/vuetify',
   ],
   /*
    ** Nuxt.js dev-modules
@@ -100,7 +103,7 @@ export default {
     // Doc: https://github.com/nuxt-community/stylelint-module
     '@nuxtjs/stylelint-module',
     '@nuxt/typescript-build',
-    '@nuxtjs/vuetify',
+    '@nuxtjs/style-resources',
   ],
   typescript: {
     typeCheck: true,
@@ -127,27 +130,6 @@ export default {
   webfontloader: {
     google: {
       families: ['Roboto&display=swap', 'NotoSansJP&&display=swap'],
-    },
-  },
-  /*
-   ** vuetify module configuration
-   ** https://github.com/nuxt-community/vuetify-module
-   */
-  vuetify: {
-    customVariables: ['~/assets/variables.scss'],
-    theme: {
-      dark: false,
-      themes: {
-        dark: {
-          primary: colors.blue.darken2,
-          accent: colors.grey.darken3,
-          secondary: colors.amber.darken3,
-          info: colors.teal.lighten1,
-          warning: colors.amber.base,
-          error: colors.deepOrange.accent4,
-          success: colors.green.accent3,
-        },
-      },
     },
   },
   env: {
@@ -207,5 +189,8 @@ export default {
         })
       }
     },
+  },
+  styleResources: {
+    scss: ['~/assets/variables.scss'],
   },
 }
