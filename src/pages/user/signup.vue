@@ -80,21 +80,6 @@
     <v-snackbar v-model="error" :timeout="5000" top color="#C01B61">
       {{ $t('common.general.error.default') }}
     </v-snackbar>
-    <v-dialog v-model="completion" max-width="460px">
-      <v-card class="DialogCard">
-        <v-container class="DialogCardContentContainer">
-          {{ $t('pages.user_signup.success.message') }}
-        </v-container>
-        <v-card-actions class="DialogCardButtons px-4">
-          <base-action-button
-            :text="$t('pages.user_signup.success.go_back_to_top')"
-            theme="border"
-            class="my-3"
-            @click="$router.push('/')"
-          />
-        </v-card-actions>
-      </v-card>
-    </v-dialog>
   </div>
 </template>
 
@@ -166,7 +151,10 @@ export default Vue.extend({
         .then(() => {
           this.completion = true
           this.loading = false
-          this.$router.push('/user/verify')
+          this.$router.push({
+            name: 'user-verify',
+            params: { email: this.email },
+          })
         })
         .catch(() => {
           this.error = true

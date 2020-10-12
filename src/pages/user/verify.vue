@@ -73,7 +73,7 @@ export default Vue.extend({
   layout: 'background',
   data() {
     return {
-      email: '',
+      email: this.$route.params.email,
       verification_code: '',
       loading: false,
       error: false,
@@ -114,6 +114,7 @@ export default Vue.extend({
 }
 .SignIn-Item {
   margin: 20px 0;
+  display: flex;
 }
 .SignIn-ButtonOuter {
   justify-content: space-between;

@@ -8,7 +8,8 @@
         "login": "ログイン",
         "logout": "ログアウト",
         "ok": "OK",
-        "save": "保存する"
+        "save": "保存する",
+        "verify": "認証する"
       },
       "error": {
         "default": "何らかのエラーが発生しました。時間をおいて再度お試しください。"
@@ -45,7 +46,8 @@
         "password": "パスワード",
         "password_rules": "パスワードは6文字以上で設定してください",
         "password_not_acceptable": "パスワードが条件を満たしていません",
-        "password_not_same": "パスワードが一致していません"
+        "password_not_same": "パスワードが一致していません",
+        "verification_code":"認証コード"
       }
     },
     "agree_terms": {
