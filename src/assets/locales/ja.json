@@ -8,7 +8,9 @@
         "login": "ログイン",
         "logout": "ログアウト",
         "ok": "OK",
-        "save": "保存する"
+        "save": "保存する",
+        "change": "変更する",
+        "verify": "認証する"
       },
       "error": {
         "default": "何らかのエラーが発生しました。時間をおいて再度お試しください。"
@@ -45,7 +47,8 @@
         "password": "パスワード",
         "password_rules": "パスワードは6文字以上で設定してください",
         "password_not_acceptable": "パスワードが条件を満たしていません",
-        "password_not_same": "パスワードが一致していません"
+        "password_not_same": "パスワードが一致していません",
+        "verification_code":"認証コード"
       }
     },
     "agree_terms": {
@@ -74,19 +77,19 @@
         "date": "日付設定",
         "time": "時間設定",
         "subject_label_color": "ラベル色",
-        "video_keyword": "（オプション機能）動画検索",
+        "video_keyword": "オプション機能：参考動画検索",
         "video_url": "参考動画URL",
         "video_thumbnail": "動画サムネイル・キャプション表示",
         "textbook_page": "教科書ページ",
         "material_title": "副教材タイトル",
         "material_url": "副教材URL"
       },
-      "placeholders": {
-        "video_keyword": "例） 理科"
+      "placeholder": {
+        "video_keyword": "キーワード"
       },
       "required": "*マークのあるものは必須項目です",
       "search_videos": {
-        "search": "検索する",
+        "search": "検索",
         "search_result": "{source}の動画検索結果",
         "add_to_video_urls": "参考動画URLに登録する"
       }
@@ -152,11 +155,28 @@
       "no_classes": "編集可能なクラスがありません。クラスの登録を行ってください"
     },
     "user_edit_user_data": {
-      "title": "ユーザー情報の変更",
+      "title": "ユーザー情報の変更"
+    },
+    "user_edit_user_name": {
+      "title": "お名前（表示名）の変更",
       "labels": {
-        "old_password": "現在のパスワード",
-        "new_password": "変更先パスワード",
-        "new_password_confirm": "変更先パスワード（確認用）"
+        "current_nickname": "現在のお名前（表示名）",
+        "new_nickname": "変更後のお名前（表示名）"
+      }
+    },
+    "user_edit_user_email": {
+      "title": "メールアドレスの変更",
+      "labels": {
+        "current_email": "現在のメールアドレス",
+        "new_email": "変更後のメールアドレス"
+      }
+    },
+    "user_edit_user_password": {
+      "title": "パスワードの変更",
+      "labels": {
+        "current_password": "現在のパスワードを入力してください",
+        "new_password": "変更後のパスワード",
+        "new_password_confirm": "パスワード（確認用）"
       }
     },
     "user_login": {

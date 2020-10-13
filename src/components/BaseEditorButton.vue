@@ -1,11 +1,12 @@
 <template>
   <v-btn
     class="editorButton"
-    width="48px"
+    min-width="48px"
     height="48px"
     @click="$emit('click')"
   >
     <v-icon :color="iconColor" :size="iconSize">{{ iconName }}</v-icon>
+    <span v-if="text">{{ text }}</span>
   </v-btn>
 </template>
 
@@ -29,6 +30,11 @@ export default Vue.extend({
       required: false,
       default: '24px',
     },
+    text: {
+      type: String,
+      required: false,
+      default: '',
+    },
   },
 })
 </script>
@@ -36,6 +42,6 @@ export default Vue.extend({
 <style lang="scss" scoped>
 .editorButton {
   border-radius: 14px;
-  min-width: 48px !important;
+  padding: 0 14px !important;
 }
 </style>

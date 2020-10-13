@@ -111,7 +111,7 @@ import BaseInputField from '@/components/BaseInputField.vue'
 import BaseActionButton from '@/components/BaseActionButton.vue'
 import { API, Auth } from 'aws-amplify'
 import { GRAPHQL_AUTH_MODE, GraphQLResult } from '@aws-amplify/api'
-import { getClass } from '@/graphql/queries'
+// import { getClass } from '@/graphql/queries'
 import { GetClassQuery } from '@/API'
 import { vxm } from '@/store'
 
@@ -144,18 +144,31 @@ export default Vue.extend({
   methods: {
     async loginToClass() {
       this.loading = true
+      const getClassSimple = /* GraphQL */ `
+        query GetClass($id: ID!) {
+          getClass(id: $id) {
+            id
+            className
+          }
+        }
+      `
       try {
         const result = (await API.graphql({
-          query: getClass,
+          query: getClassSimple,
           variables: { id: this.classId },
           authMode: GRAPHQL_AUTH_MODE.API_KEY,
         })) as GraphQLResult<GetClassQuery>
-        const className = result?.data?.getClass?.className as string
-        await vxm.classData.setClassData({
-          classId: this.classId,
-          className,
-        })
-        await this.$router.push('/classes')
+        if (!result.data || !result.data.getClass) {
+          this.loading = false
+          this.error = true
+        } else {
+          const className = result?.data?.getClass?.className as string
+          vxm.classData.setClassData({
+            classId: this.classId,
+            className,
+          })
+          await this.$router.push('/classes')
+        }
       } catch {
         this.loading = false
         this.error = true

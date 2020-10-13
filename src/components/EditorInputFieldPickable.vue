@@ -14,6 +14,7 @@
         v-if="iconName"
         class="Button"
         :icon-name="iconName"
+        :text="buttonText"
         @click="$emit('clickButton')"
       />
     </div>
@@ -59,6 +60,11 @@ export default Vue.extend({
       default: false,
     },
     value: {
+      type: String,
+      required: false,
+      default: '',
+    },
+    buttonText: {
       type: String,
       required: false,
       default: '',

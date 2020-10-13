@@ -9,20 +9,12 @@ const VuexModule = createModule({
 type Email = string
 type EmailVerified = boolean
 type DisplayName = string
-type AllowAccess = AllowAccessData[]
-type AllowAccessData = {
-  classId: string
-  schoolName: string
-  className: string
-}
 
-type Uid = string
 type LoginWithAPIKEY = boolean
 interface User {
   email: Email
   emailVerified: EmailVerified
   displayName: DisplayName
-  uid: Uid
 }
 
 interface userData {
@@ -34,7 +26,6 @@ export class UserStore extends VuexModule implements User {
   email: Email = ''
   emailVerified: EmailVerified = false
   displayName: DisplayName = ''
-  uid: Uid = ''
 
   public get isAuthenticated(): Promise<boolean> {
     return (async () => {
@@ -45,21 +36,19 @@ export class UserStore extends VuexModule implements User {
   }
 
   @mutation
-  private setUser({ email, emailVerified, displayName, uid }: User) {
+  private setUser({ email, emailVerified, displayName }: User) {
     this.email = email
     this.emailVerified = emailVerified
     this.displayName = displayName
-    this.uid = uid
   }
 
   @action
   public async login() {
     const user = await Auth.currentAuthenticatedUser()
     this.setUser({
-      email: user.email ? user.email : '',
-      emailVerified: user.emailVerified,
-      displayName: user.name,
-      uid: user.id,
+      email: user.attributes.email,
+      emailVerified: user.attributes.email_verified,
+      displayName: user.attributes.name,
     })
   }
 
@@ -69,7 +58,6 @@ export class UserStore extends VuexModule implements User {
       email: user.email,
       emailVerified: user.emailVerified,
       displayName: user.name,
-      uid: user.id,
     })
   }
 
@@ -77,7 +65,6 @@ export class UserStore extends VuexModule implements User {
   public async logout() {
     await Auth.signOut()
     this.setUser({
-      uid: '',
       email: '',
       emailVerified: false,
       displayName: '',

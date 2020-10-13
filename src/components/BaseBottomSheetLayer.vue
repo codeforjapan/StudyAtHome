@@ -78,6 +78,7 @@ export default Vue.extend({
 .Layer-FormContainer {
   height: 100%;
   padding: 0 !important;
+  overflow: auto;
 }
 .Layer-Container {
   padding: 0;

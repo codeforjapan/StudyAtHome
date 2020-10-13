@@ -1,61 +1,53 @@
 <template>
   <div>
     <base-bottom-sheet-layer
-      :title="$t('pages.user_signup.title')"
-      title-en="STEP 1"
-      fullscreen
+      :title="$t('pages.user_edit_user_password.title')"
+      title-en="USER SETTING"
     >
       <template v-slot:LayerContents>
         <dl>
           <dt class="SignUp-ItemTitle">
-            {{ $t('common.user_data.labels.nickname') }}
+            {{ $t('pages.user_edit_user_password.labels.current_password') }}
           </dt>
           <dd>
             <base-input-field
-              v-model="name"
-              label="name"
-              placeholder="山田花子"
-              require
-            />
-          </dd>
-          <dt class="SignUp-ItemTitle">
-            {{ $t('common.user_data.labels.email') }}
-          </dt>
-          <dd>
-            <base-input-field
-              v-model="email"
-              label="email"
-              placeholder="hogehoge@hogehoge.com"
-              type="email"
-              require
-            />
-          </dd>
-          <dt class="SignUp-ItemTitle">
-            {{ $t('common.user_data.labels.password') }}
-          </dt>
-          <dt class="SignUp-Rules">
-            {{ $t('common.user_data.labels.password_rules') }}
-          </dt>
-          <dd>
-            <base-input-field
-              v-model="password"
-              label="password"
+              v-model="currentPassword"
+              label="current password"
+              :placeholder="$t('common.user_data.labels.password')"
               type="password"
               require
             />
           </dd>
           <dt class="SignUp-ItemTitle">
-            {{ $t('pages.user_signup.labels.password_confirm') }}
+            {{ $t('pages.user_edit_user_password.labels.new_password') }}
+          </dt>
+          <dd class="SignUp-PasswordRules">
+            {{ $t('common.user_data.labels.password_rules') }}
+          </dd>
+          <dd>
+            <base-input-field
+              v-model="newPassword"
+              label="new password"
+              :placeholder="$t('common.user_data.labels.password')"
+              type="password"
+              require
+            />
+          </dd>
+          <dt class="SignUp-ItemTitle">
+            {{
+              $t('pages.user_edit_user_password.labels.new_password_confirm')
+            }}
           </dt>
           <dd>
             <base-input-field
               v-model="confirmation"
               label="confirmation"
+              :placeholder="$t('common.user_data.labels.password')"
               type="password"
               require
             />
           </dd>
-          <dt class="SignUp-ItemTitle text--red">{{ passwordConfirm }}</dt>
+          <dd class="SignUp-ConfirmMessage">{{ passwordConfirm }}</dd>
         </dl>
       </template>
       <template v-slot:LayerFooter>
@@ -64,15 +56,15 @@
             theme="transparent"
             :text="$t('common.general.buttons.cancel')"
             class="SignUp-Button"
-            @click="$router.push('/')"
+            @click="$router.push('/user/editUserData')"
           />
           <base-action-button
             theme="primary"
-            :text="$t('pages.user_signup.buttons.signup')"
+            :text="$t('common.general.buttons.change')"
             class="SignUp-Button"
             :is-disabled="disableRegisterButton"
             :is-loading="loading"
-            @click="doSignUp"
+            @click="doSave"
           />
         </div>
       </template>
@@ -90,76 +82,86 @@ import BaseActionButton from '@/components/BaseActionButton.vue'
 import BaseInputField from '@/components/BaseInputField.vue'
 import { Auth } from 'aws-amplify'
 
-export default Vue.extend({
+type Data = {
+  currentPassword: string
+  newPassword: string
+  confirmation: string
+  error: boolean
+  loading: boolean
+}
+
+type Methods = {
+  doSave(): void
+}
+
+type Computed = {
+  passwordConfirm: string
+  disableRegisterButton: boolean
+}
+
+export default Vue.extend<Data, Methods, Computed, unknown>({
   components: { BaseBottomSheetLayer, BaseActionButton, BaseInputField },
   layout: 'background',
+  middleware: 'authenticated',
   data() {
     return {
-      name: '',
-      email: '',
-      password: '',
+      currentPassword: '',
+      newPassword: '',
       confirmation: '',
       error: false,
-      completion: false,
       loading: false,
     }
   },
   computed: {
     passwordConfirm() {
-      if (this.password) {
+      if (this.newPassword) {
         // 6文字以上であること
         const reg = new RegExp(/[ -~]{6,}$/)
-        const response = reg.test(this.password)
+        const response = reg.test(this.newPassword)
         if (!response) {
-          return 'パスワードが条件を満たしていません'
+          return this.$t(
+            'common.user_data.labels.password_not_acceptable'
+          ).toString()
         }
       }
-      if (this.password && this.confirmation) {
-        if (this.password !== this.confirmation) {
-          return 'パスワードが一致していません'
+      if (this.newPassword && this.confirmation) {
+        if (this.newPassword !== this.confirmation) {
+          return this.$t('common.user_data.labels.password_not_same').toString()
         }
         return ''
       }
       return ''
     },
     disableRegisterButton() {
-      if (this.password && this.confirmation && this.email && this.name) {
-        if (this.password !== this.confirmation) {
-          return true
-        }
+      if (this.currentPassword && this.newPassword === this.confirmation) {
         const reg = new RegExp(/[ -~]{6,}$/)
-        const response = reg.test(this.password)
-        if (!response) {
-          return true
+        const response = reg.test(this.newPassword)
+        if (response) {
+          return false
         }
-        return false
       }
       return true
     },
   },
   methods: {
-    async doSignUp(): Promise<void> {
+    async doSave(): Promise<void> {
       this.loading = true
-      await Auth.signUp({
-        username: this.email,
-        password: this.password,
-        attributes: {
-          email: this.email,
-          name: this.name,
-        },
-      })
-        .then(() => {
-          this.completion = true
-          this.loading = false
-          this.$router.push({
-            name: 'user-verify',
-            params: { email: this.email },
-          })
-        })
-        .catch(() => {
-          this.error = true
-          this.loading = false
-        })
+      const user = await Auth.currentAuthenticatedUser()
+      if (user) {
+        if (this.newPassword) {
+          try {
+            await Auth.changePassword(
+              user,
+              this.currentPassword,
+              this.newPassword
+            )
+            await this.$router.push('/user/editUserData')
+          } catch {
+            this.error = true
+            this.loading = false
+          }
+        }
+      }
     },
   },
 })
@@ -173,10 +175,20 @@ export default Vue.extend({
   text-align: center;
   margin: 4px 0;
 }
-.SignUp-Rules {
+.SignUp-PasswordRules {
   text-align: center;
   font-weight: bold;
   color: $color-yellow;
+}
+.SignUp-ConfirmMessage:not(:empty) {
+  font-size: 16px;
+  font-weight: bold;
+  color: $color-white;
+  background-color: $color-pink;
+  border: 2px solid currentColor;
+  border-radius: 10px;
+  padding: 12px;
+  text-align: center;
 }
 .SignUp-ButtonOuter {
   display: flex;

@@ -85,7 +85,7 @@ export default Vue.extend({
     this.items = (result?.data?.listClasss?.items as any[]).map((item) => {
       return {
         classId: item.id,
-        schoolName: item.schoolName,
+        schoolName: item.school.name,
         className: item.className,
       }
     })
