@@ -247,6 +247,7 @@ export default class EditLessonScreenInner3 extends Vue {
 }
 .SearchResultList {
   padding: 0;
+  list-style: none;
 }
 .SearchResultItem {
   background-color: $color-white;
