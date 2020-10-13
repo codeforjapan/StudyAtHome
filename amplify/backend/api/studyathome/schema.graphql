@@ -1,3 +1,17 @@
+type School
+  @model
+  @auth(
+    rules: [
+      { allow: private, operations: [create], provider: userPools }
+      { allow: owner, operations: [read, update, delete], provider: userPools, ownerField: "owner" }
+    ]
+  )
+{
+  id: ID!
+  name: String!
+  owner: String!
+}
+
 type Class
   @model
   @auth(
@@ -9,8 +23,9 @@ type Class
   )
 {
   id: ID!
+  schoolId: ID!
+  school: School! @connection(fields: ["schoolId"])
   className: String!
-  schoolName: String!
   lessons: [Lesson!] @connection(keyName: "byClass", fields: ["id"])
   owner: String!
 }

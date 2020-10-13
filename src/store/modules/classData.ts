@@ -151,13 +151,11 @@ export class ClassDataStore extends VuexModule implements classData.ClassData {
           },
         })
       )
-      const sid = (school as any).data.createSchool.id
-      console.log(sid)
       await API.graphql(
         graphqlOperation(createClass, {
           input: {
             id: classId,
-            schoolId: sid,
+            schoolId: (school as any).data.createSchool.id,
             className,
             owner: user.username,
           },
