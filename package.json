@@ -30,7 +30,7 @@
     "@nuxt/typescript-runtime": "^2.0.0",
     "@nuxtjs/axios": "^5.12.2",
     "@nuxtjs/dotenv": "^1.4.1",
-    "@nuxtjs/pwa": "^3.0.2",
+    "@nuxtjs/pwa": "^3.2.1",
     "@nuxtjs/style-resources": "^1.0.0",
     "@types/node": "^14.11.2",
     "aws-amplify": "^3.3.3",
