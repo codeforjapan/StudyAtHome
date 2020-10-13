@@ -9,7 +9,12 @@ import classData from '@/types/store/classData'
 import { API, Auth, graphqlOperation } from 'aws-amplify'
 import { GRAPHQL_AUTH_MODE, GraphQLResult } from '@aws-amplify/api'
 import { getClass, listLessonsByClass } from '@/graphql/queries'
-import { createClass, createLesson, updateLesson } from '@/graphql/mutations'
+import {
+  createSchool,
+  createClass,
+  createLesson,
+  updateLesson,
+} from '@/graphql/mutations'
 import { GetClassQuery, ListLessonsByClassQuery } from '@/API'
 import { vxm } from '@/store'
 
@@ -138,12 +143,20 @@ export class ClassDataStore extends VuexModule implements classData.ClassData {
 
     try {
       const user = await Auth.currentAuthenticatedUser()
+      const school = await API.graphql(
+        graphqlOperation(createSchool, {
+          input: {
+            name: schoolName,
+            owner: user.username,
+          },
+        })
+      )
       await API.graphql(
         graphqlOperation(createClass, {
           input: {
             id: classId,
+            schoolId: (school as any).data.createSchool.id,
             className,
-            schoolName,
             owner: user.username,
           },
         })

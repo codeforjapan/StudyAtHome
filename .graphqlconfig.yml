@@ -1,6 +1,6 @@
 projects:
   studyathome:
-    schemaPath: src/graphql/schema.json
+    schemaPath: amplify/backend/api/studyathome/build/schema.graphql
     includes:
       - src/graphql/**/*.ts
     excludes:
