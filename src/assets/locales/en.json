@@ -76,7 +76,7 @@
         "material_title": "Learning Material Title",
         "material_url": "Learning Material URL"
       },
-      "placeholders": {
+      "placeholder": {
         "video_keyword": "EX) Science"
       },
       "required": "*Items Marked with Are Required",

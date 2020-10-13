@@ -77,19 +77,19 @@
         "date": "日付設定",
         "time": "時間設定",
         "subject_label_color": "ラベル色",
-        "video_keyword": "（オプション機能）動画検索",
+        "video_keyword": "オプション機能：参考動画検索",
         "video_url": "参考動画URL",
         "video_thumbnail": "動画サムネイル・キャプション表示",
         "textbook_page": "教科書ページ",
         "material_title": "副教材タイトル",
         "material_url": "副教材URL"
       },
-      "placeholders": {
-        "video_keyword": "例） 理科"
+      "placeholder": {
+        "video_keyword": "キーワード"
       },
       "required": "*マークのあるものは必須項目です",
       "search_videos": {
-        "search": "検索する",
+        "search": "検索",
         "search_result": "{source}の動画検索結果",
         "add_to_video_urls": "参考動画URLに登録する"
       }

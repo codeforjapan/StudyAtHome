@@ -7,61 +7,70 @@
       placeholder="https://"
     />
 
-    <editor-input-field-pickable
-      v-model="videoSearchWord"
-      :title="$t('components.editing_screen.labels.video_keyword')"
-      :placeholders="$t('components.editing_screen.placeholder.video_keyword')"
-    />
-
-    <button class="Button" @click="handleVideoSearchWord">
-      {{ $t('components.editing_screen.search_videos.search') }}
-    </button>
-
-    <div v-if="videoSearchResult.length > 0" class="SearchResult">
-      <h3>
-        {{
-          $t('components.editing_screen.search_videos.search_result', {
-            source: 'NHK For School',
-          })
-        }}
-      </h3>
-      <ul>
-        <li v-for="(v, i) in displayLists" :key="i" class="SearchResultItem">
-          <component
-            :is="v.videoUrl ? 'a' : 'span'"
-            :href="v.videoUrl"
-            :target="v.videoUrl ? '_blank' : null"
-            class="SearchResultLink"
-          >
-            {{ v.videoTitle }}&emsp;{{ v.videoSubTitle }}
-          </component>
-          <p class="SearchResultDescription">{{ v.videoDescription }}</p>
-          <span>{{ v.videoPlayTime }}</span>
-          <br v-if="v.videoThumbnailUrl" />
-          <img
-            v-if="v.videoThumbnailUrl"
-            :src="v.videoThumbnailUrl"
-            :alt="v.videoTitle"
-            width="240"
-          />
-          <br v-if="v.videoUrl" />
-          <button
-            v-if="v.videoUrl"
-            class="Button"
-            @click="registerVideoUrl(v.videoUrl)"
-          >
-            {{
-              $t('components.editing_screen.search_videos.add_to_video_urls')
-            }}
-          </button>
-        </li>
-      </ul>
-      <v-pagination
-        v-model="page"
-        :length="length"
-        :total-visible="5"
-        @input="pageChange"
+    <div class="VideoSearch">
+      <editor-input-field-pickable
+        v-model="videoSearchWord"
+        :title="$t('components.editing_screen.labels.video_keyword')"
+        :placeholder="$t('components.editing_screen.placeholder.video_keyword')"
+        icon-name="mdi-magnify"
+        :button-text="$t('components.editing_screen.search_videos.search')"
+        @clickButton="handleVideoSearchWord"
       />
+
+      <div v-if="videoSearchResult.length > 0" class="SearchResult">
+        <h3 class="SearchResultTitle">
+          {{
+            $t('components.editing_screen.search_videos.search_result', {
+              source: 'NHK For School',
+            })
+          }}
+        </h3>
+        <ul class="SearchResultList">
+          <li v-for="(v, i) in displayLists" :key="i" class="SearchResultItem">
+            <div class="SearchResultLinkOuter">
+              <component
+                :is="v.videoUrl ? 'a' : 'span'"
+                :href="v.videoUrl"
+                :target="v.videoUrl ? '_blank' : null"
+              >
+                {{ v.videoTitle }}&emsp;{{ v.videoSubTitle }}
+              </component>
+              <div>
+                <span class="SearchResultPlayTime">{{ v.videoPlayTime }}</span>
+              </div>
+            </div>
+            <p>{{ v.videoDescription }}</p>
+            <div class="SearchResultImgOuter">
+              <img
+                v-if="v.videoThumbnailUrl"
+                :src="v.videoThumbnailUrl"
+                :alt="v.videoTitle"
+                width="240"
+              />
+              <v-btn
+                v-if="v.videoUrl"
+                class="SearchResultButton"
+                color="#338dce"
+                @click="registerVideoUrl(v.videoUrl)"
+              >
+                <v-icon color="white"> mdi-link </v-icon>
+                {{
+                  $t(
+                    'components.editing_screen.search_videos.add_to_video_urls'
+                  )
+                }}
+              </v-btn>
+            </div>
+          </li>
+        </ul>
+        <v-pagination
+          v-model="page"
+          :length="length"
+          :total-visible="5"
+          color="#0071c2"
+          @input="pageChange"
+        />
+      </div>
     </div>
   </div>
 </template>
@@ -124,6 +133,15 @@ export default class EditLessonScreenInner3 extends Vue {
   @Watch('tempFormData', { deep: true })
   onChangeTempFormData() {
     this.input(this.tempFormData)
+  }
+
+  @Watch('value', { deep: true })
+  onChangeValueFormData() {
+    if (this.value.videoUrl === '') {
+      this.videoSearchWord = ''
+      this.videoSearchResult = []
+    }
+    this.tempFormData = this.value
   }
 
   private handleVideoSearchWord() {
@@ -213,21 +231,50 @@ export default class EditLessonScreenInner3 extends Vue {
 </script>
 
 <style lang="scss" scoped>
-.Button {
-  color: $color-white;
-  margin-bottom: 20px;
+.VideoSearch {
+  background-color: $color-base-color-02;
+  border-radius: 8px;
+  padding: 16px;
+  margin-bottom: 16px;
 }
 .SearchResult {
+  border-top: 1px solid $color-base-color-03;
+}
+.SearchResultTitle {
   color: $color-white;
-  margin-bottom: 20px;
+  text-align: center;
+  margin: 16px 0;
+}
+.SearchResultList {
+  padding: 0;
+  list-style: none;
 }
 .SearchResultItem {
+  background-color: $color-white;
+  padding: 18px;
   margin-bottom: 12px;
 }
-.SearchResultLink {
-  color: $color-white;
+.SearchResultLinkOuter {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 12px;
 }
-.SearchResultDescription {
-  margin: 0;
+.SearchResultPlayTime {
+  display: inline-block;
+  font-size: 12px;
+  border: 2px solid $color-gray;
+  border-radius: 3em;
+  padding: 2px 10px;
+}
+.SearchResultImgOuter {
+  position: relative;
+  margin-bottom: 16px;
+}
+.SearchResultButton {
+  position: absolute;
+  right: -6px;
+  bottom: -12px;
+  color: $color-white;
+  border-radius: 8px;
 }
 </style>
