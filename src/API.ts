@@ -2,19 +2,17 @@
 /* eslint-disable */
 //  This file was automatically generated and should not be edited.
 
-export type CreateClassInput = {
+export type CreateSchoolInput = {
   id?: string | null,
-  className: string,
-  schoolName: string,
+  name: string,
   owner: string,
 };
 
-export type ModelClassConditionInput = {
-  className?: ModelStringInput | null,
-  schoolName?: ModelStringInput | null,
-  and?: Array< ModelClassConditionInput | null > | null,
-  or?: Array< ModelClassConditionInput | null > | null,
-  not?: ModelClassConditionInput | null,
+export type ModelSchoolConditionInput = {
+  name?: ModelStringInput | null,
+  and?: Array< ModelSchoolConditionInput | null > | null,
+  or?: Array< ModelSchoolConditionInput | null > | null,
+  not?: ModelSchoolConditionInput | null,
 };
 
 export type ModelStringInput = {
@@ -57,10 +55,51 @@ export type ModelSizeInput = {
   between?: Array< number | null > | null,
 };
 
+export type UpdateSchoolInput = {
+  id: string,
+  name?: string | null,
+  owner?: string | null,
+};
+
+export type DeleteSchoolInput = {
+  id?: string | null,
+};
+
+export type CreateClassInput = {
+  id?: string | null,
+  schoolId: string,
+  className: string,
+  owner: string,
+};
+
+export type ModelClassConditionInput = {
+  schoolId?: ModelIDInput | null,
+  className?: ModelStringInput | null,
+  and?: Array< ModelClassConditionInput | null > | null,
+  or?: Array< ModelClassConditionInput | null > | null,
+  not?: ModelClassConditionInput | null,
+};
+
+export type ModelIDInput = {
+  ne?: string | null,
+  eq?: string | null,
+  le?: string | null,
+  lt?: string | null,
+  ge?: string | null,
+  gt?: string | null,
+  contains?: string | null,
+  notContains?: string | null,
+  between?: Array< string | null > | null,
+  beginsWith?: string | null,
+  attributeExists?: boolean | null,
+  attributeType?: ModelAttributeTypes | null,
+  size?: ModelSizeInput | null,
+};
+
 export type UpdateClassInput = {
   id: string,
+  schoolId?: string | null,
   className?: string | null,
-  schoolName?: string | null,
   owner?: string | null,
 };
 
@@ -114,22 +153,6 @@ export type ModelLessonConditionInput = {
   not?: ModelLessonConditionInput | null,
 };
 
-export type ModelIDInput = {
-  ne?: string | null,
-  eq?: string | null,
-  le?: string | null,
-  lt?: string | null,
-  ge?: string | null,
-  gt?: string | null,
-  contains?: string | null,
-  notContains?: string | null,
-  between?: Array< string | null > | null,
-  beginsWith?: string | null,
-  attributeExists?: boolean | null,
-  attributeType?: ModelAttributeTypes | null,
-  size?: ModelSizeInput | null,
-};
-
 export type ModelBooleanInput = {
   ne?: boolean | null,
   eq?: boolean | null,
@@ -157,10 +180,19 @@ export type DeleteLessonInput = {
   id?: string | null,
 };
 
+export type ModelSchoolFilterInput = {
+  id?: ModelIDInput | null,
+  name?: ModelStringInput | null,
+  owner?: ModelStringInput | null,
+  and?: Array< ModelSchoolFilterInput | null > | null,
+  or?: Array< ModelSchoolFilterInput | null > | null,
+  not?: ModelSchoolFilterInput | null,
+};
+
 export type ModelClassFilterInput = {
   id?: ModelIDInput | null,
+  schoolId?: ModelIDInput | null,
   className?: ModelStringInput | null,
-  schoolName?: ModelStringInput | null,
   owner?: ModelStringInput | null,
   and?: Array< ModelClassFilterInput | null > | null,
   or?: Array< ModelClassFilterInput | null > | null,
@@ -199,6 +231,54 @@ export enum ModelSortDirection {
 }
 
 
+export type CreateSchoolMutationVariables = {
+  input: CreateSchoolInput,
+  condition?: ModelSchoolConditionInput | null,
+};
+
+export type CreateSchoolMutation = {
+  createSchool:  {
+    __typename: "School",
+    id: string,
+    name: string,
+    owner: string,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type UpdateSchoolMutationVariables = {
+  input: UpdateSchoolInput,
+  condition?: ModelSchoolConditionInput | null,
+};
+
+export type UpdateSchoolMutation = {
+  updateSchool:  {
+    __typename: "School",
+    id: string,
+    name: string,
+    owner: string,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type DeleteSchoolMutationVariables = {
+  input: DeleteSchoolInput,
+  condition?: ModelSchoolConditionInput | null,
+};
+
+export type DeleteSchoolMutation = {
+  deleteSchool:  {
+    __typename: "School",
+    id: string,
+    name: string,
+    owner: string,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
 export type CreateClassMutationVariables = {
   input: CreateClassInput,
   condition?: ModelClassConditionInput | null,
@@ -208,8 +288,16 @@ export type CreateClassMutation = {
   createClass:  {
     __typename: "Class",
     id: string,
+    schoolId: string,
+    school:  {
+      __typename: "School",
+      id: string,
+      name: string,
+      owner: string,
+      createdAt: string,
+      updatedAt: string,
+    },
     className: string,
-    schoolName: string,
     owner: string,
     createdAt: string,
     updatedAt: string,
@@ -248,8 +336,8 @@ export type CreateClassMutation = {
         class:  {
           __typename: "Class",
           id: string,
+          schoolId: string,
           className: string,
-          schoolName: string,
           owner: string,
           createdAt: string,
           updatedAt: string,
@@ -269,8 +357,16 @@ export type UpdateClassMutation = {
   updateClass:  {
     __typename: "Class",
     id: string,
+    schoolId: string,
+    school:  {
+      __typename: "School",
+      id: string,
+      name: string,
+      owner: string,
+      createdAt: string,
+      updatedAt: string,
+    },
     className: string,
-    schoolName: string,
     owner: string,
     createdAt: string,
     updatedAt: string,
@@ -309,8 +405,8 @@ export type UpdateClassMutation = {
         class:  {
           __typename: "Class",
           id: string,
+          schoolId: string,
           className: string,
-          schoolName: string,
           owner: string,
           createdAt: string,
           updatedAt: string,
@@ -330,8 +426,16 @@ export type DeleteClassMutation = {
   deleteClass:  {
     __typename: "Class",
     id: string,
+    schoolId: string,
+    school:  {
+      __typename: "School",
+      id: string,
+      name: string,
+      owner: string,
+      createdAt: string,
+      updatedAt: string,
+    },
     className: string,
-    schoolName: string,
     owner: string,
     createdAt: string,
     updatedAt: string,
@@ -370,8 +474,8 @@ export type DeleteClassMutation = {
         class:  {
           __typename: "Class",
           id: string,
+          schoolId: string,
           className: string,
-          schoolName: string,
           owner: string,
           createdAt: string,
           updatedAt: string,
@@ -421,8 +525,16 @@ export type CreateLessonMutation = {
     class:  {
       __typename: "Class",
       id: string,
+      schoolId: string,
+      school:  {
+        __typename: "School",
+        id: string,
+        name: string,
+        owner: string,
+        createdAt: string,
+        updatedAt: string,
+      },
       className: string,
-      schoolName: string,
       owner: string,
       createdAt: string,
       updatedAt: string,
@@ -488,8 +600,16 @@ export type UpdateLessonMutation = {
     class:  {
       __typename: "Class",
       id: string,
+      schoolId: string,
+      school:  {
+        __typename: "School",
+        id: string,
+        name: string,
+        owner: string,
+        createdAt: string,
+        updatedAt: string,
+      },
       className: string,
-      schoolName: string,
       owner: string,
       createdAt: string,
       updatedAt: string,
@@ -555,8 +675,16 @@ export type DeleteLessonMutation = {
     class:  {
       __typename: "Class",
       id: string,
+      schoolId: string,
+      school:  {
+        __typename: "School",
+        id: string,
+        name: string,
+        owner: string,
+        createdAt: string,
+        updatedAt: string,
+      },
       className: string,
-      schoolName: string,
       owner: string,
       createdAt: string,
       updatedAt: string,
@@ -583,6 +711,42 @@ export type DeleteLessonMutation = {
   } | null,
 };
 
+export type GetSchoolQueryVariables = {
+  id: string,
+};
+
+export type GetSchoolQuery = {
+  getSchool:  {
+    __typename: "School",
+    id: string,
+    name: string,
+    owner: string,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type ListSchoolsQueryVariables = {
+  filter?: ModelSchoolFilterInput | null,
+  limit?: number | null,
+  nextToken?: string | null,
+};
+
+export type ListSchoolsQuery = {
+  listSchools:  {
+    __typename: "ModelSchoolConnection",
+    items:  Array< {
+      __typename: "School",
+      id: string,
+      name: string,
+      owner: string,
+      createdAt: string,
+      updatedAt: string,
+    } | null > | null,
+    nextToken: string | null,
+  } | null,
+};
+
 export type ListClasssQueryVariables = {
   filter?: ModelClassFilterInput | null,
   limit?: number | null,
@@ -595,8 +759,16 @@ export type ListClasssQuery = {
     items:  Array< {
       __typename: "Class",
       id: string,
+      schoolId: string,
+      school:  {
+        __typename: "School",
+        id: string,
+        name: string,
+        owner: string,
+        createdAt: string,
+        updatedAt: string,
+      },
       className: string,
-      schoolName: string,
       owner: string,
       createdAt: string,
       updatedAt: string,
@@ -632,8 +804,16 @@ export type GetClassQuery = {
   getClass:  {
     __typename: "Class",
     id: string,
+    schoolId: string,
+    school:  {
+      __typename: "School",
+      id: string,
+      name: string,
+      owner: string,
+      createdAt: string,
+      updatedAt: string,
+    },
     className: string,
-    schoolName: string,
     owner: string,
     createdAt: string,
     updatedAt: string,
@@ -672,8 +852,8 @@ export type GetClassQuery = {
         class:  {
           __typename: "Class",
           id: string,
+          schoolId: string,
           className: string,
-          schoolName: string,
           owner: string,
           createdAt: string,
           updatedAt: string,
@@ -722,8 +902,16 @@ export type GetLessonQuery = {
     class:  {
       __typename: "Class",
       id: string,
+      schoolId: string,
+      school:  {
+        __typename: "School",
+        id: string,
+        name: string,
+        owner: string,
+        createdAt: string,
+        updatedAt: string,
+      },
       className: string,
-      schoolName: string,
       owner: string,
       createdAt: string,
       updatedAt: string,
@@ -792,8 +980,16 @@ export type ListLessonsQuery = {
       class:  {
         __typename: "Class",
         id: string,
+        schoolId: string,
+        school:  {
+          __typename: "School",
+          id: string,
+          name: string,
+          owner: string,
+          createdAt: string,
+          updatedAt: string,
+        },
         className: string,
-        schoolName: string,
         owner: string,
         createdAt: string,
         updatedAt: string,
@@ -852,8 +1048,16 @@ export type ListLessonsByClassQuery = {
       class:  {
         __typename: "Class",
         id: string,
+        schoolId: string,
+        school:  {
+          __typename: "School",
+          id: string,
+          name: string,
+          owner: string,
+          createdAt: string,
+          updatedAt: string,
+        },
         className: string,
-        schoolName: string,
         owner: string,
         createdAt: string,
         updatedAt: string,
@@ -867,12 +1071,65 @@ export type ListLessonsByClassQuery = {
   } | null,
 };
 
+export type OnCreateSchoolSubscriptionVariables = {
+  owner: string,
+};
+
+export type OnCreateSchoolSubscription = {
+  onCreateSchool:  {
+    __typename: "School",
+    id: string,
+    name: string,
+    owner: string,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type OnUpdateSchoolSubscriptionVariables = {
+  owner: string,
+};
+
+export type OnUpdateSchoolSubscription = {
+  onUpdateSchool:  {
+    __typename: "School",
+    id: string,
+    name: string,
+    owner: string,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type OnDeleteSchoolSubscriptionVariables = {
+  owner: string,
+};
+
+export type OnDeleteSchoolSubscription = {
+  onDeleteSchool:  {
+    __typename: "School",
+    id: string,
+    name: string,
+    owner: string,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
 export type OnCreateClassSubscription = {
   onCreateClass:  {
     __typename: "Class",
     id: string,
+    schoolId: string,
+    school:  {
+      __typename: "School",
+      id: string,
+      name: string,
+      owner: string,
+      createdAt: string,
+      updatedAt: string,
+    },
     className: string,
-    schoolName: string,
     owner: string,
     createdAt: string,
     updatedAt: string,
@@ -911,8 +1168,8 @@ export type OnCreateClassSubscription = {
         class:  {
           __typename: "Class",
           id: string,
+          schoolId: string,
           className: string,
-          schoolName: string,
           owner: string,
           createdAt: string,
           updatedAt: string,
@@ -927,8 +1184,16 @@ export type OnUpdateClassSubscription = {
   onUpdateClass:  {
     __typename: "Class",
     id: string,
+    schoolId: string,
+    school:  {
+      __typename: "School",
+      id: string,
+      name: string,
+      owner: string,
+      createdAt: string,
+      updatedAt: string,
+    },
     className: string,
-    schoolName: string,
     owner: string,
     createdAt: string,
     updatedAt: string,
@@ -967,8 +1232,8 @@ export type OnUpdateClassSubscription = {
         class:  {
           __typename: "Class",
           id: string,
+          schoolId: string,
           className: string,
-          schoolName: string,
           owner: string,
           createdAt: string,
           updatedAt: string,
@@ -983,8 +1248,16 @@ export type OnDeleteClassSubscription = {
   onDeleteClass:  {
     __typename: "Class",
     id: string,
+    schoolId: string,
+    school:  {
+      __typename: "School",
+      id: string,
+      name: string,
+      owner: string,
+      createdAt: string,
+      updatedAt: string,
+    },
     className: string,
-    schoolName: string,
     owner: string,
     createdAt: string,
     updatedAt: string,
@@ -1023,8 +1296,8 @@ export type OnDeleteClassSubscription = {
         class:  {
           __typename: "Class",
           id: string,
+          schoolId: string,
           className: string,
-          schoolName: string,
           owner: string,
           createdAt: string,
           updatedAt: string,
@@ -1069,8 +1342,16 @@ export type OnCreateLessonSubscription = {
     class:  {
       __typename: "Class",
       id: string,
+      schoolId: string,
+      school:  {
+        __typename: "School",
+        id: string,
+        name: string,
+        owner: string,
+        createdAt: string,
+        updatedAt: string,
+      },
       className: string,
-      schoolName: string,
       owner: string,
       createdAt: string,
       updatedAt: string,
@@ -1131,8 +1412,16 @@ export type OnUpdateLessonSubscription = {
     class:  {
       __typename: "Class",
       id: string,
+      schoolId: string,
+      school:  {
+        __typename: "School",
+        id: string,
+        name: string,
+        owner: string,
+        createdAt: string,
+        updatedAt: string,
+      },
       className: string,
-      schoolName: string,
       owner: string,
       createdAt: string,
       updatedAt: string,
@@ -1193,8 +1482,16 @@ export type OnDeleteLessonSubscription = {
     class:  {
       __typename: "Class",
       id: string,
+      schoolId: string,
+      school:  {
+        __typename: "School",
+        id: string,
+        name: string,
+        owner: string,
+        createdAt: string,
+        updatedAt: string,
+      },
       className: string,
-      schoolName: string,
       owner: string,
       createdAt: string,
       updatedAt: string,

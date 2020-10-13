@@ -9,12 +9,6 @@ const VuexModule = createModule({
 type Email = string
 type EmailVerified = boolean
 type DisplayName = string
-type AllowAccess = AllowAccessData[]
-type AllowAccessData = {
-  classId: string
-  schoolName: string
-  className: string
-}
 
 type LoginWithAPIKEY = boolean
 interface User {

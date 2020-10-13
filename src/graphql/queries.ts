@@ -2,6 +2,35 @@
 /* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
+export const getSchool = /* GraphQL */ `
+  query GetSchool($id: ID!) {
+    getSchool(id: $id) {
+      id
+      name
+      owner
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const listSchools = /* GraphQL */ `
+  query ListSchools(
+    $filter: ModelSchoolFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listSchools(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        id
+        name
+        owner
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+  }
+`;
 export const listClasss = /* GraphQL */ `
   query ListClasss(
     $filter: ModelClassFilterInput
@@ -11,8 +40,15 @@ export const listClasss = /* GraphQL */ `
     listClasss(filter: $filter, limit: $limit, nextToken: $nextToken) {
       items {
         id
+        schoolId
+        school {
+          id
+          name
+          owner
+          createdAt
+          updatedAt
+        }
         className
-        schoolName
         owner
         createdAt
         updatedAt
@@ -42,8 +78,15 @@ export const getClass = /* GraphQL */ `
   query GetClass($id: ID!) {
     getClass(id: $id) {
       id
+      schoolId
+      school {
+        id
+        name
+        owner
+        createdAt
+        updatedAt
+      }
       className
-      schoolName
       owner
       createdAt
       updatedAt
@@ -76,8 +119,8 @@ export const getClass = /* GraphQL */ `
           updatedAt
           class {
             id
+            schoolId
             className
-            schoolName
             owner
             createdAt
             updatedAt
@@ -118,8 +161,15 @@ export const getLesson = /* GraphQL */ `
       updatedAt
       class {
         id
+        schoolId
+        school {
+          id
+          name
+          owner
+          createdAt
+          updatedAt
+        }
         className
-        schoolName
         owner
         createdAt
         updatedAt
@@ -179,8 +229,15 @@ export const listLessons = /* GraphQL */ `
         updatedAt
         class {
           id
+          schoolId
+          school {
+            id
+            name
+            owner
+            createdAt
+            updatedAt
+          }
           className
-          schoolName
           owner
           createdAt
           updatedAt
@@ -238,8 +295,15 @@ export const listLessonsByClass = /* GraphQL */ `
         updatedAt
         class {
           id
+          schoolId
+          school {
+            id
+            name
+            owner
+            createdAt
+            updatedAt
+          }
           className
-          schoolName
           owner
           createdAt
           updatedAt

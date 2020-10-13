@@ -2,12 +2,52 @@
 /* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
+export const onCreateSchool = /* GraphQL */ `
+  subscription OnCreateSchool($owner: String!) {
+    onCreateSchool(owner: $owner) {
+      id
+      name
+      owner
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onUpdateSchool = /* GraphQL */ `
+  subscription OnUpdateSchool($owner: String!) {
+    onUpdateSchool(owner: $owner) {
+      id
+      name
+      owner
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onDeleteSchool = /* GraphQL */ `
+  subscription OnDeleteSchool($owner: String!) {
+    onDeleteSchool(owner: $owner) {
+      id
+      name
+      owner
+      createdAt
+      updatedAt
+    }
+  }
+`;
 export const onCreateClass = /* GraphQL */ `
   subscription OnCreateClass {
     onCreateClass {
       id
+      schoolId
+      school {
+        id
+        name
+        owner
+        createdAt
+        updatedAt
+      }
       className
-      schoolName
       owner
       createdAt
       updatedAt
@@ -40,8 +80,8 @@ export const onCreateClass = /* GraphQL */ `
           updatedAt
           class {
             id
+            schoolId
             className
-            schoolName
             owner
             createdAt
             updatedAt
@@ -56,8 +96,15 @@ export const onUpdateClass = /* GraphQL */ `
   subscription OnUpdateClass {
     onUpdateClass {
       id
+      schoolId
+      school {
+        id
+        name
+        owner
+        createdAt
+        updatedAt
+      }
       className
-      schoolName
       owner
       createdAt
       updatedAt
@@ -90,8 +137,8 @@ export const onUpdateClass = /* GraphQL */ `
           updatedAt
           class {
             id
+            schoolId
             className
-            schoolName
             owner
             createdAt
             updatedAt
@@ -106,8 +153,15 @@ export const onDeleteClass = /* GraphQL */ `
   subscription OnDeleteClass {
     onDeleteClass {
       id
+      schoolId
+      school {
+        id
+        name
+        owner
+        createdAt
+        updatedAt
+      }
       className
-      schoolName
       owner
       createdAt
       updatedAt
@@ -140,8 +194,8 @@ export const onDeleteClass = /* GraphQL */ `
           updatedAt
           class {
             id
+            schoolId
             className
-            schoolName
             owner
             createdAt
             updatedAt
@@ -182,8 +236,15 @@ export const onCreateLesson = /* GraphQL */ `
       updatedAt
       class {
         id
+        schoolId
+        school {
+          id
+          name
+          owner
+          createdAt
+          updatedAt
+        }
         className
-        schoolName
         owner
         createdAt
         updatedAt
@@ -238,8 +299,15 @@ export const onUpdateLesson = /* GraphQL */ `
       updatedAt
       class {
         id
+        schoolId
+        school {
+          id
+          name
+          owner
+          createdAt
+          updatedAt
+        }
         className
-        schoolName
         owner
         createdAt
         updatedAt
@@ -294,8 +362,15 @@ export const onDeleteLesson = /* GraphQL */ `
       updatedAt
       class {
         id
+        schoolId
+        school {
+          id
+          name
+          owner
+          createdAt
+          updatedAt
+        }
         className
-        schoolName
         owner
         createdAt
         updatedAt
