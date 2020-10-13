@@ -238,7 +238,7 @@ export default class EditLessonScreenInner3 extends Vue {
   margin-bottom: 16px;
 }
 .SearchResult {
-  border-top: 1px solid $color-white;
+  border-top: 1px solid $color-base-color-03;
 }
 .SearchResultTitle {
   color: $color-white;
