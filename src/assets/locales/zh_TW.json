@@ -76,7 +76,7 @@
         "material_title": "副教材標題",
         "material_url": "輔助教材 URL"
       },
-      "placeholders": {
+      "placeholder": {
         "video_keyword": "例）理科"
       },
       "required": "*符號者為必填項目",
