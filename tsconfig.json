@@ -19,7 +19,6 @@
     "types": [
       "@types/node",
       "@nuxt/types",
-      "@types/js-cookie",
       "@types/jest",
       "vuetify",
       "nuxt-i18n"
