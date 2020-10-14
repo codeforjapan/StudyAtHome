@@ -78,8 +78,66 @@ export class ClassDataStore extends VuexModule implements classData.ClassData {
 
   @action
   public async lessonsOnCurrentDateAuthModeAPIKEY(date: Date) {
+    const listLessonsByClassSimple = /* GraphQL */ `
+      query ListLessonsByClass(
+        $classId: ID
+        $startTime: ModelStringKeyConditionInput
+        $sortDirection: ModelSortDirection
+        $filter: ModelLessonFilterInput
+        $limit: Int
+        $nextToken: String
+      ) {
+        listLessonsByClass(
+          classId: $classId
+          startTime: $startTime
+          sortDirection: $sortDirection
+          filter: $filter
+          limit: $limit
+          nextToken: $nextToken
+        ) {
+          items {
+            id
+            classId
+            startTime
+            endTime
+            title
+            subject {
+              name
+              color
+            }
+            goal
+            description
+            videos {
+              title
+              url
+              thumbnailUrl
+            }
+            pages
+            materials {
+              title
+              url
+            }
+            isHidden
+            owner
+            createdAt
+            updatedAt
+            class {
+              id
+              className
+              owner
+              createdAt
+              updatedAt
+              lessons {
+                nextToken
+              }
+            }
+          }
+          nextToken
+        }
+      }
+    `
     const lessons = (await API.graphql({
-      query: listLessonsByClass,
+      query: listLessonsByClassSimple,
       variables: {
         classId: this.classId,
         startTime: {
