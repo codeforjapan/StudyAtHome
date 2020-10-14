@@ -52,10 +52,9 @@
 import Vue from 'vue'
 import BaseBottomSheetLayer from '@/components/BaseBottomSheetLayer.vue'
 import BaseActionButton from '@/components/BaseActionButton.vue'
-import { Auth, API, graphqlOperation } from 'aws-amplify'
+import { Auth, API } from 'aws-amplify'
 import { GraphQLResult } from '@aws-amplify/api'
 import { vxm } from '@/store'
-import { listClasss } from '@/graphql/queries'
 import { ListClasssQuery } from '@/API'
 
 type DataType = {
@@ -77,11 +76,30 @@ export default Vue.extend({
   },
   async created() {
     const user = await Auth.currentAuthenticatedUser()
-    const result = (await API.graphql(
-      graphqlOperation(listClasss, {
+    const listClasssSimple = /* GraphQL */ `
+      query ListClasss(
+        $filter: ModelClassFilterInput
+        $limit: Int
+        $nextToken: String
+      ) {
+        listClasss(filter: $filter, limit: $limit, nextToken: $nextToken) {
+          items {
+            id
+            school {
+              name
+            }
+            className
+          }
+          nextToken
+        }
+      }
+    `
+    const result = (await API.graphql({
+      query: listClasssSimple,
+      variables: {
         filter: { owner: { eq: user.username } },
-      })
-    )) as GraphQLResult<ListClasssQuery>
+      },
+    })) as GraphQLResult<ListClasssQuery>
     this.items = (result?.data?.listClasss?.items as any[]).map((item) => {
       return {
         classId: item.id,
