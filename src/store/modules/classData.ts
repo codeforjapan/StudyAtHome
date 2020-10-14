@@ -95,17 +95,24 @@ const generateUniqueId = (): string => {
   return result + ''
 }
 // Generate a new Date object with a specified date & time
-const d = (date: Date, hours: number, minutes: number, seconds: number) => {
+const d = (
+  date: Date,
+  hours: number,
+  minutes: number,
+  seconds: number,
+  milliseconds: number
+) => {
   const newDate = new Date(date)
   newDate.setHours(hours)
   newDate.setMinutes(minutes)
   newDate.setSeconds(seconds)
+  newDate.setMilliseconds(milliseconds)
   return newDate
 }
 
 const getFullDayArray = (date: Date) => {
-  const start = d(date, 0, 0, 0)
-  const end = d(date, 24, 0, 0)
+  const start = d(date, 0, 0, 0, 0)
+  const end = d(date, 24, 0, 0, 0)
   return [start, end]
 }
 
