@@ -83,7 +83,7 @@
     "stylelint-config-standard": "^20.0.0",
     "stylelint-scss": "^3.18.0",
     "ts-jest": "^26.4.1",
-    "ts-loader": "^8.0.4",
+    "ts-loader": "^8.0.5",
     "vue": "^2.6.12",
     "vue-jest": "^3.0.7",
     "vue-server-renderer": "^2.6.12",
