@@ -5,7 +5,17 @@
         v-model="date"
         locale="ja"
         first-day-of-week="1"
+        width="100%"
+        class="mb-4"
         @input="openCalenderDialog = false"
+      />
+      <base-action-button
+        theme="secondary"
+        :text="$t('common.calender.to_today')"
+        @click="
+          date = new Date()
+          openCalenderDialog = false
+        "
       />
     </v-dialog>
     <base-dialog
@@ -14,54 +24,45 @@
       hide-default-cancel-button
       :actions="[
         {
-          buttonLabel: '閉じる',
+          buttonLabel: $t('common.general.buttons.close'),
           iconName: '',
           theme: 'primary',
           action: () => {
             return false
-          }
+          },
         },
         {
-          buttonLabel: 'ログアウト',
+          buttonLabel: $t('common.general.buttons.logout'),
           iconName: 'mdi-login-variant',
           theme: 'border',
           action: () => {
             clickLogout()
             return false
-          }
-        }
+          },
+        },
       ]"
     >
       <template v-slot:title>
-        今、ログインしているクラスです
+        {{ $t('common.class_id_dialog.title') }}
       </template>
       <template v-slot:default>
         <div class="ClassIdModal-Contents">
           <p class="ClassIdModal-ClassText">{{ className }}</p>
-          <p class="ClassIdModal-Text">クラスID</p>
+          <p class="ClassIdModal-Text">
+            {{ $t('common.class_id_dialog.label.class_id') }}
+          </p>
           <div class="ClassIdModal-Id">{{ classId }}</div>
         </div>
       </template>
     </base-dialog>
     <v-overlay :value="loading" color="#0071C2" opacity="1" z-index="9999">
-      <div class="loader">
-        Loading
-      </div>
+      <div class="loader">Loading</div>
     </v-overlay>
-    <v-app-bar fixed app class="bar" elevation="0">
+    <v-app-bar fixed app class="bar" elevation="0" extension-height="83">
       <HeaderLogo />
+      <AppLanguageSelector />
       <v-spacer />
       <div class="classes-buttons">
-        <v-btn
-          fab
-          small
-          outlined
-          rounded
-          color="#0071C2"
-          @click="openCalenderDialog = true"
-        >
-          <v-icon>mdi-calendar-today</v-icon>
-        </v-btn>
         <v-btn
           fab
           small
@@ -75,7 +76,10 @@
       </div>
       <template v-slot:extension>
         <div class="header-calender">
-          <CalendarBar v-model="app.currentDate" />
+          <CalendarBar
+            v-model="app.currentDate"
+            @showCalender="openCalenderDialog = true"
+          />
         </div>
       </template>
     </v-app-bar>
@@ -90,9 +94,11 @@
 <script lang="ts">
 import Vue from 'vue'
 import dayjs from 'dayjs'
+import AppLanguageSelector from '@/components/AppLanguageSelector.vue'
 import HeaderLogo from '@/assets/svgs/header_logo.svg'
 import CalendarBar from '@/components/CalendarBar.vue'
 import BaseDialog from '@/components/BaseDialog.vue'
+import BaseActionButton from '@/components/BaseActionButton.vue'
 import { vxm } from '@/store'
 
 type LocalData = {
@@ -107,9 +113,11 @@ type LocalData = {
 export default Vue.extend({
   middleware: 'checkClassData',
   components: {
+    AppLanguageSelector,
     CalendarBar,
     BaseDialog,
-    HeaderLogo
+    HeaderLogo,
+    BaseActionButton,
   },
   data(): LocalData {
     return {
@@ -118,7 +126,7 @@ export default Vue.extend({
       openClassIdDialog: false,
       classId: vxm.classData.classId,
       className: vxm.classData.className,
-      app: vxm.app
+      app: vxm.app,
     }
   },
   computed: {
@@ -128,19 +136,19 @@ export default Vue.extend({
       },
       set(newValue: string) {
         vxm.app.setDate(dayjs(newValue).toDate())
-      }
-    }
+      },
+    },
   },
   mounted(): void {
     this.loading = false
   },
   methods: {
-    clickLogout() {
-      vxm.classData.unloadClassData().then(() => {
-        this.$router.push('/')
-      })
-    }
-  }
+    async clickLogout() {
+      await vxm.user.logout()
+      await vxm.app.resetDate()
+      await this.$router.push('/')
+    },
+  },
 })
 </script>
 
@@ -171,7 +179,7 @@ export default Vue.extend({
   margin: 0 auto;
   width: 100%;
   max-width: 640px;
-  height: 40px;
+  height: 100%;
 }
 .classes-container {
   height: 100%;

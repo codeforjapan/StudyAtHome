@@ -1,20 +1,28 @@
 <template>
   <div>
-    <bottom-sheet-layer title="ユーザー登録" title-en="STEP 1" fullscreen>
+    <base-bottom-sheet-layer
+      :title="$t('pages.user_signup.title')"
+      title-en="STEP 1"
+      fullscreen
+    >
       <template v-slot:LayerContents>
         <dl>
-          <dt class="SignUp-ItemTitle">お名前（表示名）</dt>
+          <dt class="SignUp-ItemTitle">
+            {{ $t('common.user_data.labels.nickname') }}
+          </dt>
           <dd>
-            <input-field
+            <base-input-field
               v-model="name"
               label="name"
               placeholder="山田花子"
               require
             />
           </dd>
-          <dt class="SignUp-ItemTitle">メールアドレス</dt>
+          <dt class="SignUp-ItemTitle">
+            {{ $t('common.user_data.labels.email') }}
+          </dt>
           <dd>
-            <input-field
+            <base-input-field
               v-model="email"
               label="email"
               placeholder="hogehoge@hogehoge.com"
@@ -22,18 +30,25 @@
               require
             />
           </dd>
-          <dt class="SignUp-ItemTitle">パスワード</dt>
+          <dt class="SignUp-ItemTitle">
+            {{ $t('common.user_data.labels.password') }}
+          </dt>
+          <dt class="SignUp-Rules">
+            {{ $t('common.user_data.labels.password_rules') }}
+          </dt>
           <dd>
-            <input-field
+            <base-input-field
               v-model="password"
               label="password"
               type="password"
               require
             />
           </dd>
-          <dt class="SignUp-ItemTitle">パスワード（確認用）</dt>
+          <dt class="SignUp-ItemTitle">
+            {{ $t('pages.user_signup.labels.password_confirm') }}
+          </dt>
           <dd>
-            <input-field
+            <base-input-field
               v-model="confirmation"
               label="confirmation"
               type="password"
@@ -45,15 +60,15 @@
       </template>
       <template v-slot:LayerFooter>
         <div class="SignUp-ButtonOuter">
-          <action-button
+          <base-action-button
             theme="transparent"
-            text="キャンセル"
+            :text="$t('common.general.buttons.cancel')"
             class="SignUp-Button"
             @click="$router.push('/')"
           />
-          <action-button
+          <base-action-button
             theme="primary"
-            text="登録"
+            :text="$t('pages.user_signup.buttons.signup')"
             class="SignUp-Button"
             :is-disabled="disableRegisterButton"
             :is-loading="loading"
@@ -61,38 +76,22 @@
           />
         </div>
       </template>
-    </bottom-sheet-layer>
-    <v-snackbar v-model="error" :timeout="5000" absolute top color="#C01B61">
-      何らかのエラーが発生しました。時間をおいて再度お試しください。
+    </base-bottom-sheet-layer>
+    <v-snackbar v-model="error" :timeout="5000" top color="#C01B61">
+      {{ $t('common.general.error.default') }}
     </v-snackbar>
-    <v-dialog v-model="completion" max-width="460px">
-      <v-card class="DialogCard">
-        <v-container class="DialogCardContentContainer">
-          入力いただいたメールアドレス宛に確認メールを送信しました。<br />
-          メールに記載されているURLから認証を行ってください。
-        </v-container>
-        <v-card-actions class="DialogCardButtons px-4">
-          <action-button
-            text="トップに戻る"
-            theme="border"
-            class="my-3"
-            @click="$router.push('/')"
-          />
-        </v-card-actions>
-      </v-card>
-    </v-dialog>
   </div>
 </template>
 
 <script lang="ts">
 import Vue from 'vue'
-import BottomSheetLayer from '@/components/BottomSheetLayer.vue'
-import ActionButton from '@/components/ActionButton.vue'
-import InputField from '@/components/InputField.vue'
-import firebase from '@/plugins/firebase'
+import BaseBottomSheetLayer from '@/components/BaseBottomSheetLayer.vue'
+import BaseActionButton from '@/components/BaseActionButton.vue'
+import BaseInputField from '@/components/BaseInputField.vue'
+import { Auth } from 'aws-amplify'
 
 export default Vue.extend({
-  components: { BottomSheetLayer, ActionButton, InputField },
+  components: { BaseBottomSheetLayer, BaseActionButton, BaseInputField },
   layout: 'background',
   data() {
     return {
@@ -102,11 +101,19 @@ export default Vue.extend({
       confirmation: '',
       error: false,
       completion: false,
-      loading: false
+      loading: false,
     }
   },
   computed: {
     passwordConfirm() {
+      if (this.password) {
+        // 6文字以上であること
+        const reg = new RegExp(/[ -~]{6,}$/)
+        const response = reg.test(this.password)
+        if (!response) {
+          return 'パスワードが条件を満たしていません'
+        }
+      }
       if (this.password && this.confirmation) {
         if (this.password !== this.confirmation) {
           return 'パスワードが一致していません'
@@ -120,55 +127,41 @@ export default Vue.extend({
         if (this.password !== this.confirmation) {
           return true
         }
+        const reg = new RegExp(/[ -~]{6,}$/)
+        const response = reg.test(this.password)
+        if (!response) {
+          return true
+        }
         return false
       }
       return true
-    }
+    },
   },
   methods: {
-    doSignUp(): void {
+    async doSignUp(): Promise<void> {
       this.loading = true
-      firebase
-        .auth()
-        .createUserWithEmailAndPassword(this.email, this.password)
+      await Auth.signUp({
+        username: this.email,
+        password: this.password,
+        attributes: {
+          email: this.email,
+          name: this.name,
+        },
+      })
         .then(() => {
-          const user = firebase.auth().currentUser
-          if (user) {
-            firebase
-              .firestore()
-              .collection('users')
-              .doc(user.uid)
-              .set({
-                username: this.name,
-                allow_access: [],
-                created_at: new Date(),
-                last_login: new Date(),
-                updated_at: new Date()
-              })
-              .catch(() => {
-                firebase
-                  .firestore()
-                  .collection('users')
-                  .doc(user.uid)
-                  .set({
-                    username: this.name,
-                    allow_access: [],
-                    created_at: new Date(),
-                    last_login: new Date(),
-                    updated_at: new Date()
-                  })
-              })
-            user.sendEmailVerification()
-            this.completion = true
-            this.loading = false
-          }
+          this.completion = true
+          this.loading = false
+          this.$router.push({
+            name: 'user-verify',
+            params: { email: this.email },
+          })
         })
         .catch(() => {
           this.error = true
           this.loading = false
         })
-    }
-  }
+    },
+  },
 })
 </script>
 
@@ -179,6 +172,11 @@ export default Vue.extend({
   color: $color-white;
   text-align: center;
   margin: 4px 0;
+}
+.SignUp-Rules {
+  text-align: center;
+  font-weight: bold;
+  color: $color-yellow;
 }
 .SignUp-ButtonOuter {
   display: flex;

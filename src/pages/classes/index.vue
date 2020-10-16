@@ -1,8 +1,8 @@
 <template>
   <div class="MainPage">
-    <div v-if="classData.lessonsOnCurrentDate.length">
-      <period-card
-        v-for="(lessons, time, index) in lessonsGroupByPeriod"
+    <div v-if="Object.keys(classData.lessonsGroupByPeriod).length">
+      <period-section
+        v-for="(lessons, time, index) in classData.lessonsGroupByPeriod"
         :key="index"
         :period="index"
         :time="time"
@@ -11,12 +11,12 @@
     </div>
     <div v-else-if="today" class="Classes-Outer">
       <h1 class="Classes-Title">
-        今日の時間割はまだ届いていないみたいです
+        {{ $t('pages.classes_index.no_lessons_today') }}
       </h1>
     </div>
     <div v-else class="Classes-Outer">
       <h1 class="Classes-Title">
-        {{ dateTitle }} の時間割はまだ届いていないみたいです
+        {{ $t('pages.classes_index.no_lessons', { date: dateTitle }) }}
       </h1>
     </div>
   </div>
@@ -27,13 +27,8 @@ import Vue from 'vue'
 import dayjs from 'dayjs'
 import isToday from 'date-fns/isToday'
 import { vxm } from '@/store'
-import PeriodCard from '@/components/PeriodCard.vue'
-import { classData } from '@/types/store/classData'
-import LessonWithId = classData.LessonWithId
+import PeriodSection from '@/components/PeriodSection.vue'
 
-type LessonsGroupedBy = {
-  [key: string]: LessonWithId[]
-}
 type Data = {
   classData: typeof vxm.classData
 }
@@ -41,35 +36,35 @@ type Data = {
 type Computed = {
   today: boolean
   dateTitle: string
-  lessonsGroupByPeriod: LessonsGroupedBy
 }
 
-export default Vue.extend<Data, unknown, Computed, unknown>({
-  components: { PeriodCard },
+export default Vue.extend({
+  components: { PeriodSection },
   layout: 'classes',
   data() {
     return {
-      classData: vxm.classData
+      classData: vxm.classData,
     }
   },
   computed: {
+    currentDate() {
+      return vxm.app.currentDate
+    },
     today() {
       return isToday(vxm.app.currentDate)
     },
     dateTitle() {
       return dayjs(vxm.app.currentDate).format('M/D')
     },
-    lessonsGroupByPeriod() {
-      const groupBy = (targets: LessonWithId[], key: keyof LessonWithId) =>
-        targets.reduce((acc: LessonsGroupedBy, currentLesson: LessonWithId) => {
-          const valueToGroup = currentLesson[key].toString()
-          acc[valueToGroup] = acc[valueToGroup] || []
-          acc[valueToGroup].push(currentLesson)
-          return acc
-        }, {})
-      return groupBy(this.classData.lessonsOnCurrentDate, 'startTime')
-    }
-  }
+  },
+  watch: {
+    async currentDate() {
+      await this.classData.getLessonsByCurrentDateAuthModeAPIKEY()
+    },
+  },
+  async mounted() {
+    await this.classData.getLessonsByCurrentDateAuthModeAPIKEY()
+  },
 })
 </script>
 

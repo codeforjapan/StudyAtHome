@@ -1,26 +1,30 @@
 <template>
   <div>
-    <bottom-sheet-layer
+    <base-bottom-sheet-layer
       fullscreen
-      title="ログインしてください"
+      :title="$t('pages.user_login.title')"
       title-en="LOGIN"
     >
       <template v-slot:LayerContents>
         <dl>
-          <dt class="SignIn-ItemTitle">メールアドレス</dt>
+          <dt class="SignIn-ItemTitle">
+            {{ $t('common.user_data.labels.email') }}
+          </dt>
           <dd class="SignIn-Item">
-            <input-field
+            <base-input-field
               v-model="email"
               label="studyathome@example.com"
               require
               type="email"
             />
           </dd>
-          <dt class="SignIn-ItemTitle">パスワード</dt>
+          <dt class="SignIn-ItemTitle">
+            {{ $t('common.user_data.labels.password') }}
+          </dt>
           <dd class="SignIn-Item">
-            <input-field
+            <base-input-field
               v-model="password"
-              label="パスワード"
+              :label="$t('common.user_data.labels.password')"
               require
               type="password"
             />
@@ -29,11 +33,11 @@
       </template>
       <template v-slot:LayerFooter>
         <div class="SignIn-ButtonOuter">
-          <action-button
+          <base-action-button
             :is-disabled="disableLogin"
             :is-loading="loading"
             class="SignIn-Button"
-            text="ログイン"
+            :text="$t('common.general.buttons.login')"
             theme="primary"
             @click="doLogin"
           />
@@ -46,34 +50,34 @@
             text
             to="/"
           >
-            <span>戻る</span>
+            <span>{{ $t('common.general.buttons.go_back') }}</span>
           </v-btn>
         </div>
       </template>
-    </bottom-sheet-layer>
-    <v-snackbar v-model="error" :timeout="5000" absolute top color="#C01B61">
-      メールアドレスまたはパスワードが正しくありません
+    </base-bottom-sheet-layer>
+    <v-snackbar v-model="error" :timeout="5000" top color="#C01B61">
+      {{ $t('pages.user_login.error.invalid') }}
     </v-snackbar>
   </div>
 </template>
 
 <script lang="ts">
 import Vue from 'vue'
-import BottomSheetLayer from '@/components/BottomSheetLayer.vue'
-import ActionButton from '@/components/ActionButton.vue'
-import InputField from '@/components/InputField.vue'
-import firebase from '@/plugins/firebase'
-import { vxm } from '@/store'
+import BaseBottomSheetLayer from '@/components/BaseBottomSheetLayer.vue'
+import BaseActionButton from '@/components/BaseActionButton.vue'
+import BaseInputField from '@/components/BaseInputField.vue'
+import { Auth } from 'aws-amplify'
+// import { vxm } from '@/store'
 
 export default Vue.extend({
-  components: { BottomSheetLayer, ActionButton, InputField },
+  components: { BaseBottomSheetLayer, BaseActionButton, BaseInputField },
   layout: 'background',
   data() {
     return {
       email: '',
       password: '',
       loading: false,
-      error: false
+      error: false,
     }
   },
   computed: {
@@ -83,25 +87,21 @@ export default Vue.extend({
         this.password &&
         this.email.match(/^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/)
       )
-    }
+    },
   },
   methods: {
-    doLogin(): void {
+    async doLogin(): Promise<void> {
       this.loading = true
-      firebase
-        .auth()
-        .signInWithEmailAndPassword(this.email, this.password)
-        .then(() => {
-          vxm.user.login().then(() => {
-            this.$router.push('/user/classlist')
-          })
-        })
-        .catch(() => {
-          this.loading = false
-          this.error = true
-        })
-    }
-  }
+      try {
+        await Auth.signIn(this.email, this.password)
+        // await vxm.user.login()
+        await this.$router.push('/user/classlist')
+      } catch (err) {
+        this.loading = false
+        this.error = true
+      }
+    },
+  },
 })
 </script>
 

@@ -1,5 +1,19 @@
 <template>
   <v-container fill-height class="calendar-bar">
+    <v-row justify="space-between" class="pa-0 ma-0">
+      <v-btn text color="#0071C2" @click="dateListWindow.prevList">
+        <v-icon>mdi-menu-left</v-icon>
+        {{ $t('common.calender.prev_week') }}
+      </v-btn>
+      <v-btn text color="#0071C2" @click="$emit('showCalender')">
+        {{ fmtym(dateListWindow.currentDate) }}
+        <v-icon>mdi-calendar-today</v-icon>
+      </v-btn>
+      <v-btn text color="#0071C2" @click="dateListWindow.nextList">
+        {{ $t('common.calender.next_week') }}
+        <v-icon>mdi-menu-right</v-icon>
+      </v-btn>
+    </v-row>
     <v-row align="center" class="pa-0 ma-0">
       <v-col cols="1" class="pa-0 ma-1">
         <v-card class="calendar-bar-ym" flat>
@@ -16,7 +30,7 @@
         :key="fmtft(date)"
         v-touch="{
           left: () => dateListWindow.nextList(),
-          right: () => dateListWindow.prevList()
+          right: () => dateListWindow.prevList(),
         }"
         cols="0"
         class="pa-0 ma-0"
@@ -24,7 +38,7 @@
         <v-card
           class="calendar-bar-date elevation-4"
           :class="{
-            current: fmtft(date) === fmtft(dateListWindow.currentDate)
+            current: fmtft(date) === fmtft(dateListWindow.currentDate),
           }"
           @click="dateListWindow.selectDate(date)"
         >
@@ -154,7 +168,7 @@ class DateListWindowImpl implements DateListWindow {
     view: View,
     startWeekOn: StartWeekOn,
     date: Date
-  ) => Date = function(view: View, startWeekOn: StartWeekOn, date: Date) {
+  ) => Date = function (view: View, startWeekOn: StartWeekOn, date: Date) {
     const dowList: Array<StartWeekOn> = [
       'Sunday',
       'Monday',
@@ -162,7 +176,7 @@ class DateListWindowImpl implements DateListWindow {
       'Wednesday',
       'Thursday',
       'Friday',
-      'Saturday'
+      'Saturday',
     ]
     let firstDate: Date = date
     switch (view) {
@@ -201,26 +215,36 @@ class DateListWindowImpl implements DateListWindow {
 
 @Component
 export default class CalendarBar extends Vue {
+  dateListWindow: DateListWindow = new DateListWindowImpl(
+    'Week',
+    'Monday',
+    new Date(),
+    this.input
+  )
+
   @Prop({
     default() {
       return { view: 'Week', startWeekOn: 'Monday' }
-    }
+    },
   })
   config: CalendarBarConfig | undefined
 
   @Prop({
     default() {
       return new Date()
-    }
+    },
   })
   public value!: Date
 
-  dateListWindow: DateListWindow = new DateListWindowImpl(
-    this.config?.view ?? 'Week',
-    this.config?.startWeekOn ?? 'Monday',
-    this.value ?? new Date(),
-    this.input
-  )
+  constructor() {
+    super()
+    this.dateListWindow = new DateListWindowImpl(
+      this.config?.view ?? 'Week',
+      this.config?.startWeekOn ?? 'Monday',
+      this.value ?? new Date(),
+      this.input
+    )
+  }
 
   @Emit()
   public input(value: Date) {
@@ -250,6 +274,10 @@ export default class CalendarBar extends Vue {
 
   fmtft(date: Date): String {
     return format(date, 'yyyy-MM-dd HH:mm:ss EEE')
+  }
+
+  fmtym(date: Date): String {
+    return format(date, 'yyyy年M月', { locale: ja })
   }
 
   fmtISO(date: Date): String {

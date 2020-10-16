@@ -1,13 +1,14 @@
 <template>
   <div class="MainPage">
-    <div v-if="classData.lessonsOnCurrentDate.length">
-      <period-card
-        v-for="(lessons, time, index) in lessonsGroupByPeriod"
+    <div v-if="Object.keys(classData.lessonsGroupByPeriod).length > 0">
+      <period-section
+        v-for="(lessons, time, index) in classData.lessonsGroupByPeriod"
         :key="index"
         :period="index"
         :time="time"
         :class-data="lessons"
         :editable="true"
+        @toggleHidden="doToggleHidden"
         @clickEditButton="doEdit"
       />
       <ul class="Classes-List">
@@ -18,7 +19,7 @@
             target="_blank"
             rel="noopener"
           >
-            おうちで時間割について
+            {{ $t('common.footer.about') }}
           </a>
         </li>
         <li>
@@ -28,51 +29,20 @@
             target="_blank"
             rel="noopener"
           >
-            お問い合わせ
+            {{ $t('common.footer.contact') }}
           </a>
         </li>
 
         <li>
           <nuxt-link class="white--text" to="policy">
-            利用規約
+            {{ $t('common.footer.terms') }}
           </nuxt-link>
         </li>
       </ul>
     </div>
     <div v-else-if="today" class="Classes-Outer">
-      <h1 class="Classes-Title">まだ今日の時間割はありません</h1>
-      <ul class="Classes-List">
-        <li>
-          <a
-            class="white--text"
-            href="http://www.studyathome.jp/"
-            target="_blank"
-            rel="noopener"
-          >
-            おうちで時間割について
-          </a>
-        </li>
-        <li>
-          <a
-            class="white--text"
-            href="https://forms.gle/G91PJ7T8ipTtYeGA6"
-            target="_blank"
-            rel="noopener"
-          >
-            お問い合わせ
-          </a>
-        </li>
-
-        <li>
-          <nuxt-link class="white--text" to="policy">
-            利用規約
-          </nuxt-link>
-        </li>
-      </ul>
-    </div>
-    <div v-else class="Classes-Outer">
       <h1 class="Classes-Title">
-        まだ{{ dateTitle }}の時間割は<br />ありません
+        {{ $t('pages.edit_index.no_lessons_today') }}
       </h1>
       <ul class="Classes-List">
         <li>
@@ -82,7 +52,7 @@
             target="_blank"
             rel="noopener"
           >
-            おうちで時間割について
+            {{ $t('common.footer.about') }}
           </a>
         </li>
         <li>
@@ -92,26 +62,68 @@
             target="_blank"
             rel="noopener"
           >
-            お問い合わせ
+            {{ $t('common.footer.contact') }}
           </a>
         </li>
 
         <li>
           <nuxt-link class="white--text" to="policy">
-            利用規約
+            {{ $t('common.footer.terms') }}
           </nuxt-link>
         </li>
       </ul>
     </div>
-    <simple-bottom-sheet
-      message="2年B組の授業を追加・編集する"
+    <div v-else class="Classes-Outer">
+      <h1 class="Classes-Title">
+        {{ $t('pages.edit_index.no_lessons', { date: dateTitle }) }}
+      </h1>
+      <ul class="Classes-List">
+        <li>
+          <a
+            class="white--text"
+            href="http://www.studyathome.jp/"
+            target="_blank"
+            rel="noopener"
+          >
+            {{ $t('common.footer.about') }}
+          </a>
+        </li>
+        <li>
+          <a
+            class="white--text"
+            href="https://forms.gle/G91PJ7T8ipTtYeGA6"
+            target="_blank"
+            rel="noopener"
+          >
+            {{ $t('common.footer.contact') }}
+          </a>
+        </li>
+
+        <li>
+          <nuxt-link class="white--text" to="policy">
+            {{ $t('common.footer.terms') }}
+          </nuxt-link>
+        </li>
+      </ul>
+    </div>
+    <edit-lesson-screen-bottom-sheet
+      :message="
+        $t('pages.edit_index.add_or_edit_lesson', {
+          className: classData.className,
+        })
+      "
       :expanded="!editingMode"
       @clickAddButton="toggleScreen"
     />
-    <editing-screen
+    <edit-lesson-screen
       :value="editPageValue"
       :expanded="editingMode"
-      @collapse="onCollapseEditingScreen"
+      @collapse="onCollapseEditLessonScreen"
+    />
+    <editing-visibility-dialog
+      :value="editVisibilityDialogValue"
+      :editing-visibility-mode="editingVisibilityMode"
+      @close="closeModal"
     />
   </div>
 </template>
@@ -121,120 +133,127 @@ import Vue from 'vue'
 import dayjs from 'dayjs'
 import isToday from 'date-fns/isToday'
 import { vxm } from '@/store'
-import PeriodCard from '@/components/PeriodCard.vue'
-import SimpleBottomSheet from '@/components/SimpleBottomSheet.vue'
-import EditingScreen from '@/components/EditingScreen.vue'
-import { classData } from '@/types/store/classData'
-import LessonWithId = classData.LessonWithId
-
-type LessonsGroupedBy = {
-  [key: string]: LessonWithId[]
-}
+import PeriodSection from '@/components/PeriodSection.vue'
+import EditLessonScreenBottomSheet from '@/components/EditLessonScreenBottomSheet.vue'
+import EditLessonScreen from '@/components/EditLessonScreen.vue'
+import EditingVisibilityDialog from '@/components/EditingVisibilityDialog.vue'
+import classData from '@/types/store/classData'
 
 type DataType = {
   classData: typeof vxm.classData
   editingMode: boolean
-  editPageValue: object
+  editingVisibilityMode: boolean
+  editPageValue: editPageValueType
+  editVisibilityDialogValue: object
 }
 
 type Computed = {
   today: boolean
   dateTitle: string
-  lessonsGroupByPeriod: LessonsGroupedBy
+}
+
+type editPageValueType = {
+  isHidden: boolean
+  lessonId: string
+  date: string
+  startTime: string
+  endTime: string
+  title: string
+  subjectName: string
+  subjectColor: string
+  goal: string
+  description: string
+  videoUrl: string
+  videoTitle: string
+  videoThumbnailUrl: string
+  pages: string
+  materialsTitle: string
+  materialsUrl: string
+}
+
+const editPageValueDefault = {
+  isHidden: false,
+  lessonId: '',
+  date: '',
+  startTime: '',
+  endTime: '',
+  title: '',
+  subjectName: '',
+  subjectColor: '#BAC8FF',
+  goal: '',
+  description: '',
+  videoUrl: '',
+  videoTitle: '',
+  videoThumbnailUrl: '',
+  pages: '',
+  materialsTitle: '',
+  materialsUrl: '',
 }
 
 export default Vue.extend({
   components: {
-    PeriodCard,
-    SimpleBottomSheet,
-    EditingScreen
+    PeriodSection,
+    EditLessonScreenBottomSheet,
+    EditLessonScreen,
+    EditingVisibilityDialog,
   },
   layout: 'protected',
   data(): DataType {
     return {
       classData: vxm.classData,
       editingMode: false,
-      editPageValue: {
-        isHidden: false,
-        lessonId: '',
-        firstPageData: {
-          date: '',
-          startTime: '',
-          endTime: '',
-          title: '',
-          subjectName: '',
-          subjectColor: '#BAC8FF'
-        },
-        secondPageData: {
-          goal: '',
-          description: ''
-        },
-        thirdPageData: {
-          videoUrl: '',
-          videoTitle: '',
-          videoThumbnailUrl: ''
-        },
-        fourthPageData: {
-          pages: '',
-          materialsTitle: '',
-          materialsUrl: ''
-        }
-      }
+      editingVisibilityMode: false,
+      editPageValue: Object.assign({}, editPageValueDefault),
+      editVisibilityDialogValue: {},
     }
   },
   computed: {
+    currentDate() {
+      return vxm.app.currentDate
+    },
     today() {
       return isToday(vxm.app.currentDate)
     },
     dateTitle() {
       return dayjs(vxm.app.currentDate).format('M/D')
     },
-    lessonsGroupByPeriod() {
-      const groupBy = (targets: LessonWithId[], key: keyof LessonWithId) =>
-        targets.reduce((acc: LessonsGroupedBy, currentLesson: LessonWithId) => {
-          const valueToGroup = currentLesson[key].toString()
-          acc[valueToGroup] = acc[valueToGroup] || []
-          acc[valueToGroup].push(currentLesson)
-          return acc
-        }, {})
-      return groupBy(vxm.classData.lessonsOnCurrentDate, 'startTime')
-    }
+  },
+  watch: {
+    async currentDate() {
+      await this.classData.getLessonsByCurrentDate()
+    },
+  },
+  async mounted() {
+    await this.classData.getLessonsByCurrentDate()
   },
   methods: {
-    onCollapseEditingScreen(): void {
+    onCollapseEditLessonScreen(): void {
       this.toggleScreen()
-      this.resetEditingScreen()
+      this.resetEditLessonScreen()
     },
     toggleScreen(): void {
+      const date =
+        this.editPageValue.date !== ''
+          ? this.editPageValue.date
+          : dayjs(vxm.app.currentDate).format('YYYY-MM-DD')
+      this.editPageValue = Object.assign({}, this.editPageValue, {
+        date,
+      })
       this.editingMode = !this.editingMode
     },
-    resetEditingScreen(): void {
-      this.editPageValue = {
-        isHidden: false,
-        lessonId: '',
-        firstPageData: {
-          date: '',
-          startTime: '',
-          endTime: '',
-          title: '',
-          subjectName: '',
-          subjectColor: '#BAC8FF'
-        },
-        secondPageData: {
-          goal: '',
-          description: ''
-        },
-        thirdPageData: {
-          videoUrl: '',
-          videoTitle: '',
-          videoThumbnailUrl: ''
-        },
-        fourthPageData: {
-          pages: '',
-          materialsTitle: '',
-          materialsUrl: ''
-        }
-      }
+    closeModal(): void {
+      this.editVisibilityDialogValue = {}
+      this.editingVisibilityMode = false
+    },
+    openVisibilityModal(): void {
+      this.editingVisibilityMode = true
+    },
+    resetEditLessonScreen(): void {
+      this.editPageValue = Object.assign({}, editPageValueDefault)
+    },
+    doToggleHidden(value: classData.LessonWithId): void {
+      this.openVisibilityModal()
+      this.editVisibilityDialogValue = value
     },
     // @todo doEdit の中身を整理する
     doEdit(value: classData.LessonWithId): void {
@@ -248,33 +267,25 @@ export default Vue.extend({
         value.materials.length === 0 ? '' : value.materials[0].url
       this.editPageValue = {
         isHidden: value.isHidden,
-        lessonId: value.docId,
-        firstPageData: {
-          date: dayjs(value.startTime).format('YYYY-MM-DD'),
-          startTime: dayjs(value.startTime).format('HH:mm'),
-          endTime: dayjs(value.endTime).format('HH:mm'),
-          title: value.title,
-          subjectName: value.subject.name,
-          subjectColor: value.subject.color
-        },
-        secondPageData: {
-          goal: value.goal,
-          description: value.description
-        },
-        thirdPageData: {
-          videoUrl,
-          videoTitle,
-          videoThumbnailUrl
-        },
-        fourthPageData: {
-          pages: value.pages,
-          materialsTitle: materialTitle,
-          materialsUrl: materialUrl
-        }
+        lessonId: value.id,
+        date: dayjs(value.startTime).format('YYYY-MM-DD'),
+        startTime: dayjs(value.startTime).format('HH:mm'),
+        endTime: dayjs(value.endTime).format('HH:mm'),
+        title: value.title,
+        subjectName: value.subject.name,
+        subjectColor: value.subject.color,
+        goal: value.goal,
+        description: value.description,
+        videoUrl,
+        videoTitle,
+        videoThumbnailUrl,
+        pages: value.pages,
+        materialsTitle: materialTitle,
+        materialsUrl: materialUrl,
       }
       this.toggleScreen()
-    }
-  }
+    },
+  },
 })
 </script>
 

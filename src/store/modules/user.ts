@@ -1,29 +1,20 @@
 import { createModule, action, mutation } from 'vuex-class-component'
-import firebase from '@/plugins/firebase.js'
+import { Auth } from 'aws-amplify'
 
 const VuexModule = createModule({
   namespaced: 'user',
   strict: false,
-  target: 'nuxt'
+  target: 'nuxt',
 })
 type Email = string
 type EmailVerified = boolean
 type DisplayName = string
-type AllowAccess = AllowAccessData[]
-type AllowAccessData = {
-  classId: string
-  schoolName: string
-  className: string
-}
 
-type Uid = string
-
+type LoginWithAPIKEY = boolean
 interface User {
   email: Email
   emailVerified: EmailVerified
   displayName: DisplayName
-  allowAccess: AllowAccess
-  uid: Uid
 }
 
 interface userData {
@@ -35,114 +26,48 @@ export class UserStore extends VuexModule implements User {
   email: Email = ''
   emailVerified: EmailVerified = false
   displayName: DisplayName = ''
-  allowAccess: AllowAccess = []
-  uid: Uid = ''
 
-  public get isAuthenticated(): boolean {
-    return !!this.email && !!this.uid
+  public get isAuthenticated(): Promise<boolean> {
+    return (async () => {
+      return await Auth.currentAuthenticatedUser()
+        .then(() => true)
+        .catch(() => false)
+    })()
   }
 
   @mutation
-  private setUser({
-    email,
-    emailVerified,
-    displayName,
-    allowAccess,
-    uid
-  }: User) {
+  private setUser({ email, emailVerified, displayName }: User) {
     this.email = email
     this.emailVerified = emailVerified
     this.displayName = displayName
-    this.allowAccess = allowAccess
-    this.uid = uid
   }
 
   @action
   public async login() {
-    const user = firebase.auth().currentUser
-    if (!user) return
-
-    const data = await firebase
-      .firestore()
-      .collection('users')
-      .doc(user.uid)
-      .get()
-
-    const allowAccessClassIds: string[] = data.get('allow_access')
-    const allowAccessData: AllowAccessData[] = []
-    for (const value of allowAccessClassIds) {
-      const classData = await firebase
-        .firestore()
-        .collection('classData')
-        .doc(value)
-        .get()
-      const editorClassData = await firebase
-        .firestore()
-        .collection('editorClassData')
-        .doc(value)
-        .get()
-      allowAccessData.push({
-        classId: value,
-        schoolName: editorClassData.get('schoolName'),
-        className: classData.get('className')
-      })
-    }
-
+    const user = await Auth.currentAuthenticatedUser()
     this.setUser({
-      email: user.email ? user.email : '',
-      emailVerified: user.emailVerified,
-      displayName: data.get('username'),
-      allowAccess: allowAccessData,
-      uid: user.uid
+      email: user.attributes.email,
+      emailVerified: user.attributes.email_verified,
+      displayName: user.attributes.name,
     })
   }
 
   @action
   public async loginFromUserObject(user: any) {
-    const data = await firebase
-      .firestore()
-      .collection('users')
-      .doc(user.user_id)
-      .get()
-
-    const allowAccessClassIds: string[] = data.get('allow_access')
-    const allowAccessData: AllowAccessData[] = []
-    for (const value of allowAccessClassIds) {
-      const classData = await firebase
-        .firestore()
-        .collection('classData')
-        .doc(value)
-        .get()
-      const editorClassData = await firebase
-        .firestore()
-        .collection('editorClassData')
-        .doc(value)
-        .get()
-      allowAccessData.push({
-        classId: value,
-        schoolName: editorClassData.get('schoolName'),
-        className: classData.get('className')
-      })
-    }
-
     this.setUser({
       email: user.email,
       emailVerified: user.emailVerified,
-      displayName: data.get('username'),
-      allowAccess: allowAccessData,
-      uid: user.user_id
+      displayName: user.name,
     })
   }
 
   @action
   public async logout() {
-    await firebase.auth().signOut()
+    await Auth.signOut()
     this.setUser({
-      uid: '',
       email: '',
       emailVerified: false,
       displayName: '',
-      allowAccess: []
     })
   }
 }

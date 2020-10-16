@@ -1,9 +1,15 @@
 <template>
-  <bottom-sheet-layer title="クラス一覧" title-en="CLASS LIST" fullscreen>
+  <base-bottom-sheet-layer
+    :title="$t('pages.user_classlist.title')"
+    title-en="CLASS LIST"
+    fullscreen
+  >
     <template v-slot:LayerContents>
-      <h1 v-if="!items || items.length < 1">
-        編集可能なクラスがありません。クラスの登録を行ってください
-      </h1>
+      <div v-if="!items || items.length < 1" class="noClass">
+        <h1>
+          {{ $t('pages.user_classlist.no_classes') }}
+        </h1>
+      </div>
       <v-list v-else>
         <v-radio-group v-model="selectedClassId">
           <v-list-item
@@ -14,7 +20,9 @@
             <v-radio :value="item.classId">
               <template v-slot:label>
                 <span class="ClassList-Label">
-                  {{ item.schoolName }} {{ item.className }}
+                  {{ item.schoolName }} {{ item.className }} （{{
+                    item.classId
+                  }}）
                 </span>
               </template>
             </v-radio>
@@ -23,28 +31,32 @@
       </v-list>
     </template>
     <template v-slot:LayerFooter>
-      <action-button
+      <base-action-button
         :is-disabled="!items || items.length < 1"
         theme="primary"
-        text="選択クラスでログインする"
+        :text="$t('pages.user_classlist.login_to_class')"
         class="ClassList-Button"
         :is-loading="loading"
         @click="doSelectClassLogin"
       />
-      <action-button
-        text="クラスを登録する"
+      <base-action-button
+        :text="$t('pages.user_classlist.add_class')"
         theme="secondary"
         @click="$router.push('/user/registerClass')"
       />
     </template>
-  </bottom-sheet-layer>
+  </base-bottom-sheet-layer>
 </template>
 
 <script lang="ts">
 import Vue from 'vue'
-import BottomSheetLayer from '@/components/BottomSheetLayer.vue'
-import ActionButton from '@/components/ActionButton.vue'
+import BaseBottomSheetLayer from '@/components/BaseBottomSheetLayer.vue'
+import BaseActionButton from '@/components/BaseActionButton.vue'
+import { Auth, API, graphqlOperation } from 'aws-amplify'
+import { GraphQLResult } from '@aws-amplify/api'
 import { vxm } from '@/store'
+import { listClasss } from '@/graphql/queries'
+import { ListClasssQuery } from '@/API'
 
 type DataType = {
   items: Object[]
@@ -53,15 +65,30 @@ type DataType = {
 }
 
 export default Vue.extend({
-  components: { BottomSheetLayer, ActionButton },
+  components: { BaseBottomSheetLayer, BaseActionButton },
   layout: 'background',
   middleware: 'authenticated',
   data(): DataType {
     return {
-      items: vxm.user.allowAccess,
+      items: [],
       selectedClassId: '',
-      loading: false
+      loading: false,
     }
+  },
+  async created() {
+    const user = await Auth.currentAuthenticatedUser()
+    const result = (await API.graphql(
+      graphqlOperation(listClasss, {
+        filter: { owner: { eq: user.username } },
+      })
+    )) as GraphQLResult<ListClasssQuery>
+    this.items = (result?.data?.listClasss?.items as any[]).map((item) => {
+      return {
+        classId: item.id,
+        schoolName: item.school.name,
+        className: item.className,
+      }
+    })
   },
   methods: {
     async doSelectClassLogin() {
@@ -72,12 +99,23 @@ export default Vue.extend({
       } catch {
         this.loading = false
       }
-    }
-  }
+    },
+  },
 })
 </script>
 
 <style lang="scss" scoped>
+.noClass {
+  height: 100%;
+  color: $color-white;
+  display: flex;
+  align-items: center;
+  text-align: center;
+  h1 {
+    width: 100%;
+    font-size: 21px;
+  }
+}
 .ClassList-Item {
   &:nth-child(2n) {
     background-color: $color-back-gray;

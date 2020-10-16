@@ -4,11 +4,7 @@
     "module": "esnext",
     "experimentalDecorators": true,
     "moduleResolution": "node",
-    "lib": [
-      "esnext",
-      "esnext.asynciterable",
-      "dom"
-    ],
+    "lib": ["esnext", "esnext.asynciterable", "dom"],
     "esModuleInterop": true,
     "allowJs": true,
     "allowSyntheticDefaultImports": true,
@@ -17,22 +13,17 @@
     "noEmit": true,
     "baseUrl": "./src",
     "paths": {
-      "~/*": [
-        "./*"
-      ],
-      "@/*": [
-        "./*"
-      ]
+      "~/*": ["./*"],
+      "@/*": ["./*"]
     },
     "types": [
       "@types/node",
       "@nuxt/types",
       "@types/js-cookie",
       "@types/jest",
-      "vuetify"
+      "vuetify",
+      "nuxt-i18n"
     ]
   },
-  "exclude": [
-    "node_modules"
-  ]
+  "exclude": ["node_modules"]
 }

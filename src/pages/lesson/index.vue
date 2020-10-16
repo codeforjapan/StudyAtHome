@@ -22,7 +22,7 @@
           <SubjectTag
             v-if="lesson.videos.length"
             class="subject-tag"
-            :name="'動画'"
+            :name="$t('common.lesson_data.tags.video')"
             :icon="'mdi-video'"
             :icon-color="'#FFFFFF'"
             :background-color="'#D0BFFF'"
@@ -36,7 +36,9 @@
           {{ lesson.title }}
         </div>
 
-        <div class="item-label">教科書</div>
+        <div class="item-label">
+          {{ $t('common.lesson_data.labels.textbook') }}
+        </div>
         <div class="item-value">
           <span v-if="lesson.text && lesson.text.title && lesson.text.page">
             {{ lesson.text.title }} {{ lesson.text.page }}
@@ -50,17 +52,23 @@
           <v-divider />
         </div>
 
-        <div class="item-label">学習の目的</div>
+        <div class="item-label">
+          {{ $t('common.lesson_data.labels.goal') }}
+        </div>
         <div v-if="lesson.goal" class="item-value">
           {{ lesson.goal }}
         </div>
 
-        <div class="item-label">詳細</div>
+        <div class="item-label">
+          {{ $t('common.lesson_data.labels.description') }}
+        </div>
         <div v-if="lesson.description" class="item-value">
           {{ lesson.description }}
         </div>
 
-        <div class="item-label">参考動画</div>
+        <div class="item-label">
+          {{ $t('common.lesson_data.labels.videos') }}
+        </div>
         <div v-if="lesson.videos.length > 0">
           <div v-for="(item, index) in lesson.videos" :key="index">
             <div class="item-label">
@@ -77,7 +85,9 @@
           </div>
         </div>
 
-        <div class="item-label">副教材</div>
+        <div class="item-label">
+          {{ $t('common.lesson_data.labels.materials') }}
+        </div>
         <div v-if="lesson.materials.length">
           <div
             v-for="(item, index) in lesson.materials"
@@ -96,7 +106,7 @@
         </div>
 
         <div class="divider">
-          <v-divider style="border-color:transparent" />
+          <v-divider style="border-color: transparent" />
         </div>
       </v-sheet>
     </div>
@@ -110,7 +120,7 @@ import 'dayjs/locale/ja'
 import add from 'date-fns/add'
 import { vxm } from '@/store'
 import SubjectTag from '@/components/SubjectTag.vue'
-import { classData } from '~/types/store/classData'
+import classData from '~/types/store/classData'
 import LessonWithId = classData.LessonWithId
 
 type DataType = {
@@ -133,20 +143,20 @@ export default Vue.extend({
       required: false,
       default() {
         return { title: '1', unit: '時間目' }
-      }
+      },
     },
     dummyLesson: {
       type: Object,
       required: false,
       default() {
         return {
-          docId: '',
+          id: '',
           startTime: new Date(),
           endTime: add(new Date(), { minutes: 40 }),
           title: '授業のタイトル',
           subject: {
             name: '教科名',
-            color: '#7FFFD4'
+            color: '#7FFFD4',
           },
           // objectives: '学習の目的',
           // description: '詳細説明',
@@ -159,34 +169,34 @@ export default Vue.extend({
             {
               title: '動画タイトル',
               url: 'http://example.com/',
-              thumbnailUrl: 'https://picsum.photos/1280/720'
+              thumbnailUrl: 'https://picsum.photos/1280/720',
             },
             {
               title: '動画2タイトル',
               url: 'http://example.com/',
-              thumbnailUrl: 'https://picsum.photos/1280/720'
-            }
+              thumbnailUrl: 'https://picsum.photos/1280/720',
+            },
           ],
           pages: '12~19',
           materials: [
             {
               title: '副教材のタイトル',
-              url: 'http://example.com/'
+              url: 'http://example.com/',
             },
             {
               title: '副教材Xのタイトル',
-              url: 'http://example.com/'
-            }
+              url: 'http://example.com/',
+            },
           ],
-          isHidden: false
+          isHidden: false,
         }
-      }
-    }
+      },
+    },
   },
   data(): DataType {
     return {
       lesson: {
-        docId: '',
+        id: '',
         startTime: new Date(),
         endTime: new Date(),
         title: '',
@@ -194,7 +204,7 @@ export default Vue.extend({
         // subjectColor: '#7FFFD4',
         subject: {
           name: '',
-          color: ''
+          color: '',
         },
         goal: '',
         // objectives: '',
@@ -206,15 +216,13 @@ export default Vue.extend({
         videos: [],
         pages: '12~19',
         materials: [],
-        isHidden: false
-      }
+        isHidden: false,
+      },
     }
   },
   computed: {
     dateString(): string {
-      return dayjs(this.lesson.startTime)
-        .locale('ja')
-        .format('M月D日（ddd）')
+      return dayjs(this.lesson.startTime).locale('ja').format('M月D日（ddd）')
     },
     dateTitle(): string {
       return dayjs(this.lesson.startTime).format('M/D')
@@ -227,14 +235,15 @@ export default Vue.extend({
         dayjs(this.lesson.endTime).format('YYYY-MM-DD')
         ? dayjs(this.lesson.endTime).format('H:mm')
         : dayjs(this.lesson.endTime).format('H:mm（M/D）')
-    }
+    },
   },
-  mounted() {
-    this.$nextTick(function() {
-      const data:
-        | LessonWithId
-        | undefined = vxm.classData.lessonsOnCurrentDate.find(
-        e => this.$route.query.lessonId === e.docId
+  async mounted() {
+    const lessonList = await vxm.classData.lessonsOnCurrentDateAuthModeAPIKEY(
+      vxm.app.currentDate
+    )
+    await this.$nextTick(function () {
+      const data: LessonWithId | undefined = lessonList.find(
+        (e) => this.$route.query.lessonId === e.id
       ) as LessonWithId | undefined
       this.lesson = data ?? this.dummyLesson
     })
@@ -242,8 +251,8 @@ export default Vue.extend({
   methods: {
     openExternalLink(url: string): void {
       window.open(url, '_blank', 'noopener')
-    }
-  }
+    },
+  },
 })
 </script>
 

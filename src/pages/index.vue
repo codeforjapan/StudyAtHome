@@ -5,14 +5,16 @@
         <v-icon color="white" size="60px">mdi-library</v-icon>
       </v-row>
       <v-row justify="center">
-        <span class="description mb-3">授業をうける生徒・児童の方</span>
+        <span class="description mb-3">
+          {{ $t('pages.index.students.label') }}
+        </span>
       </v-row>
       <v-row class="loginFieldRow" justify="center">
-        <input-field
+        <base-input-field
           v-model="classId"
           class="classIdField"
           type="classId"
-          label="クラスID"
+          :label="$t('pages.index.students.class_id')"
         />
         <v-btn
           class="classLoginButton ml-3"
@@ -31,21 +33,39 @@
           <v-icon color="white" size="60px">mdi-account-circle</v-icon>
         </v-row>
         <v-row justify="center">
-          <span class="description mb-3">時間割をつくる先生方</span>
+          <span class="description mb-3">
+            {{ $t('pages.index.teachers.label') }}
+          </span>
         </v-row>
-        <div style="margin: 0 10px;">
-          <action-button
-            text="ユーザー登録する"
+        <div style="margin: 0 10px">
+          <base-action-button
+            v-if="isLoggedIn"
+            :text="$t('pages.index.teachers.buttons.registerLessons')"
             class="registerButton"
-            @click="$router.push('/user/terms')"
+            @click="$router.push('/user/classlist')"
+          />
+          <base-action-button
+            v-else
+            :text="$t('pages.index.teachers.buttons.signup')"
+            class="registerButton"
+            @click="$router.push('/user/agree')"
           />
 
-          <action-button
-            text="ログインする"
+          <base-action-button
+            v-if="isLoggedIn"
+            :text="$t('pages.index.teachers.buttons.logout')"
+            class="loginButton"
+            theme="secondary"
+            @click="$router.push('/user/logout')"
+          />
+          <base-action-button
+            v-else
+            :text="$t('pages.index.teachers.buttons.login')"
             class="loginButton"
             theme="secondary"
             @click="$router.push('/user/login')"
           />
+
           <v-footer color="#004170" padless>
             <ul class="Index-Footer-List">
               <li>
@@ -55,7 +75,7 @@
                   target="_blank"
                   rel="noopener"
                 >
-                  おうちで時間割について
+                  {{ $t('common.footer.about') }}
                 </a>
               </li>
               <li>
@@ -65,13 +85,13 @@
                   target="_blank"
                   rel="noopener"
                 >
-                  お問い合わせ
+                  {{ $t('common.footer.contact') }}
                 </a>
               </li>
 
               <li>
-                <nuxt-link class="white--text" to="policy">
-                  利用規約
+                <nuxt-link class="white--text" to="terms">
+                  {{ $t('common.footer.terms') }}
                 </nuxt-link>
               </li>
             </ul>
@@ -79,52 +99,82 @@
         </div>
       </v-flex>
     </v-flex>
-    <v-snackbar v-model="error" :timeout="5000" absolute top color="#C01B61">
-      クラスIDが正しくありません
+    <v-snackbar v-model="error" :timeout="5000" top color="#C01B61">
+      {{ $t('pages.index.error.invalid_class_id') }}
     </v-snackbar>
   </v-layout>
 </template>
 
 <script lang="ts">
 import Vue from 'vue'
+import BaseInputField from '@/components/BaseInputField.vue'
+import BaseActionButton from '@/components/BaseActionButton.vue'
+import { API, Auth } from 'aws-amplify'
+import { GRAPHQL_AUTH_MODE, GraphQLResult } from '@aws-amplify/api'
+// import { getClass } from '@/graphql/queries'
+import { GetClassQuery } from '@/API'
 import { vxm } from '@/store'
-import InputField from '@/components/InputField.vue'
-import ActionButton from '@/components/ActionButton.vue'
 
 type DataType = {
   classId: string
   loading: boolean
   error: boolean
   valid: boolean
+  isLoggedIn: boolean
 }
 
 export default Vue.extend({
   components: {
-    ActionButton,
-    InputField
+    BaseActionButton,
+    BaseInputField,
   },
   data(): DataType {
     return {
       classId: '',
       loading: false,
       error: false,
-      valid: true
+      valid: true,
+      isLoggedIn: false,
     }
   },
+  async mounted() {
+    const userInfo = await Auth.currentUserInfo()
+    this.isLoggedIn = !!userInfo
+  },
   methods: {
-    loginToClass(): void {
+    async loginToClass() {
       this.loading = true
-      vxm.classData
-        .loadClassData(this.classId)
-        .then(() => {
-          this.$router.push('/classes')
-        })
-        .catch(() => {
+      const getClassSimple = /* GraphQL */ `
+        query GetClass($id: ID!) {
+          getClass(id: $id) {
+            id
+            className
+          }
+        }
+      `
+      try {
+        const result = (await API.graphql({
+          query: getClassSimple,
+          variables: { id: this.classId },
+          authMode: GRAPHQL_AUTH_MODE.API_KEY,
+        })) as GraphQLResult<GetClassQuery>
+        if (!result.data || !result.data.getClass) {
           this.loading = false
           this.error = true
-        })
-    }
-  }
+        } else {
+          const className = result?.data?.getClass?.className as string
+          vxm.classData.setClassData({
+            classId: this.classId,
+            className,
+          })
+          await this.$router.push('/classes')
+        }
+      } catch {
+        this.loading = false
+        this.error = true
+      }
+    },
+  },
 })
 </script>
 

@@ -1,0 +1,231 @@
+{
+  "common": {
+    "general": {
+      "buttons": {
+        "cancel": "キャンセル",
+        "close": "閉じる",
+        "go_back": "戻る",
+        "login": "ログイン",
+        "logout": "ログアウト",
+        "ok": "OK",
+        "save": "保存する",
+        "change": "変更する",
+        "verify": "認証する"
+      },
+      "error": {
+        "default": "何らかのエラーが発生しました。時間をおいて再度お試しください。"
+      }
+    },
+    "calender": {
+      "prev_week": "前の週",
+      "next_week": "次の週",
+      "to_today": "今日へ移動"
+    },
+    "footer": {
+      "about": "おうちで時間割について",
+      "contact": "お問い合わせ",
+      "terms": "利用規約"
+    },
+    "lesson_data": {
+      "labels": {
+        "title": "タイトル",
+        "subject_name": "教科名",
+        "textbook": "教科書",
+        "goal": "ねらい",
+        "description": "内容（ないよう）",
+        "videos": "参考動画",
+        "materials": "副教材"
+      },
+      "tags": {
+        "video": "動画"
+      }
+    },
+    "user_data": {
+      "labels": {
+        "nickname": "お名前（表示名）",
+        "email": "メールアドレス",
+        "password": "パスワード",
+        "password_rules": "パスワードは6文字以上で設定してください",
+        "password_not_acceptable": "パスワードが条件を満たしていません",
+        "password_not_same": "パスワードが一致していません",
+        "verification_code":"認証コード"
+      }
+    },
+    "agree_terms": {
+      "checkbox": {
+        "agree": "利用規約に同意します"
+      },
+      "buttons": {
+        "agree": "登録へ進む",
+        "disagree": "同意しない"
+      }
+    },
+    "class_id_dialog": {
+      "title": "今、ログインしているクラスです",
+      "label": {
+        "class_id": "クラスID"
+      }
+    }
+  },
+  "components": {
+    "editing_screen": {
+      "title": "時間割作成",
+      "error": {
+        "could_not_add_lesson": "エラーにより授業の追加に失敗しました。時間をおいて再度お試しください。"
+      },
+      "labels": {
+        "date": "日付設定",
+        "time": "時間設定",
+        "subject_label_color": "ラベル色",
+        "video_keyword": "オプション機能：参考動画検索",
+        "video_url": "参考動画URL",
+        "video_thumbnail": "動画サムネイル・キャプション表示",
+        "textbook_page": "教科書ページ",
+        "material_title": "副教材タイトル",
+        "material_url": "副教材URL"
+      },
+      "placeholder": {
+        "video_keyword": "キーワード"
+      },
+      "required": "*マークのあるものは必須項目です",
+      "search_videos": {
+        "search": "検索",
+        "search_result": "{source}の動画検索結果",
+        "add_to_video_urls": "参考動画URLに登録する"
+      }
+    },
+    "editing_visibility_dialog": {
+      "title": {
+        "show": "時間割を公開にします",
+        "hide": "時間割を非公開にします"
+      },
+      "buttons": {
+        "show": "公開する",
+        "hide": "非公開にする"
+      },
+      "error": {
+        "could_not_change_visibility": "エラーにより公開ステータスの変更に失敗しました。時間をおいて再度お試しください。"
+      },
+      "success": {
+        "message": "授業の公開ステータスを変更しました。"
+      }
+    }
+  },
+  "layouts": {
+    "protected": {
+      "class_id_dialog": {
+        "buttons": {
+          "switch_to_or_create_class": "クラスの切替・登録"
+        }
+      }
+    }
+  },
+  "pages": {
+    "classes_index": {
+      "no_lessons": "{date} の時間割はまだ届いていないみたいです",
+      "no_lessons_today": "今日の時間割はまだ届いていないみたいです"
+    },
+    "edit_index": {
+      "add_or_edit_lesson": "{className}の授業を追加・編集する",
+      "no_lessons": "まだ{date}の時間割はありません",
+      "no_lessons_today": "まだ今日の時間割はありません"
+    },
+    "index": {
+      "error": {
+        "invalid_class_id": "クラスIDが正しくありません"
+      },
+      "students": {
+        "label": "授業をうける生徒・児童の方",
+        "class_id": "クラスID"
+      },
+      "teachers": {
+        "label": "時間割をつくる先生方",
+        "buttons": {
+          "signup": "ユーザー登録する",
+          "login": "ログインする",
+          "registerLessons": "時間割をつくる",
+          "logout": "ログアウトする"
+        }
+      }
+    },
+    "user_classlist": {
+      "title": "クラス一覧",
+      "add_class": "クラスを登録する",
+      "login_to_class": "選択クラスでログインする",
+      "no_classes": "編集可能なクラスがありません。クラスの登録を行ってください"
+    },
+    "user_edit_user_data": {
+      "title": "ユーザー情報の変更"
+    },
+    "user_edit_user_name": {
+      "title": "お名前（表示名）の変更",
+      "labels": {
+        "current_nickname": "現在のお名前（表示名）",
+        "new_nickname": "変更後のお名前（表示名）"
+      }
+    },
+    "user_edit_user_email": {
+      "title": "メールアドレスの変更",
+      "labels": {
+        "current_email": "現在のメールアドレス",
+        "new_email": "変更後のメールアドレス"
+      }
+    },
+    "user_edit_user_password": {
+      "title": "パスワードの変更",
+      "labels": {
+        "current_password": "現在のパスワードを入力してください",
+        "new_password": "変更後のパスワード",
+        "new_password_confirm": "パスワード（確認用）"
+      }
+    },
+    "user_login": {
+      "title": "ログインしてください",
+      "error": {
+        "invalid": "メールアドレスまたはパスワードが正しくありません"
+      }
+    },
+    "user_register_class": {
+      "title": "クラス登録",
+      "buttons": {
+        "register": "登録を完了する"
+      },
+      "error": {
+        "default": "クラスの追加に失敗しました。再度登録をお願いします。"
+      },
+      "labels": {
+        "school_name": "学校名",
+        "class_name": "クラス名",
+        "class_name_visible": "クラス名は表示されますのでご注意ください"
+      }
+    },
+    "user_registered": {
+      "title": "登録されました！",
+      "buttons": {
+        "add_or_edit_lessons": "授業を追加・編集する"
+      },
+      "labels": {
+        "new_class_id": "あなたのクラスIDです"
+      }
+    },
+    "user_signup": {
+      "title": "ユーザー登録",
+      "buttons": {
+        "signup": "登録"
+      },
+      "labels": {
+        "password_confirm": "パスワード（確認用）"
+      },
+      "success": {
+        "go_back_to_top": "トップに戻る",
+        "message": "入力いただいたメールアドレス宛に確認メールを送信しました。メールに記載されているURLから認証を行ってください。"
+      }
+    },
+    "user_verify": {
+      "title": "メールアドレス確認"
+    },
+    "user_verify_new_email": {
+      "title": "メールアドレス変更確認"
+    }
+  }
+}

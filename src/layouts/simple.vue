@@ -1,16 +1,15 @@
 <template>
   <v-app>
     <v-overlay :value="loading" color="#0071C2" opacity="1" z-index="9999">
-      <div class="loader">
-        Loading
-      </div>
+      <div class="loader">Loading</div>
     </v-overlay>
     <v-app-bar fixed app class="bar" elevation="0">
       <HeaderLogo />
+      <AppLanguageSelector />
       <v-spacer />
       <v-btn outlined rounded color="#0071C2" @click="$router.back()">
         <v-icon left>mdi-arrow-left</v-icon>
-        もどる
+        {{ $t('common.general.buttons.go_back') }}
       </v-btn>
     </v-app-bar>
     <v-content class="content">
@@ -23,6 +22,7 @@
 
 <script lang="ts">
 import Vue from 'vue'
+import AppLanguageSelector from '@/components/AppLanguageSelector.vue'
 import HeaderLogo from '@/assets/svgs/header_logo.svg'
 
 type LocalData = {
@@ -30,15 +30,15 @@ type LocalData = {
 }
 
 export default Vue.extend({
-  components: { HeaderLogo },
+  components: { AppLanguageSelector, HeaderLogo },
   data(): LocalData {
     return {
-      loading: true
+      loading: true,
     }
   },
   mounted(): void {
     this.loading = false
-  }
+  },
 })
 </script>
 

@@ -24,44 +24,44 @@ export default Vue.extend({
     type: {
       type: String,
       required: false,
-      default: 'text'
+      default: 'text',
     },
     label: {
       type: String,
       required: true,
-      default: ''
+      default: '',
     },
     hint: {
       type: String,
       required: false,
-      default: ''
+      default: '',
     },
     require: {
       type: Boolean,
       required: false,
-      default: false
+      default: false,
     },
     placeholder: {
       type: String,
       required: false,
-      default: ''
+      default: '',
     },
     transparent: {
       type: Boolean,
       required: false,
-      default: false
+      default: false,
     },
     readonly: {
       type: Boolean,
       required: false,
-      default: false
+      default: false,
     },
     value: {
       type: String,
       required: true,
-      default: ''
-    }
-  }
+      default: '',
+    },
+  },
 })
 </script>
 

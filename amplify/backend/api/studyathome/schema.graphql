@@ -1,0 +1,77 @@
+type School
+  @model
+  @auth(
+    rules: [
+      { allow: private, operations: [create], provider: userPools }
+      { allow: owner, operations: [read, update, delete], provider: userPools, ownerField: "owner" }
+    ]
+  )
+{
+  id: ID!
+  name: String!
+  owner: String!
+}
+
+type Class
+  @model
+  @auth(
+    rules: [
+      { allow: public, operations: [read], provider: apiKey }
+      { allow: private, operations: [read, create], provider: userPools }
+      { allow: owner, operations: [update, delete], provider: userPools, ownerField: "owner" }
+    ]
+  )
+{
+  id: ID!
+  schoolId: ID!
+  school: School! @connection(fields: ["schoolId"])
+  className: String!
+  lessons: [Lesson!] @connection(keyName: "byClass", fields: ["id"])
+  owner: String!
+}
+
+type Subject
+{
+  name: String!
+  color: String!
+}
+
+type Video
+{
+  title: String
+  url: AWSURL!
+  thumbnailUrl: AWSURL
+}
+
+type Material
+{
+  title: String
+  url: AWSURL!
+}
+
+type Lesson
+  @model
+  @key(name: "byClass", fields: ["classId", "startTime"], queryField: "listLessonsByClass")
+  @auth(
+    rules: [
+      { allow: public, operations: [read], provider: apiKey }
+      { allow: private, operations: [read, create], provider: userPools }
+      { allow: owner, operations: [update, delete], provider: userPools, ownerField: "owner" }
+    ]
+  )
+{
+  id: ID!
+  classId: ID!
+  class: Class! @connection(fields: ["classId"])
+  startTime: AWSDateTime!
+  endTime: AWSDateTime!
+  title: String!
+  subject: Subject!
+  goal: String
+  description: String
+  videos: [Video!]
+  pages: String
+  materials: [Material!]
+  isHidden: Boolean!
+  owner: String!
+}
