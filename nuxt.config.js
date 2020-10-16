@@ -121,6 +121,7 @@ export default {
     ['@nuxtjs/dotenv', { filename: `.env.${environment}` }],
     'nuxt-svg-loader',
     ['nuxt-i18n', i18nConfig],
+    ['@nuxtjs/google-analytics', { id: process.env.GAID }],
   ],
   /*
    ** Axios module configuration
@@ -131,16 +132,6 @@ export default {
     google: {
       families: ['Roboto&display=swap', 'NotoSansJP&&display=swap'],
     },
-  },
-  env: {
-    APIKEY: process.env.APIKEY,
-    AUTHDOMAIN: process.env.AUTHDOMAIN,
-    DATABASEURL: process.env.DATABASEURL,
-    PROJECTID: process.env.PROJECTID,
-    STORAGEBUCKET: process.env.STORAGEBUCKET,
-    MESSAGINGSENDERID: process.env.MESSAGINGSENDERID,
-    APPID: process.env.APPID,
-    MEASUREMENTID: process.env.MEASUREMENTID,
   },
   manifest: {
     name: 'おうちで時間割',
