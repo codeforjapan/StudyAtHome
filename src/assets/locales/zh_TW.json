@@ -8,11 +8,18 @@
         "login": "登入",
         "logout": "登出",
         "ok": "OK",
-        "save": "儲存"
+        "save": "儲存",
+        "change": "修改",
+        "verify": "驗證"
       },
       "error": {
         "default": "發生錯誤，請稍後再試。"
       }
+    },
+    "calender": {
+      "prev_week": "上週",
+      "next_week": "下週",
+      "to_today": "移到今天"
     },
     "footer": {
       "about": "關於在家學習時間表",
@@ -25,7 +32,7 @@
         "subject_name": "科目名",
         "textbook": "教科書",
         "goal": "目標",
-        "description": "內容",
+        "description": "內容（內部使用）",
         "videos": "參考影片",
         "materials": "輔助教材"
       },
@@ -40,7 +47,8 @@
         "password": "密碼",
         "password_rules": "密碼必須至少 6 個字元",
         "password_not_acceptable": "密碼不符合密碼規則需求",
-        "password_not_same": "密碼不符合"
+        "password_not_same": "密碼不符合",
+        "verification_code":"驗證碼"
       }
     },
     "agree_terms": {
@@ -69,7 +77,7 @@
         "date": "設定日期",
         "time": "設定時間",
         "subject_label_color": "標籤顏色",
-        "video_keyword": "可選功能（影片搜尋）",
+        "video_keyword": "可選功能：搜尋參考影片",
         "video_url": "參考影片 URL",
         "video_thumbnail": "顯示影片縮圖",
         "textbook_page": "教科書頁",
@@ -77,9 +85,9 @@
         "material_url": "輔助教材 URL"
       },
       "placeholder": {
-        "video_keyword": "例）理科"
+        "video_keyword": "關鍵字"
       },
-      "required": "*符號者為必填項目",
+      "required": "* 星號為必填項目",
       "search_videos": {
         "search": "搜尋",
         "search_result": "{source}的影片搜尋結果",
@@ -99,7 +107,7 @@
         "could_not_change_visibility": "發生錯誤，變更公開狀態失敗。請經過一段時間再試一次。"
       },
       "success": {
-        "message": "已變更課程公開狀態。"
+        "message": "已修改課程公開狀態。"
       }
     }
   },
@@ -147,11 +155,28 @@
       "no_classes": "無可以編輯的課程。請先進行課程登錄。"
     },
     "user_edit_user_data": {
-      "title": "使用者資料變更",
+      "title": "修改使用者資料"
+    },
+    "user_edit_user_name": {
+      "title": "修改姓名（顯示名稱）",
       "labels": {
-        "old_password": "現在的密碼",
-        "new_password": "請輸入新密碼",
-        "new_password_confirm": "請輸入新密碼（確認用）"
+        "current_nickname": "現在的姓名（顯示名稱）",
+        "new_nickname": "修改後的姓名（顯示名稱）"
+      }
+    },
+    "user_edit_user_email": {
+      "title": "更改 EMAIL",
+      "labels": {
+        "current_email": "現在的 EMAIL",
+        "new_email": "更改後的 EMAIL"
+      }
+    },
+    "user_edit_user_password": {
+      "title": "更改密碼",
+      "labels": {
+        "current_password": "請輸入目前使用的密碼",
+        "new_password": "更改後的密碼",
+        "new_password_confirm": "密碼（確認用）"
       }
     },
     "user_login": {
