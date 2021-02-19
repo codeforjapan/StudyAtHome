@@ -41,7 +41,7 @@
     "dayjs": "^1.9.3",
     "express": "^4.17.1",
     "nuxt": "^2.14.7",
-    "nuxt-i18n": "^6.15.3",
+    "nuxt-i18n": "^6.20.2",
     "nuxt-property-decorator": "^2.8.8",
     "nuxt-svg-loader": "^1.2.0",
     "nuxt-webfontloader": "^1.1.0",
