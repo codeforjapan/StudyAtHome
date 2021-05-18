@@ -95,10 +95,7 @@ export default Vue.extend({
   flex-direction: column;
   flex: 0 1 auto;
   margin-left: 12px;
-
-  .ContentCard-Button {
-    margin-bottom: 12px;
-  }
+  justify-content: space-around;
 }
 
 .ContentCard {

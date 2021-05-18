@@ -1,3 +1,5 @@
+import Sass from 'sass'
+import Fiber from 'fibers'
 import i18nConfig from './nuxt-i18n.config.js'
 const environment = process.env.NODE_ENV || 'development'
 
@@ -152,6 +154,14 @@ export default {
    */
   build: {
     publicPath: '/assets/',
+    loaders: {
+      scss: {
+        implementation: Sass,
+        sassOptions: {
+          fiber: Fiber,
+        },
+      },
+    },
     babel: {
       presets({ isServer }) {
         return [
