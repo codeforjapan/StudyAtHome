@@ -4,7 +4,7 @@
     title-en="CLASS LIST"
     fullscreen
   >
-    <template v-slot:LayerContents>
+    <template #LayerContents>
       <div v-if="!items || items.length < 1" class="noClass">
         <h1>
           {{ $t('pages.user_classlist.no_classes') }}
@@ -18,7 +18,7 @@
             class="ClassList-Item"
           >
             <v-radio :value="item.classId">
-              <template v-slot:label>
+              <template #label>
                 <span class="ClassList-Label">
                   {{ item.schoolName }} {{ item.className }} （{{
                     item.classId
@@ -30,7 +30,7 @@
         </v-radio-group>
       </v-list>
     </template>
-    <template v-slot:LayerFooter>
+    <template #LayerFooter>
       <base-action-button
         :is-disabled="!items || items.length < 1"
         theme="primary"

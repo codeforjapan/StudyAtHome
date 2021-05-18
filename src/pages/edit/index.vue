@@ -139,18 +139,12 @@ import EditLessonScreen from '@/components/EditLessonScreen.vue'
 import EditingVisibilityDialog from '@/components/EditingVisibilityDialog.vue'
 import classData from '@/types/store/classData'
 
-type DataType = {
-  classData: typeof vxm.classData
-  editingMode: boolean
-  editingVisibilityMode: boolean
-  editPageValue: editPageValueType
-  editVisibilityDialogValue: object
-}
-
+/*
 type Computed = {
   today: boolean
   dateTitle: string
 }
+*/
 
 type editPageValueType = {
   isHidden: boolean
@@ -169,6 +163,14 @@ type editPageValueType = {
   pages: string
   materialsTitle: string
   materialsUrl: string
+}
+
+type DataType = {
+  classData: typeof vxm.classData
+  editingMode: boolean
+  editingVisibilityMode: boolean
+  editPageValue: editPageValueType
+  editVisibilityDialogValue: object
 }
 
 const editPageValueDefault = {

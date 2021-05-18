@@ -14,10 +14,10 @@
     outlined
     @input="$emit('input', $event)"
   >
-    <template v-slot:prepend-inner>
+    <template #prepend-inner>
       <v-icon :color="prependIconColor">{{ prependIcon }}</v-icon>
     </template>
-    <template v-slot:append>
+    <template #append>
       <v-icon
         color="blue"
         @click="show = !show"
@@ -40,7 +40,7 @@
     outlined
     @input="$emit('input', $event)"
   >
-    <template v-slot:prepend-inner>
+    <template #prepend-inner>
       <v-icon :color="prependIconColor">{{ prependIcon }}</v-icon>
     </template>
   </v-text-field>
@@ -59,7 +59,7 @@
     outlined
     @input="$emit('input', $event)"
   >
-    <template v-slot:prepend-inner>
+    <template #prepend-inner>
       <v-icon :color="prependIconColor">{{ prependIcon }}</v-icon>
     </template>
   </v-text-field>
@@ -78,7 +78,7 @@
     outlined
     @input="$emit('input', $event)"
   >
-    <template v-slot:prepend-inner>
+    <template #prepend-inner>
       <v-icon :color="prependIconColor">{{ prependIcon }}</v-icon>
     </template>
   </v-text-field>

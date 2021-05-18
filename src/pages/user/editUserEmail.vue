@@ -4,7 +4,7 @@
       :title="$t('pages.user_edit_user_email.title')"
       title-en="USER SETTING"
     >
-      <template v-slot:LayerContents>
+      <template #LayerContents>
         <dl>
           <dt class="SignUp-ItemTitle">
             {{ $t('pages.user_edit_user_email.labels.current_email') }}
@@ -25,7 +25,7 @@
           </dd>
         </dl>
       </template>
-      <template v-slot:LayerFooter>
+      <template #LayerFooter>
         <div class="SignUp-ButtonOuter">
           <base-action-button
             theme="transparent"

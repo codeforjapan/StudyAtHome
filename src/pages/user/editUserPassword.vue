@@ -4,7 +4,7 @@
       :title="$t('pages.user_edit_user_password.title')"
       title-en="USER SETTING"
     >
-      <template v-slot:LayerContents>
+      <template #LayerContents>
         <dl>
           <dt class="SignUp-ItemTitle">
             {{ $t('pages.user_edit_user_password.labels.current_password') }}
@@ -47,7 +47,7 @@
           <dd class="SignUp-ConfirmMessage">{{ passwordConfirm }}</dd>
         </dl>
       </template>
-      <template v-slot:LayerFooter>
+      <template #LayerFooter>
         <div class="SignUp-ButtonOuter">
           <base-action-button
             theme="transparent"
@@ -113,7 +113,7 @@ export default Vue.extend<Data, Methods, Computed, unknown>({
     passwordConfirm() {
       if (this.newPassword) {
         // 6文字以上であること
-        const reg = new RegExp(/[ -~]{6,}$/)
+        const reg = /[ -~]{6,}$/
         const response = reg.test(this.newPassword)
         if (!response) {
           return this.$t(
@@ -131,7 +131,7 @@ export default Vue.extend<Data, Methods, Computed, unknown>({
     },
     disableRegisterButton() {
       if (this.currentPassword && this.newPassword === this.confirmation) {
-        const reg = new RegExp(/[ -~]{6,}$/)
+        const reg = /[ -~]{6,}$/
         const response = reg.test(this.newPassword)
         if (response) {
           return false

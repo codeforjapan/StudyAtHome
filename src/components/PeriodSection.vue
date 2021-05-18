@@ -45,7 +45,7 @@ export default Vue.extend({
     },
     classData: {
       type: Array as () => classData.LessonWithId[],
-      default: [],
+      default: () => [],
     },
     editable: {
       type: Boolean,
