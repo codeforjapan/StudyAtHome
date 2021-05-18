@@ -18,10 +18,10 @@
       <v-col cols="1" class="pa-0 ma-1">
         <v-card class="calendar-bar-ym" flat>
           <v-card-title class="calendar-bar-ym-title">
-            {{ currentMonthString }}
+            {{ currentMonthString() }}
           </v-card-title>
           <v-card-subtitle class="calendar-bar-ym-subtitle">
-            {{ currentYearString }}
+            {{ currentYearString() }}
           </v-card-subtitle>
         </v-card>
       </v-col>
@@ -56,11 +56,7 @@
 
 <script lang="ts">
 import { Vue, Component, Prop, Emit, Watch } from 'vue-property-decorator'
-import add from 'date-fns/add'
-import format from 'date-fns/format'
-import formatISO from 'date-fns/formatISO'
-import isValid from 'date-fns/isValid'
-import ja from 'date-fns/locale/ja'
+import dayjs from 'dayjs'
 
 export type View = 'Day' | 'Weekday' | 'Week'
 export type StartWeekOn =
@@ -106,7 +102,7 @@ class DateListWindowImpl implements DateListWindow {
     this.startWeekOn = view === 'Weekday' ? 'Monday' : startWeekOn
     this.currentDate = this.calcCurrentDate(
       view,
-      isValid(date) ? date : new Date()
+      dayjs(date).isValid() ? date : new Date()
     )
     this.list = this.generateDateList(
       this.view,
@@ -143,7 +139,7 @@ class DateListWindowImpl implements DateListWindow {
   selectDate(date: Date): DateListWindow {
     this.currentDate = this.calcCurrentDate(
       this.view,
-      isValid(date) ? date : new Date()
+      dayjs(date).isValid() ? date : new Date()
     )
     this.list = this.generateDateList()
 
@@ -155,13 +151,13 @@ class DateListWindowImpl implements DateListWindow {
   private calcCurrentDate(view: View, date: Date): Date {
     let currentDate: Date = date
     if (view === 'Weekday' && date.getDay() === 0) {
-      currentDate = add(date, { days: 1 })
+      currentDate = dayjs(date).add(1, 'd').toDate()
     }
     return currentDate
   }
 
   private addDays(value: number): DateListWindow {
-    return this.selectDate(add(this.currentDate, { days: value }))
+    return this.selectDate(dayjs(this.currentDate).add(value, 'd').toDate())
   }
 
   private firstDateOfList: (
@@ -187,7 +183,9 @@ class DateListWindowImpl implements DateListWindow {
       default: {
         const idx = dowList.indexOf(startWeekOn)
         const startDay: number = idx >= 0 ? idx : 1
-        firstDate = add(date, { days: (startDay - (7 + date.getDay())) % 7 })
+        firstDate = dayjs(date)
+          .add((startDay - (7 + date.getDay())) % 7, 'd')
+          .toDate()
         break
       }
     }
@@ -207,7 +205,7 @@ class DateListWindowImpl implements DateListWindow {
     const size: number = this.sizeOfList(view)
     const list = Array<Date>(size)
     for (let i = 0; i < list.length; i++) {
-      list[i] = add(firstDate, { days: i })
+      list[i] = dayjs(firstDate).add(i, 'd').toDate()
     }
     return list
   }
@@ -256,32 +254,28 @@ export default class CalendarBar extends Vue {
     this.dateListWindow.selectDate(newValue)
   }
 
-  get currentMonthString(): string {
-    return format(this.dateListWindow.currentDate, 'M') + '月'
+  currentMonthString(): string {
+    return this.$dayjs(this.dateListWindow.currentDate).format('MMM')
   }
 
-  get currentYearString(): string {
-    return format(this.dateListWindow.currentDate, 'yyyy')
+  currentYearString(): string {
+    return this.$dayjs(this.dateListWindow.currentDate).format('YYYY')
   }
 
   fmtd(date: Date): String {
-    return format(date, 'd')
+    return this.$dayjs(date).format('D')
   }
 
   fmteeeee(date: Date): String {
-    return format(date, 'EEEEE', { locale: ja })
+    return this.$dayjs(date).format('ddd')
   }
 
   fmtft(date: Date): String {
-    return format(date, 'yyyy-MM-dd HH:mm:ss EEE')
+    return this.$dayjs(date).format('YYYY-MM-DD HH:mm:ss ddd')
   }
 
   fmtym(date: Date): String {
-    return format(date, 'yyyy年M月', { locale: ja })
-  }
-
-  fmtISO(date: Date): String {
-    return formatISO(date)
+    return this.$dayjs(date).format('YYYY MMM')
   }
 }
 </script>
