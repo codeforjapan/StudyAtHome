@@ -128,7 +128,7 @@ export default {
     locales: ['ja', 'en', 'zh-tw'],
     defaultLocale: 'ja',
     defaultTimeZone: 'Asia/Tokyo',
-    plugins: ['utc', 'timezone', 'minMax'],
+    plugins: ['utc', 'timezone', 'minMax', 'localizedFormat'],
   },
   /*
    ** Axios module configuration
