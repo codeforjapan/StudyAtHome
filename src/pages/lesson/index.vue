@@ -221,9 +221,7 @@ export default Vue.extend({
   },
   computed: {
     dateString(): string {
-      return this.$dayjs(this.lesson.startTime)
-        .locale('ja')
-        .format('M月D日（ddd）')
+      return this.$dayjs(this.lesson.startTime).format('LL（ddd）')
     },
     dateTitle(): string {
       return this.$dayjs(this.lesson.startTime).format('M/D')
