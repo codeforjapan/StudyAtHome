@@ -3,10 +3,11 @@
     <v-dialog v-model="openCalenderDialog" max-width="320px">
       <v-date-picker
         v-model="date"
-        locale="ja"
         first-day-of-week="1"
         width="100%"
         class="mb-4"
+        :locale="$root.$i18n.locale"
+        :day-format="(date) => $dayjs(date).format('D')"
         @input="openCalenderDialog = false"
       />
       <base-action-button
@@ -132,8 +133,8 @@ export default Vue.extend({
       get() {
         return this.$dayjs(vxm.app.currentDate).format('YYYY-MM-DD')
       },
-      set(newValue: string) {
-        vxm.app.setDate(newValue)
+      set(newValue: Date) {
+        vxm.app.setDate((this as any).$dayjs(newValue).toDate())
       },
     },
     classData() {
