@@ -96,7 +96,6 @@
 
 <script lang="ts">
 import Vue from 'vue'
-import dayjs from 'dayjs'
 import { vxm } from '@/store'
 import AppLanguageSelector from '@/components/AppLanguageSelector.vue'
 import HeaderLogo from '@/assets/svgs/header_logo.svg'
@@ -131,10 +130,10 @@ export default Vue.extend({
   computed: {
     date: {
       get() {
-        return dayjs(vxm.app.currentDate).format('YYYY-MM-DD')
+        return this.$dayjs(vxm.app.currentDate).format('YYYY-MM-DD')
       },
       set(newValue: string) {
-        vxm.app.setDate(dayjs(newValue).toDate())
+        vxm.app.setDate(newValue)
       },
     },
     classData() {
@@ -142,7 +141,7 @@ export default Vue.extend({
     },
   },
   mounted(): void {
-    this.loading = false
+    ;(this as any).loading = false
   },
   methods: {
     unloadClassData() {

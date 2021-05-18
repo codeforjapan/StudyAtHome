@@ -24,7 +24,6 @@
 
 <script lang="ts">
 import Vue from 'vue'
-import dayjs from 'dayjs'
 import isToday from 'date-fns/isToday'
 import { vxm } from '@/store'
 import PeriodSection from '@/components/PeriodSection.vue'
@@ -54,7 +53,7 @@ export default Vue.extend({
       return isToday(vxm.app.currentDate)
     },
     dateTitle() {
-      return dayjs(vxm.app.currentDate).format('M/D')
+      return this.$dayjs(vxm.app.currentDate).format('M/D')
     },
   },
   watch: {
