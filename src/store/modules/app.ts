@@ -29,8 +29,8 @@ export class AppStore extends VuexModule implements App {
   }
 
   @mutation
-  public setDate(date: string) {
-    this.currentDate = this.$store.$dayjs(date).toDate()
+  public setDate(date: Date) {
+    this.currentDate = date
   }
 
   @mutation
