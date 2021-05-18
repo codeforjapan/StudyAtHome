@@ -115,8 +115,6 @@
 
 <script lang="ts">
 import Vue from 'vue'
-import 'dayjs/locale/ja'
-import add from 'date-fns/add'
 import { vxm } from '@/store'
 import SubjectTag from '@/components/SubjectTag.vue'
 import classData from '~/types/store/classData'
@@ -151,7 +149,7 @@ export default Vue.extend({
         return {
           id: '',
           startTime: new Date(),
-          endTime: add(new Date(), { minutes: 40 }),
+          endTime: this.$dayjs().add(40, 'minute'),
           title: '授業のタイトル',
           subject: {
             name: '教科名',

@@ -10,7 +10,7 @@ import {
   Wrapper,
 } from '@vue/test-utils'
 // Components
-import formatISO from 'date-fns/formatISO'
+import dayjs from 'dayjs'
 import CalendarBar from '../CalendarBar.vue'
 // import View from '../CalendarBar.vue'
 // import StartWeekOn from '../CalendarBar.vue'
@@ -53,9 +53,9 @@ describe('CalendarBar.vue', () => {
     const dateListWindow = wrapper.vm.$data.dateListWindow
     expect(dateListWindow.view).toBe('Week')
     expect(dateListWindow.startWeekOn).toBe('Monday')
-    expect(
-      formatISO(dateListWindow.currentDate, { representation: 'date' })
-    ).toBe(formatISO(new Date(), { representation: 'date' }))
+    expect(dayjs(dateListWindow.currentDate).toISOString()).toBe(
+      dayjs().toISOString()
+    )
   })
 
   test('sets props correctly', () => {
