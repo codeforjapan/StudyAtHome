@@ -12,7 +12,6 @@
           <dd>
             <base-input-field
               v-model="currentPassword"
-              label="current password"
               :placeholder="$t('common.user_data.labels.password')"
               type="password"
               require
@@ -27,7 +26,6 @@
           <dd>
             <base-input-field
               v-model="newPassword"
-              label="new password"
               :placeholder="$t('common.user_data.labels.password')"
               type="password"
               require
@@ -41,7 +39,6 @@
           <dd>
             <base-input-field
               v-model="confirmation"
-              label="confirmation"
               :placeholder="$t('common.user_data.labels.password')"
               type="password"
               require

@@ -18,7 +18,6 @@
           <dd>
             <base-input-field
               v-model="email"
-              label="email"
               :placeholder="$t('common.user_data.labels.email')"
               type="email"
               require

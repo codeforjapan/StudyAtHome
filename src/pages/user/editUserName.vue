@@ -18,7 +18,6 @@
           <dd>
             <base-input-field
               v-model="name"
-              label="name"
               :placeholder="$t('common.user_data.labels.nickname')"
               require
             />
