@@ -128,8 +128,8 @@ type DataType = {
 }
 
 export default Vue.extend({
-  layout: 'lesson',
   components: { SubjectTag },
+  layout: 'lesson',
   // filters: {
   //   dateString: function dateString(lesson: LessonWithId): string {
   //     return dayjs(lesson.startTime)

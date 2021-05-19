@@ -3,7 +3,7 @@
     :title="$t('pages.user_registered.title')"
     title-en="THANK YOU!"
   >
-    <template v-slot:LayerContents>
+    <template #LayerContents>
       <div class="Registered-Contents">
         <v-icon color="white" class="Registered-Icon">
           mdi-clipboard-account
@@ -14,7 +14,7 @@
         <div class="Registered-Id">{{ classId }}</div>
       </div>
     </template>
-    <template v-slot:LayerFooter>
+    <template #LayerFooter>
       <base-action-button
         theme="primary"
         :text="$t('pages.user_registered.buttons.add_or_edit_lessons')"

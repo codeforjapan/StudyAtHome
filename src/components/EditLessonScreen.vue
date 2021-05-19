@@ -61,11 +61,6 @@ import EditLessonScreenInner3 from '@/components/EditLessonScreenInner3.vue'
 import EditLessonScreenInner4 from '@/components/EditLessonScreenInner4.vue'
 import classData from '@/types/store/classData'
 
-type stateType = {
-  error: boolean
-  lessonData: LessonDataType
-}
-
 type LessonDataType = {
   lessonId: string
   isHidden: boolean
@@ -83,6 +78,11 @@ type LessonDataType = {
   pages: string
   materialsTitle: string
   materialsUrl: string
+}
+
+type stateType = {
+  error: boolean
+  lessonData: LessonDataType
 }
 
 export default Vue.extend({

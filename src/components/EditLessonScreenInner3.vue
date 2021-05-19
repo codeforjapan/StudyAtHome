@@ -3,7 +3,6 @@
     <editor-input-field-pickable
       v-model="tempFormData.videoUrl"
       :title="$t('components.editing_screen.labels.video_url')"
-      label="video"
       placeholder="https://"
     />
 
