@@ -27,10 +27,14 @@
         />
       </v-card-actions>
       <v-card-title>
-        <h2 class="ContentCard-Title">{{ lesson.title }}</h2>
+        <h2 class="ContentCard-Title">
+          {{ lesson.title }}
+        </h2>
       </v-card-title>
       <v-card-text>
-        <p class="ContentCard-Description">{{ lesson.description }}</p>
+        <p class="ContentCard-Description">
+          {{ lesson.description }}
+        </p>
       </v-card-text>
     </v-card>
     <div v-if="editable" class="ContentCard-Button-Outer">
@@ -95,10 +99,7 @@ export default Vue.extend({
   flex-direction: column;
   flex: 0 1 auto;
   margin-left: 12px;
-
-  .ContentCard-Button {
-    margin-bottom: 12px;
-  }
+  justify-content: space-around;
 }
 
 .ContentCard {

@@ -3,10 +3,11 @@
     <v-dialog v-model="openCalenderDialog" max-width="320px">
       <v-date-picker
         v-model="date"
-        locale="ja"
         first-day-of-week="1"
         width="100%"
         class="mb-4"
+        :locale="$root.$i18n.locale"
+        :day-format="(date) => $dayjs(date).format('D')"
         @input="openCalenderDialog = false"
       />
       <base-action-button
@@ -42,16 +43,20 @@
         },
       ]"
     >
-      <template v-slot:title>
+      <template #title>
         {{ $t('common.class_id_dialog.title') }}
       </template>
-      <template v-slot:default>
+      <template #default>
         <div class="ClassIdModal-Contents">
-          <p class="ClassIdModal-ClassText">{{ className }}</p>
+          <p class="ClassIdModal-ClassText">
+            {{ className }}
+          </p>
           <p class="ClassIdModal-Text">
             {{ $t('common.class_id_dialog.label.class_id') }}
           </p>
-          <div class="ClassIdModal-Id">{{ classId }}</div>
+          <div class="ClassIdModal-Id">
+            {{ classId }}
+          </div>
         </div>
       </template>
     </base-dialog>
@@ -74,7 +79,7 @@
           <v-icon>mdi-clipboard-account</v-icon>
         </v-btn>
       </div>
-      <template v-slot:extension>
+      <template #extension>
         <div class="header-calender">
           <CalendarBar
             v-model="app.currentDate"
@@ -93,7 +98,6 @@
 
 <script lang="ts">
 import Vue from 'vue'
-import dayjs from 'dayjs'
 import AppLanguageSelector from '@/components/AppLanguageSelector.vue'
 import HeaderLogo from '@/assets/svgs/header_logo.svg'
 import CalendarBar from '@/components/CalendarBar.vue'
@@ -111,7 +115,6 @@ type LocalData = {
 }
 
 export default Vue.extend({
-  middleware: 'checkClassData',
   components: {
     AppLanguageSelector,
     CalendarBar,
@@ -119,6 +122,7 @@ export default Vue.extend({
     HeaderLogo,
     BaseActionButton,
   },
+  middleware: 'checkClassData',
   data(): LocalData {
     return {
       loading: true,
@@ -132,15 +136,15 @@ export default Vue.extend({
   computed: {
     date: {
       get() {
-        return dayjs(vxm.app.currentDate).format('YYYY-MM-DD')
+        return this.$dayjs(vxm.app.currentDate).format('YYYY-MM-DD')
       },
-      set(newValue: string) {
-        vxm.app.setDate(dayjs(newValue).toDate())
+      set(newValue: Date) {
+        vxm.app.setDate((this as any).$dayjs(newValue).toDate())
       },
     },
   },
   mounted(): void {
-    this.loading = false
+    ;(this as any).loading = false
   },
   methods: {
     async clickLogout() {

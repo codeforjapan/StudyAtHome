@@ -3,10 +3,11 @@
     <v-dialog v-model="openCalenderDialog" max-width="320px">
       <v-date-picker
         v-model="date"
-        locale="ja"
         first-day-of-week="1"
         width="100%"
         class="mb-4"
+        :locale="$root.$i18n.locale"
+        :day-format="(date) => $dayjs(date).format('D')"
         @input="openCalenderDialog = false"
       />
       <base-action-button
@@ -29,22 +30,26 @@
           ),
           action: () => {
             unloadClassData()
-            this.$router.push('/user/classlist')
+            $router.push('/user/classlist')
             return false
           },
         },
       ]"
     >
-      <template v-slot:title>
+      <template #title>
         {{ $t('common.class_id_dialog.title') }}
       </template>
-      <template v-slot:default>
+      <template #default>
         <div class="ClassIdModal-Contents">
-          <p class="ClassIdModal-ClassText">{{ classData.className }}</p>
+          <p class="ClassIdModal-ClassText">
+            {{ classData.className }}
+          </p>
           <p class="ClassIdModal-Text">
             {{ $t('common.class_id_dialog.label.class_id') }}
           </p>
-          <div class="ClassIdModal-Id">{{ classData.classId }}</div>
+          <div class="ClassIdModal-Id">
+            {{ classData.classId }}
+          </div>
         </div>
       </template>
     </base-dialog>
@@ -77,7 +82,7 @@
           <v-icon>mdi-cog</v-icon>
         </v-btn>
       </div>
-      <template v-slot:extension>
+      <template #extension>
         <div class="header-calender">
           <CalendarBar
             v-model="app.currentDate"
@@ -96,7 +101,6 @@
 
 <script lang="ts">
 import Vue from 'vue'
-import dayjs from 'dayjs'
 import { vxm } from '@/store'
 import AppLanguageSelector from '@/components/AppLanguageSelector.vue'
 import HeaderLogo from '@/assets/svgs/header_logo.svg'
@@ -112,7 +116,6 @@ type LocalData = {
 }
 
 export default Vue.extend({
-  middleware: ['authenticated', 'checkClassData'],
   components: {
     AppLanguageSelector,
     CalendarBar,
@@ -120,6 +123,7 @@ export default Vue.extend({
     HeaderLogo,
     BaseActionButton,
   },
+  middleware: ['authenticated', 'checkClassData'],
   data(): LocalData {
     return {
       loading: true,
@@ -131,10 +135,10 @@ export default Vue.extend({
   computed: {
     date: {
       get() {
-        return dayjs(vxm.app.currentDate).format('YYYY-MM-DD')
+        return this.$dayjs(vxm.app.currentDate).format('YYYY-MM-DD')
       },
-      set(newValue: string) {
-        vxm.app.setDate(dayjs(newValue).toDate())
+      set(newValue: Date) {
+        vxm.app.setDate((this as any).$dayjs(newValue).toDate())
       },
     },
     classData() {
@@ -142,7 +146,7 @@ export default Vue.extend({
     },
   },
   mounted(): void {
-    this.loading = false
+    ;(this as any).loading = false
   },
   methods: {
     unloadClassData() {

@@ -5,7 +5,7 @@
       :title="$t('pages.user_verify_new_email.title')"
       title-en="VERIFY NEW EMAIL"
     >
-      <template v-slot:LayerContents>
+      <template #LayerContents>
         <dl>
           <dt class="SignIn-ItemTitle">
             {{ $t('common.user_data.labels.email') }}
@@ -31,7 +31,7 @@
           </dd>
         </dl>
       </template>
-      <template v-slot:LayerFooter>
+      <template #LayerFooter>
         <div class="SignIn-ButtonOuter">
           <base-action-button
             :is-disabled="disableLogin"
