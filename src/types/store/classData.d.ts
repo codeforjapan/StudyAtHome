@@ -12,6 +12,22 @@ declare namespace classData {
     className: string
   }
 
+  export interface Subject {
+    name: string
+    color: ColorCodeString
+  }
+
+  export interface Video {
+    title: string
+    url: UrlString
+    thumbnailUrl: UrlString
+  }
+
+  export interface Material {
+    title: string
+    url: UrlString
+  }
+
   export interface Lesson {
     startTime: Date
     endTime: Date
@@ -27,22 +43,6 @@ declare namespace classData {
 
   export interface LessonWithId extends Lesson {
     id: LessonId
-  }
-
-  export interface Subject {
-    name: string
-    color: ColorCodeString
-  }
-
-  export interface Video {
-    title: string
-    url: UrlString
-    thumbnailUrl: UrlString
-  }
-
-  export interface Material {
-    title: string
-    url: UrlString
   }
 }
 
