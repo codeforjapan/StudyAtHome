@@ -4,7 +4,8 @@
       <div class="loader">Loading</div>
     </v-overlay>
     <v-app-bar fixed app class="bar" elevation="0">
-      <HeaderLogo />
+      <header-logo-zhtw v-if="$root.$i18n.locale === 'zh-goyu'" />
+      <header-logo v-else />
       <AppLanguageSelector />
       <v-spacer />
       <v-btn outlined rounded color="#0071C2" @click="$router.back()">
@@ -24,13 +25,14 @@
 import Vue from 'vue'
 import AppLanguageSelector from '@/components/AppLanguageSelector.vue'
 import HeaderLogo from '@/assets/svgs/header_logo.svg'
+import HeaderLogoZhtw from '@/assets/svgs/header_logo-zhtw.svg'
 
 type LocalData = {
   loading: boolean
 }
 
 export default Vue.extend({
-  components: { AppLanguageSelector, HeaderLogo },
+  components: { AppLanguageSelector, HeaderLogo, HeaderLogoZhtw },
   data(): LocalData {
     return {
       loading: true,

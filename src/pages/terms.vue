@@ -1,7 +1,8 @@
 <template>
   <div class="MainPage">
     <div class="Logo-outer">
-      <prj-logo class="Logo" />
+      <prj-logo-zhtw v-if="$root.$i18n.locale === 'zh-goyu'" class="Logo" />
+      <prj-logo v-else class="Logo" />
     </div>
     <div class="PolicyText-outer">
       <p>
@@ -290,9 +291,10 @@
 <script lang="ts">
 import Vue from 'vue'
 import PrjLogo from '@/assets/svgs/prj_logo.svg'
+import PrjLogoZhtw from '@/assets/svgs/prj_logo-zhtw.svg'
 
 export default Vue.extend({
-  components: { PrjLogo },
+  components: { PrjLogo, PrjLogoZhtw },
   layout: 'simple',
 })
 </script>
