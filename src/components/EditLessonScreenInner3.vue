@@ -9,7 +9,11 @@
     <div class="VideoSearch">
       <editor-input-field-pickable
         v-model="videoSearchWord"
-        :title="$t('components.editing_screen.labels.video_keyword')"
+        :title="
+          $t('components.editing_screen.labels.video_keyword', {
+            source: 'NHK For School',
+          })
+        "
         :placeholder="$t('components.editing_screen.placeholder.video_keyword')"
         icon-name="mdi-magnify"
         :button-text="$t('components.editing_screen.search_videos.search')"
