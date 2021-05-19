@@ -125,7 +125,6 @@
       <editor-input-field-pickable
         v-model="tempFormData.startTime"
         :title="`${$t('components.editing_screen.labels.time')} *`"
-        label="start_time"
         placeholder="00:00"
         :transparent="true"
         icon-name="mdi-clock-outline"
@@ -136,7 +135,6 @@
       <span class="Hyphen">-</span>
       <editor-input-field-pickable
         v-model="tempFormData.endTime"
-        label="end_time"
         placeholder="00:00"
         :transparent="true"
         icon-name="mdi-clock-outline"
@@ -149,7 +147,6 @@
       <editor-input-field-pickable
         v-model="tempFormData.subjectName"
         :title="`${$t('common.lesson_data.labels.subject_name')} *`"
-        label="lesson"
         placeholder="例）理科"
         class="LessonField"
       />
@@ -165,7 +162,6 @@
     <editor-input-field-pickable
       v-model="tempFormData.title"
       :title="`${$t('common.lesson_data.labels.title')} *`"
-      :label="$t('common.lesson_data.labels.title')"
       placeholder="例）理科"
     />
   </div>

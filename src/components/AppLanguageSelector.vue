@@ -26,6 +26,7 @@ export default Vue.extend({
       return { locales: [{ text: 'N/A', value: '', format: '' }] }
 
     return {
+      // @ts-ignore
       locales: this.$root.$i18n.locales.map((l) => {
         if (typeof l === 'string') return { text: l, value: l, format: l }
         else return { text: l.displayName, value: l.code, format: l.format }

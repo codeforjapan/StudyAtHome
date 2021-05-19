@@ -26,10 +26,10 @@
       ]"
       @click-outside="closeModal"
     >
-      <template v-slot:title>
+      <template #title>
         {{ modalTitle }}
       </template>
-      <template v-slot:default>
+      <template #default>
         <div class="EditingVisibilityModal-Contents">
           <p class="EditingVisibilityModal-Text">
             {{ date }} <br />
@@ -78,9 +78,6 @@ export default Vue.extend({
     value: {
       type: Object as () => classData.LessonWithId,
       required: true,
-      default: {
-        id: '',
-      },
     },
   },
   data(): LocalData {

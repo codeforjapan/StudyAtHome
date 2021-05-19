@@ -30,16 +30,17 @@ import PeriodSection from '@/components/PeriodSection.vue'
 type Data = {
   classData: typeof vxm.classData
 }
-
+/*
 type Computed = {
   today: boolean
   dateTitle: string
 }
+*/
 
 export default Vue.extend({
   components: { PeriodSection },
   layout: 'classes',
-  data() {
+  data(): Data {
     return {
       classData: vxm.classData,
     }

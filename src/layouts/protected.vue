@@ -30,16 +30,16 @@
           ),
           action: () => {
             unloadClassData()
-            this.$router.push('/user/classlist')
+            $router.push('/user/classlist')
             return false
           },
         },
       ]"
     >
-      <template v-slot:title>
+      <template #title>
         {{ $t('common.class_id_dialog.title') }}
       </template>
-      <template v-slot:default>
+      <template #default>
         <div class="ClassIdModal-Contents">
           <p class="ClassIdModal-ClassText">{{ classData.className }}</p>
           <p class="ClassIdModal-Text">
@@ -78,7 +78,7 @@
           <v-icon>mdi-cog</v-icon>
         </v-btn>
       </div>
-      <template v-slot:extension>
+      <template #extension>
         <div class="header-calender">
           <CalendarBar
             v-model="app.currentDate"
@@ -112,7 +112,6 @@ type LocalData = {
 }
 
 export default Vue.extend({
-  middleware: ['authenticated', 'checkClassData'],
   components: {
     AppLanguageSelector,
     CalendarBar,
@@ -120,6 +119,7 @@ export default Vue.extend({
     HeaderLogo,
     BaseActionButton,
   },
+  middleware: ['authenticated', 'checkClassData'],
   data(): LocalData {
     return {
       loading: true,

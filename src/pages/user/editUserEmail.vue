@@ -4,7 +4,7 @@
       :title="$t('pages.user_edit_user_email.title')"
       title-en="USER SETTING"
     >
-      <template v-slot:LayerContents>
+      <template #LayerContents>
         <dl>
           <dt class="SignUp-ItemTitle">
             {{ $t('pages.user_edit_user_email.labels.current_email') }}
@@ -18,7 +18,6 @@
           <dd>
             <base-input-field
               v-model="email"
-              label="email"
               :placeholder="$t('common.user_data.labels.email')"
               type="email"
               require
@@ -26,7 +25,7 @@
           </dd>
         </dl>
       </template>
-      <template v-slot:LayerFooter>
+      <template #LayerFooter>
         <div class="SignUp-ButtonOuter">
           <base-action-button
             theme="transparent"
