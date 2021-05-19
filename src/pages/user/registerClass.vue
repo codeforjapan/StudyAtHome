@@ -4,7 +4,7 @@
       :title="$t('pages.user_register_class.title')"
       title-en="STEP 2"
     >
-      <template v-slot:LayerContents>
+      <template #LayerContents>
         <dl class="RegisterClass-List">
           <dt class="RegisterClass-ItemTitle">
             {{ $t('pages.user_register_class.labels.school_name') }}
@@ -33,7 +33,7 @@
           </dd>
         </dl>
       </template>
-      <template v-slot:LayerFooter>
+      <template #LayerFooter>
         <base-action-button
           :is-disabled="disableButton"
           :is-loading="loading"

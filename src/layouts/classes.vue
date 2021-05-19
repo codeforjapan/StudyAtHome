@@ -43,16 +43,20 @@
         },
       ]"
     >
-      <template v-slot:title>
+      <template #title>
         {{ $t('common.class_id_dialog.title') }}
       </template>
-      <template v-slot:default>
+      <template #default>
         <div class="ClassIdModal-Contents">
-          <p class="ClassIdModal-ClassText">{{ className }}</p>
+          <p class="ClassIdModal-ClassText">
+            {{ className }}
+          </p>
           <p class="ClassIdModal-Text">
             {{ $t('common.class_id_dialog.label.class_id') }}
           </p>
-          <div class="ClassIdModal-Id">{{ classId }}</div>
+          <div class="ClassIdModal-Id">
+            {{ classId }}
+          </div>
         </div>
       </template>
     </base-dialog>
@@ -75,7 +79,7 @@
           <v-icon>mdi-clipboard-account</v-icon>
         </v-btn>
       </div>
-      <template v-slot:extension>
+      <template #extension>
         <div class="header-calender">
           <CalendarBar
             v-model="app.currentDate"
@@ -111,7 +115,6 @@ type LocalData = {
 }
 
 export default Vue.extend({
-  middleware: 'checkClassData',
   components: {
     AppLanguageSelector,
     CalendarBar,
@@ -119,6 +122,7 @@ export default Vue.extend({
     HeaderLogo,
     BaseActionButton,
   },
+  middleware: 'checkClassData',
   data(): LocalData {
     return {
       loading: true,

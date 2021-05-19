@@ -4,7 +4,7 @@
       :title="$t('pages.user_edit_user_name.title')"
       title-en="USER SETTING"
     >
-      <template v-slot:LayerContents>
+      <template #LayerContents>
         <dl>
           <dt class="SignUp-ItemTitle">
             {{ $t('pages.user_edit_user_name.labels.current_nickname') }}
@@ -18,14 +18,13 @@
           <dd>
             <base-input-field
               v-model="name"
-              label="name"
               :placeholder="$t('common.user_data.labels.nickname')"
               require
             />
           </dd>
         </dl>
       </template>
-      <template v-slot:LayerFooter>
+      <template #LayerFooter>
         <div class="SignUp-ButtonOuter">
           <base-action-button
             theme="transparent"

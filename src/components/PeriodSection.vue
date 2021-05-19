@@ -42,7 +42,7 @@ export default Vue.extend({
     },
     classData: {
       type: Array as () => classData.LessonWithId[],
-      default: [],
+      default: () => [],
     },
     editable: {
       type: Boolean,
@@ -71,6 +71,7 @@ export default Vue.extend({
   border-bottom: 1px solid $color-base-color-02;
   padding-bottom: 12px;
   margin-bottom: 12px;
+  align-items: center;
 
   &:last-child {
     border: none;

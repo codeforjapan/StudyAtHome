@@ -10,18 +10,18 @@ type Email = string
 type EmailVerified = boolean
 type DisplayName = string
 
-type LoginWithAPIKEY = boolean
+// type LoginWithAPIKEY = boolean
 interface User {
   email: Email
   emailVerified: EmailVerified
   displayName: DisplayName
 }
-
+/*
 interface userData {
   allowAccess: string[]
   username: string
 }
-
+*/
 export class UserStore extends VuexModule implements User {
   email: Email = ''
   emailVerified: EmailVerified = false

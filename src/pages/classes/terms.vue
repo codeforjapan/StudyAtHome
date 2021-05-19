@@ -53,9 +53,7 @@ export default Vue.extend({
   },
   computed: {
     isCheck(): boolean {
-      return this.toggle.some((value) => {
-        return value === 'check'
-      })
+      return Boolean(this.toggle.length)
     },
   },
   methods: {
