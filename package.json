@@ -90,6 +90,6 @@
     "vue-jest": "^3.0.7",
     "vue-server-renderer": "^2.6.12",
     "vue-template-compiler": "^2.6.12",
-    "webpack": "4.46.0"
+    "webpack": "5.37.0"
   }
 }
