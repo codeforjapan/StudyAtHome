@@ -57,7 +57,8 @@
       <div class="loader">Loading</div>
     </v-overlay>
     <v-app-bar fixed app class="bar" elevation="0" extension-height="83">
-      <HeaderLogo />
+      <header-logo-zhtw v-if="$root.$i18n.locale === 'zh-goyu'" />
+      <header-logo v-else />
       <AppLanguageSelector />
       <v-spacer />
       <div class="admin-buttons">
@@ -104,6 +105,7 @@ import Vue from 'vue'
 import { vxm } from '@/store'
 import AppLanguageSelector from '@/components/AppLanguageSelector.vue'
 import HeaderLogo from '@/assets/svgs/header_logo.svg'
+import HeaderLogoZhtw from '@/assets/svgs/header_logo-zhtw.svg'
 import CalendarBar from '@/components/CalendarBar.vue'
 import BaseDialog from '@/components/BaseDialog.vue'
 import BaseActionButton from '@/components/BaseActionButton.vue'
@@ -121,6 +123,7 @@ export default Vue.extend({
     CalendarBar,
     BaseDialog,
     HeaderLogo,
+    HeaderLogoZhtw,
     BaseActionButton,
   },
   middleware: ['authenticated', 'checkClassData'],
