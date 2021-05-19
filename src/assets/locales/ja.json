@@ -77,7 +77,7 @@
         "date": "日付設定",
         "time": "時間設定",
         "subject_label_color": "ラベル色",
-        "video_keyword": "オプション機能：参考動画検索",
+        "video_keyword": "オプション機能：{source}動画検索",
         "video_url": "参考動画URL",
         "video_thumbnail": "動画サムネイル・キャプション表示",
         "textbook_page": "教科書ページ",
