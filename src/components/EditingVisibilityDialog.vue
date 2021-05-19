@@ -26,10 +26,10 @@
       ]"
       @click-outside="closeModal"
     >
-      <template v-slot:title>
+      <template #title>
         {{ modalTitle }}
       </template>
-      <template v-slot:default>
+      <template #default>
         <div class="EditingVisibilityModal-Contents">
           <p class="EditingVisibilityModal-Text">
             {{ date }} <br />
@@ -55,7 +55,6 @@
 
 <script lang="ts">
 import Vue from 'vue'
-import dayjs from 'dayjs'
 import BaseDialog from '@/components/BaseDialog.vue'
 import { vxm } from '@/store'
 import classData from '@/types/store/classData'
@@ -79,9 +78,6 @@ export default Vue.extend({
     value: {
       type: Object as () => classData.LessonWithId,
       required: true,
-      default: {
-        id: '',
-      },
     },
   },
   data(): LocalData {
@@ -99,16 +95,18 @@ export default Vue.extend({
     },
     date(): string {
       return this.value.startTime
-        ? dayjs(this.value.startTime).format('MM月DD日(ddd)')
+        ? this.$dayjs(this.value.startTime).format('MM月DD日(ddd)')
         : ''
     },
     time(): string {
       return (
         (this.value.startTime
-          ? dayjs(this.value.startTime).format('HH:mm')
+          ? this.$dayjs(this.value.startTime).format('HH:mm')
           : '') +
         ' - ' +
-        (this.value.endTime ? dayjs(this.value.endTime).format('HH:mm') : '')
+        (this.value.endTime
+          ? this.$dayjs(this.value.endTime).format('HH:mm')
+          : '')
       )
     },
     subjectName(): string {

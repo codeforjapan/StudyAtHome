@@ -22,7 +22,6 @@
 
 <script lang="ts">
 import Vue from 'vue'
-import dayjs from 'dayjs'
 
 export default Vue.extend({
   name: 'LessonCaption',
@@ -46,7 +45,7 @@ export default Vue.extend({
   },
   methods: {
     format(date: Date): String {
-      return dayjs(date).format('h:mm')
+      return this.$dayjs(date).format('h:mm')
     },
   },
 })

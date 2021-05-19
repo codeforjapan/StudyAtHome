@@ -26,11 +26,8 @@
 
 <script lang="ts">
 import Vue from 'vue'
-import dayjs from 'dayjs'
-import minMax from 'dayjs/plugin/minMax'
 import LessonSummaryCard from '@/components/LessonSummaryCard.vue'
 import classData from '@/types/store/classData'
-dayjs.extend(minMax)
 
 export default Vue.extend({
   components: { LessonSummaryCard },
@@ -45,7 +42,7 @@ export default Vue.extend({
     },
     classData: {
       type: Array as () => classData.LessonWithId[],
-      default: [],
+      default: () => [],
     },
     editable: {
       type: Boolean,
@@ -54,13 +51,15 @@ export default Vue.extend({
   },
   computed: {
     maxEndTime() {
-      const endTimeArray = this.classData.map((value) => dayjs(value.endTime))
-      return dayjs.max(...endTimeArray)
+      const endTimeArray = this.classData.map((value) =>
+        this.$dayjs(value.endTime)
+      )
+      return (this.$dayjs as any).max([...endTimeArray])
     },
   },
   methods: {
     formatDate(date: Date): string {
-      return dayjs(date).format('HH:mm')
+      return this.$dayjs(date).format('HH:mm')
     },
   },
 })
@@ -72,6 +71,7 @@ export default Vue.extend({
   border-bottom: 1px solid $color-base-color-02;
   padding-bottom: 12px;
   margin-bottom: 12px;
+  align-items: center;
 
   &:last-child {
     border: none;

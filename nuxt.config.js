@@ -1,3 +1,5 @@
+import Sass from 'sass'
+import Fiber from 'fibers'
 import i18nConfig from './nuxt-i18n.config.js'
 const environment = process.env.NODE_ENV || 'development'
 
@@ -122,7 +124,14 @@ export default {
     'nuxt-svg-loader',
     ['nuxt-i18n', i18nConfig],
     ['@nuxtjs/google-analytics', { id: process.env.GAID }],
+    '@nuxtjs/dayjs',
   ],
+  dayjs: {
+    locales: ['ja', 'en', 'zh-tw'],
+    defaultLocale: 'ja',
+    defaultTimeZone: 'Asia/Tokyo',
+    plugins: ['utc', 'timezone', 'minMax', 'isToday', 'localizedFormat'],
+  },
   /*
    ** Axios module configuration
    ** See https://axios.nuxtjs.org/options
@@ -152,6 +161,14 @@ export default {
    */
   build: {
     publicPath: '/assets/',
+    loaders: {
+      scss: {
+        implementation: Sass,
+        sassOptions: {
+          fiber: Fiber,
+        },
+      },
+    },
     babel: {
       presets({ isServer }) {
         return [

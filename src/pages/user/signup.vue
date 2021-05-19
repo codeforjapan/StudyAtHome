@@ -5,7 +5,7 @@
       title-en="STEP 1"
       fullscreen
     >
-      <template v-slot:LayerContents>
+      <template #LayerContents>
         <dl>
           <dt class="SignUp-ItemTitle">
             {{ $t('common.user_data.labels.nickname') }}
@@ -55,10 +55,12 @@
               require
             />
           </dd>
-          <dt class="SignUp-ItemTitle text--red">{{ passwordConfirm }}</dt>
+          <dt class="SignUp-ItemTitle text--red">
+            {{ passwordConfirm }}
+          </dt>
         </dl>
       </template>
-      <template v-slot:LayerFooter>
+      <template #LayerFooter>
         <div class="SignUp-ButtonOuter">
           <base-action-button
             theme="transparent"
@@ -108,7 +110,7 @@ export default Vue.extend({
     passwordConfirm() {
       if (this.password) {
         // 6文字以上であること
-        const reg = new RegExp(/[ -~]{6,}$/)
+        const reg = /[ -~]{6,}$/
         const response = reg.test(this.password)
         if (!response) {
           return 'パスワードが条件を満たしていません'
@@ -127,7 +129,7 @@ export default Vue.extend({
         if (this.password !== this.confirmation) {
           return true
         }
-        const reg = new RegExp(/[ -~]{6,}$/)
+        const reg = /[ -~]{6,}$/
         const response = reg.test(this.password)
         if (!response) {
           return true

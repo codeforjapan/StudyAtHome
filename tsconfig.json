@@ -19,6 +19,7 @@
     "types": [
       "@types/node",
       "@nuxt/types",
+      "@nuxtjs/dayjs",
       "@types/jest",
       "vuetify",
       "nuxt-i18n"

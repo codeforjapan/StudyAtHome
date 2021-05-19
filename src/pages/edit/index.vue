@@ -34,7 +34,7 @@
         </li>
 
         <li>
-          <nuxt-link class="white--text" to="policy">
+          <nuxt-link class="white--text" to="terms">
             {{ $t('common.footer.terms') }}
           </nuxt-link>
         </li>
@@ -67,7 +67,7 @@
         </li>
 
         <li>
-          <nuxt-link class="white--text" to="policy">
+          <nuxt-link class="white--text" to="terms">
             {{ $t('common.footer.terms') }}
           </nuxt-link>
         </li>
@@ -100,7 +100,7 @@
         </li>
 
         <li>
-          <nuxt-link class="white--text" to="policy">
+          <nuxt-link class="white--text" to="terms">
             {{ $t('common.footer.terms') }}
           </nuxt-link>
         </li>
@@ -130,8 +130,6 @@
 
 <script lang="ts">
 import Vue from 'vue'
-import dayjs from 'dayjs'
-import isToday from 'date-fns/isToday'
 import { vxm } from '@/store'
 import PeriodSection from '@/components/PeriodSection.vue'
 import EditLessonScreenBottomSheet from '@/components/EditLessonScreenBottomSheet.vue'
@@ -139,18 +137,12 @@ import EditLessonScreen from '@/components/EditLessonScreen.vue'
 import EditingVisibilityDialog from '@/components/EditingVisibilityDialog.vue'
 import classData from '@/types/store/classData'
 
-type DataType = {
-  classData: typeof vxm.classData
-  editingMode: boolean
-  editingVisibilityMode: boolean
-  editPageValue: editPageValueType
-  editVisibilityDialogValue: object
-}
-
+/*
 type Computed = {
   today: boolean
   dateTitle: string
 }
+*/
 
 type editPageValueType = {
   isHidden: boolean
@@ -169,6 +161,14 @@ type editPageValueType = {
   pages: string
   materialsTitle: string
   materialsUrl: string
+}
+
+type DataType = {
+  classData: typeof vxm.classData
+  editingMode: boolean
+  editingVisibilityMode: boolean
+  editPageValue: editPageValueType
+  editVisibilityDialogValue: object
 }
 
 const editPageValueDefault = {
@@ -212,10 +212,10 @@ export default Vue.extend({
       return vxm.app.currentDate
     },
     today() {
-      return isToday(vxm.app.currentDate)
+      return (this.$dayjs(vxm.app.currentDate) as any).isToday()
     },
     dateTitle() {
-      return dayjs(vxm.app.currentDate).format('M/D')
+      return this.$dayjs(vxm.app.currentDate).format('M/D')
     },
   },
   watch: {
@@ -235,7 +235,7 @@ export default Vue.extend({
       const date =
         this.editPageValue.date !== ''
           ? this.editPageValue.date
-          : dayjs(vxm.app.currentDate).format('YYYY-MM-DD')
+          : this.$dayjs(vxm.app.currentDate).format('YYYY-MM-DD')
       this.editPageValue = Object.assign({}, this.editPageValue, {
         date,
       })
@@ -268,9 +268,9 @@ export default Vue.extend({
       this.editPageValue = {
         isHidden: value.isHidden,
         lessonId: value.id,
-        date: dayjs(value.startTime).format('YYYY-MM-DD'),
-        startTime: dayjs(value.startTime).format('HH:mm'),
-        endTime: dayjs(value.endTime).format('HH:mm'),
+        date: this.$dayjs(value.startTime).format('YYYY-MM-DD'),
+        startTime: this.$dayjs(value.startTime).format('HH:mm'),
+        endTime: this.$dayjs(value.endTime).format('HH:mm'),
         title: value.title,
         subjectName: value.subject.name,
         subjectColor: value.subject.color,

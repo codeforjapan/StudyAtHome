@@ -52,7 +52,6 @@
 
 <script lang="ts">
 import Vue from 'vue'
-import dayjs from 'dayjs'
 import { vxm } from '@/store'
 import BaseActionButton from '@/components/BaseActionButton.vue'
 import EditLessonScreenInner1 from '@/components/EditLessonScreenInner1.vue'
@@ -60,11 +59,6 @@ import EditLessonScreenInner2 from '@/components/EditLessonScreenInner2.vue'
 import EditLessonScreenInner3 from '@/components/EditLessonScreenInner3.vue'
 import EditLessonScreenInner4 from '@/components/EditLessonScreenInner4.vue'
 import classData from '@/types/store/classData'
-
-type stateType = {
-  error: boolean
-  lessonData: LessonDataType
-}
 
 type LessonDataType = {
   lessonId: string
@@ -83,6 +77,11 @@ type LessonDataType = {
   pages: string
   materialsTitle: string
   materialsUrl: string
+}
+
+type stateType = {
+  error: boolean
+  lessonData: LessonDataType
 }
 
 export default Vue.extend({
@@ -255,10 +254,10 @@ export default Vue.extend({
     buildLessonData(): classData.Lesson {
       const startTimeStr: string =
         this.lessonData.date + ' ' + this.lessonData.startTime
-      const startTimeDate: Date = dayjs(startTimeStr).toDate()
+      const startTimeDate: Date = this.$dayjs(startTimeStr).toDate()
       const endTimeStr: string =
         this.lessonData.date + ' ' + this.lessonData.endTime
-      const endTimeDate: Date = dayjs(endTimeStr).toDate()
+      const endTimeDate: Date = this.$dayjs(endTimeStr).toDate()
       const videoData = []
       if (this.lessonData.videoUrl)
         videoData.push({

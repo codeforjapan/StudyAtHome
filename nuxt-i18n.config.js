@@ -15,16 +15,19 @@ const options = {
       code: 'ja',
       displayName: '日本語',
       file: 'ja.json',
+      format: 'ja',
     },
     {
       code: 'en',
       displayName: 'English',
       file: 'en.json',
+      format: 'en',
     },
     {
       code: 'zh-goyu',
       displayName: '台灣華語',
       file: 'zh_TW.json',
+      format: 'zh-tw',
     },
   ],
 }
