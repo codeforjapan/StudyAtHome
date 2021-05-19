@@ -124,7 +124,14 @@ export default {
     'nuxt-svg-loader',
     ['nuxt-i18n', i18nConfig],
     ['@nuxtjs/google-analytics', { id: process.env.GAID }],
+    '@nuxtjs/dayjs',
   ],
+  dayjs: {
+    locales: ['ja', 'en', 'zh-tw'],
+    defaultLocale: 'ja',
+    defaultTimeZone: 'Asia/Tokyo',
+    plugins: ['utc', 'timezone', 'minMax', 'isToday', 'localizedFormat'],
+  },
   /*
    ** Axios module configuration
    ** See https://axios.nuxtjs.org/options

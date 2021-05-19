@@ -15,7 +15,9 @@
     @input="$emit('input', $event)"
   >
     <template #prepend-inner>
-      <v-icon :color="prependIconColor">{{ prependIcon }}</v-icon>
+      <v-icon :color="prependIconColor">
+        {{ prependIcon }}
+      </v-icon>
     </template>
     <template #append>
       <v-icon
@@ -41,7 +43,9 @@
     @input="$emit('input', $event)"
   >
     <template #prepend-inner>
-      <v-icon :color="prependIconColor">{{ prependIcon }}</v-icon>
+      <v-icon :color="prependIconColor">
+        {{ prependIcon }}
+      </v-icon>
     </template>
   </v-text-field>
   <v-text-field
@@ -60,7 +64,9 @@
     @input="$emit('input', $event)"
   >
     <template #prepend-inner>
-      <v-icon :color="prependIconColor">{{ prependIcon }}</v-icon>
+      <v-icon :color="prependIconColor">
+        {{ prependIcon }}
+      </v-icon>
     </template>
   </v-text-field>
   <v-text-field
@@ -79,7 +85,9 @@
     @input="$emit('input', $event)"
   >
     <template #prepend-inner>
-      <v-icon :color="prependIconColor">{{ prependIcon }}</v-icon>
+      <v-icon :color="prependIconColor">
+        {{ prependIcon }}
+      </v-icon>
     </template>
   </v-text-field>
 </template>

@@ -115,9 +115,6 @@
 
 <script lang="ts">
 import Vue from 'vue'
-import dayjs from 'dayjs'
-import 'dayjs/locale/ja'
-import add from 'date-fns/add'
 import { vxm } from '@/store'
 import SubjectTag from '@/components/SubjectTag.vue'
 import classData from '~/types/store/classData'
@@ -132,7 +129,7 @@ export default Vue.extend({
   layout: 'lesson',
   // filters: {
   //   dateString: function dateString(lesson: LessonWithId): string {
-  //     return dayjs(lesson.startTime)
+  //     return this.$dayjs(lesson.startTime)
   //       .locale('ja')
   //       .format('M月D日（ddd）')
   //   }
@@ -152,7 +149,7 @@ export default Vue.extend({
         return {
           id: '',
           startTime: new Date(),
-          endTime: add(new Date(), { minutes: 40 }),
+          endTime: this.$dayjs().add(40, 'minute'),
           title: '授業のタイトル',
           subject: {
             name: '教科名',
@@ -222,19 +219,19 @@ export default Vue.extend({
   },
   computed: {
     dateString(): string {
-      return dayjs(this.lesson.startTime).locale('ja').format('M月D日（ddd）')
+      return this.$dayjs(this.lesson.startTime).format('LL（ddd）')
     },
     dateTitle(): string {
-      return dayjs(this.lesson.startTime).format('M/D')
+      return this.$dayjs(this.lesson.startTime).format('M/D')
     },
     startTimeString(): string {
-      return dayjs(this.lesson.startTime).format('H:mm')
+      return this.$dayjs(this.lesson.startTime).format('H:mm')
     },
     endTimeString(): string {
-      return dayjs(this.lesson.startTime).format('YYYY-MM-DD') ===
-        dayjs(this.lesson.endTime).format('YYYY-MM-DD')
-        ? dayjs(this.lesson.endTime).format('H:mm')
-        : dayjs(this.lesson.endTime).format('H:mm（M/D）')
+      return this.$dayjs(this.lesson.startTime).format('YYYY-MM-DD') ===
+        this.$dayjs(this.lesson.endTime).format('YYYY-MM-DD')
+        ? this.$dayjs(this.lesson.endTime).format('H:mm')
+        : this.$dayjs(this.lesson.endTime).format('H:mm（M/D）')
     },
   },
   async mounted() {

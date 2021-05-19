@@ -55,7 +55,9 @@
               require
             />
           </dd>
-          <dt class="SignUp-ItemTitle text--red">{{ passwordConfirm }}</dt>
+          <dt class="SignUp-ItemTitle text--red">
+            {{ passwordConfirm }}
+          </dt>
         </dl>
       </template>
       <template #LayerFooter>

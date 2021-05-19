@@ -27,10 +27,14 @@
         />
       </v-card-actions>
       <v-card-title>
-        <h2 class="ContentCard-Title">{{ lesson.title }}</h2>
+        <h2 class="ContentCard-Title">
+          {{ lesson.title }}
+        </h2>
       </v-card-title>
       <v-card-text>
-        <p class="ContentCard-Description">{{ lesson.description }}</p>
+        <p class="ContentCard-Description">
+          {{ lesson.description }}
+        </p>
       </v-card-text>
     </v-card>
     <div v-if="editable" class="ContentCard-Button-Outer">

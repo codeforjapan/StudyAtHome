@@ -44,7 +44,9 @@
               require
             />
           </dd>
-          <dd class="SignUp-ConfirmMessage">{{ passwordConfirm }}</dd>
+          <dd class="SignUp-ConfirmMessage">
+            {{ passwordConfirm }}
+          </dd>
         </dl>
       </template>
       <template #LayerFooter>

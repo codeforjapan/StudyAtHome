@@ -11,7 +11,9 @@
         <p class="Registered-Text">
           {{ $t('pages.user_registered.labels.new_class_id') }}
         </p>
-        <div class="Registered-Id">{{ classId }}</div>
+        <div class="Registered-Id">
+          {{ classId }}
+        </div>
       </div>
     </template>
     <template #LayerFooter>

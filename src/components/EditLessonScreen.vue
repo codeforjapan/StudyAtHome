@@ -52,7 +52,6 @@
 
 <script lang="ts">
 import Vue from 'vue'
-import dayjs from 'dayjs'
 import { vxm } from '@/store'
 import BaseActionButton from '@/components/BaseActionButton.vue'
 import EditLessonScreenInner1 from '@/components/EditLessonScreenInner1.vue'
@@ -255,10 +254,10 @@ export default Vue.extend({
     buildLessonData(): classData.Lesson {
       const startTimeStr: string =
         this.lessonData.date + ' ' + this.lessonData.startTime
-      const startTimeDate: Date = dayjs(startTimeStr).toDate()
+      const startTimeDate: Date = this.$dayjs(startTimeStr).toDate()
       const endTimeStr: string =
         this.lessonData.date + ' ' + this.lessonData.endTime
-      const endTimeDate: Date = dayjs(endTimeStr).toDate()
+      const endTimeDate: Date = this.$dayjs(endTimeStr).toDate()
       const videoData = []
       if (this.lessonData.videoUrl)
         videoData.push({

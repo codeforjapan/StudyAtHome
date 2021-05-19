@@ -3,10 +3,11 @@
     <v-dialog v-model="openCalenderDialog" max-width="320px">
       <v-date-picker
         v-model="date"
-        locale="ja"
         first-day-of-week="1"
         width="100%"
         class="mb-4"
+        :locale="$root.$i18n.locale"
+        :day-format="(date) => $dayjs(date).format('D')"
         @input="openCalenderDialog = false"
       />
       <base-action-button
@@ -47,11 +48,15 @@
       </template>
       <template #default>
         <div class="ClassIdModal-Contents">
-          <p class="ClassIdModal-ClassText">{{ className }}</p>
+          <p class="ClassIdModal-ClassText">
+            {{ className }}
+          </p>
           <p class="ClassIdModal-Text">
             {{ $t('common.class_id_dialog.label.class_id') }}
           </p>
-          <div class="ClassIdModal-Id">{{ classId }}</div>
+          <div class="ClassIdModal-Id">
+            {{ classId }}
+          </div>
         </div>
       </template>
     </base-dialog>
@@ -93,7 +98,6 @@
 
 <script lang="ts">
 import Vue from 'vue'
-import dayjs from 'dayjs'
 import AppLanguageSelector from '@/components/AppLanguageSelector.vue'
 import HeaderLogo from '@/assets/svgs/header_logo.svg'
 import CalendarBar from '@/components/CalendarBar.vue'
@@ -132,15 +136,15 @@ export default Vue.extend({
   computed: {
     date: {
       get() {
-        return dayjs(vxm.app.currentDate).format('YYYY-MM-DD')
+        return this.$dayjs(vxm.app.currentDate).format('YYYY-MM-DD')
       },
-      set(newValue: string) {
-        vxm.app.setDate(dayjs(newValue).toDate())
+      set(newValue: Date) {
+        vxm.app.setDate((this as any).$dayjs(newValue).toDate())
       },
     },
   },
   mounted(): void {
-    this.loading = false
+    ;(this as any).loading = false
   },
   methods: {
     async clickLogout() {

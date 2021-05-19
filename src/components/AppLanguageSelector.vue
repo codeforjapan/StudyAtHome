@@ -15,7 +15,7 @@
 <script lang="ts">
 import Vue from 'vue'
 
-type LocaleListItem = { text: string; value: string }
+type LocaleListItem = { text: string; value: string; format: string }
 type LocalData = {
   locales: LocaleListItem[]
 }
@@ -23,15 +23,20 @@ type LocalData = {
 export default Vue.extend({
   data(): LocalData {
     if (!this.$root.$i18n.locales)
-      return { locales: [{ text: 'N/A', value: '' }] }
+      return { locales: [{ text: 'N/A', value: '', format: '' }] }
 
     return {
       // @ts-ignore
       locales: this.$root.$i18n.locales.map((l) => {
-        if (typeof l === 'string') return { text: l, value: l }
-        else return { text: l.displayName, value: l.code }
+        if (typeof l === 'string') return { text: l, value: l, format: l }
+        else return { text: l.displayName, value: l.code, format: l.format }
       }),
     }
+  },
+  watch: {
+    '$root.$i18n.locale'(locale) {
+      this.$dayjs.locale(this.locales?.find((v) => v.value === locale)?.format)
+    },
   },
 })
 </script>

@@ -6,7 +6,11 @@
       :return-value.sync="tempFormData.date"
       width="290px"
     >
-      <v-date-picker v-model="tempFormData.date">
+      <v-date-picker
+        v-model="tempFormData.date"
+        :locale="$root.$i18n.locale"
+        :day-format="(date) => $dayjs(date).format('D')"
+      >
         <v-spacer />
         <v-btn text color="primary" @click="datePickerOpen = false">
           {{ $t('common.general.buttons.cancel') }}

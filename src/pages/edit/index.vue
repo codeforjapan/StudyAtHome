@@ -130,8 +130,6 @@
 
 <script lang="ts">
 import Vue from 'vue'
-import dayjs from 'dayjs'
-import isToday from 'date-fns/isToday'
 import { vxm } from '@/store'
 import PeriodSection from '@/components/PeriodSection.vue'
 import EditLessonScreenBottomSheet from '@/components/EditLessonScreenBottomSheet.vue'
@@ -214,10 +212,10 @@ export default Vue.extend({
       return vxm.app.currentDate
     },
     today() {
-      return isToday(vxm.app.currentDate)
+      return (this.$dayjs(vxm.app.currentDate) as any).isToday()
     },
     dateTitle() {
-      return dayjs(vxm.app.currentDate).format('M/D')
+      return this.$dayjs(vxm.app.currentDate).format('M/D')
     },
   },
   watch: {
@@ -237,7 +235,7 @@ export default Vue.extend({
       const date =
         this.editPageValue.date !== ''
           ? this.editPageValue.date
-          : dayjs(vxm.app.currentDate).format('YYYY-MM-DD')
+          : this.$dayjs(vxm.app.currentDate).format('YYYY-MM-DD')
       this.editPageValue = Object.assign({}, this.editPageValue, {
         date,
       })
@@ -270,9 +268,9 @@ export default Vue.extend({
       this.editPageValue = {
         isHidden: value.isHidden,
         lessonId: value.id,
-        date: dayjs(value.startTime).format('YYYY-MM-DD'),
-        startTime: dayjs(value.startTime).format('HH:mm'),
-        endTime: dayjs(value.endTime).format('HH:mm'),
+        date: this.$dayjs(value.startTime).format('YYYY-MM-DD'),
+        startTime: this.$dayjs(value.startTime).format('HH:mm'),
+        endTime: this.$dayjs(value.endTime).format('HH:mm'),
         title: value.title,
         subjectName: value.subject.name,
         subjectColor: value.subject.color,
