@@ -30,7 +30,7 @@
           ),
           action: () => {
             unloadClassData()
-            $router.push('/user/classlist')
+            $router.push(localePath('/user/classlist'))
             return false
           },
         },
@@ -78,7 +78,7 @@
           outlined
           rounded
           color="#0071C2"
-          @click="$router.push('/user/editUserData')"
+          @click="$router.push(localePath('/user/editUserData'))"
         >
           <v-icon>mdi-cog</v-icon>
         </v-btn>

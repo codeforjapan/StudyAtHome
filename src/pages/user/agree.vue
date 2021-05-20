@@ -302,13 +302,13 @@
       class="Button"
       theme="primary"
       text="登録へ進む"
-      @click="$router.push('/user/signup')"
+      @click="$router.push(localePath('/user/signup'))"
     />
     <base-action-button
       class="Button"
       theme="border"
       text="同意しない"
-      @click="$router.push('/')"
+      @click="$router.push(localePath('/'))"
     />
   </div>
 </template>

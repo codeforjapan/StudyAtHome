@@ -153,7 +153,7 @@ export default Vue.extend({
     async clickLogout() {
       await vxm.user.logout()
       await vxm.app.resetDate()
-      await this.$router.push('/')
+      await this.$router.push(this.localePath('/'))
     },
   },
 })

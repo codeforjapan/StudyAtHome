@@ -66,7 +66,7 @@
             theme="transparent"
             :text="$t('common.general.buttons.cancel')"
             class="SignUp-Button"
-            @click="$router.push('/')"
+            @click="$router.push(localePath('/'))"
           />
           <base-action-button
             theme="primary"
@@ -153,10 +153,12 @@ export default Vue.extend({
         .then(() => {
           this.completion = true
           this.loading = false
-          this.$router.push({
-            name: 'user-verify',
-            params: { email: this.email },
-          })
+          this.$router.push(
+            this.localePath({
+              name: 'user-verify',
+              params: { email: this.email },
+            })
+          )
         })
         .catch(() => {
           this.error = true

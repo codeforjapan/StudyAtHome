@@ -34,7 +34,7 @@
       class="Button"
       theme="border"
       :text="$t('common.agree_terms.buttons.disagree')"
-      @click="$router.push('/')"
+      @click="$router.push(localePath('/'))"
     />
   </div>
 </template>

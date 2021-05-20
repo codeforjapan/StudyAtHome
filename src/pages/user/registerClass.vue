@@ -83,7 +83,7 @@ export default Vue.extend({
         })
         .then(() => {
           this.loading = false
-          this.$router.push('/user/registered')
+          this.$router.push(this.localePath('/user/registered'))
         })
         .catch(() => {
           this.error = true
