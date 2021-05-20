@@ -1,7 +1,7 @@
 const defaultLocale = 'ja'
 
 const options = {
-  strategy: 'no_prefix',
+  strategy: 'prefix_except_default',
   detectBrowserLanguage: false,
   defaultLocale,
   vueI18n: {
