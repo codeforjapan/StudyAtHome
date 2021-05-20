@@ -89,7 +89,7 @@
         <v-color-picker
           v-if="colorPickerOpen"
           v-model="tempFormData.subjectColor"
-          disabled
+          hide-sliders
           hide-canvas
           hide-inputs
           hide-mode-switch
