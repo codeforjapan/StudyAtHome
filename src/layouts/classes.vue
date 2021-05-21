@@ -64,7 +64,7 @@
       <div class="loader">Loading</div>
     </v-overlay>
     <v-app-bar fixed app class="bar" elevation="0" extension-height="83">
-      <header-logo-zhtw v-if="$root.$i18n.locale === 'zh-goyu'" />
+      <header-logo-zhtw v-if="$root.$i18n.locale === 'zh-tw'" />
       <header-logo v-else />
       <AppLanguageSelector />
       <v-spacer />

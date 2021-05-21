@@ -1,7 +1,7 @@
 <template>
   <div class="MainPage">
     <div class="Logo-outer">
-      <prj-logo-zhtw v-if="$root.$i18n.locale === 'zh-goyu'" class="Logo" />
+      <prj-logo-zhtw v-if="$root.$i18n.locale === 'zh-tw'" class="Logo" />
       <prj-logo v-else class="Logo" />
     </div>
     <div class="PolicyText-outer">

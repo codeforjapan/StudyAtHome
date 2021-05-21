@@ -24,7 +24,7 @@ const options = {
       format: 'en',
     },
     {
-      code: 'zh-goyu',
+      code: 'zh-tw',
       displayName: '台灣華語',
       file: 'zh_TW.json',
       format: 'zh-tw',
