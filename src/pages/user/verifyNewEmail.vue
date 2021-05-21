@@ -48,7 +48,7 @@
             color="#ffffff"
             height="60px"
             text
-            to="/"
+            :to="localePath('/')"
           >
             <span>{{ $t('common.general.buttons.go_back') }}</span>
           </v-btn>
@@ -97,7 +97,7 @@ export default Vue.extend({
         this.verification_code
       )
         .then(() => {
-          this.$router.push('/user/editUserData')
+          this.$router.push(this.localePath('/user/editUserData'))
         })
         .catch(() => {
           this.loading = false

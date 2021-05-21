@@ -30,7 +30,7 @@
           ),
           action: () => {
             unloadClassData()
-            $router.push('/user/classlist')
+            $router.push(localePath('/user/classlist'))
             return false
           },
         },
@@ -57,7 +57,7 @@
       <div class="loader">Loading</div>
     </v-overlay>
     <v-app-bar fixed app class="bar" elevation="0" extension-height="83">
-      <header-logo-zhtw v-if="$root.$i18n.locale === 'zh-goyu'" />
+      <header-logo-zhtw v-if="$root.$i18n.locale === 'zh-tw'" />
       <header-logo v-else />
       <AppLanguageSelector />
       <v-spacer />
@@ -78,7 +78,7 @@
           outlined
           rounded
           color="#0071C2"
-          @click="$router.push('/user/editUserData')"
+          @click="$router.push(localePath('/user/editUserData'))"
         >
           <v-icon>mdi-cog</v-icon>
         </v-btn>

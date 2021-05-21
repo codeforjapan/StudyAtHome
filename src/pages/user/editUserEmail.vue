@@ -31,7 +31,7 @@
             theme="transparent"
             :text="$t('common.general.buttons.cancel')"
             class="SignUp-Button"
-            @click="$router.push('/user/editUserData')"
+            @click="$router.push(localePath('/user/editUserData'))"
           />
           <base-action-button
             theme="primary"
@@ -100,7 +100,7 @@ export default Vue.extend<Data, Methods, Computed, unknown>({
             await Auth.updateUserAttributes(user, {
               email: this.email,
             })
-            await this.$router.push('/user/verifyNewEmail')
+            await this.$router.push(this.localePath('/user/verifyNewEmail'))
           } catch {
             this.error = true
             this.loading = false

@@ -21,7 +21,7 @@
         theme="primary"
         :text="$t('pages.user_registered.buttons.add_or_edit_lessons')"
         class="Registered-Button"
-        @click="$router.push('/edit')"
+        @click="$router.push(localePath('/edit'))"
       />
       <!-- <base-action-button theme="secondary" text="クラスIDを共有する" /> -->
     </template>

@@ -15,7 +15,7 @@
               color="white"
               height="auto"
               class="ToEditNavButton"
-              @click="$router.push('/user/editUserName')"
+              @click="$router.push(localePath('/user/editUserName'))"
             >
               {{ name }}
               <v-icon right color="#0071C2"> mdi-chevron-right </v-icon>
@@ -30,7 +30,7 @@
               color="white"
               height="auto"
               class="ToEditNavButton"
-              @click="$router.push('/user/editUserEmail')"
+              @click="$router.push(localePath('/user/editUserEmail'))"
             >
               {{ email }}
               <v-icon right color="#0071C2"> mdi-chevron-right </v-icon>
@@ -45,7 +45,7 @@
               color="white"
               height="auto"
               class="ToEditNavButton"
-              @click="$router.push('/user/editUserPassword')"
+              @click="$router.push(localePath('/user/editUserPassword'))"
             >
               ********
               <v-icon right color="#0071C2"> mdi-chevron-right </v-icon>
@@ -59,7 +59,7 @@
             theme="transparent"
             :text="$t('common.general.buttons.cancel')"
             class="SignUp-Button"
-            @click="$router.push('/edit')"
+            @click="$router.push(localePath('/edit'))"
           />
           <v-btn
             :disabled="loading"
@@ -125,7 +125,7 @@ export default Vue.extend<Data, Methods, Computed, unknown>({
       try {
         await vxm.user.logout()
         await vxm.app.resetDate()
-        await this.$router.push('/')
+        await this.$router.push(this.localePath('/'))
       } catch {
         this.error = true
       }

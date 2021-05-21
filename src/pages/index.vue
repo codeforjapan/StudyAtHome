@@ -42,13 +42,13 @@
             v-if="isLoggedIn"
             :text="$t('pages.index.teachers.buttons.registerLessons')"
             class="registerButton"
-            @click="$router.push('/user/classlist')"
+            @click="$router.push(localePath('/user/classlist'))"
           />
           <base-action-button
             v-else
             :text="$t('pages.index.teachers.buttons.signup')"
             class="registerButton"
-            @click="$router.push('/user/agree')"
+            @click="$router.push(localePath('/user/agree'))"
           />
 
           <base-action-button
@@ -56,14 +56,14 @@
             :text="$t('pages.index.teachers.buttons.logout')"
             class="loginButton"
             theme="secondary"
-            @click="$router.push('/user/logout')"
+            @click="$router.push(localePath('/user/logout'))"
           />
           <base-action-button
             v-else
             :text="$t('pages.index.teachers.buttons.login')"
             class="loginButton"
             theme="secondary"
-            @click="$router.push('/user/login')"
+            @click="$router.push(localePath('/user/login'))"
           />
 
           <v-footer color="#004170" padless>
@@ -90,7 +90,7 @@
               </li>
 
               <li>
-                <nuxt-link class="white--text" to="terms">
+                <nuxt-link class="white--text" :to="localePath('/terms')">
                   {{ $t('common.footer.terms') }}
                 </nuxt-link>
               </li>
@@ -167,7 +167,7 @@ export default Vue.extend({
             classId: this.classId,
             className,
           })
-          await this.$router.push('/classes')
+          await this.$router.push(this.localePath('/classes'))
         }
       } catch {
         this.loading = false
