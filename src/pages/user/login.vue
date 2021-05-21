@@ -48,7 +48,7 @@
             color="#ffffff"
             height="60px"
             text
-            to="/"
+            :to="localePath('/')"
           >
             <span>{{ $t('common.general.buttons.go_back') }}</span>
           </v-btn>
@@ -95,7 +95,7 @@ export default Vue.extend({
       try {
         await Auth.signIn(this.email, this.password)
         // await vxm.user.login()
-        await this.$router.push('/user/classlist')
+        await this.$router.push(this.localePath('/user/classlist'))
       } catch (err) {
         this.loading = false
         this.error = true

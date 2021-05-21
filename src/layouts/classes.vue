@@ -64,7 +64,7 @@
       <div class="loader">Loading</div>
     </v-overlay>
     <v-app-bar fixed app class="bar" elevation="0" extension-height="83">
-      <header-logo-zhtw v-if="$root.$i18n.locale === 'zh-goyu'" />
+      <header-logo-zhtw v-if="$root.$i18n.locale === 'zh-tw'" />
       <header-logo v-else />
       <AppLanguageSelector />
       <v-spacer />
@@ -153,7 +153,7 @@ export default Vue.extend({
     async clickLogout() {
       await vxm.user.logout()
       await vxm.app.resetDate()
-      await this.$router.push('/')
+      await this.$router.push(this.localePath('/'))
     },
   },
 })

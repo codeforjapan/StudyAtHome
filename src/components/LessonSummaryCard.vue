@@ -83,7 +83,7 @@ export default Vue.extend({
   methods: {
     toLessonDetail() {
       const lesson = this.lesson as LessonWithId
-      this.$router.push('/lesson/?lessonId=' + lesson.id)
+      this.$router.push(this.localePath('/lesson/?lessonId=' + lesson.id))
     },
   },
 })

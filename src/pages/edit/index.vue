@@ -34,7 +34,7 @@
         </li>
 
         <li>
-          <nuxt-link class="white--text" to="terms">
+          <nuxt-link class="white--text" :to="localePath('/terms')">
             {{ $t('common.footer.terms') }}
           </nuxt-link>
         </li>
@@ -67,7 +67,7 @@
         </li>
 
         <li>
-          <nuxt-link class="white--text" to="terms">
+          <nuxt-link class="white--text" :to="localePath('/terms')">
             {{ $t('common.footer.terms') }}
           </nuxt-link>
         </li>
@@ -100,7 +100,7 @@
         </li>
 
         <li>
-          <nuxt-link class="white--text" to="terms">
+          <nuxt-link class="white--text" :to="localePath('/terms')">
             {{ $t('common.footer.terms') }}
           </nuxt-link>
         </li>

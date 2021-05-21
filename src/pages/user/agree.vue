@@ -1,7 +1,7 @@
 <template>
   <div class="MainPage">
     <div class="Logo-outer">
-      <prj-logo-zhtw v-if="$root.$i18n.locale === 'zh-goyu'" class="Logo" />
+      <prj-logo-zhtw v-if="$root.$i18n.locale === 'zh-tw'" class="Logo" />
       <prj-logo v-else class="Logo" />
     </div>
     <div class="PolicyText-outer">
@@ -302,13 +302,13 @@
       class="Button"
       theme="primary"
       text="登録へ進む"
-      @click="$router.push('/user/signup')"
+      @click="$router.push(localePath('/user/signup'))"
     />
     <base-action-button
       class="Button"
       theme="border"
       text="同意しない"
-      @click="$router.push('/')"
+      @click="$router.push(localePath('/'))"
     />
   </div>
 </template>

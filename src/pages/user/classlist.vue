@@ -42,7 +42,7 @@
       <base-action-button
         :text="$t('pages.user_classlist.add_class')"
         theme="secondary"
-        @click="$router.push('/user/registerClass')"
+        @click="$router.push(localePath('/user/registerClass'))"
       />
     </template>
   </base-bottom-sheet-layer>
@@ -113,7 +113,7 @@ export default Vue.extend({
       this.loading = true
       try {
         await vxm.classData.loadClassData(this.selectedClassId)
-        await this.$router.push('/edit')
+        await this.$router.push(this.localePath('/edit'))
       } catch {
         this.loading = false
       }

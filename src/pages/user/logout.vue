@@ -35,7 +35,7 @@ export default Vue.extend({
       try {
         await Auth.signOut()
         await vxm.app.resetDate()
-        await this.$router.push('/')
+        await this.$router.push(this.localePath('/'))
       } catch {
         this.loading = false
         this.error = true
