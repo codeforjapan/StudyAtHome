@@ -77,7 +77,7 @@
         "date": "設定日期",
         "time": "設定時間",
         "subject_label_color": "標籤顏色",
-        "video_keyword": "可選功能：搜尋參考影片",
+        "video_keyword": "可選功能：{source}的影片搜尋",
         "video_url": "參考影片 URL",
         "video_thumbnail": "顯示影片縮圖",
         "textbook_page": "教科書頁",
