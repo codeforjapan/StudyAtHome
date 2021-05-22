@@ -81,9 +81,22 @@ const VuexModule = createModule({
   target: 'nuxt',
 })
 
-const generateUniqueId = (): string => {
-  const c =
-    'あいうえおかきくけこさしすせそたちつてとなにぬねのはひふへほまみむめもやゆよらりるれろわをん'
+const generateUniqueId = (locale: string): string => {
+  let c: string = ''
+  switch (locale) {
+    case 'ja':
+      c =
+        'あいうえおかきくけこさしすせそたちつてとなにぬねのはひふへほまみむめもやゆよらりるれろわをん'
+      break
+    case 'en':
+      c = 'abcdefghijklmnopqrstuvwxyz'
+      break
+    case 'zh-tw':
+      c =
+        'ㄅㄆㄇㄈㄉㄊㄋㄌㄍㄎㄏㄐㄑㄒㄓㄔㄕㄖㄗㄘㄙㄧㄨㄩㄚㄛㄜㄝㄞㄟㄠㄡㄢㄣㄤㄥㄦ'
+      break
+  }
+
   const cl = c.length
   const result =
     c[Math.floor(Math.random() * cl)] +
@@ -237,9 +250,11 @@ export class ClassDataStore extends VuexModule implements classData.ClassData {
   public async registerClass({
     className,
     schoolName,
+    locale,
   }: {
     className: string
     schoolName: string
+    locale: string
   }) {
     if (!vxm.user.isAuthenticated) {
       throw new Error('ユーザーが正しくログインされていません')
@@ -247,7 +262,7 @@ export class ClassDataStore extends VuexModule implements classData.ClassData {
 
     let classId, classObject
     do {
-      classId = generateUniqueId()
+      classId = generateUniqueId(locale)
       try {
         const result = (await API.graphql({
           query: getClassSimple,
