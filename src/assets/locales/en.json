@@ -8,11 +8,18 @@
         "login": "Sign In",
         "logout": "Sign Out",
         "ok": "OK",
-        "save": "Save"
+        "save": "Save",
+        "change": "Modify",
+        "verify": "Verification"
       },
       "error": {
         "default": "An error occurred, please try again later."
       }
+    },
+    "calender": {
+      "prev_week": "Previous week",
+      "next_week": "Next week",
+      "to_today": "Move to today"
     },
     "footer": {
       "about": "About StayAtHome",
@@ -40,7 +47,8 @@
         "password": "Password",
         "password_rules": "Password Must be At Least 6 Characters",
         "password_not_acceptable": "The Password Does Not Meet the Password Requirements",
-        "password_not_same": "Inconsistent Passwords"
+        "password_not_same": "Inconsistent Passwords",
+        "verification_code":"Verification code"
       }
     },
     "agree_terms": {
@@ -69,7 +77,7 @@
         "date": "Date Setting",
         "time": "Time Setting",
         "subject_label_color": "Label Color",
-        "video_keyword": "(Optional function) Video Search",
+        "video_keyword": "Optional feature: Video search of {source}",
         "video_url": "Reference Video URL",
         "video_thumbnail": "Video Thumbnail/Caption Display",
         "textbook_page": "Textbook Page",
@@ -77,7 +85,7 @@
         "material_url": "Learning Material URL"
       },
       "placeholder": {
-        "video_keyword": "EX) Science"
+        "video_keyword": "Keyword"
       },
       "required": "*Items Marked with Are Required",
       "search_videos": {
@@ -134,7 +142,9 @@
         "label": "To the Teacher Who Made the Timetable",
         "buttons": {
           "signup": "Register As A User",
-          "login": "Log In"
+          "login": "Log In",
+          "registerLessons": "Create Timetable",
+          "logout": "Sign Out"
         }
       }
     },
@@ -145,10 +155,28 @@
       "no_classes": "There Are No Editable Courses. Please Register Your Course."
     },
     "user_edit_user_data": {
-      "title": "Change User Information",
+      "title": "Change User Information"
+    },
+    "user_edit_user_name": {
+      "title": "Change name (display name)",
       "labels": {
-        "new_password": "Change Password",
-        "new_password_confirm": "Change Password (for confirmation)"
+        "current_nickname": "Current name (display name)",
+        "new_nickname": "Name to be used (display name)"
+      }
+    },
+    "user_edit_user_email": {
+      "title": "Change email address",
+      "labels": {
+        "current_email": "Current email address",
+        "new_email": "Email address to be used"
+      }
+    },
+    "user_edit_user_password": {
+      "title": "Change password",
+      "labels": {
+        "current_password": "Please enter your current password",
+        "new_password": "New password",
+        "new_password_confirm": "Password (for confirmation)"
       }
     },
     "user_login": {
@@ -192,6 +220,12 @@
         "go_back_to_top": "Back to Top",
         "message": "A Confirmation Email Has Been Sent to the Email Address You Entered. Please Authenticate from the URL Described in the Email."
       }
+    },
+    "user_verify": {
+      "title": "Confirm email address"
+    },
+    "user_verify_new_email": {
+      "title": "Confirm changing email address"
     }
   }
 }
