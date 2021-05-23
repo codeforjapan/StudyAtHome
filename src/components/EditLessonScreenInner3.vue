@@ -10,11 +10,7 @@
       <editor-input-field-pickable
         v-model="videoSearchWord"
         selector="video"
-        :title="
-          $t('components.editing_screen.labels.video_keyword', {
-            source: '',
-          })
-        "
+        :title="$t('components.editing_screen.labels.video_keyword')"
         :placeholder="$t('components.editing_screen.placeholder.video_keyword')"
         icon-name="mdi-magnify"
         :button-text="$t('components.editing_screen.search_videos.search')"
@@ -24,11 +20,7 @@
 
       <div v-if="videoSearchResult.length > 0" class="SearchResult">
         <h3 class="SearchResultTitle">
-          {{
-            $t('components.editing_screen.search_videos.search_result', {
-              source: '',
-            })
-          }}
+          {{ $t('components.editing_screen.search_videos.search_result') }}
         </h3>
         <ul class="SearchResultList">
           <li v-for="(v, i) in displayLists" :key="i" class="SearchResultItem">
@@ -83,12 +75,16 @@
 <script lang="ts">
 import { Vue, Component, Prop, Emit, Watch } from 'vue-property-decorator'
 import EditorInputFieldPickable from '~/components/EditorInputFieldPickable.vue'
+import { MovieListItem, Movie } from '~/types/movies'
 
-let movies: any[] = []
+let movies: Movie[] = []
 
 export type formData = {
   videoUrl: string | null
   videoTitle: string
+  videoSubTitle: string | null
+  videoDescription: string | null
+  videoPlayTime: string | null
   videoThumbnailUrl: string | null
 }
 
@@ -101,6 +97,9 @@ export default class EditLessonScreenInner3 extends Vue {
   tempFormData = {
     videoUrl: this.form.videoUrl,
     videoTitle: this.form.videoTitle,
+    videoSubTitle: this.form.videoSubTitle,
+    videoDescription: this.form.videoDescription,
+    videoPlayTime: this.form.videoPlayTime,
     videoThumbnailUrl:
       this.form.videoThumbnailUrl !== '' ? this.form.videoThumbnailUrl : null,
   }
@@ -111,6 +110,9 @@ export default class EditLessonScreenInner3 extends Vue {
     default: () => ({
       videoUrl: null,
       videoTitle: '',
+      videoSubTitle: '',
+      videoDescription: '',
+      videoPlayTime: '',
       videoThumbnailUrl: '',
     }),
   })
@@ -118,11 +120,11 @@ export default class EditLessonScreenInner3 extends Vue {
 
   videoSourceType: string = ''
   videoSearchWord: string = ''
-  videoSearchResult: formData[] = []
+  videoSearchResult: (formData | undefined)[] = []
   page: number = 1
   pageSize: number = 5
   length: number = 0
-  displayLists: formData[] = []
+  displayLists: (formData | undefined)[] = []
 
   mounted() {
     // fetch('/data/movies.json')
@@ -150,7 +152,7 @@ export default class EditLessonScreenInner3 extends Vue {
     this.tempFormData = this.value
   }
 
-  private handleChangeMovie(selected) {
+  private handleChangeMovie(selected: MovieListItem) {
     this.videoSourceType = selected.sourceType
     fetch(`/data/${selected.dataFile}`)
       .then((res) => res.json())
@@ -199,7 +201,7 @@ export default class EditLessonScreenInner3 extends Vue {
     )
   }
 
-  private mapNhk(v) {
+  private mapNhk(v: Movie): formData {
     const videoId = v.inherentProperties.教材_ID
     const videoType = parseInt(videoId.slice(5, 6))
     const nfsMovieUrl = 'https://www2.nhk.or.jp/school/movie/'
@@ -229,7 +231,7 @@ export default class EditLessonScreenInner3 extends Vue {
     }
   }
 
-  private mapJunyiacademy(v) {
+  private mapJunyiacademy(v: Movie): formData {
     return {
       videoUrl: v.inherentProperties.url,
       videoTitle: v.title,
