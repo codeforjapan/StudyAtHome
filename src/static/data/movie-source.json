@@ -2,7 +2,7 @@
   {
     "sourceType": "NHK",
     "name": "NHK For Schoolの動画",
-    "dataFile": "movies2-nhk.json"
+    "dataFile": "movies-nhk.json"
   },
   {
   "sourceType": "junyiacademy",

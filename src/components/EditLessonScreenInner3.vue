@@ -48,7 +48,13 @@
                 v-if="v.videoUrl"
                 class="SearchResultButton"
                 color="#338dce"
-                @click="registerVideoUrl(v.videoUrl)"
+                @click="
+                  registerVideoUrl(
+                    v.videoUrl,
+                    v.videoTitle,
+                    v.videoThumbnailUrl
+                  )
+                "
               >
                 <v-icon color="white"> mdi-link </v-icon>
                 {{
@@ -190,8 +196,10 @@ export default class EditLessonScreenInner3 extends Vue {
     }
   }
 
-  private registerVideoUrl(url: string) {
+  private registerVideoUrl(url: string, title: string, thumbnailUrl: string) {
     this.tempFormData.videoUrl = url
+    this.tempFormData.videoTitle = title
+    this.tempFormData.videoThumbnailUrl = thumbnailUrl
   }
 
   private pageChange(pageNumber: number) {
@@ -232,13 +240,14 @@ export default class EditLessonScreenInner3 extends Vue {
   }
 
   private mapJunyiacademy(v: Movie): formData {
+    const videoId: string = v.inherentProperties.url.slice(-11)
     return {
       videoUrl: v.inherentProperties.url,
       videoTitle: v.title,
       videoSubTitle: '',
       videoDescription: v.description,
       videoPlayTime: '',
-      videoThumbnailUrl: v.inherentProperties.thumbnailUrl,
+      videoThumbnailUrl: `https://img.youtube.com/vi/${videoId}/hqdefault.jpg`,
     }
   }
 
