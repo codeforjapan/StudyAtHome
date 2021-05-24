@@ -2,6 +2,7 @@ const defaultLocale = 'ja'
 
 const options = {
   strategy: 'prefix_except_default',
+  seo: false,
   detectBrowserLanguage: false,
   defaultLocale,
   vueI18n: {
