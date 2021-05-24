@@ -18,7 +18,7 @@
 <script lang="ts">
 import Vue from 'vue'
 
-type MovieListItem = { sourceType: string; name: string; dataFile: string }
+import { MovieListItem } from '~/types/movies'
 type LocalData = {
   selectedMovie: string
   movies: MovieListItem[]
