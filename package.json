@@ -35,7 +35,7 @@
     "@nuxtjs/pwa": "^3.3.5",
     "@nuxtjs/style-resources": "^1.0.0",
     "@types/node": "^15.3.0",
-    "aws-amplify": "^4.0.2",
+    "aws-amplify": "^4.0.3",
     "core-js": "^3.12.1",
     "cross-env": "^7.0.3",
     "express": "^4.17.1",
