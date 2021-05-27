@@ -80,6 +80,7 @@ export default Vue.extend({
         .registerClass({
           schoolName: this.schoolName,
           className: this.className,
+          locale: this.$i18n.locale,
         })
         .then(() => {
           this.loading = false
