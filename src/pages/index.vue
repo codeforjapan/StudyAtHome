@@ -21,7 +21,7 @@
           color="#FFDB6C"
           width="56px"
           height="56px"
-          :disabled="!/^[あ-ん]{6}$/.test(classId)"
+          :disabled="!/^[あ-んa-zㄅ-ㄩ]{6}$/.test(classId)"
           :loading="loading"
           @click="loginToClass"
         >
