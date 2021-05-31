@@ -19,11 +19,6 @@
     ],
     "*.{css,scss,vue}": "stylelint"
   },
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged"
-    }
-  },
   "dependencies": {
     "@aws-amplify/api": "^4.0.0",
     "@babel/core": "^7.14.3",
