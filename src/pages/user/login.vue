@@ -66,7 +66,7 @@ import Vue from 'vue'
 import BaseBottomSheetLayer from '@/components/BaseBottomSheetLayer.vue'
 import BaseActionButton from '@/components/BaseActionButton.vue'
 import BaseInputField from '@/components/BaseInputField.vue'
-import { Auth } from 'aws-amplify'
+import { withSSRContext } from 'aws-amplify'
 // import { vxm } from '@/store'
 
 export default Vue.extend({
@@ -92,6 +92,7 @@ export default Vue.extend({
   methods: {
     async doLogin(): Promise<void> {
       this.loading = true
+      const { Auth } = withSSRContext()
       try {
         await Auth.signIn(this.email, this.password)
         // await vxm.user.login()
