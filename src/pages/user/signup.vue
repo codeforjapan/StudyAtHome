@@ -90,7 +90,7 @@ import Vue from 'vue'
 import BaseBottomSheetLayer from '@/components/BaseBottomSheetLayer.vue'
 import BaseActionButton from '@/components/BaseActionButton.vue'
 import BaseInputField from '@/components/BaseInputField.vue'
-import { Auth } from 'aws-amplify'
+import { withSSRContext } from 'aws-amplify'
 
 export default Vue.extend({
   components: { BaseBottomSheetLayer, BaseActionButton, BaseInputField },
@@ -142,6 +142,7 @@ export default Vue.extend({
   methods: {
     async doSignUp(): Promise<void> {
       this.loading = true
+      const { Auth } = withSSRContext()
       await Auth.signUp({
         username: this.email,
         password: this.password,

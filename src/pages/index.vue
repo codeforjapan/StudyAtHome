@@ -21,7 +21,7 @@
           color="#FFDB6C"
           width="56px"
           height="56px"
-          :disabled="!/^[あ-ん]{6}$/.test(classId)"
+          :disabled="!/^[あ-んa-zㄅ-ㄩ]{6}$/.test(classId)"
           :loading="loading"
           @click="loginToClass"
         >
@@ -109,7 +109,7 @@
 import Vue from 'vue'
 import BaseInputField from '@/components/BaseInputField.vue'
 import BaseActionButton from '@/components/BaseActionButton.vue'
-import { API, Auth } from 'aws-amplify'
+import { withSSRContext } from 'aws-amplify'
 import { GRAPHQL_AUTH_MODE, GraphQLResult } from '@aws-amplify/api'
 // import { getClass } from '@/graphql/queries'
 import { GetClassQuery } from '@/API'
@@ -138,6 +138,7 @@ export default Vue.extend({
     }
   },
   async mounted() {
+    const { Auth } = withSSRContext()
     const userInfo = await Auth.currentUserInfo()
     this.isLoggedIn = !!userInfo
   },
@@ -152,6 +153,7 @@ export default Vue.extend({
           }
         }
       `
+      const { API } = withSSRContext()
       try {
         const result = (await API.graphql({
           query: getClassSimple,

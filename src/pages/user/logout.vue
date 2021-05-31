@@ -14,7 +14,7 @@
 <script lang="ts">
 import Vue from 'vue'
 import BaseBottomSheetLayer from '@/components/BaseBottomSheetLayer.vue'
-import { Auth } from 'aws-amplify'
+import { withSSRContext } from 'aws-amplify'
 import { vxm } from '@/store'
 
 export default Vue.extend({
@@ -32,6 +32,7 @@ export default Vue.extend({
   methods: {
     async doLogout(): Promise<void> {
       this.loading = true
+      const { Auth } = withSSRContext()
       try {
         await Auth.signOut()
         await vxm.app.resetDate()

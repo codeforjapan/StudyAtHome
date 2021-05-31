@@ -54,7 +54,7 @@ import Vue from 'vue'
 import BaseBottomSheetLayer from '@/components/BaseBottomSheetLayer.vue'
 import BaseActionButton from '@/components/BaseActionButton.vue'
 import BaseInputField from '@/components/BaseInputField.vue'
-import { Auth } from 'aws-amplify'
+import { withSSRContext } from 'aws-amplify'
 import { vxm } from '~/store'
 
 type Data = {
@@ -92,6 +92,7 @@ export default Vue.extend<Data, Methods, Computed, unknown>({
   methods: {
     async doSave(): Promise<void> {
       this.loading = true
+      const { Auth } = withSSRContext()
       const user = await Auth.currentAuthenticatedUser()
       if (user) {
         if (this.name !== this.currentName) {
