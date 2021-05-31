@@ -142,7 +142,7 @@ export default Vue.extend({
   },
   computed: {
     prependIconColor(): string {
-      const classIdPattern = /^[あ-ん]{6}$/
+      const classIdPattern = /^[あ-んa-zㄅ-ㄩ]{6}$/
       if (this.type === 'classId') {
         if (!this.value || !classIdPattern.test(this.value)) return '#C01B61'
       }
@@ -162,7 +162,7 @@ export default Vue.extend({
       return '#BDBDBD'
     },
     textFieldColor(): string {
-      const classIdPattern = /^[あ-ん]{6}$/
+      const classIdPattern = /^[あ-んa-zㄅ-ㄩ]{6}$/
       if (this.type === 'classId') {
         if (!this.value || !classIdPattern.test(this.value)) return '#C01B61'
       }
@@ -179,7 +179,7 @@ export default Vue.extend({
       return '#0071C2'
     },
     prependIcon(): string {
-      const classIdPattern = /^[あ-ん]{6}$/
+      const classIdPattern = /^[あ-んa-zㄅ-ㄩ]{6}$/
       if (this.type === 'classId') {
         if (!this.value || !classIdPattern.test(this.value))
           return 'mdi-alert-circle'
