@@ -1,4 +1,6 @@
 {
+  "title": "StayAtHome",
+  "description": "Utilizing Digitalisation for Children's learning - We are now creating an environment where children can learn easily and happily, whether it is the current emergency school closure or future online learning,  let us build together. ",
   "common": {
     "general": {
       "buttons": {
@@ -77,7 +79,7 @@
         "date": "Date Setting",
         "time": "Time Setting",
         "subject_label_color": "Label Color",
-        "video_keyword": "Optional feature: Video search of {source}",
+        "video_keyword": "Optional feature: Video search",
         "video_url": "Reference Video URL",
         "video_thumbnail": "Video Thumbnail/Caption Display",
         "textbook_page": "Textbook Page",
@@ -90,7 +92,7 @@
       "required": "*Items Marked with Are Required",
       "search_videos": {
         "search": "Search",
-        "search_result": "Video Search Results of {source}",
+        "search_result": "Video search results",
         "add_to_video_urls": "Reference Video URL"
       }
     },
