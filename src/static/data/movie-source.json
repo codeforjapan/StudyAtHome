@@ -1,0 +1,12 @@
+[
+  {
+    "sourceType": "NHK",
+    "name": "NHK For Schoolの動画",
+    "dataFile": "movies-nhk.json"
+  },
+  {
+  "sourceType": "junyiacademy",
+  "name": "均一教育平台 junyiacademy",
+  "dataFile": "movies-junyiacademy.json"
+  }
+]
