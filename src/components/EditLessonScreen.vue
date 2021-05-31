@@ -59,6 +59,7 @@ import EditLessonScreenInner2 from '@/components/EditLessonScreenInner2.vue'
 import EditLessonScreenInner3 from '@/components/EditLessonScreenInner3.vue'
 import EditLessonScreenInner4 from '@/components/EditLessonScreenInner4.vue'
 import classData from '@/types/store/classData'
+import { removeEmpty } from '@/utils/remove'
 
 type LessonDataType = {
   lessonId: string
@@ -234,7 +235,7 @@ export default Vue.extend({
       try {
         const lessonData: classData.Lesson = await this.buildLessonData()
         await vxm.classData.changeLesson({
-          editData: lessonData,
+          editData: removeEmpty(lessonData),
           id: this.lessonData.lessonId,
         })
         await this.$emit('collapse')
