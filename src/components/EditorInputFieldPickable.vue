@@ -1,6 +1,11 @@
 <template>
   <div>
     <span v-if="title" class="EditorField-Title">{{ title }}</span>
+    <movie-selector
+      v-if="selector"
+      class="EditorField-Selector"
+      @change="$emit('changeMovie', $event)"
+    />
     <div class="EditorField-Form">
       <editor-input-field
         :value="value"
@@ -25,9 +30,10 @@
 import Vue from 'vue'
 import EditorInputField from '@/components/EditorInputField.vue'
 import BaseEditorButton from '@/components/BaseEditorButton.vue'
+import MovieSelector from '@/components/MovieSelector.vue'
 
 export default Vue.extend({
-  components: { EditorInputField, BaseEditorButton },
+  components: { EditorInputField, BaseEditorButton, MovieSelector },
   props: {
     title: {
       type: String,
@@ -69,17 +75,26 @@ export default Vue.extend({
       required: false,
       default: '',
     },
+    selector: {
+      type: String,
+      required: false,
+      default: '',
+    },
   },
 })
 </script>
 
 <style lang="scss" scoped>
 .EditorField-Title {
-  display: block;
+  display: inline-flex;
   font-size: 16px;
   font-weight: bold;
   color: $color-white;
   margin-bottom: 4px;
+}
+.EditorField-Selector {
+  display: inline-flex;
+  margin-bottom: 8px;
 }
 .EditorField-Form {
   display: flex;

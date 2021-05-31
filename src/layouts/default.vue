@@ -37,8 +37,73 @@ export default Vue.extend({
       loading: true,
     }
   },
+  head() {
+    const ogpImage = () => {
+      switch (this.$i18n.locale) {
+        case 'zh-tw':
+          return `https://app.studyathome.jp/ogp-${this.$i18n.locale}.png`
+        default:
+          return 'https://app.studyathome.jp/ogp.png'
+      }
+    }
+    return {
+      title: this.$tc('title'),
+      meta: [
+        {
+          hid: 'description',
+          name: 'description',
+          content: this.$tc('description'),
+        },
+        {
+          hid: 'apple-mobile-web-app-title',
+          name: 'apple-mobile-web-app-title',
+          content: this.$tc('title'),
+        },
+        {
+          hid: 'og:title',
+          property: 'og:title',
+          content: this.$tc('title'),
+        },
+        {
+          hid: 'og:description',
+          property: 'og:description',
+          content: this.$tc('description'),
+        },
+        {
+          hid: 'og:site_name',
+          property: 'og:site_name',
+          content: this.$tc('title'),
+        },
+        {
+          hid: 'og:image',
+          property: 'og:image',
+          content: ogpImage(),
+        },
+        {
+          hid: 'og:image:width',
+          property: 'og:image:width',
+          content: '1200',
+        },
+        {
+          hid: 'og:image:height',
+          property: 'og:image:height',
+          content: '630',
+        },
+        {
+          hid: 'twitter:image',
+          name: 'twitter:image',
+          content: ogpImage(),
+        },
+        {
+          hid: 'og:url',
+          property: 'og:url',
+          content: `https://app.studyathome.jp${this.$route.path}`,
+        },
+      ],
+    }
+  },
   mounted(): void {
-    this.loading = false
+    ;(this as any).loading = false
   },
 })
 </script>
