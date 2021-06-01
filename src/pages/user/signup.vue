@@ -113,12 +113,12 @@ export default Vue.extend({
         const reg = /[ -~]{6,}$/
         const response = reg.test(this.password)
         if (!response) {
-          return 'パスワードが条件を満たしていません'
+          return this.$tc('common.user_data.labels.password_not_acceptable')
         }
       }
       if (this.password && this.confirmation) {
         if (this.password !== this.confirmation) {
-          return 'パスワードが一致していません'
+          return this.$tc('common.user_data.labels.password_not_same')
         }
         return ''
       }
