@@ -49,7 +49,7 @@
     "@mdi/font": "^5.9.55",
     "@nuxt/types": "^2.15.6",
     "@nuxt/typescript-build": "^2.1.0",
-    "@nuxtjs/eslint-config-typescript": "^6.0.0",
+    "@nuxtjs/eslint-config-typescript": "^6.0.1",
     "@nuxtjs/stylelint-module": "^4.0.0",
     "@types/jest": "^26.0.23",
     "@vue/test-utils": "^1.2.0",
