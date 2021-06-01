@@ -41,7 +41,7 @@
     "nuxt-webfontloader": "^1.1.0",
     "uuid": "^8.3.2",
     "vue-property-decorator": "^9.1.2",
-    "vuetify": "^2.5.1",
+    "vuetify": "^2.5.2",
     "vuex": "^3.6.2",
     "vuex-class-component": "^2.3.5"
   },
