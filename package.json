@@ -29,7 +29,7 @@
     "@nuxtjs/google-analytics": "^2.4.0",
     "@nuxtjs/pwa": "^3.3.5",
     "@nuxtjs/style-resources": "^1.0.0",
-    "@types/node": "^15.6.1",
+    "@types/node": "^15.6.2",
     "aws-amplify": "^4.0.3",
     "core-js": "^3.13.1",
     "cross-env": "^7.0.3",
