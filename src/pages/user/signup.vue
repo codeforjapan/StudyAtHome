@@ -92,7 +92,28 @@ import BaseActionButton from '@/components/BaseActionButton.vue'
 import BaseInputField from '@/components/BaseInputField.vue'
 import { withSSRContext } from 'aws-amplify'
 
-export default Vue.extend({
+type Data = {
+  name: string
+  email: string
+  password: string
+  confirmation: string
+  error: boolean
+  completion: boolean
+  loading: boolean
+}
+
+type Methods = {
+  doSignUp(): Promise<void>
+}
+
+type Computed = {
+  passwordConfirm: string
+  disableRegisterButton: boolean
+}
+
+type Props = {}
+
+export default Vue.extend<Data, Methods, Computed, Props>({
   components: { BaseBottomSheetLayer, BaseActionButton, BaseInputField },
   layout: 'background',
   data() {
@@ -131,16 +152,13 @@ export default Vue.extend({
         }
         const reg = /[ -~]{6,}$/
         const response = reg.test(this.password)
-        if (!response) {
-          return true
-        }
-        return false
+        return !response
       }
       return true
     },
   },
   methods: {
-    async doSignUp(): Promise<void> {
+    async doSignUp() {
       this.loading = true
       const { Auth } = withSSRContext()
       await Auth.signUp({
