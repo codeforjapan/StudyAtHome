@@ -1,8 +1,7 @@
 import { Middleware } from '@nuxt/types'
-import { withSSRContext } from 'aws-amplify'
+import { Auth } from 'aws-amplify'
 
 const authenticated: Middleware = async ({ redirect, localePath }) => {
-  const { Auth } = withSSRContext()
   const userInfo = await Auth.currentUserInfo()
 
   if (!userInfo) {

@@ -5,7 +5,7 @@ const environment = process.env.NODE_ENV || 'development'
 
 export default {
   telemetry: false,
-  ssr: true,
+  ssr: false,
   srcDir: 'src',
   /*
    ** Headers of the page

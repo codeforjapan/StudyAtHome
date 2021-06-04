@@ -52,7 +52,7 @@
 import Vue from 'vue'
 import BaseBottomSheetLayer from '@/components/BaseBottomSheetLayer.vue'
 import BaseActionButton from '@/components/BaseActionButton.vue'
-import { withSSRContext } from 'aws-amplify'
+import { Auth, API } from 'aws-amplify'
 import { GraphQLResult } from '@aws-amplify/api'
 import { vxm } from '@/store'
 import { ListClasssQuery } from '@/API'
@@ -75,7 +75,6 @@ export default Vue.extend({
     }
   },
   async created() {
-    const { API, Auth } = withSSRContext()
     const user = await Auth.currentAuthenticatedUser()
     const listClasssSimple = /* GraphQL */ `
       query ListClasss(

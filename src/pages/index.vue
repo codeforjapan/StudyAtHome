@@ -109,7 +109,7 @@
 import Vue from 'vue'
 import BaseInputField from '@/components/BaseInputField.vue'
 import BaseActionButton from '@/components/BaseActionButton.vue'
-import { withSSRContext } from 'aws-amplify'
+import { API, Auth } from 'aws-amplify'
 import { GRAPHQL_AUTH_MODE, GraphQLResult } from '@aws-amplify/api'
 // import { getClass } from '@/graphql/queries'
 import { GetClassQuery } from '@/API'
@@ -138,7 +138,6 @@ export default Vue.extend({
     }
   },
   async mounted() {
-    const { Auth } = withSSRContext()
     const userInfo = await Auth.currentUserInfo()
     this.isLoggedIn = !!userInfo
   },
@@ -153,7 +152,6 @@ export default Vue.extend({
           }
         }
       `
-      const { API } = withSSRContext()
       try {
         const result = (await API.graphql({
           query: getClassSimple,
