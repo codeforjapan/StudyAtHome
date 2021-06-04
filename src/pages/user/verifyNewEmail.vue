@@ -66,7 +66,7 @@ import Vue from 'vue'
 import BaseBottomSheetLayer from '@/components/BaseBottomSheetLayer.vue'
 import BaseActionButton from '@/components/BaseActionButton.vue'
 import BaseInputField from '@/components/BaseInputField.vue'
-import { withSSRContext } from 'aws-amplify'
+import { Auth } from 'aws-amplify'
 
 export default Vue.extend({
   components: { BaseBottomSheetLayer, BaseActionButton, BaseInputField },
@@ -92,7 +92,6 @@ export default Vue.extend({
   methods: {
     async doVerify(): Promise<void> {
       this.loading = true
-      const { Auth } = withSSRContext()
       await Auth.verifyCurrentUserAttributeSubmit(
         'email',
         this.verification_code

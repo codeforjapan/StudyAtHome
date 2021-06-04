@@ -6,7 +6,7 @@ import {
 } from 'vuex-class-component'
 import { AppStore } from '@/store/modules/app'
 import classData from '@/types/store/classData'
-import { withSSRContext, graphqlOperation } from 'aws-amplify'
+import { API, Auth, graphqlOperation } from 'aws-amplify'
 import { GRAPHQL_AUTH_MODE, GraphQLResult } from '@aws-amplify/api'
 import {
   createSchool,
@@ -136,7 +136,6 @@ export class ClassDataStore extends VuexModule implements classData.ClassData {
 
   @action
   public async lessonsOnCurrentDate(date: Date) {
-    const { API } = withSSRContext()
     const lessons = (await API.graphql({
       query: listLessonsByClassSimple,
       variables: {
@@ -210,7 +209,6 @@ export class ClassDataStore extends VuexModule implements classData.ClassData {
         }
       }
     `
-    const { API } = withSSRContext()
     const lessons = (await API.graphql({
       query: listLessonsByClassSimple,
       variables: {
@@ -231,7 +229,6 @@ export class ClassDataStore extends VuexModule implements classData.ClassData {
 
   @action
   public async loadClassData(classId: classData.ClassId) {
-    const { API } = withSSRContext()
     const result = (await API.graphql({
       query: getClassSimple,
       variables: { id: classId },
@@ -259,8 +256,6 @@ export class ClassDataStore extends VuexModule implements classData.ClassData {
     schoolName: string
     locale: string
   }) {
-    const { API, Auth } = withSSRContext()
-
     if (!vxm.user.isAuthenticated) {
       throw new Error('ユーザーが正しくログインされていません')
     }
@@ -310,7 +305,6 @@ export class ClassDataStore extends VuexModule implements classData.ClassData {
 
   @action
   public async registerLesson(lessonData: classData.Lesson) {
-    const { API, Auth } = withSSRContext()
     try {
       const user = await Auth.currentAuthenticatedUser()
       await API.graphql(
@@ -336,7 +330,6 @@ export class ClassDataStore extends VuexModule implements classData.ClassData {
     editData: any
     id: classData.LessonId
   }) {
-    const { API } = withSSRContext()
     try {
       await API.graphql(
         graphqlOperation(updateLesson, {

@@ -79,7 +79,7 @@ import Vue from 'vue'
 import BaseBottomSheetLayer from '@/components/BaseBottomSheetLayer.vue'
 import BaseActionButton from '@/components/BaseActionButton.vue'
 import BaseInputField from '@/components/BaseInputField.vue'
-import { withSSRContext } from 'aws-amplify'
+import { Auth } from 'aws-amplify'
 
 type Data = {
   currentPassword: string
@@ -145,7 +145,6 @@ export default Vue.extend<Data, Methods, Computed, unknown>({
   methods: {
     async doSave(): Promise<void> {
       this.loading = true
-      const { Auth } = withSSRContext()
       const user = await Auth.currentAuthenticatedUser()
       if (user) {
         if (this.newPassword) {

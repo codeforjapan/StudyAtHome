@@ -1,5 +1,5 @@
 import { createModule, action, mutation } from 'vuex-class-component'
-import { withSSRContext } from 'aws-amplify'
+import { Auth } from 'aws-amplify'
 
 const VuexModule = createModule({
   namespaced: 'user',
@@ -28,7 +28,6 @@ export class UserStore extends VuexModule implements User {
   displayName: DisplayName = ''
 
   public get isAuthenticated(): Promise<boolean> {
-    const { Auth } = withSSRContext()
     return (async () => {
       return await Auth.currentAuthenticatedUser()
         .then(() => true)
@@ -45,7 +44,6 @@ export class UserStore extends VuexModule implements User {
 
   @action
   public async login() {
-    const { Auth } = withSSRContext()
     const user = await Auth.currentAuthenticatedUser()
     this.setUser({
       email: user.attributes.email,
@@ -65,7 +63,6 @@ export class UserStore extends VuexModule implements User {
 
   @action
   public async logout() {
-    const { Auth } = withSSRContext()
     await Auth.signOut()
     this.setUser({
       email: '',
