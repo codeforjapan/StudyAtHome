@@ -28,7 +28,7 @@
     "@nuxtjs/dotenv": "^1.4.1",
     "@nuxtjs/google-analytics": "^2.4.0",
     "@nuxtjs/pwa": "^3.3.5",
-    "@nuxtjs/style-resources": "^1.0.0",
+    "@nuxtjs/style-resources": "^1.1.0",
     "@types/node": "^15.6.1",
     "aws-amplify": "^4.0.3",
     "core-js": "^3.13.1",
