@@ -92,7 +92,28 @@ import BaseActionButton from '@/components/BaseActionButton.vue'
 import BaseInputField from '@/components/BaseInputField.vue'
 import { Auth } from 'aws-amplify'
 
-export default Vue.extend({
+type Data = {
+  name: string
+  email: string
+  password: string
+  confirmation: string
+  error: boolean
+  completion: boolean
+  loading: boolean
+}
+
+type Methods = {
+  doSignUp(): Promise<void>
+}
+
+type Computed = {
+  passwordConfirm: string
+  disableRegisterButton: boolean
+}
+
+type Props = {}
+
+export default Vue.extend<Data, Methods, Computed, Props>({
   components: { BaseBottomSheetLayer, BaseActionButton, BaseInputField },
   layout: 'background',
   data() {
@@ -113,12 +134,12 @@ export default Vue.extend({
         const reg = /[ -~]{6,}$/
         const response = reg.test(this.password)
         if (!response) {
-          return 'パスワードが条件を満たしていません'
+          return this.$tc('common.user_data.labels.password_not_acceptable')
         }
       }
       if (this.password && this.confirmation) {
         if (this.password !== this.confirmation) {
-          return 'パスワードが一致していません'
+          return this.$tc('common.user_data.labels.password_not_same')
         }
         return ''
       }
@@ -131,16 +152,13 @@ export default Vue.extend({
         }
         const reg = /[ -~]{6,}$/
         const response = reg.test(this.password)
-        if (!response) {
-          return true
-        }
-        return false
+        return !response
       }
       return true
     },
   },
   methods: {
-    async doSignUp(): Promise<void> {
+    async doSignUp() {
       this.loading = true
       await Auth.signUp({
         username: this.email,
