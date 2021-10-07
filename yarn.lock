@@ -2931,12 +2931,12 @@
     consola "^2.15.3"
     defu "^5.0.0"
 
-"@nuxtjs/dayjs@1.4.0":
-  version "1.4.0"
-  resolved "https://registry.yarnpkg.com/@nuxtjs/dayjs/-/dayjs-1.4.0.tgz#e11347bfa4f267deb9b9a6fb33bf918b32abfd00"
-  integrity sha512-rP/BcUBI0ASh57QolZj7l3Wa58xSHCPXrvaFw62Apha1ATTc7pGnnV6USiZcZh9MoF+lRx5xkGyAMKmjHWuwqg==
+"@nuxtjs/dayjs@1.4.1":
+  version "1.4.1"
+  resolved "https://registry.yarnpkg.com/@nuxtjs/dayjs/-/dayjs-1.4.1.tgz#a1ff4dba8b9f9f423577264783f50a5492af1cae"
+  integrity sha512-FgZoFqXxwRPoNJwcN3Up8jvxKnwalIZJF4rX5MWmMpJej75Rl/ShPKkkNxgf3x3gUopOyRjTCLRq/LAVFwY0Pg==
   dependencies:
-    consola "^2.3.2"
+    consola "^2.10.1"
     dayjs "^1.10.4"
 
 "@nuxtjs/dotenv@1.4.1":
