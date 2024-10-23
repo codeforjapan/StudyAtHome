@@ -71,7 +71,7 @@
     "nodemon": "2.0.14",
     "prettier": "2.3.2",
     "rimraf": "3.0.2",
-    "sass": "1.35.2",
+    "sass": "1.80.4",
     "sass-loader": "10.2.0",
     "stylelint": "13.13.1",
     "stylelint-config-prettier": "8.0.2",
