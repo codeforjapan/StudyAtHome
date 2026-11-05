@@ -33,7 +33,7 @@
     "aws-amplify": "4.1.2",
     "core-js": "3.15.2",
     "cross-env": "7.0.3",
-    "express": "4.17.1",
+    "express": "4.20.0",
     "nuxt": "2.15.8",
     "nuxt-i18n": "6.27.3",
     "nuxt-property-decorator": "2.9.1",
