@@ -39,7 +39,7 @@
     "nuxt-property-decorator": "2.9.1",
     "nuxt-svg-loader": "1.2.0",
     "nuxt-webfontloader": "1.1.0",
-    "uuid": "8.3.2",
+    "uuid": "11.1.1",
     "vue-property-decorator": "9.1.2",
     "vuetify": "2.5.10",
     "vuex": "3.6.2",
